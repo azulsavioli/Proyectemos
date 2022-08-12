@@ -9,7 +9,8 @@ class OnboardingPage extends StatefulWidget {
 }
 
 class _OnboardingPageState extends State<OnboardingPage> {
-  final controller = PageController();
+  final controller = PageController(initialPage: 0);
+  int pageChanged = 0;
 
   @override
   void dispose() {
@@ -21,6 +22,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              pageChanged = index;
+            });
+          },
           controller: controller,
           children: [
             Container(
@@ -65,15 +71,27 @@ class _OnboardingPageState extends State<OnboardingPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Voltar",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold),
-                  )),
+              pageChanged == 0
+                  ? TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "Pular",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      ))
+                  : TextButton(
+                      onPressed: () => controller.previousPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut),
+                      child: const Text(
+                        "Voltar",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      )),
               Center(
                 child: SmoothPageIndicator(
                   controller: controller,
@@ -85,15 +103,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       dotColor: Colors.white),
                 ),
               ),
-              TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Próximo",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold),
-                  ))
+              pageChanged == 2
+                  ? TextButton(
+                      onPressed: () => controller.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut),
+                      child: const Text(
+                        "Concluir",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      ))
+                  : TextButton(
+                      onPressed: () => controller.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut),
+                      child: const Text(
+                        "Próximo",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold),
+                      ))
             ],
           ),
         ),
