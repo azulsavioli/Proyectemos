@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyectemos/app/pages/home_page.dart';
+import 'package:proyectemos/app/pages/widgets/home_page.dart';
 import 'package:proyectemos/app/pages/services/auth_services.dart';
 import 'package:proyectemos/app/pages/widgets/login_page.dart';
+
+import 'onboarding.dart';
 
 class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);
@@ -21,7 +23,7 @@ class _AuthCheckState extends State<AuthCheck> {
     } else if (auth.userAuth == null) {
       return const LoginPage(title: '¡Proyectemos!');
     } else {
-      return const HomePage();
+      return const OnboardingPage();
     }
   }
 

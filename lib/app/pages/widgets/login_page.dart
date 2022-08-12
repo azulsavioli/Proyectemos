@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/pages/services/auth_services.dart';
+import 'package:proyectemos/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key, required String title}) : super(key: key);
@@ -70,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo,
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
           child: Padding(
               padding: const EdgeInsets.only(top: 100),
@@ -83,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         titulo,
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.lightBlue,
                           fontSize: 35,
                           fontWeight: FontWeight.bold,
                           letterSpacing: -1.5,
@@ -93,16 +95,16 @@ class _LoginPageState extends State<LoginPage> {
                         height: 40,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(20),
                         child: TextFormField(
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
+                              color: Colors.black, fontSize: 18),
                           controller: emailController,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             label: Text(
                               'Email',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                           keyboardType: TextInputType.emailAddress,
@@ -115,17 +117,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(20),
                         child: TextFormField(
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 18),
+                              color: Colors.black, fontSize: 18),
                           controller: passwordController,
                           obscureText: true,
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             label: Text(
                               'Senha',
-                              style: TextStyle(color: Colors.white),
+                              style: TextStyle(color: Colors.black),
                             ),
                           ),
                           validator: (value) {
@@ -178,9 +180,35 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-                      TextButton(
-                          onPressed: () => setFormAction(!isLogin),
-                          child: Text(toggleButton))
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: ElevatedButton.icon(
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.lightBlue,
+                                onPrimary: Colors.black,
+                                minimumSize: const Size(double.infinity, 50)),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              final provider = Provider.of<GoogleSignnProvider>(
+                                  context,
+                                  listen: false);
+                              provider.googleLogin();
+                            },
+                            label: const Text('Login com sua conta Google',
+                                style: TextStyle(color: Colors.white))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 18.0),
+                        child: TextButton(
+                            onPressed: () => setFormAction(!isLogin),
+                            child: Text(
+                              toggleButton,
+                              style: const TextStyle(color: Colors.blueGrey),
+                            )),
+                      )
                     ]),
               ))),
     );
