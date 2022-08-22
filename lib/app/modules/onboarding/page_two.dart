@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 class PageTwo extends StatefulWidget {
   const PageTwo({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _PageTwoState extends State<PageTwo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(0, 159, 251, 1),
+      color: ThemeColors.blue,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +35,7 @@ class _PageTwoState extends State<PageTwo> {
                       fontSize: 16,
                       letterSpacing: 1,
                       fontFamily: 'Poppins',
-                      color: Color.fromRGBO(250, 251, 250, 1),
+                      color: ThemeColors.white,
                       fontWeight: FontWeight.bold),
                 ),
               ),

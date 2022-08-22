@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 class PageOne extends StatelessWidget {
   const PageOne({Key? key}) : super(key: key);
@@ -6,7 +7,7 @@ class PageOne extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(243, 1, 70, 1),
+      color: ThemeColors.red,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 class PageThree extends StatefulWidget {
   const PageThree({Key? key}) : super(key: key);
@@ -11,7 +12,7 @@ class _PageThreeState extends State<PageThree> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromRGBO(254, 147, 28, 1),
+      color: ThemeColors.yellow,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,7 +34,7 @@ class _PageThreeState extends State<PageThree> {
                     fontSize: 16,
                     letterSpacing: 1,
                     fontFamily: 'Poppins',
-                    color: Color.fromRGBO(250, 251, 250, 1),
+                    color: ThemeColors.white,
                     fontWeight: FontWeight.bold),
               ),
             )
