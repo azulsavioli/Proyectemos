@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyectemos/app/modules/home/proyectos_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 
@@ -19,21 +20,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text(
-          '¡Proyectemos!',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      drawer: const DrawerMenuWidget(),
       body: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasData) {
-              return const ProyectosPage();
+              return const ProfilePage();
             } else if (snapshot.hasError) {
               return const Center(child: Text('Algo deu errado!'));
             } else {
