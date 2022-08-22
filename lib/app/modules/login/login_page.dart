@@ -193,9 +193,9 @@ class _LoginPageState extends State<LoginPage> {
                               color: Colors.white,
                             ),
                             onPressed: () {
-                              final provider = Provider.of<GoogleSignnProvider>(
-                                  context,
-                                  listen: false);
+                              final provider =
+                                  Provider.of<GoogleSignInProvider>(context,
+                                      listen: false);
                               provider.googleLogin();
                             },
                             label: const Text('Login com sua conta Google',
