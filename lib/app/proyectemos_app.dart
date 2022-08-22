@@ -9,13 +9,11 @@ class Proyectemos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-      create: (context) => GoogleSignnProvider(),
+      create: (context) => GoogleSignInProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: title,
-        theme: ThemeData(
-          primarySwatch: Colors.amber,
-        ),
+        theme: ThemeData(primarySwatch: Colors.amber),
         home: const AuthCheck(),
       ));
 }
