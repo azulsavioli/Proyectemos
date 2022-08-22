@@ -12,20 +12,23 @@ class DrawerMenuWidget extends StatelessWidget {
     return Drawer(
       backgroundColor: const Color.fromRGBO(250, 251, 250, 1),
       child: Column(children: [
-        const DrawerHeader(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Color.fromRGBO(0, 159, 251, 1),
-          ),
-          child: Center(
-            child: Text(
-              '¡Proyectemos!',
-              style: TextStyle(
-                  fontSize: 16,
-                  letterSpacing: 1,
-                  fontFamily: 'Poppins',
-                  color: Color.fromRGBO(250, 251, 250, 1),
-                  fontWeight: FontWeight.bold),
+        const SizedBox(
+          height: 90,
+          child: DrawerHeader(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Color.fromRGBO(0, 159, 251, 1),
+            ),
+            child: Center(
+              child: Text(
+                '¡Proyectemos!',
+                style: TextStyle(
+                    fontSize: 20,
+                    letterSpacing: 1,
+                    fontFamily: 'Poppins',
+                    color: Color.fromRGBO(250, 251, 250, 1),
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
         ),
@@ -65,7 +68,7 @@ class DrawerMenuWidget extends StatelessWidget {
           onTap: () {
             final auth = AuthService();
             auth.logout();
-            Provider.of<GoogleSignnProvider>(context, listen: false);
+            Provider.of<GoogleSignInProvider>(context, listen: false);
           },
         )
       ]),
