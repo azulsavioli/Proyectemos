@@ -31,12 +31,7 @@ class _PageTwoState extends State<PageTwo> {
               child: Center(
                 child: Text(
                   "Con la finalidad de poner la lengua española más cerca de tus intereses y realidad, esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.",
-                  style: TextStyle(
-                      fontSize: 16,
-                      letterSpacing: 1,
-                      fontFamily: 'Poppins',
-                      color: ThemeColors.white,
-                      fontWeight: FontWeight.bold),
+                  style: ThemeText.title20White,
                 ),
               ),
             )
