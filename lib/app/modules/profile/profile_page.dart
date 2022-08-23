@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
+import '../widgets/card_clicavel.dart';
 import '../widgets/drawer_menu.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,6 +14,10 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
+
+  void goTo() {
+    return print('ola');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
           iconTheme: const IconThemeData(color: ThemeColors.white),
           automaticallyImplyLeading: true,
           title: const Text(
-            'Profile',
+            'Perfil',
             style: ThemeText.title20White,
           ),
         ),
@@ -35,17 +40,20 @@ class _ProfilePageState extends State<ProfilePage> {
         body: Center(
           child: Column(
             children: [
+              const SizedBox(
+                height: 8,
+              ),
               Card(
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * .9,
-                  height: 150,
+                  height: 180,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundColor: ThemeColors.blue,
+                        backgroundColor: ThemeColors.yellow,
                         child: CircleAvatar(
                           radius: 27,
                           backgroundImage: (user.photoURL == null)
@@ -61,8 +69,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           ? const Text('')
                           : Text(
                               user.displayName!,
-                              style: ThemeText.paragraph16Blue,
+                              style: ThemeText.paragraph16BlueBold,
                             ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(
+                        user.email!,
+                        style: ThemeText.paragraph16Gray,
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
@@ -74,61 +89,80 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: SizedBox(
                     width: MediaQuery.of(context).size.width * .9,
                     height: 80,
-                    child: Container(
-                      color: ThemeColors.white,
-                      child: Center(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  '0/14',
-                                  style: ThemeText.paragraph16Blue,
-                                ),
-                                Text(
-                                  'Tareas',
-                                  style: ThemeText.paragraph14Blue,
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  '0',
-                                  style: ThemeText.paragraph16Blue,
-                                ),
-                                Text(
-                                  'Notas',
-                                  style: ThemeText.paragraph14Blue,
-                                )
-                              ],
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  '0%',
-                                  style: ThemeText.paragraph16Blue,
-                                ),
-                                Text(
-                                  'Conclusão',
-                                  style: ThemeText.paragraph14Blue,
-                                )
-                              ],
-                            ),
-                          ])),
-                    )),
+                    child: Center(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '0/14',
+                                style: ThemeText.paragraph16BlueBold,
+                              ),
+                              Text(
+                                'Tareas',
+                                style: ThemeText.paragraph14Gray,
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Text(
+                                '0%',
+                                style: ThemeText.paragraph16BlueBold,
+                              ),
+                              Text(
+                                'Conclusão',
+                                style: ThemeText.paragraph14Gray,
+                              )
+                            ],
+                          ),
+                        ]))),
               ),
-              Text(
-                'Email: ${user.email!}',
-                style: const TextStyle(color: Colors.black, fontSize: 16),
+              CardClicavel(
+                text: 'Notificaciones',
+                textColor: ThemeText.paragraph16Gray,
+                onCallback: () => goTo,
+                backgroundColor: ThemeColors.red,
+                icon: Icons.access_alarm_outlined,
+                iconColor: ThemeColors.white,
+              ),
+              CardClicavel(
+                text: 'Informaciones',
+                textColor: ThemeText.paragraph16Gray,
+                onCallback: () => goTo,
+                backgroundColor: ThemeColors.yellow,
+                icon: Icons.announcement_outlined,
+                iconColor: ThemeColors.white,
+              ),
+              CardClicavel(
+                text: 'Conquistas',
+                textColor: ThemeText.paragraph16Gray,
+                onCallback: () => goTo,
+                backgroundColor: ThemeColors.blue,
+                icon: Icons.workspace_premium,
+                iconColor: ThemeColors.white,
+              ),
+              CardClicavel(
+                text: 'Educador',
+                textColor: ThemeText.paragraph16Gray,
+                onCallback: () => goTo,
+                backgroundColor: ThemeColors.red,
+                icon: Icons.volunteer_activism_outlined,
+                iconColor: ThemeColors.white,
+              ),
+              CardClicavel(
+                text: 'Configuraciones',
+                textColor: ThemeText.paragraph16Gray,
+                onCallback: () => goTo,
+                backgroundColor: ThemeColors.yellow,
+                icon: Icons.settings_rounded,
+                iconColor: ThemeColors.white,
               ),
             ],
           ),
