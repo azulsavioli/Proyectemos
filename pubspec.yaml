@@ -108,6 +108,9 @@ flutter:
     - assets/images/uno_onboarding.png
     - assets/images/dos_onboarding.png
     - assets/images/tres_onboarding.png
+    - assets/images/uno_img.png
+    - assets/images/dos_img.png
+    - assets/images/tres_img.png
 
 
     # An image asset can refer to one or more resolution-specific "variants", see
