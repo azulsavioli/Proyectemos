@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/home/proyectos_page.dart';
-import 'package:proyectemos/app/modules/profile/profile_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
-
-import '../widgets/drawer_menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,7 +23,7 @@ class _HomePageState extends State<HomePage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasData) {
-              return const ProfilePage();
+              return ProyectosPage();
             } else if (snapshot.hasError) {
               return const Center(child: Text('Algo deu errado!'));
             } else {
