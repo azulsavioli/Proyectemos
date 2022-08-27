@@ -141,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 iconColor: ThemeColors.white,
               ),
               CardClicavel(
-                text: 'Conquistas',
+                text: 'Logros',
                 textColor: ThemeText.paragraph16Gray,
                 onCallback: () => goTo,
                 backgroundColor: ThemeColors.blue,
@@ -149,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 iconColor: ThemeColors.white,
               ),
               CardClicavel(
-                text: 'Educador',
+                text: 'Profesor(a)',
                 textColor: ThemeText.paragraph16Gray,
                 onCallback: () => goTo,
                 backgroundColor: ThemeColors.red,

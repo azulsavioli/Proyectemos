@@ -44,12 +44,12 @@ class DrawerMenuWidget extends StatelessWidget {
         ),
         ListTile(
           leading: const Icon(Icons.task_alt),
-          title: const Text('Tareas Complidas'),
+          title: const Text('Tareas Cumplidas'),
           onTap: () {},
         ),
         ListTile(
           leading: const Icon(Icons.auto_stories_outlined),
-          title: const Text('Tareas Inconclusas'),
+          title: const Text('Tareas Pendientes'),
           onTap: () {},
         ),
         ListTile(
