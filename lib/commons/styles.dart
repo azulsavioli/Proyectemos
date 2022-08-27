@@ -8,6 +8,27 @@ abstract class ThemeText {
       color: ThemeColors.white,
       fontWeight: FontWeight.bold);
 
+  static const TextStyle title20Red = TextStyle(
+      fontSize: 20,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.red,
+      fontWeight: FontWeight.bold);
+
+  static const TextStyle title20Blue = TextStyle(
+      fontSize: 20,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.blue,
+      fontWeight: FontWeight.bold);
+
+  static const TextStyle title20yellow = TextStyle(
+      fontSize: 20,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.yellow,
+      fontWeight: FontWeight.bold);
+
   static const TextStyle paragraph16BlueBold = TextStyle(
       fontSize: 16,
       letterSpacing: 1,
