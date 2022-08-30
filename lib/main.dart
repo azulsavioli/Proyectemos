@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'app/services/auth_services.dart';
 import 'commons/firebase_options.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 bool? isOnboardingCompleted;
 
@@ -19,7 +20,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context) => AuthService()),
-  ], child: const Proyectemos()));
+  initializeDateFormatting().then((_) => runApp(MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => AuthService()),
+      ], child: const Proyectemos())));
 }
