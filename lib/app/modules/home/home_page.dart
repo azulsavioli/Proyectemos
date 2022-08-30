@@ -16,22 +16,22 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-      body: StreamBuilder(
+      child: Scaffold(
+        body: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasData) {
-              return ProyectosPage();
+              return const ProyectosPage();
             } else if (snapshot.hasError) {
               return const Center(child: Text('Algo deu errado!'));
             } else {
-              return const LoginPage(
-                title: '¡Proyectemos!',
-              );
+              return const LoginPage();
             }
-          }),
-    ));
+          },
+        ),
+      ),
+    );
   }
 }

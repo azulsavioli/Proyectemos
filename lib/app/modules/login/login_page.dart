@@ -6,7 +6,7 @@ import 'package:proyectemos/commons/google_sign_in.dart';
 import '../../services/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required String title}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();

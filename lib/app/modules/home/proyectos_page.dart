@@ -6,7 +6,7 @@ import '../widgets/drawer_menu.dart';
 import '../../../commons/strings.dart';
 
 class ProyectosPage extends StatelessWidget {
-  ProyectosPage({Key? key}) : super(key: key);
+  const ProyectosPage({Key? key}) : super(key: key);
 
   void goTo() {
     return print('ola');
