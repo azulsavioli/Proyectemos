@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
+import 'package:proyectemos/app/modules/login/registration_page.dart';
 import 'package:proyectemos/main.dart';
 
 import '../app/modules/onboarding/onboarding_page.dart';
@@ -24,9 +25,11 @@ class _AuthCheckState extends State<AuthCheck> {
     } else if (auth.userAuth == null) {
       return const LoginPage();
     } else {
-      return isOnboardingCompleted == true
-          ? const HomePage()
-          : const OnboardingPage();
+      return isOnboardingCompleted == null
+          ? const OnboardingPage()
+          : isStudentInfoSaved == null
+              ? const RegistrationPage()
+              : const HomePage();
     }
   }
 
