@@ -2,8 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../widgets/card_clicavel.dart';
-import '../widgets/drawer_menu.dart';
+import '../widgets/card_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -15,12 +14,15 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  void goTo() {
-    return print('ola');
+  void goTo(routeName) {
+    Navigator.pushNamed(context, routeName);
   }
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width * .9;
+    final height = MediaQuery.of(context).size.width * .2;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -33,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
           automaticallyImplyLeading: true,
           title: const Text(
             'Perfil',
-            style: ThemeText.title20White,
+            style: ThemeText.paragraph16WhiteBold,
           ),
         ),
         // endDrawer: const DrawerMenuWidget(),
@@ -76,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Text(
                         user.email!,
-                        style: ThemeText.paragraph16Gray,
+                        style: ThemeText.paragraph16GrayNormal,
                       ),
                       const SizedBox(
                         height: 8,
@@ -124,45 +126,67 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ]))),
               ),
-              CardClicavel(
+              CardButton(
+                iconSize: 25,
                 text: 'Notificaciones',
-                textColor: ThemeText.paragraph16Gray,
-                onCallback: () => goTo,
                 backgroundColor: ThemeColors.red,
                 icon: Icons.access_alarm_outlined,
-                iconColor: ThemeColors.white,
+                cardWidth: width,
+                cardHeight: height,
+                namedRoute: '',
+                shadowColor: ThemeColors.red,
               ),
-              CardClicavel(
+              const SizedBox(
+                height: 8,
+              ),
+              CardButton(
+                iconSize: 25,
                 text: 'Informaciones',
-                textColor: ThemeText.paragraph16Gray,
-                onCallback: () => goTo,
                 backgroundColor: ThemeColors.yellow,
                 icon: Icons.announcement_outlined,
-                iconColor: ThemeColors.white,
+                cardWidth: width,
+                cardHeight: height,
+                namedRoute: '',
+                shadowColor: ThemeColors.yellow,
               ),
-              CardClicavel(
+              const SizedBox(
+                height: 8,
+              ),
+              CardButton(
+                iconSize: 25,
                 text: 'Logros',
-                textColor: ThemeText.paragraph16Gray,
-                onCallback: () => goTo,
                 backgroundColor: ThemeColors.blue,
                 icon: Icons.workspace_premium,
-                iconColor: ThemeColors.white,
+                cardWidth: width,
+                cardHeight: height,
+                namedRoute: '',
+                shadowColor: ThemeColors.blue,
               ),
-              CardClicavel(
+              const SizedBox(
+                height: 8,
+              ),
+              CardButton(
+                iconSize: 25,
                 text: 'Profesor(a)',
-                textColor: ThemeText.paragraph16Gray,
-                onCallback: () => goTo,
                 backgroundColor: ThemeColors.red,
                 icon: Icons.volunteer_activism_outlined,
-                iconColor: ThemeColors.white,
+                cardWidth: width,
+                cardHeight: height,
+                namedRoute: '',
+                shadowColor: ThemeColors.red,
               ),
-              CardClicavel(
+              const SizedBox(
+                height: 8,
+              ),
+              CardButton(
+                iconSize: 25,
                 text: 'Configuraciones',
-                textColor: ThemeText.paragraph16Gray,
-                onCallback: () => goTo,
                 backgroundColor: ThemeColors.yellow,
                 icon: Icons.settings_rounded,
-                iconColor: ThemeColors.white,
+                cardWidth: width,
+                cardHeight: height,
+                namedRoute: '',
+                shadowColor: ThemeColors.yellow,
               ),
             ],
           ),
