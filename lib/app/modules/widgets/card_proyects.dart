@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CardProyecto extends StatelessWidget {
-  final Function onCallback;
+  final String namedRoute;
   final String image;
   final Color backgroundColor;
   final String title;
@@ -11,21 +11,21 @@ class CardProyecto extends StatelessWidget {
 
   const CardProyecto({
     Key? key,
-    required this.onCallback,
     required this.backgroundColor,
     required this.title,
     required this.titleColor,
     required this.description,
     required this.descriptionColor,
     required this.image,
+    required this.namedRoute,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: backgroundColor,
-      splashColor: backgroundColor,
-      onTap: onCallback(),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(namedRoute);
+      },
       child: Card(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * .9,
@@ -65,5 +65,9 @@ class CardProyecto extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  goTo(context, namedRoute) {
+    Navigator.pushNamed(context, namedRoute);
   }
 }
