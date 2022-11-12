@@ -18,8 +18,16 @@ class _PageTwoState extends State<PageTwo> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
+              child: Text(
+                "Con la finalidad de poner la lengua española más cerca de tus intereses y realidad,",
+                style: ThemeText.paragraph16WhiteBold,
+                textAlign: TextAlign.center,
+              ),
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12),
+              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 12),
               child: Image.asset(
                 'assets/images/dos_onboarding.png',
                 height: MediaQuery.of(context).size.width * .7,
@@ -28,11 +36,10 @@ class _PageTwoState extends State<PageTwo> {
             ),
             const Padding(
               padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
-              child: Center(
-                child: Text(
-                  "Con la finalidad de poner la lengua española más cerca de tus intereses y realidad, esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.",
-                  style: ThemeText.title20White,
-                ),
+              child: Text(
+                "esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.",
+                style: ThemeText.paragraph16WhiteBold,
+                textAlign: TextAlign.center,
               ),
             )
           ],

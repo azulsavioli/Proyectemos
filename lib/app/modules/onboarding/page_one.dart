@@ -13,8 +13,12 @@ class PageOne extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Text(
+              "!Bienvenidos!",
+              style: ThemeText.h1title45WhiteBold,
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12),
+              padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 12),
               child: Image.asset(
                 'assets/images/uno_onboarding.png',
                 height: MediaQuery.of(context).size.width * .7,
@@ -29,22 +33,9 @@ class PageOne extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "!Bienvenidos!",
-                    style: TextStyle(
-                        fontSize: 20,
-                        letterSpacing: 1,
-                        fontFamily: 'Poppins',
-                        color: Color.fromRGBO(250, 251, 250, 1),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
                     "Esta aplicación ha sido pensada como un lugar para explorar tu creatividad, para encuentros e interacciones con tus compañeros(as) y profesores(as).",
-                    style: TextStyle(
-                        fontSize: 16,
-                        letterSpacing: 1,
-                        fontFamily: 'Poppins',
-                        color: Color.fromRGBO(250, 251, 250, 1),
-                        fontWeight: FontWeight.bold),
+                    style: ThemeText.paragraph16WhiteBold,
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

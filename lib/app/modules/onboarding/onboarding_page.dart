@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
+import 'package:proyectemos/app/modules/login/registration_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -100,7 +101,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomePage()))
+                                builder: (context) => const RegistrationPage()))
                       },
                       child: const Text(
                         "Concluir",
