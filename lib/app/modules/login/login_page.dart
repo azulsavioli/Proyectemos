@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 
+import '../../../commons/strings.dart';
 import '../../services/auth_services.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,10 +20,11 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   bool isLogin = true;
-  late String titulo;
   late String actionButton;
   late String toggleButton;
+  late IconData icon;
   bool loading = false;
+  bool loadingGoogle = false;
 
   @override
   void initState() {
@@ -33,13 +36,13 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       isLogin = action;
       if (isLogin) {
-        titulo = 'Login';
-        actionButton = 'Login';
-        toggleButton = 'Ainda não tem conta? Cadastre-se agora.';
+        actionButton = 'Acceso';
+        toggleButton = '¿Aún no tienes una cuenta? Regístrate ahora.';
+        icon = Icons.lock_open_outlined;
       } else {
-        titulo = 'Crie sua conta';
-        actionButton = 'Cadastrar';
-        toggleButton = 'Voltar ao login';
+        actionButton = 'Crea tu cuenta';
+        toggleButton = 'Atrás para iniciar sesión';
+        icon = Icons.arrow_forward_ios;
       }
     });
   }
@@ -73,34 +76,42 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: ThemeColors.white,
       body: SingleChildScrollView(
-          child: Form(
-        key: formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(
-                    height: 350,
-                    width: 350,
-                    child: Image.asset('assets/images/logo.png')),
-                Text(
-                  titulo,
-                  style: const TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 45,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: -1.5,
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50.0),
+                    child: SizedBox(
+                      height: 80,
+                      width: 80,
+                      child: Image.asset(
+                        Strings.logo,
+                        height: 80,
+                        width: 80,
+                      ),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
+                  child: Text(
+                    '!Bienvenidos a Proyectemos!',
+                    style: ThemeText.h1title45YellowBold,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 30,
                 ),
                 TextFormField(
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
                   controller: emailController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
@@ -108,15 +119,24 @@ class _LoginPageState extends State<LoginPage> {
                         Radius.circular(20),
                       ),
                     ),
-                    label: Text(
-                      'Email',
-                      style: TextStyle(color: Colors.black),
+                    label: Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        'Correo electrónico',
+                        style: ThemeText.paragraph16GrayLight,
+                      ),
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Informe o email corretamente';
+                  validator: (email) {
+                    if (email!.isEmpty) {
+                      return 'Ingrese el correo electrónico correctamente';
+                    }
+                    if (!email.contains('@')) {
+                      return 'Ingrese un correo eletrónico valido';
+                    }
+                    if (email.length < 10) {
+                      return 'El correo electrónico debe tener al menos 10 caracteres';
                     }
                     return null;
                   },
@@ -125,7 +145,6 @@ class _LoginPageState extends State<LoginPage> {
                   height: 18,
                 ),
                 TextFormField(
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
@@ -134,16 +153,19 @@ class _LoginPageState extends State<LoginPage> {
                         Radius.circular(20),
                       ),
                     ),
-                    label: Text(
-                      'Senha',
-                      style: TextStyle(color: Colors.black),
+                    label: Padding(
+                      padding: EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        'Contraseña',
+                        style: ThemeText.paragraph16GrayLight,
+                      ),
                     ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Informe sua senha!';
+                      return 'Informa tu contraseña!';
                     } else if (value.length < 6) {
-                      return 'Sua senha deve possuir no mínimo 6 caracteres';
+                      return 'Tu contraseña debe tener al menos 6 caracteres';
                     }
                     return null;
                   },
@@ -186,21 +208,52 @@ class _LoginPageState extends State<LoginPage> {
                               )
                             ]
                           : [
-                              const Icon(Icons.check),
                               Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Text(
                                   actionButton,
                                   style: const TextStyle(fontSize: 20),
                                 ),
-                              )
+                              ),
+                              Icon(icon),
                             ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 18,
+                  height: 4,
                 ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/recoveryPassword');
+                  },
+                  child: const Text(
+                    "¿Olvidaste tu contraseña?",
+                    style: TextStyle(color: Colors.blueGrey),
+                  ),
+                ),
+                const SizedBox(
+                  height: 4,
+                ),
+                Row(children: <Widget>[
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                        child: const Divider(
+                          color: Colors.black,
+                          height: 36,
+                        )),
+                  ),
+                  const Text("O entonces"),
+                  Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                        child: const Divider(
+                          color: Colors.black,
+                          height: 36,
+                        )),
+                  ),
+                ]),
                 SizedBox(
                   height: 60,
                   child: ElevatedButton(
@@ -213,14 +266,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
+                      loadingGoogle = true;
                       final provider = Provider.of<GoogleSignInProvider>(
                           context,
                           listen: false);
                       provider.googleLogin();
+                      Navigator.of(context).pushNamed('/home');
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: (loading)
+                      children: (loadingGoogle)
                           ? [
                               const Padding(
                                 padding: EdgeInsets.all(16),
@@ -240,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
                               const Padding(
                                 padding: EdgeInsets.all(16.0),
                                 child: Text(
-                                  'Login com sua conta Google',
+                                  'Inicia sesión con tu cuenta de Google',
                                   style: TextStyle(fontSize: 16),
                                 ),
                               )
@@ -249,17 +304,20 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(
-                  height: 18,
+                  height: 4,
                 ),
                 TextButton(
-                    onPressed: () => setFormAction(!isLogin),
-                    child: Text(
-                      toggleButton,
-                      style: const TextStyle(color: Colors.blueGrey),
-                    ))
-              ]),
+                  onPressed: () => setFormAction(!isLogin),
+                  child: Text(
+                    toggleButton,
+                    style: const TextStyle(color: Colors.blueGrey),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-      )),
+      ),
     );
   }
 }
