@@ -8,6 +8,8 @@ import '../../services/auth_services.dart';
 class DrawerMenuWidget extends StatelessWidget {
   const DrawerMenuWidget({Key? key}) : super(key: key);
 
+  get context => null;
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -23,7 +25,7 @@ class DrawerMenuWidget extends StatelessWidget {
             child: Center(
               child: Text(
                 '¡Proyectemos!',
-                style: ThemeText.title20White,
+                style: ThemeText.paragraph16WhiteBold,
               ),
             ),
           ),
@@ -74,12 +76,26 @@ class DrawerMenuWidget extends StatelessWidget {
           leading: const Icon(Icons.exit_to_app),
           title: const Text('Salir'),
           onTap: () {
-            final auth = AuthService();
-            auth.logout();
-            Provider.of<GoogleSignInProvider>(context, listen: false);
+            final provider =
+                Provider.of<GoogleSignInProvider>(context, listen: false);
+            if (provider.googleSignIn.currentUser != null) {
+              provider.googleLogout();
+            } else {
+              logout();
+            }
+            Navigator.of(context).pushNamed('/login');
           },
         )
       ]),
     );
+  }
+
+  void logout() async {
+    try {
+      AuthService().logout();
+    } on AuthException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
   }
 }
