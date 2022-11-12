@@ -37,6 +37,11 @@ dependencies:
   firebase_core: ^1.10.0
   firebase_database: ^9.0.8
 
+  logger: ^1.0.0
+
+  uuid: ^3.0.5
+  cloud_firestore: ^3.5.1
+
   #Authentication
   firebase_auth: ^3.4.2
   google_sign_in: ^5.0.3
@@ -45,7 +50,15 @@ dependencies:
   font_awesome_flutter: ^10.1.0
 
   #State management 
-  provider: ^6.0.3
+  provider: 
+  get: ^4.6.5
+  
+  #Video
+  video_player: 
+  youtube_player_flutter: ^8.1.1
+
+  #ImagePicker
+  image_picker: ^0.8.6
 
   #Requests
   http: ^0.13.4
@@ -59,8 +72,13 @@ dependencies:
   #Launcher icon
   flutter_launcher_icons: ^0.10.0 
 
+  #PDF
+  syncfusion_flutter_pdf: ^20.3.56
+  path_provider: ^2.0.11
+  open_file: ^3.2.1
+
   #Data
-  flutter_secure_storage: ^5.0.2
+  flutter_secure_storage: ^6.0.0
   shared_preferences: ^2.0.15
 
   #Calendar
@@ -69,9 +87,16 @@ dependencies:
   #Internacional
   intl: ^0.17.0
 
+  #Email
+  mailer: ^5.2.0
+
+  #Utils
+  basic_utils: ^5.2.2
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_storage: ^10.3.11
 
 flutter_native_splash:
   image: assets/images/splash.png
@@ -117,9 +142,14 @@ flutter:
     - assets/images/uno_onboarding.png
     - assets/images/dos_onboarding.png
     - assets/images/tres_onboarding.png
+    - assets/images/proyecto_uno.png
+    - assets/images/proyecto_dos.png
+    - assets/images/proyecto_tres.png
     - assets/images/uno_img.png
     - assets/images/dos_img.png
     - assets/images/tres_img.png
+    - assets/images/logo_email.png
+    - assets/images/logo_login.png
 
 
     # An image asset can refer to one or more resolution-specific "variants", see

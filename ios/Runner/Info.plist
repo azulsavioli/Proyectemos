@@ -47,5 +47,18 @@
 		<true/>
 		<key>UIStatusBarHidden</key>
 		<false/>
-	</dict>
-</plist>
+		<key>NSAppTransportSecurity</key>
+		<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		</dict>
+		<key>NSCameraUsageDescription</key>
+		<string>To take user profile</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>To choose user profile image</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Usage to capture audio for image picker plugin</string>
+		<key></key>
+		<key></key>
+	</dictkey>
+</plikeys
