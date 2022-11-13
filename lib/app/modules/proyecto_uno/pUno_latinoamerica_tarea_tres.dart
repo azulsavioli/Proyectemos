@@ -64,8 +64,6 @@ class _PUnoLatinoamericaTareaTresPageState
 
   @override
   Widget build(BuildContext context) {
-    PdfMaker pdfMaker = PdfMaker(context);
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
