@@ -28,7 +28,7 @@ class _TutorialPageState extends State<TutorialPage> {
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
           automaticallyImplyLeading: true,
-          title: const Text(Strings.title, style: ThemeText.title20White),
+          title: const Text(Strings.title, style: ThemeText.h3title22White),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: const Center(

@@ -33,7 +33,7 @@ class _AgendaPageState extends State<AgendaPage> {
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
           automaticallyImplyLeading: true,
-          title: const Text('Agenda', style: ThemeText.title20White),
+          title: const Text('Agenda', style: ThemeText.h3title22White),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: Center(
