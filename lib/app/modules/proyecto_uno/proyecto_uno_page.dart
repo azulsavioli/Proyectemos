@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 
 import '../../../commons/strings.dart';
@@ -63,7 +63,7 @@ class ProyectoUnoPage extends StatelessWidget {
                   text: 'Artistas\nhispanoamericanos',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_latinoamerica_tarea_uno',
+                  namedRoute: '/pUno_latinoamerica_tarea_tres',
                   backgroundColor: ThemeColors.blue,
                   icon: Icons.group,
                   shadowColor: ThemeColors.blue,
