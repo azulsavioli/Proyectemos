@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-// import 'package:proyectemos/app/modules/agenda/agenda_page.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';

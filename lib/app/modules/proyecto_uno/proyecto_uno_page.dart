@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter/scheduler.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 
 import '../../../commons/strings.dart';
