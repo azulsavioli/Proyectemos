@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyectemos/app/modules/agenda/agenda_page.dart';
+// import 'package:proyectemos/app/modules/agenda/agenda_page.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
-import 'package:proyectemos/app/modules/tarefas_cumpridas/tarefas_cumpridas_page.dart';
-import 'package:proyectemos/app/modules/tarefas_incompletas/tarefas_incompletas_page.dart';
-import 'package:proyectemos/app/modules/tutorial/tutorial_page.dart';
 import 'package:proyectemos/commons/auth_check.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/commons/styles.dart';
@@ -16,9 +13,9 @@ import 'modules/home/proyectos_page.dart';
 import 'modules/login/recovery_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
-import 'modules/proyecto_uno/pUno_latinoamerica_tarea_dos.dart';
-import 'modules/proyecto_uno/pUno_latinoamerica_tarea_tres.dart';
-import 'modules/proyecto_uno/pUno_latinoamerica_tarea_uno.dart';
+import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_dos.dart';
+import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_tres.dart';
+import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_uno.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
 
 class Proyectemos extends StatelessWidget {
@@ -41,10 +38,10 @@ class Proyectemos extends StatelessWidget {
             '/login': (context) => const LoginPage(),
             '/onboarding': (context) => const OnboardingPage(),
             '/profile': (context) => const ProfilePage(),
-            '/tarefas_cumplidas': (context) => const TarefasCompletasPage(),
-            '/tarefas_pendientes': (context) => const TarefasIncompletasPage(),
-            '/agenda': (context) => const AgendaPage(),
-            '/tutorial': (context) => const TutorialPage(),
+            // '/tarefas_cumplidas': (context) => const TarefasCompletasPage(),
+            // '/tarefas_pendientes': (context) => const TarefasIncompletasPage(),
+            // '/agenda': (context) => const AgendaPage(),
+            // '/tutorial': (context) => const TutorialPage(),
             '/recoveryPassword': (context) => const RecoveryPasswordPage(),
             '/proyectos': (context) => const ProyectosPage(),
             '/proyecto_uno': (context) => const ProyectoUnoPage(),
