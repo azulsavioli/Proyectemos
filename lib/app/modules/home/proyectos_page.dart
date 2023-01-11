@@ -14,8 +14,8 @@ class ProyectosPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * .9;
-    final height = MediaQuery.of(context).size.width * .4;
+    // final width = MediaQuery.of(context).size.width * .9;
+    // final height = MediaQuery.of(context).size.width * .4;
 
     return SafeArea(
       child: Scaffold(
@@ -62,7 +62,7 @@ class ProyectosPage extends StatelessWidget {
                   description: Strings.descriptionCardDos,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.blue,
-                  namedRoute: '/proyecto_dos',
+                  namedRoute: '/pdf',
                 ),
                 SizedBox(
                   height: 30,
