@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/proyectemos_repository.dart';
 import 'package:proyectemos/app/services/storage_service.dart';
-import '../../../commons/strings.dart';
-import '../../../commons/strings_latinoamerica.dart';
-import '../../../commons/styles.dart';
-import '../../services/auth_services.dart';
-import '../widgets/custom_text_form_field.dart';
-import '../widgets/drawer_menu.dart';
+import '../../../../commons/strings.dart';
+import '../../../../commons/strings_latinoamerica.dart';
+import '../../../../commons/styles.dart';
+import '../../../services/auth_services.dart';
+import '../../widgets/custom_text_form_field.dart';
+import '../../widgets/drawer_menu.dart';
 
 class PUnoLatinoamericaTareaDosPage extends StatefulWidget {
   const PUnoLatinoamericaTareaDosPage({Key? key}) : super(key: key);
@@ -30,7 +30,6 @@ class _PUnoLatinoamericaTareaDosPageState
   final _answerDosController = TextEditingController();
   final _answerTresController = TextEditingController();
 
-  final Map<String, dynamic> answerList = {};
   bool loading = false;
 
   @override
@@ -137,16 +136,18 @@ class _PUnoLatinoamericaTareaDosPageState
                           ),
                         ),
                         onPressed: () {
-                          answerList.addAll(
-                            {
-                              'answers': {
-                                'resposta_1': _answerUnoController.text,
-                                'resposta_2': _answerDosController.text,
-                                'resposta_3': _answerTresController.text,
-                              }
-                            },
-                          );
-                          sendAnswersToFirebase(answerList);
+                          final json = {
+                            'resposta_1': _answerUnoController.text,
+                            'resposta_2': _answerDosController.text,
+                            'resposta_3': _answerTresController.text,
+                          };
+
+                          sendAnswersToFirebase(json);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Resposta enviada com sucesso!"),
+                            duration: Duration(seconds: 2),
+                          ));
                           Navigator.pushNamed(
                               context, '/pUno_latinoamerica_tarea_tres');
                         },
@@ -169,7 +170,7 @@ class _PUnoLatinoamericaTareaDosPageState
                                   const Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Text(
-                                      "Siguiente",
+                                      "Contínua",
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ),
@@ -188,13 +189,10 @@ class _PUnoLatinoamericaTareaDosPageState
     );
   }
 
-  void sendAnswersToFirebase(answerList) async {
+  void sendAnswersToFirebase(json) async {
     String doc = 'uno/latinoamerica/atividade_2/';
     try {
-      await context.read<ProyectemosRepository>().saveAnswers(doc, answerList);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Resposta enviada com sucesso!")));
+      await context.read<ProyectemosRepository>().saveAnswers(doc, json);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
