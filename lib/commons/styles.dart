@@ -62,7 +62,7 @@ abstract class ThemeText {
   static const TextStyle h1title45YellowBoldGinto = TextStyle(
       fontSize: 45,
       letterSpacing: 1,
-      fontFamily: 'Ginto',
+      fontFamily: 'Poppins',
       color: ThemeColors.yellow,
       fontWeight: FontWeight.bold);
 
@@ -255,6 +255,7 @@ abstract class ThemeText {
 abstract class ThemeColors {
   static const Color white = Color.fromRGBO(250, 251, 250, 1);
   static const Color blue = Color.fromRGBO(0, 159, 251, 1);
+  static const Color green = Color.fromARGB(255, 42, 175, 2);
   static const Color red = Color.fromRGBO(243, 1, 70, 1);
   static const Color yellow = Color.fromRGBO(254, 147, 28, 1);
   static const Color gray = Color.fromARGB(255, 119, 118, 118);
