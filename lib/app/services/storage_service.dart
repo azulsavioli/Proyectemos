@@ -7,7 +7,7 @@ class StorageService {
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
-  Future<void> uploadFile(
+  Future uploadFile(
     String filePath,
     String filename,
   ) async {
@@ -15,15 +15,8 @@ class StorageService {
     try {
       await storage.ref('images/$filename').putFile(file);
     } on firebase_core.FirebaseException catch (e) {
-      print(e);
+      return 'Firebase Exception ${e.toString()} ';
     }
-  }
-
-  Future<firebase_storage.ListResult> listVideosFiles() async {
-    firebase_storage.ListResult results =
-        await storage.ref('proyectemos_videos/').listAll();
-
-    return results;
   }
 
   Future<firebase_storage.ListResult> listImageFiles() async {
@@ -33,20 +26,31 @@ class StorageService {
     return results;
   }
 
-  Future<String> downloadUrlImg(String imageName) async {
+  Future<String> downloadDefaultUrlImg(String imageName) async {
     String downloadUrl =
         await storage.ref('proyectemos_assets/$imageName').getDownloadURL();
     return downloadUrl;
   }
 
-  Future<String> downloadUrlVideo(String videoName) async {
-    String downloadUrl =
-        await storage.ref('proyectemos_videos/$videoName').getDownloadURL();
+  Future<firebase_storage.ListResult> listLatinoamericaImageFiles() async {
+    firebase_storage.ListResult results =
+        await storage.ref('uno-latinoamerica-images/').listAll();
+
+    return results;
+  }
+
+  Future<String> downloadLatinoamericaUrlImg(String imageName) async {
+    String downloadUrl = await storage
+        .ref('uno-latinoamerica-images/$imageName')
+        .getDownloadURL();
     return downloadUrl;
   }
 
-  Future<String> getVideo() async {
-    String video = await downloadUrlVideo('LosCoyotes.mp4');
-    return video;
+  Future<void> deleteLatinoamericaImageFiles(String imageName) async {
+    // Create a reference to the file to delete
+    final desertRef =
+        storage.ref().child('uno-latinoamerica-images/$imageName');
+    // Delete the file
+    await desertRef.delete();
   }
 }
