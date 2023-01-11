@@ -295,7 +295,6 @@ class _ImageBlock extends pw.StatelessWidget {
     return pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: <pw.Widget>[
-          pw.SizedBox(height: 30),
           pw.Container(
               decoration: const pw.BoxDecoration(
                   border: pw.Border(left: pw.BorderSide(color: red, width: 2))),
