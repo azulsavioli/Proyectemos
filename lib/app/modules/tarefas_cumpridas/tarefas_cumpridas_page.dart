@@ -28,7 +28,8 @@ class _TarefasCompletasPageState extends State<TarefasCompletasPage> {
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
           automaticallyImplyLeading: true,
-          title: const Text(Strings.title, style: ThemeText.h3title22White),
+          title: const Text(Strings.titleTarefasCumpridasPage,
+              style: ThemeText.paragraph16WhiteBold),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: const Center(
