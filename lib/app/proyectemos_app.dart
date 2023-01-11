@@ -12,9 +12,9 @@ import 'modules/home/proyectos_page.dart';
 import 'modules/login/recovery_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
-import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_dos.dart';
-import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_tres.dart';
-import 'modules/proyecto_uno/latinoamerica/uno_latinoamerica_tarea_uno.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_dos.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_tres.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_uno.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
 
 class Proyectemos extends StatelessWidget {
