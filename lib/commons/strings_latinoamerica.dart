@@ -9,7 +9,7 @@ abstract class StringsLationamerica {
   static const String titleQtwoPageOneLatin =
       'Ahora mira el vídeo, pon atención en las imágenes y después contesta las preguntas en la próxima página.';
   static const String qOneLatinPageOne =
-      '¿Conoces al grupo?\n¿Ya has escuchado alguna canción suya?';
+      '¿Conoces al grupo? ¿Ya has escuchado alguna canción suya?';
   static const String qTwoLatinPageOne =
       '¿De qué crees qua va a hablar la canción?';
 

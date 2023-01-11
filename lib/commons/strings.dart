@@ -9,6 +9,7 @@ abstract class Strings {
   static const String proyectoUno = 'assets/images/proyecto_uno.png';
   static const String proyectoDos = 'assets/images/proyecto_dos.png';
   static const String proyectoTres = 'assets/images/proyecto_tres.png';
+  static const String loginImage = 'assets/images/login_img.png';
 
   //Strings
   static const String title = '¡Proyectos!';
