@@ -40,9 +40,9 @@ class CardButton extends StatelessWidget {
           ),
         ),
         style: ElevatedButton.styleFrom(
+          foregroundColor: shadowColor,
+          backgroundColor: Colors.white,
           elevation: 1,
-          onPrimary: shadowColor,
-          primary: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           textStyle: ThemeText.paragraph16GrayNormal,
         ),
