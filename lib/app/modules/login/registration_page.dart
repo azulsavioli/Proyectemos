@@ -159,7 +159,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   height: 60,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: ThemeColors.red,
+                      backgroundColor: ThemeColors.red,
                       minimumSize: const Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

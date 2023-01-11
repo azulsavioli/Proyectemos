@@ -90,7 +90,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                   height: 60,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      primary: ThemeColors.yellow,
+                      backgroundColor: ThemeColors.yellow,
                       minimumSize: const Size.fromHeight(50),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -144,7 +144,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
+      return e.toString();
     }
   }
 }
