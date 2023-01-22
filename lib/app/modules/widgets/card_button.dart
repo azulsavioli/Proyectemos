@@ -43,7 +43,7 @@ class CardButton extends StatelessWidget {
           foregroundColor: shadowColor,
           backgroundColor: Colors.white,
           elevation: 1,
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
           textStyle: ThemeText.paragraph16GrayNormal,
         ),
         onPressed: () {
