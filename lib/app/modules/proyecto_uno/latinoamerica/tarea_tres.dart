@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:proyectemos/commons/strings_latinoamerica.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/google_sign_in.dart';
@@ -152,11 +153,11 @@ class PUnoLatinoamericaTareaTresPageState
     return [
       const Step(
         title: Text(
-          'Descargar mis imágenes',
+          StringsLationamerica.titleQOnePageTresLatin,
           style: ThemeText.h3title22BlueNormal,
         ),
         content: Text(
-          'Acá vas a poder descargar tu seleccíon de imagenes y también ver la de tus companẽros. ',
+          StringsLationamerica.descriptionqOnePageTres,
           style: ThemeText.paragraph14Gray,
         ),
         isActive: true,
@@ -316,7 +317,7 @@ class PUnoLatinoamericaTareaTresPageState
               sendAnswersToFirebase(currentUser);
 
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text("Tarea concluída com sucesso!"),
+                content: Text(Strings.tareaConcluida),
                 duration: Duration(seconds: 2),
               ));
               Navigator.pushNamed(context, '/proyecto_uno');
