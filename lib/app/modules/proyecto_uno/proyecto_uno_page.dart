@@ -62,7 +62,7 @@ class ProyectoUnoPage extends StatelessWidget {
                   text: 'Artistas\nhispanoamericanos',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_latinoamerica_tarea_tres',
+                  namedRoute: '/pUno_artistas_latinoamericanos_tarea_uno',
                   backgroundColor: ThemeColors.blue,
                   icon: Icons.group,
                   shadowColor: ThemeColors.blue,
