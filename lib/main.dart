@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/proyectemos_repository.dart';
+import 'package:proyectemos/providers/play_audio_provider.dart';
+import 'package:proyectemos/providers/record_audio_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app/proyectemos_app.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,6 +31,8 @@ Future<void> main() async {
           create: (context) => ProyectemosRepository(
             authService: context.read<AuthService>(),
           ),
-        )
+        ),
+        ChangeNotifierProvider(create: (_) => RecordAudioProvider()),
+        ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
       ], child: const Proyectemos())));
 }
