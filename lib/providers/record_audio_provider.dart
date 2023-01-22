@@ -23,13 +23,6 @@ class RecordAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  clearAllData() {
-    _recordsDeleted = true;
-    _afterRecordingFilePath = '';
-    recordingsPaths = [];
-    notifyListeners();
-  }
-
   recordVoice() async {
     final isPermitted = (await PermissionManagement.recordingPermission()) &&
         (await PermissionManagement.storagePermission());
@@ -57,12 +50,14 @@ class RecordAudioProvider extends ChangeNotifier {
   }
 
   cancelRecording() async {
+    _recordsDeleted = true;
     clearOldData();
     notifyListeners();
   }
 
   saveRecording() async {
     recordingsPaths.add(_afterRecordingFilePath);
+    print('RECORD PATHS LIST : $recordingsPaths');
     clearOldData();
     showToast('Grabación guardada');
     notifyListeners();
