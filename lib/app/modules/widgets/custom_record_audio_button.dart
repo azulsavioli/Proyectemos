@@ -1,18 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/styles.dart';
-
-import '../../../providers/record_audio_provider.dart';
 
 class CustomRecordAudioButton extends StatefulWidget {
   final String question;
+  final bool isAudioFinish;
 
-  const CustomRecordAudioButton({
-    super.key,
-    required this.question,
-  });
+  const CustomRecordAudioButton(
+      {super.key, required this.question, required this.isAudioFinish});
 
   @override
   State<CustomRecordAudioButton> createState() =>
@@ -24,11 +20,7 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
 
   @override
   Widget build(BuildContext context) {
-    final audioProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
-
-    bool recordsDeleted = audioProvider.recordsDeleted;
-
+    bool isAudioFinish = widget.isAudioFinish;
     return Column(
       children: [
         const SizedBox(
@@ -47,23 +39,17 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
               ),
             ),
             onPressed: () {
-              _isButtonDisabled
-                  ? null
-                  : {
-                      Navigator.pushNamed(context, '/record_and_play',
-                          arguments: widget.question),
-                      Timer(const Duration(milliseconds: 400), () {
-                        setState(() {
-                          if (recordsDeleted) {
-                            _isButtonDisabled = false;
-                          } else {
-                            _isButtonDisabled = true;
-                          }
-                        });
-                        }
-                        ;
-                      })
-                    };
+              Navigator.pushNamed(context, '/record_and_play',
+                  arguments: widget.question);
+              Timer(const Duration(milliseconds: 400), () {
+                setState(() {
+                  if (isAudioFinish) {
+                    _isButtonDisabled = false;
+                  } else {
+                    _isButtonDisabled = true;
+                  }
+                });
+              });
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
