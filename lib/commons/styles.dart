@@ -145,6 +145,20 @@ abstract class ThemeText {
       color: ThemeColors.blue,
       fontWeight: FontWeight.bold);
 
+  static const TextStyle h3title22Gray = TextStyle(
+      fontSize: 22,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.gray,
+      fontWeight: FontWeight.bold);
+
+  static const TextStyle h3title22GrayNormal = TextStyle(
+      fontSize: 22,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.gray,
+      fontWeight: FontWeight.normal);
+
   static const TextStyle h3title22yellow = TextStyle(
       fontSize: 22,
       letterSpacing: 1,
@@ -181,6 +195,13 @@ abstract class ThemeText {
       fontWeight: FontWeight.normal);
 
 //Paragraph 16
+  static const TextStyle paragraph16RedBold = TextStyle(
+      fontSize: 16,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.red,
+      fontWeight: FontWeight.bold);
+
   static const TextStyle paragraph16BlueBold = TextStyle(
       fontSize: 16,
       letterSpacing: 1,
@@ -237,6 +258,13 @@ abstract class ThemeText {
       color: ThemeColors.gray,
       fontWeight: FontWeight.normal);
 
+  static const TextStyle paragraph14GrayBold = TextStyle(
+      fontSize: 14,
+      letterSpacing: 1,
+      fontFamily: 'Poppins',
+      color: ThemeColors.gray,
+      fontWeight: FontWeight.bold);
+
   static const TextStyle paragraph14White = TextStyle(
       fontSize: 14,
       letterSpacing: 1,
@@ -256,6 +284,8 @@ abstract class ThemeColors {
   static const Color white = Color.fromRGBO(250, 251, 250, 1);
   static const Color blue = Color.fromRGBO(0, 159, 251, 1);
   static const Color green = Color.fromARGB(255, 42, 175, 2);
+
+  static const Color otherGreen = Color(0xff4BB543);
   static const Color red = Color.fromRGBO(243, 1, 70, 1);
   static const Color yellow = Color.fromRGBO(254, 147, 28, 1);
   static const Color gray = Color.fromARGB(255, 119, 118, 118);

@@ -17,6 +17,9 @@ abstract class Strings {
   static const String titleCardDos = 'Proyecto DOS';
   static const String titleCardTres = 'Proyecto TRES';
 
+  //Feedbacks
+  static const String tareaConcluida = "Tarea concluída com sucesso!";
+
   //Login
   static const String bemvindos = '!Bienvenidos a Proyectemos!';
   static const String descricaoAppLogin =
