@@ -51,6 +51,7 @@ dependencies:
 
   #State management 
   provider: 
+  path_provider: ^2.0.11
   get: ^4.6.5
   
   #Video
@@ -75,14 +76,26 @@ dependencies:
 
   #PDF
   flutter_html_to_pdf: ^0.7.0
-  path_provider: ^2.0.11
-  open_file: ^3.2.1
   pdf_merger: ^0.0.6
   pdf: ^3.8.4
   xfile: ^1.0.0
   printing: ^5.9.3
+
+  file_picker: ^5.2.5  
   
+  carousel_slider: ^4.2.1
   im_stepper: ^1.0.1+1
+
+  #Permissions
+  permission_handler: ^10.2.0
+
+  #Audio Recorder
+  flutter_sound: ^9.2.13
+  record: ^3.0.3
+  simple_ripple_animation: ^0.0.3
+  just_audio: ^0.9.29
+  percent_indicator: ^4.2.2
+  fluttertoast: ^8.0.9
 
   #Data
   flutter_secure_storage: ^6.0.0
@@ -97,7 +110,6 @@ dependencies:
   #Email
   mailer: ^5.2.0
   flutter_email_sender: ^5.2.0
-
 
   #Utils
   basic_utils: ^5.2.2
@@ -149,19 +161,6 @@ flutter:
 # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    # - assets/images/logo.png
-    # - assets/images/uno_onboarding.png
-    # - assets/images/dos_onboarding.png
-    # - assets/images/tres_onboarding.png
-    # - assets/images/proyecto_uno.png
-    # - assets/images/proyecto_dos.png
-    # - assets/images/proyecto_tres.png
-    # - assets/images/uno_img.png
-    # - assets/images/dos_img.png
-    # - assets/images/tres_img.png
-    # - assets/images/logo_email.png
-    # - assets/images/logo_login.png
-
 
     # An image asset can refer to one or more resolution-specific "variants", see
     # https://flutter.dev/assets-and-images/#resolution-aware
