@@ -3,19 +3,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_latinoamerica.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/google_sign_in.dart';
 import '../../../../commons/strings.dart';
+import '../../../../utils/email_sender.dart';
 import '../../../../utils/latinoamerica_pdf/latinoamerica_pdf.dart';
 import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 import '../../widgets/step.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
 
 class PUnoLatinoamericaTareaTresPage extends StatefulWidget {
   const PUnoLatinoamericaTareaTresPage({Key? key}) : super(key: key);
@@ -100,42 +100,25 @@ class PUnoLatinoamericaTareaTresPageState
     return json;
   }
 
-  sendAnswersToFirebase(currentUser) async {
+  sendAnswers(currentUser) async {
     var json = await makeJson(currentUser);
     String doc = 'uno/latinoamerica/atividade_3/';
+    final pdfMaker = LatinoamericaPdf(context);
+    final attachment = [FileAttachment(await pdfMaker.createPDF())];
+    const email = [
+      'comesana.alexis.silvera@gmail.com',
+      'fernandamaiadeoliveira@gmail.com'
+    ];
+    const subject = "Atividade Latinoamerica";
+    const text = "Atividade Latinoamerica concluída!";
+    final emailSender = EmailSender();
     try {
-      // ignore: use_build_context_synchronously
       await context.read<ProyectemosRepository>().saveAnswers(doc, json);
-      sendEmailToTeacher(currentUser);
+
+      emailSender.sendEmailToTeacher(
+          currentUser, attachment, email, subject, text);
     } on FirebaseException catch (e) {
       return e.toString();
-    }
-  }
-
-  Future sendEmailToTeacher(currentUser) async {
-    final pdfMaker = LatinoamericaPdf(context);
-    final pdf = await pdfMaker.createPDF();
-    var email = currentUser.email;
-    var userName = currentUser.displayName;
-
-    final auth = await currentUser.authentication;
-    final token = auth.accessToken!;
-    final smtpServer = gmailSaslXoauth2(email, token);
-    final message = Message()
-      ..attachments = [FileAttachment(pdf)]
-      ..from = Address(email, userName)
-      ..recipients = [
-        email,
-        // 'kadhinymendonca@gmail.com',
-        'comesana.alexis.silvera@gmail.com'
-      ]
-      ..subject = "Atividade Latinoamerica"
-      ..text = "Atividade Latinoamerica concluída!";
-
-    try {
-      await send(message, smtpServer);
-    } on MailerException catch (e) {
-      return e;
     }
   }
 
@@ -314,7 +297,7 @@ class PUnoLatinoamericaTareaTresPageState
                 provider.googleSignIn.signIn();
                 currentUser = provider.googleSignIn.currentUser;
               }
-              sendAnswersToFirebase(currentUser);
+              sendAnswers(currentUser);
 
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text(Strings.tareaConcluida),
