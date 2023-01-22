@@ -6,7 +6,7 @@ import 'package:proyectemos/app/modules/login/registration_page.dart';
 import 'package:proyectemos/main.dart';
 
 import '../app/modules/onboarding/onboarding_page.dart';
-import '../app/services/auth_services.dart';
+import '../services/auth_services.dart';
 
 class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);

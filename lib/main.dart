@@ -5,7 +5,7 @@ import 'package:proyectemos/providers/record_audio_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'app/proyectemos_app.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'app/services/auth_services.dart';
+import 'services/auth_services.dart';
 import 'commons/firebase_options.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';

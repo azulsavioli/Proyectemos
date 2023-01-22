@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/proyectemos_repository.dart';
-import 'package:proyectemos/app/services/storage_service.dart';
+import 'package:proyectemos/services/storage_service.dart';
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_latinoamerica.dart';
 import '../../../../commons/styles.dart';
-import '../../../services/auth_services.dart';
+import '../../../../services/auth_services.dart';
 import '../../widgets/custom_text_form_field.dart';
 import '../../widgets/drawer_menu.dart';
 

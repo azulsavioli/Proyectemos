@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyectemos/app/services/storage_service.dart';
+import 'package:proyectemos/services/storage_service.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../commons/strings.dart';

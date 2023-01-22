@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../commons/google_sign_in.dart';
-import '../../services/auth_services.dart';
+import '../../../services/auth_services.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
   const DrawerMenuWidget({Key? key}) : super(key: key);

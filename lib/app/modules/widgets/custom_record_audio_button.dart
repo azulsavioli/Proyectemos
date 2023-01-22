@@ -60,6 +60,8 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
                             _isButtonDisabled = true;
                           }
                         });
+                        }
+                        ;
                       })
                     };
             },

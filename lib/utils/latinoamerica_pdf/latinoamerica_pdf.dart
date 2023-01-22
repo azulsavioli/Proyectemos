@@ -6,7 +6,7 @@ import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/utils/latinoamerica_pdf/generate_pdf.dart';
 import '../../app/proyectemos_repository.dart';
-import '../../app/services/storage_service.dart';
+import '../../services/storage_service.dart';
 import '../../commons/google_sign_in.dart';
 import 'package:flutter/material.dart';
 

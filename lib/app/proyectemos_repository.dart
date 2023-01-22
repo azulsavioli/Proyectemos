@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/services/auth_services.dart';
+import 'package:proyectemos/services/auth_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'services/firebase/db_firestore_helper.dart';
+import '../services/firebase/db_firestore_helper.dart';
 
 class ProyectemosRepository extends ChangeNotifier {
   late FirebaseFirestore db;
