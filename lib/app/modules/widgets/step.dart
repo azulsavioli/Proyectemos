@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:proyectemos/services/toast_services.dart';
 
 import '../../../commons/styles.dart';
 import 'custom_text_form_field.dart';
@@ -82,6 +83,10 @@ class _CustomStepState extends State<CustomStep> {
     return image;
   }
 
+  String? validate(context) {
+    return showToast("¡Por favor seleccione su imagen!");
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomStepInheritedWidget(
@@ -115,7 +120,9 @@ class _CustomStepState extends State<CustomStep> {
                       onPressed: () async {
                         final image = await pickImage(
                             CustomStep.images, ImageSource.gallery);
-                        if (image != null) {
+                        if (image == null) {
+                          validate(context);
+                        } else if (image != null) {
                           setState(() {
                             buttonFileColor = ThemeColors.green;
                             buttonFileIcon = const Icon(Icons.check);

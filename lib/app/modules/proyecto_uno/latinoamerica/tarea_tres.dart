@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,7 @@ class PUnoLatinoamericaTareaTresPageState
   final answerOchoController = TextEditingController();
   final answerNueveController = TextEditingController();
   final answerDiezController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   List<XFile> selectedImages = CustomStep.images;
 
@@ -73,7 +75,7 @@ class PUnoLatinoamericaTareaTresPageState
       }
       return firebasePaths;
     } on PlatformException catch (e) {
-      return 'Failed convert a image: ${e.toString()}';
+      return 'Failed to convert image: ${e.toString()}';
     }
   }
 
@@ -103,6 +105,15 @@ class PUnoLatinoamericaTareaTresPageState
   sendAnswers(currentUser) async {
     var json = await makeJson(currentUser);
     String doc = 'uno/latinoamerica/atividade_3/';
+
+    try {
+      await context.read<ProyectemosRepository>().saveAnswers(doc, json);
+    } on FirebaseException catch (e) {
+      return e.toString();
+    }
+  }
+
+  Future<void> sendEmail(context, currentUser) async {
     final pdfMaker = LatinoamericaPdf(context);
     final attachment = [FileAttachment(await pdfMaker.createPDF())];
     const email = [
@@ -112,14 +123,9 @@ class PUnoLatinoamericaTareaTresPageState
     const subject = "Atividade Latinoamerica";
     const text = "Atividade Latinoamerica concluída!";
     final emailSender = EmailSender();
-    try {
-      await context.read<ProyectemosRepository>().saveAnswers(doc, json);
 
-      emailSender.sendEmailToTeacher(
-          currentUser, attachment, email, subject, text);
-    } on FirebaseException catch (e) {
-      return e.toString();
-    }
+    await emailSender.sendEmailToTeacher(
+        currentUser, attachment, email, subject, text);
   }
 
   List<Step> steps(
@@ -252,6 +258,8 @@ class PUnoLatinoamericaTareaTresPageState
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = getCurrentUser(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -268,85 +276,107 @@ class PUnoLatinoamericaTareaTresPageState
             style: ThemeText.paragraph16WhiteBold),
       ),
       endDrawer: const DrawerMenuWidget(),
-      body: Stepper(
-          currentStep: currentStep,
-          steps: steps(
-              answerUnoController,
-              answerDosController,
-              answerTresController,
-              answerQuatroController,
-              answerCincoController,
-              answerSeisController,
-              answerSieteController,
-              answerOchoController,
-              answerNueveController,
-              answerDiezController),
-          onStepContinue: () {
-            final isLastStep = currentStep == 10;
+      body: Form(
+        key: formKey,
+        child: Stepper(
+            currentStep: currentStep,
+            steps: steps(
+                answerUnoController,
+                answerDosController,
+                answerTresController,
+                answerQuatroController,
+                answerCincoController,
+                answerSeisController,
+                answerSieteController,
+                answerOchoController,
+                answerNueveController,
+                answerDiezController),
+            onStepContinue: () {
+              final isLastStep = currentStep == 10;
 
-            if (currentStep < 11 - 1) {
-              setState(() => currentStep++);
-            }
-
-            if (isLastStep) {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              var currentUser = provider.googleSignIn.currentUser;
-
-              if (currentUser == null) {
-                provider.googleSignIn.signIn();
-                currentUser = provider.googleSignIn.currentUser;
+              if (currentStep < 11 - 1) {
+                setState(() => currentStep++);
               }
-              sendAnswers(currentUser);
 
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                content: Text(Strings.tareaConcluida),
-                duration: Duration(seconds: 2),
-              ));
-              Navigator.pushNamed(context, '/proyecto_uno');
-            }
-          },
-          onStepTapped: (step) {
-            setState(() {
-              currentStep = step;
-            });
-          },
-          onStepCancel: () {
-            if (currentStep > 0) {
-              setState(() => currentStep--);
-            }
-            currentStep == 0 ? null : () => setState(() => currentStep--);
-          },
-          controlsBuilder: (BuildContext context, ControlsDetails details) {
-            final isLastStep = currentStep == 10;
-            return Row(
-              children: <Widget>[
-                if (currentStep != 0)
-                  Expanded(
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(ThemeColors.white),
-                      ),
-                      onPressed: details.onStepCancel,
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(color: ThemeColors.blue),
+              if (isLastStep) {
+                if (formKey.currentState!.validate() &&
+                    selectedImages.length == 10) {
+                  sendAnswers(currentUser);
+                  sendEmail(context, currentUser);
+
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(Strings.tareaConcluida),
+                    duration: Duration(seconds: 2),
+                  ));
+                  Navigator.pushNamed(context, '/proyecto_uno');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text(
+                      'Selecciona una imagen de su cámara o de su archivo y escriba su descripción',
+                    ),
+                    duration: Duration(seconds: 2),
+                  ));
+                }
+              }
+            },
+            onStepTapped: (step) {
+              setState(() {
+                currentStep = step;
+              });
+            },
+            onStepCancel: () {
+              if (currentStep > 0) {
+                setState(() => currentStep--);
+              }
+              currentStep == 0 ? null : () => setState(() => currentStep--);
+            },
+            controlsBuilder: (BuildContext context, ControlsDetails details) {
+              final isLastStep = currentStep == 10;
+              return Row(
+                children: <Widget>[
+                  if (currentStep != 0)
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(ThemeColors.white),
+                        ),
+                        onPressed: details.onStepCancel,
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(color: ThemeColors.blue),
+                        ),
                       ),
                     ),
+                  const SizedBox(
+                    width: 5,
                   ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: details.onStepContinue,
-                    child: Text(isLastStep ? 'Concluir' : 'Continuar'),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: details.onStepContinue,
+                      child: Text(isLastStep ? 'Concluir' : 'Continuar'),
+                    ),
                   ),
-                ),
-              ],
-            );
-          }),
+                ],
+              );
+            }),
+      ),
     );
+  }
+
+  GoogleSignInAccount? getCurrentUser(BuildContext context) {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    var currentUser = provider.googleSignIn.currentUser;
+
+    if (currentUser == null) {
+      provider.googleSignIn.signInSilently();
+      provider.googleLogin();
+      currentUser = provider.googleSignIn.currentUser;
+    } else if (currentUser.authentication == null) {
+      provider.googleLogout();
+      provider.googleSignIn.signInSilently();
+      provider.googleLogin();
+    }
+    return currentUser;
   }
 }

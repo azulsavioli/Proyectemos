@@ -136,20 +136,22 @@ class _PUnoLatinoamericaTareaDosPageState
                           ),
                         ),
                         onPressed: () {
-                          final json = {
-                            'resposta_1': _answerUnoController.text,
-                            'resposta_2': _answerDosController.text,
-                            'resposta_3': _answerTresController.text,
-                          };
+                          if (formKey.currentState!.validate()) {
+                            final json = {
+                              'resposta_1': _answerUnoController.text,
+                              'resposta_2': _answerDosController.text,
+                              'resposta_3': _answerTresController.text,
+                            };
 
-                          sendAnswersToFirebase(json);
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                            content: Text("Resposta enviada com sucesso!"),
-                            duration: Duration(seconds: 2),
-                          ));
-                          Navigator.pushNamed(
-                              context, '/pUno_latinoamerica_tarea_tres');
+                            sendAnswersToFirebase(json);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                              content: Text("Resposta enviada com sucesso!"),
+                              duration: Duration(seconds: 2),
+                            ));
+                            Navigator.pushNamed(
+                                context, '/pUno_latinoamerica_tarea_tres');
+                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
