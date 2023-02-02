@@ -13,10 +13,9 @@ import 'modules/home/proyectos_page.dart';
 import 'modules/login/recovery_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
-import 'modules/proyecto_uno/artistas_latinoamericanos/tarea_cuatro.dart';
 import 'modules/proyecto_uno/artistas_latinoamericanos/tarea_dos.dart';
-import 'modules/proyecto_uno/artistas_latinoamericanos/tarea_tres.dart';
 import 'modules/proyecto_uno/artistas_latinoamericanos/tarea_uno.dart';
+import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_tres.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_uno.dart';
@@ -55,14 +54,12 @@ class Proyectemos extends StatelessWidget {
                 const PUnoLatinoamericaTareaDosPage(),
             '/pUno_latinoamerica_tarea_tres': (context) =>
                 const PUnoLatinoamericaTareaTresPage(),
+            '/pUno_latinoamerica_feed': (context) =>
+                const FeedLatinoamericaPage(),
             '/pUno_artistas_latinoamericanos_tarea_uno': (context) =>
                 const PUnoArtistasLatinoamericanosTareaUnoPage(),
             '/pUno_artistas_latinoamericanos_tarea_dos': (context) =>
                 const PUnoArtistasLatinoamericanosTareaDosPage(),
-            '/pUno_artistas_latinoamericanos_tarea_tres': (context) =>
-                const PUnoArtistasLatinoamericanosTareaTresPage(),
-            '/pUno_artistas_latinoamericanos_tarea_cuatro': (context) =>
-                const PUnoArtistasLatinoamericanosTareaCuatroPage(),
             '/proyecto_dos': (context) => const ProyectoDosPage(),
             '/proyecto_tres': (context) => const ProyectoTresPage(),
             '/record_and_play': (context) => const RecordAndPlayScreen(),
