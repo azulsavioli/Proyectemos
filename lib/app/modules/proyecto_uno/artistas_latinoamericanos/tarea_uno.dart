@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_artistas_latinoamericanos.dart';
-import 'package:proyectemos/commons/google_sign_in.dart';
+import 'package:proyectemos/utils/get_user.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/styles.dart';
@@ -150,17 +149,6 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                         ),
                         onPressed: () {
                           final currentUser = getCurrentUser(context);
-
-                          // final provider = Provider.of<GoogleSignInProvider>(
-                          //     context,
-                          //     listen: false);
-                          // var currentUser = provider.googleSignIn.currentUser;
-
-                          // if (currentUser == null) {
-                          //   provider.googleSignIn.signIn();
-                          //   provider.googleLogin();
-                          //   currentUser = provider.googleSignIn.currentUser;
-                          // }
 
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 3) {
@@ -306,21 +294,5 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
 
     emailSender.sendEmailToTeacher(
         currentUser, attachment, email, subject, text);
-  }
-
-  GoogleSignInAccount? getCurrentUser(BuildContext context) {
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    var currentUser = provider.googleSignIn.currentUser;
-
-    if (currentUser == null) {
-      provider.googleSignIn.signInSilently();
-      provider.googleLogin();
-      currentUser = provider.googleSignIn.currentUser;
-    } else if (currentUser.authentication == null) {
-      provider.googleLogout();
-      provider.googleSignIn.signInSilently();
-      provider.googleLogin();
-    }
-    return currentUser;
   }
 }
