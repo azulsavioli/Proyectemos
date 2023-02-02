@@ -20,9 +20,10 @@ class CustomCarousel extends StatelessWidget {
                   child: Stack(
                     children: <Widget>[
                       Image.network(
-                        fit: BoxFit.contain,
+                        fit: BoxFit.cover,
                         item,
-                        height: 400,
+                        height: 600,
+                        width: 400,
                       ),
                       Positioned(
                         bottom: 0.0,
@@ -58,7 +59,7 @@ class CustomCarousel extends StatelessWidget {
 
     return CarouselSlider(
       options: CarouselOptions(
-        height: 270,
+        height: 400,
         aspectRatio: 3.0,
         enlargeCenterPage: true,
         scrollDirection: Axis.horizontal,

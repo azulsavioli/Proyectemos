@@ -21,6 +21,7 @@ class CustomUploadForm extends StatefulWidget {
 }
 
 class _CustomUploadFormState extends State<CustomUploadForm> {
+  bool _isButtonDisabled = false;
   @override
   Widget build(BuildContext context) {
     PlatformFile? pickedFile;
@@ -38,8 +39,6 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
       return pickedFile;
     }
 
-    final answerUnoController = TextEditingController();
-
     return Column(children: [
       const SizedBox(
         height: 25,
@@ -51,20 +50,12 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
       const SizedBox(
         height: 25,
       ),
-      CustomTextFormField(
-        hint: 'Nombre del artista',
-        controller: answerUnoController,
-        keyboardType: TextInputType.text,
-        validatorVazio: 'Ingrese tuja respuesta correctamente',
-        validatorMenorque10: 'Su respuesta debe tener al menos 10 caracteres',
-      ),
-      const SizedBox(
-        height: 25,
-      ),
       SizedBox(
         height: 60,
         child: ElevatedButton(
           style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+                _isButtonDisabled ? ThemeColors.green : ThemeColors.blue),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
@@ -72,12 +63,15 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
             ),
           ),
           onPressed: () {
-            selectFile;
             loading = true;
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Archivo enviado com sucesso!"),
-              duration: Duration(seconds: 2),
-            ));
+            selectFile(CustomUploadForm.listFiles);
+            setState(() {
+              if (pickedFile == null) {
+                _isButtonDisabled = false;
+              } else {
+                _isButtonDisabled = true;
+              }
+            });
             loading = false;
           },
           child: Row(
@@ -106,6 +100,19 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
                   ],
           ),
         ),
+      ),
+      const SizedBox(
+        height: 15,
+      ),
+      CustomTextFormField(
+        hint: 'Nombre del artista',
+        controller: widget.controller,
+        keyboardType: TextInputType.text,
+        validatorVazio: 'Ingrese tuja respuesta correctamente',
+        validatorMenorque10: 'Su respuesta debe tener al menos 10 caracteres',
+      ),
+      const SizedBox(
+        height: 25,
       ),
     ]);
   }

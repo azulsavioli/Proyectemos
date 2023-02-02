@@ -38,19 +38,21 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
                 ),
               ),
             ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/record_and_play',
-                  arguments: widget.question);
-              Timer(const Duration(milliseconds: 400), () {
-                setState(() {
-                  if (isAudioFinish) {
-                    _isButtonDisabled = false;
-                  } else {
-                    _isButtonDisabled = true;
-                  }
-                });
-              });
-            },
+            onPressed: _isButtonDisabled
+                ? null
+                : () {
+                    Navigator.pushNamed(context, '/record_and_play',
+                        arguments: widget.question);
+                    Timer(const Duration(milliseconds: 400), () {
+                      setState(() {
+                        if (isAudioFinish) {
+                          _isButtonDisabled = false;
+                        } else {
+                          _isButtonDisabled = true;
+                        }
+                      });
+                    });
+                  },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -67,7 +69,7 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
                       ),
                       Text(
                         _isButtonDisabled ? 'Completo' : 'Grabar la respuesta',
-                        style: const TextStyle(fontSize: 20),
+                        style: ThemeText.paragraph16White,
                       ),
                     ],
                   ),

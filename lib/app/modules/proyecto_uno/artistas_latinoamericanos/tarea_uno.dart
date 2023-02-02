@@ -40,10 +40,10 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
   ];
 
   final imgNameList = [
-    'Autorretrato com Colar de Espinhos, 1940',
-    'A coluna quebrada, 1944',
-    'O cervo ferido, 1946',
-    'Desesperada, 1945'
+    'Autorretrato con collar de espinas, 1940',
+    'La columna rota, 1944',
+    'El venado herido, 1946',
+    'Desesperado, 1945'
   ];
 
   bool loading = false;
@@ -51,7 +51,6 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
 
   @override
   Widget build(BuildContext context) {
-    // final currentUser = getCurrentUser(context);
     final audioProvider =
         Provider.of<RecordAudioProvider>(context, listen: false);
     bool isAudioFinish = audioProvider.isRecording;
