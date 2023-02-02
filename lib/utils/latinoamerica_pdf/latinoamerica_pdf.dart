@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
+import 'package:proyectemos/utils/get_user.dart';
 import 'package:proyectemos/utils/latinoamerica_pdf/generate_pdf.dart';
 import '../../app/proyectemos_repository.dart';
 import '../../services/storage_service.dart';
@@ -33,13 +34,7 @@ class LatinoamericaPdf {
 
   getLatinoamericaTaskThreeImages() async {
     final imageList = [];
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    var currentUser = provider.googleSignIn.currentUser;
-
-    if (currentUser == null) {
-      provider.googleSignIn.signIn();
-      currentUser = provider.googleSignIn.currentUser;
-    }
+    var currentUser = getCurrentUser(context);
 
     var storage = StorageService();
 
