@@ -3,10 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/login/registration_page.dart';
+import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/main.dart';
 
 import '../app/modules/onboarding/onboarding_page.dart';
-import '../services/auth_services.dart';
+import '../utils/get_user.dart';
 
 class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);
@@ -18,11 +19,9 @@ class AuthCheck extends StatefulWidget {
 class _AuthCheckState extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
-    AuthService auth = Provider.of<AuthService>(context);
+    final currentUser = getCurrentUser(context);
 
-    if (auth.isLoading) {
-      return loading();
-    } else if (auth.userAuth == null) {
+    if (currentUser == null) {
       return const LoginPage();
     } else {
       return isOnboardingCompleted == null
@@ -31,11 +30,5 @@ class _AuthCheckState extends State<AuthCheck> {
               ? const RegistrationPage()
               : const HomePage();
     }
-  }
-
-  loading() {
-    return const Scaffold(
-        backgroundColor: Colors.deepPurpleAccent,
-        body: Center(child: CircularProgressIndicator()));
   }
 }

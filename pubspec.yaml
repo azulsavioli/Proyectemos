@@ -114,6 +114,9 @@ dependencies:
   #Utils
   basic_utils: ^5.2.2
 
+  #Card
+  card_swiper: ^2.0.4
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

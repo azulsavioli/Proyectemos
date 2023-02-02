@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
+  final auth = FirebaseAuth.instance;
   final googleSignIn = GoogleSignIn(scopes: ['https://mail.google.com/']);
 
   GoogleSignInAccount? _user;
@@ -23,15 +24,16 @@ class GoogleSignInProvider extends ChangeNotifier {
         idToken: googleAuth.idToken,
       );
 
-      await FirebaseAuth.instance.signInWithCredential(credential);
-    } catch (e) {
+      await auth.signInWithCredential(credential);
+
+      notifyListeners();
+    } on FirebaseAuthException catch (e) {
       return e.toString();
     }
-
-    notifyListeners();
   }
 
   Future googleLogout() async {
+    await auth.signOut();
     await googleSignIn.disconnect();
     FirebaseAuth.instance.signOut();
   }
