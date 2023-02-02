@@ -26,7 +26,7 @@ class ProyectemosRepository extends ChangeNotifier {
     sharedPreferences = await SharedPreferences.getInstance();
     studentInfo = sharedPreferences.getString('studentInfo');
     await db
-        .collection('educandos/$studentInfo/${authService.userAuth!.uid}/')
+        .collection('educandos/$studentInfo/${authService.userAuth!.email}/')
         .doc(doc)
         .set(answer);
 
@@ -39,8 +39,29 @@ class ProyectemosRepository extends ChangeNotifier {
     List tasksAnswers = [];
 
     final DocumentReference document = db
-        .collection("educandos/$studentInfo/${authService.userAuth!.uid}")
+        .collection("educandos/$studentInfo/${authService.userAuth!.email}/")
         .doc("/$doc");
+
+    try {
+      await document.get().then((snapshot) {
+        if (snapshot.data() != null) {
+          tasksAnswers.add(snapshot.data());
+        }
+      });
+    } on FirebaseException catch (e) {
+      return e.toString();
+    }
+    notifyListeners();
+    return tasksAnswers;
+  }
+
+  Future getAllStudentsAnswers() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+    List tasksAnswers = [];
+
+    final DocumentReference document =
+        db.collection("educandos/").doc("/$studentInfo");
 
     try {
       await document.get().then((snapshot) {
@@ -59,7 +80,7 @@ class ProyectemosRepository extends ChangeNotifier {
     sharedPreferences = await SharedPreferences.getInstance();
     studentInfo = sharedPreferences.getString('studentInfo');
     await db
-        .collection('educandos/$studentInfo${authService.userAuth!.uid}/')
+        .collection('educandos/$studentInfo${authService.userAuth!.email}/')
         .doc(doc)
         .delete();
 
