@@ -2,16 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_latinoamerica.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../../commons/google_sign_in.dart';
 import '../../../../commons/strings.dart';
 import '../../../../utils/email_sender.dart';
+import '../../../../utils/get_user.dart';
 import '../../../../utils/latinoamerica_pdf/latinoamerica_pdf.dart';
 import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
@@ -362,21 +361,5 @@ class PUnoLatinoamericaTareaTresPageState
             }),
       ),
     );
-  }
-
-  GoogleSignInAccount? getCurrentUser(BuildContext context) {
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    var currentUser = provider.googleSignIn.currentUser;
-
-    if (currentUser == null) {
-      provider.googleSignIn.signInSilently();
-      provider.googleLogin();
-      currentUser = provider.googleSignIn.currentUser;
-    } else if (currentUser.authentication == null) {
-      provider.googleLogout();
-      provider.googleSignIn.signInSilently();
-      provider.googleLogin();
-    }
-    return currentUser;
   }
 }

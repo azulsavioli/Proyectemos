@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_artistas_latinoamericanos.dart';
@@ -55,7 +56,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     final audioProvider =
         Provider.of<RecordAudioProvider>(context, listen: false);
     bool isAudioFinish = audioProvider.isRecording;
-    final recordsPathList = RecordAudioProvider.recordingsPaths;
+    var recordsPathList = RecordAudioProvider.recordingsPaths;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -148,10 +149,18 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                           ),
                         ),
                         onPressed: () {
-                          final provider = Provider.of<GoogleSignInProvider>(
-                              context,
-                              listen: false);
-                          provider.googleLogin();
+                          final currentUser = getCurrentUser(context);
+
+                          // final provider = Provider.of<GoogleSignInProvider>(
+                          //     context,
+                          //     listen: false);
+                          // var currentUser = provider.googleSignIn.currentUser;
+
+                          // if (currentUser == null) {
+                          //   provider.googleSignIn.signIn();
+                          //   provider.googleLogin();
+                          //   currentUser = provider.googleSignIn.currentUser;
+                          // }
 
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 3) {
@@ -162,8 +171,8 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                           } else {
                             if (recordsPathList.isNotEmpty &&
                                 recordsPathList.length == 3) {
-                              sendAnswers(provider.googleSignIn.currentUser);
-                              sendEmail(context, recordsPathList);
+                              sendAnswers(currentUser);
+                              sendEmail(currentUser, recordsPathList);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                                 content: Text("Resposta enviada com sucesso!"),
@@ -171,6 +180,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                               ));
                               Navigator.pushNamed(context,
                                   '/pUno_artistas_latinoamericanos_tarea_dos');
+                              recordsPathList = [];
                             }
                           }
                         },
@@ -212,22 +222,6 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
       ),
     );
   }
-
-  // GoogleSignInAccount? getCurrentUser(BuildContext context) {
-  //   final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-  //   var currentUser = provider.googleSignIn.currentUser;
-
-  //   if (currentUser == null) {
-  //     provider.googleSignIn.signInSilently();
-  //     provider.googleLogin();
-  //     currentUser = provider.googleSignIn.currentUser;
-  //   } else if (currentUser.authentication == null) {
-  //     provider.googleLogout();
-  //     provider.googleSignIn.signInSilently();
-  //     provider.googleLogin();
-  //   }
-  //   return currentUser;
-  // }
 
   Future convertAudioToFirebase(audioPaths, currentUser) async {
     final firebaseStorage = FirebaseStorage.instance;
@@ -304,12 +298,29 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
       'comesana.alexis.silvera@gmail.com',
       'fernandamaiadeoliveira@gmail.com'
     ];
-    const subject = "Atividade Artistas Latinoamericanos";
+
+    const subject = "Atividade 1 - Artistas Latinoamericanos";
     const text =
         "Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.";
     final emailSender = EmailSender();
 
     emailSender.sendEmailToTeacher(
         currentUser, attachment, email, subject, text);
+  }
+
+  GoogleSignInAccount? getCurrentUser(BuildContext context) {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    var currentUser = provider.googleSignIn.currentUser;
+
+    if (currentUser == null) {
+      provider.googleSignIn.signInSilently();
+      provider.googleLogin();
+      currentUser = provider.googleSignIn.currentUser;
+    } else if (currentUser.authentication == null) {
+      provider.googleLogout();
+      provider.googleSignIn.signInSilently();
+      provider.googleLogin();
+    }
+    return currentUser;
   }
 }
