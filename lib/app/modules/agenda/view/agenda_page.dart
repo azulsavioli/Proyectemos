@@ -1,9 +1,10 @@
 // import 'package:flutter/material.dart';
 // import 'package:table_calendar/table_calendar.dart';
 
-// import '../../../commons/strings.dart';
-// import '../../../commons/styles.dart';
-// import '../widgets/drawer_menu.dart';
+// import '../../../../commons/strings.dart';
+// import '../../../../commons/styles.dart';
+// import '../../widgets/drawer_menu.dart';
+// import '../repository/google_calendar_api.dart';
 
 // class AgendaPage extends StatefulWidget {
 //   const AgendaPage({Key? key}) : super(key: key);
@@ -16,6 +17,18 @@
 //   CalendarFormat format = CalendarFormat.month;
 //   DateTime _selectedDay = DateTime.now();
 //   DateTime _focusedDay = DateTime.now();
+
+//   @override
+//   void initState() {
+//     addSchedules;
+//     super.initState();
+//   }
+
+//   Future addSchedules() async {
+//     await GoogleCalendarApi.getData().then((schedules) {
+//       for (var i = 0; i < schedules.length; i++) {}
+//     });
+//   }
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -33,7 +46,8 @@
 //             color: Color.fromRGBO(250, 251, 250, 1),
 //           ),
 //           automaticallyImplyLeading: true,
-//           title: const Text('Agenda', style: ThemeText.h3title22White),
+//           title: const Text(Strings.titleAgendaPage,
+//               style: ThemeText.paragraph16WhiteBold),
 //         ),
 //         endDrawer: const DrawerMenuWidget(),
 //         body: Center(

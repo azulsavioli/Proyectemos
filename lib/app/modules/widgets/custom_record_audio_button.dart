@@ -6,9 +6,18 @@ import 'package:proyectemos/commons/styles.dart';
 class CustomRecordAudioButton extends StatefulWidget {
   final String question;
   final bool isAudioFinish;
+  final String namedRoute;
+  final String labelButton;
+  final String labelButtonFinished;
 
-  const CustomRecordAudioButton(
-      {super.key, required this.question, required this.isAudioFinish});
+  const CustomRecordAudioButton({
+    super.key,
+    required this.question,
+    required this.isAudioFinish,
+    required this.namedRoute,
+    required this.labelButton,
+    required this.labelButtonFinished,
+  });
 
   @override
   State<CustomRecordAudioButton> createState() =>
@@ -20,7 +29,7 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
 
   @override
   Widget build(BuildContext context) {
-    bool isAudioFinish = widget.isAudioFinish;
+    final isAudioFinish = widget.isAudioFinish;
     return Column(
       children: [
         const SizedBox(
@@ -28,54 +37,54 @@ class _CustomRecordAudioButtonState extends State<CustomRecordAudioButton> {
         ),
         SizedBox(
           height: 60,
-          child: ElevatedButton(
+          width: MediaQuery.of(context).size.width,
+          child: ElevatedButton.icon(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                  _isButtonDisabled ? ThemeColors.green : ThemeColors.blue),
+                _isButtonDisabled ? ThemeColors.green : ThemeColors.blue,
+              ),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
+            icon: Icon(
+              _isButtonDisabled ? Icons.check : Icons.mic,
+              color: ThemeColors.white,
+            ),
+            label: Text(
+              _isButtonDisabled
+                  ? widget.labelButtonFinished
+                  : widget.labelButton,
+              style: const TextStyle(
+                fontSize: 20,
+                color: ThemeColors.white,
+              ),
+            ),
             onPressed: _isButtonDisabled
                 ? null
                 : () {
-                    Navigator.pushNamed(context, '/record_and_play',
-                        arguments: widget.question);
-                    Timer(const Duration(milliseconds: 400), () {
-                      setState(() {
-                        if (isAudioFinish) {
-                          _isButtonDisabled = false;
-                        } else {
-                          _isButtonDisabled = true;
-                        }
-                      });
-                    });
+                    Navigator.pushNamed(
+                      context,
+                      widget.namedRoute,
+                      arguments: widget.question,
+                    );
+                    Timer(
+                      const Duration(milliseconds: 400),
+                      () {
+                        setState(
+                          () {
+                            if (isAudioFinish) {
+                              _isButtonDisabled = false;
+                            } else {
+                              _isButtonDisabled = true;
+                            }
+                          },
+                        );
+                      },
+                    );
                   },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Icon(
-                        _isButtonDisabled ? Icons.check : Icons.mic,
-                        color: ThemeColors.white,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        _isButtonDisabled ? 'Completo' : 'Grabar la respuesta',
-                        style: ThemeText.paragraph16White,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
         const SizedBox(

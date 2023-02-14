@@ -28,7 +28,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
           backgroundColor: ThemeColors.blue,
           elevation: 0,
           title: const Text(
-            "Recuperar contraseña",
+            'Recuperar contraseña',
             style: ThemeText.paragraph16White,
           ),
         ),
@@ -41,7 +41,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
               children: [
                 const Center(
                   child: Text(
-                    'Reciba un correo electrónico para\nrestablecer tu contraseña',
+                    '''Reciba un correo electrónico para\nrestablecer tu contraseña''',
                     style: ThemeText.paragraph16GrayNormal,
                     textAlign: TextAlign.center,
                   ),
@@ -61,7 +61,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                       ),
                     ),
                     label: Padding(
-                      padding: EdgeInsets.only(left: 8.0),
+                      padding: EdgeInsets.only(left: 8),
                       child: Text(
                         'Correo electrónico',
                         style: ThemeText.paragraph16GrayLight,
@@ -78,7 +78,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                       return 'Ingrese un correo eletrónico valido';
                     }
                     if (email.length < 10) {
-                      return 'El correo electrónico debe tener al menos 10 caracteres';
+                      return '''El correo electrónico debe tener al menos 10 caracteres''';
                     }
                     return null;
                   },
@@ -104,7 +104,8 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
-                                        'Correo electrónico de recuperación de contraseña enviado'),
+                                      '''Correo electrónico de recuperación de contraseña enviado''',
+                                    ),
                                   ),
                                 ),
                               ),
@@ -115,7 +116,8 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  '¡Ups! Ha ocurrido un error y su correo electrónico de recuperación de contraseña no ha sido enviado. ¡Inténtalo de nuevo!'),
+                                '''¡Ups! Ha ocurrido un error y su correo electrónico de recuperación de contraseña no ha sido enviado. ¡Inténtalo de nuevo!''',
+                              ),
                             ),
                           ),
                         }
@@ -135,11 +137,10 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
 
   Future resetPassword() async {
     try {
-      showDialog(
+      await showDialog(
         context: context,
         barrierDismissible: false,
-        builder: ((context) =>
-            const Center(child: CircularProgressIndicator())),
+        builder: (context) => const Center(child: CircularProgressIndicator()),
       );
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: emailController.text.trim());

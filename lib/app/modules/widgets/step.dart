@@ -83,8 +83,8 @@ class _CustomStepState extends State<CustomStep> {
     return image;
   }
 
-  String? validate(context) {
-    return showToast("¡Por favor seleccione su imagen!");
+  void validate(BuildContext context) {
+    return showToast('¡Por favor seleccione su imagen!');
   }
 
   @override
@@ -113,49 +113,54 @@ class _CustomStepState extends State<CustomStep> {
               children: <Widget>[
                 Expanded(
                   child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(buttonFileColor),
-                      ),
-                      onPressed: () async {
-                        final image = await pickImage(
-                            CustomStep.images, ImageSource.gallery);
-                        if (image == null) {
-                          validate(context);
-                        } else if (image != null) {
-                          setState(() {
-                            buttonFileColor = ThemeColors.green;
-                            buttonFileIcon = const Icon(Icons.check);
-                            buttonFileSelected = true;
-                          });
-                        }
-                      },
-                      icon: buttonFileIcon,
-                      label: const Text('Galería')),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(buttonFileColor),
+                    ),
+                    onPressed: () async {
+                      final image = await pickImage(
+                        CustomStep.images,
+                        ImageSource.gallery,
+                      );
+                      if (image == null) {
+                        validate(context);
+                      } else if (image != null) {
+                        setState(() {
+                          buttonFileColor = ThemeColors.green;
+                          buttonFileIcon = const Icon(Icons.check);
+                          buttonFileSelected = true;
+                        });
+                      }
+                    },
+                    icon: buttonFileIcon,
+                    label: const Text('Galería'),
+                  ),
                 ),
                 const SizedBox(
                   width: 5,
                 ),
-                Expanded(
-                  child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(buttonCameraColor),
-                      ),
-                      onPressed: () async {
-                        final image = await pickImage(
-                            CustomStep.images, ImageSource.camera);
-                        if (image != null) {
-                          setState(() {
-                            buttonCameraColor = ThemeColors.green;
-                            buttonCameraIcon = const Icon(Icons.check);
-                            buttonCameraSelected = true;
-                          });
-                        }
-                      },
-                      icon: buttonCameraIcon,
-                      label: const Text('Cámara')),
-                ),
+                // Expanded(
+                //   child: ElevatedButton.icon(
+                //       style: ButtonStyle(
+                //         backgroundColor:
+                //             MaterialStateProperty.all(buttonCameraColor),
+                //       ),
+                //       onPressed: () async {
+                //         final image = await pickImage(
+                //             CustomStep.images, ImageSource.camera);
+                //         if (image == null) {
+                //           validate(context);
+                //         } else if (image != null) {
+                //           setState(() {
+                //             buttonCameraColor = ThemeColors.green;
+                //             buttonCameraIcon = const Icon(Icons.check);
+                //             buttonCameraSelected = true;
+                //           });
+                //         }
+                //       },
+                //       icon: buttonCameraIcon,
+                //       label: const Text('Cámara')),
+                // ),
               ],
             ),
             const Divider(),

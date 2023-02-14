@@ -18,12 +18,12 @@ abstract class Strings {
   static const String titleCardTres = 'Proyecto TRES';
 
   //Feedbacks
-  static const String tareaConcluida = "Tarea concluída com sucesso!";
+  static const String tareaConcluida = 'Tarea concluída com sucesso!';
 
   //Login
   static const String bemvindos = '!Bienvenidos a Proyectemos!';
   static const String descricaoAppLogin =
-      'Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.';
+      '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
   static const String iniciaSessao = 'Inicia sesión con tu cuenta de Google';
 
   //Title tasks uno
@@ -31,6 +31,8 @@ abstract class Strings {
   static const String titleArtistasHispanoamericanosUno =
       'Artistas hipanoamericanos';
   static const String titleEventoCulturalUno = 'Evento Cultural';
+  static const String titlePropuestadeEventoUno = 'La propuesta del evento';
+  static const String titleFeedbackEventoUno = 'Feedback';
   static const String titleDivulgacionUno = 'Divulgación';
 
   //Paginas

@@ -27,16 +27,18 @@ class _TarefasIncompletasPageState extends State<TarefasIncompletasPage> {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          automaticallyImplyLeading: true,
-          title: const Text(Strings.titleTarefasPendentesPage,
-              style: ThemeText.paragraph16WhiteBold),
+          title: const Text(
+            Strings.titleTarefasPendentesPage,
+            style: ThemeText.paragraph16WhiteBold,
+          ),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: const Center(
-            child: Text(
-          'Tarefas Pendientes',
-          style: ThemeText.paragraph14Blue,
-        )),
+          child: Text(
+            'Tarefas Pendientes',
+            style: ThemeText.paragraph14Blue,
+          ),
+        ),
       ),
     );
   }

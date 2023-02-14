@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/proyectemos_repository.dart';
-import 'package:proyectemos/services/storage_service.dart';
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_latinoamerica.dart';
 import '../../../../commons/styles.dart';
-import '../../../../services/auth_services.dart';
 import '../../widgets/custom_text_form_field.dart';
 import '../../widgets/drawer_menu.dart';
 
@@ -20,11 +18,6 @@ class PUnoLatinoamericaTareaDosPage extends StatefulWidget {
 
 class _PUnoLatinoamericaTareaDosPageState
     extends State<PUnoLatinoamericaTareaDosPage> {
-  late AuthService authService;
-
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final StorageService storageService = StorageService();
-
   final formKey = GlobalKey<FormState>();
   final _answerUnoController = TextEditingController();
   final _answerDosController = TextEditingController();
@@ -45,16 +38,17 @@ class _PUnoLatinoamericaTareaDosPageState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        automaticallyImplyLeading: true,
-        title: const Text(Strings.titleLatinoamericaUno,
-            style: ThemeText.paragraph16WhiteBold),
+        title: const Text(
+          Strings.titleLatinoamericaUno,
+          style: ThemeText.paragraph16WhiteBold,
+        ),
       ),
       endDrawer: const DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -144,18 +138,21 @@ class _PUnoLatinoamericaTareaDosPageState
                             };
 
                             sendAnswersToFirebase(json);
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Resposta enviada com sucesso!"),
-                              duration: Duration(seconds: 2),
-                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Resposta enviada com sucesso!'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
                             Navigator.pushNamed(
-                                context, '/pUno_latinoamerica_tarea_tres');
+                              context,
+                              '/pUno_latinoamerica_tarea_tres',
+                            );
                           }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: (loading)
+                          children: loading
                               ? [
                                   const Padding(
                                     padding: EdgeInsets.all(16),
@@ -170,9 +167,9 @@ class _PUnoLatinoamericaTareaDosPageState
                                 ]
                               : [
                                   const Padding(
-                                    padding: EdgeInsets.all(16.0),
+                                    padding: EdgeInsets.all(16),
                                     child: Text(
-                                      "Contínua",
+                                      'Contínua',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ),
@@ -191,8 +188,8 @@ class _PUnoLatinoamericaTareaDosPageState
     );
   }
 
-  void sendAnswersToFirebase(json) async {
-    String doc = 'uno/latinoamerica/atividade_2/';
+  Future<void> sendAnswersToFirebase(Map<String, String> json) async {
+    const doc = 'uno/latinoamerica/atividade_2/';
     try {
       await context.read<ProyectemosRepository>().saveAnswers(doc, json);
     } on FirebaseException catch (e) {

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../../commons/strings.dart';
 import '../../../commons/styles.dart';
 import '../widgets/card_proyects.dart';
 import '../widgets/drawer_menu.dart';
-import '../../../commons/strings.dart';
 
 class ProyectosPage extends StatelessWidget {
   const ProyectosPage({Key? key}) : super(key: key);
 
-  goTo(context, namedRoute) {
+  void goTo(BuildContext context, String namedRoute) {
     Navigator.pushNamed(context, namedRoute);
   }
 
@@ -30,18 +30,15 @@ class ProyectosPage extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          automaticallyImplyLeading: true,
           title:
               const Text(Strings.title, style: ThemeText.paragraph16WhiteBold),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 40.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 CardProyecto(
                   image: Strings.imageUno,
@@ -62,7 +59,7 @@ class ProyectosPage extends StatelessWidget {
                   description: Strings.descriptionCardDos,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.blue,
-                  namedRoute: '/pdf',
+                  namedRoute: '/pUno_latinoamerica_feed',
                 ),
                 SizedBox(
                   height: 30,

@@ -27,16 +27,18 @@ class _TarefasCompletasPageState extends State<TarefasCompletasPage> {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          automaticallyImplyLeading: true,
-          title: const Text(Strings.titleTarefasCumpridasPage,
-              style: ThemeText.paragraph16WhiteBold),
+          title: const Text(
+            Strings.titleTarefasCumpridasPage,
+            style: ThemeText.paragraph16WhiteBold,
+          ),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: const Center(
-            child: Text(
-          'Tarefas Cumplidas',
-          style: ThemeText.paragraph14Blue,
-        )),
+          child: Text(
+            'Tarefas Cumplidas',
+            style: ThemeText.paragraph14Blue,
+          ),
+        ),
       ),
     );
   }

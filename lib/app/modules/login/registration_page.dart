@@ -19,10 +19,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final dropSeriesOptions = ['1º Colegial', '2º Colegial', '3º Colegial'];
   final dropClassroomOptions = ['A1', 'B2', 'C3'];
 
-  saveStudentOptions() async {
-    bool isStudentInfoSaved = true;
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String studentInfo =
+  Future<void> saveStudentOptions() async {
+    const isStudentInfoSaved = true;
+    final preferences = await SharedPreferences.getInstance();
+    final studentInfo =
         '${dropSchoolValue.value}/${dropSeriesValue.value}/${dropClassroomValue.value}';
     await preferences.setString('studentInfo', studentInfo);
     await preferences.setBool('studentInfoSaved', isStudentInfoSaved);
@@ -35,7 +35,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           backgroundColor: ThemeColors.blue,
           elevation: 0,
           title: const Text(
-            "Registro de estudiantes",
+            'Registro de estudiantes',
             style: ThemeText.paragraph16White,
           ),
         ),
@@ -63,12 +63,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     builder: (BuildContext context, String value, _) {
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        )),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
                         hint: const Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Text("Elige tu escuela"),
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text('Elige tu escuela'),
                         ),
                         value: (value.isEmpty) ? null : value,
                         iconSize: 42,
@@ -77,10 +78,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         onChanged: (option) =>
                             dropSchoolValue.value = option.toString(),
                         items: dropSchoolOptions
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
-                                ))
+                            .map(
+                              (op) => DropdownMenuItem(
+                                value: op,
+                                child: Text(op),
+                              ),
+                            )
                             .toList(),
                       );
                     },
@@ -96,12 +99,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     builder: (BuildContext context, String value, _) {
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        )),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
                         hint: const Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Text("Elige tu grado"),
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text('Elige tu grado'),
                         ),
                         value: (value.isEmpty) ? null : value,
                         iconSize: 42,
@@ -110,10 +114,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         onChanged: (option) =>
                             dropSeriesValue.value = option.toString(),
                         items: dropSeriesOptions
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
-                                ))
+                            .map(
+                              (op) => DropdownMenuItem(
+                                value: op,
+                                child: Text(op),
+                              ),
+                            )
                             .toList(),
                       );
                     },
@@ -129,12 +135,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     builder: (BuildContext context, String value, _) {
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25),
-                        )),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
                         hint: const Padding(
-                          padding: EdgeInsets.only(left: 12.0),
-                          child: Text("Elige tu clase"),
+                          padding: EdgeInsets.only(left: 12),
+                          child: Text('Elige tu clase'),
                         ),
                         value: (value.isEmpty) ? null : value,
                         iconSize: 42,
@@ -143,10 +150,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         onChanged: (option) =>
                             dropClassroomValue.value = option.toString(),
                         items: dropClassroomOptions
-                            .map((op) => DropdownMenuItem(
-                                  value: op,
-                                  child: Text(op),
-                                ))
+                            .map(
+                              (op) => DropdownMenuItem(
+                                value: op,
+                                child: Text(op),
+                              ),
+                            )
                             .toList(),
                       );
                     },
@@ -183,7 +192,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
                               content: Text(
-                                  '¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!'),
+                                '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!''',
+                              ),
                             ),
                           ),
                         }

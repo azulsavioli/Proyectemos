@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_core/firebase_core.dart' as firebase_core;
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class StorageService {
   final firebase_storage.FirebaseStorage storage =
@@ -11,36 +11,34 @@ class StorageService {
     String filePath,
     String filename,
   ) async {
-    File file = File(filePath);
+    final file = File(filePath);
     try {
       await storage.ref('images/$filename').putFile(file);
     } on firebase_core.FirebaseException catch (e) {
-      return 'Firebase Exception ${e.toString()} ';
+      return 'Firebase Exception ${e.message} ';
     }
   }
 
   Future<firebase_storage.ListResult> listImageFiles() async {
-    firebase_storage.ListResult results =
-        await storage.ref('proyectemos_assets/').listAll();
+    final results = await storage.ref('proyectemos_assets/').listAll();
 
     return results;
   }
 
   Future<String> downloadDefaultUrlImg(String imageName) async {
-    String downloadUrl =
+    final downloadUrl =
         await storage.ref('proyectemos_assets/$imageName').getDownloadURL();
     return downloadUrl;
   }
 
   Future<firebase_storage.ListResult> listLatinoamericaImageFiles() async {
-    firebase_storage.ListResult results =
-        await storage.ref('uno-latinoamerica-images/').listAll();
+    final results = await storage.ref('uno-latinoamerica-images/').listAll();
 
     return results;
   }
 
   Future<String> downloadLatinoamericaUrlImg(String imageName) async {
-    String downloadUrl = await storage
+    final downloadUrl = await storage
         .ref('uno-latinoamerica-images/$imageName')
         .getDownloadURL();
     return downloadUrl;

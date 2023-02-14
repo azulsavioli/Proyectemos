@@ -30,7 +30,7 @@ class CustomTextFormField extends StatelessWidget {
           ),
         ),
         label: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 8),
           child: Text(
             hint,
             style: ThemeText.paragraph16GrayLight,

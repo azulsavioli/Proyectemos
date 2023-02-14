@@ -25,24 +25,25 @@ class ProyectoUnoPage extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          automaticallyImplyLeading: true,
-          title: const Text(Strings.titleCardUno,
-              style: ThemeText.paragraph16WhiteBold),
+          title: const Text(
+            Strings.titleCardUno,
+            style: ThemeText.paragraph16WhiteBold,
+          ),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 20.0),
+                  padding: const EdgeInsets.only(bottom: 20),
                   child: SizedBox(
-                      height: 250,
-                      width: 250,
-                      child: Image.asset(Strings.proyectoUno)),
+                    height: 250,
+                    width: 250,
+                    child: Image.asset(Strings.proyectoUno),
+                  ),
                 ),
                 CardButton(
                   iconSize: 35,
@@ -75,7 +76,7 @@ class ProyectoUnoPage extends StatelessWidget {
                   text: 'Evento Cultural',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_latinoamerica_tarea_uno',
+                  namedRoute: '/pUno_evento_cultural',
                   backgroundColor: ThemeColors.yellow,
                   icon: Icons.group_add,
                   shadowColor: ThemeColors.yellow,
@@ -88,7 +89,7 @@ class ProyectoUnoPage extends StatelessWidget {
                   text: 'Divulgación',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_latinoamerica_tarea_uno',
+                  namedRoute: '/pUno_divulgacao',
                   backgroundColor: ThemeColors.yellow,
                   icon: Icons.group_add,
                   shadowColor: ThemeColors.yellow,

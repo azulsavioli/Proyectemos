@@ -11,10 +11,9 @@ class PageOne extends StatelessWidget {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Text(
-              "!Bienvenidos!",
+              '!Bienvenidos!',
               style: ThemeText.h1title45WhiteBold,
             ),
             Padding(
@@ -27,13 +26,16 @@ class PageOne extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 12, left: 22, right: 22, bottom: 8),
+                top: 12,
+                left: 22,
+                right: 22,
+                bottom: 8,
+              ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "Esta aplicación ha sido pensada como un lugar para explorar tu creatividad, para encuentros e interacciones con tus compañeros(as) y profesores(as).",
+                    '''Esta aplicación ha sido pensada como un lugar para explorar tu creatividad, para encuentros e interacciones con tus compañeros(as) y profesores(as).''',
                     style: ThemeText.paragraph16WhiteBold,
                     textAlign: TextAlign.center,
                   ),

@@ -1,62 +1,63 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart' hide Table hide Image;
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/utils/get_user.dart';
 import 'package:proyectemos/utils/latinoamerica_pdf/generate_pdf.dart';
+
 import '../../app/proyectemos_repository.dart';
 import '../../services/storage_service.dart';
-import '../../commons/google_sign_in.dart';
-import 'package:flutter/material.dart';
 
 class TextAnswers {
-  final String question;
-  final String answer;
-
   const TextAnswers({required this.question, required this.answer});
+
+  final String answer;
+  final String question;
 }
 
 class LatinoamericaPdf {
-  BuildContext context;
-
   LatinoamericaPdf(
     this.context,
   );
 
-  late String? studentInfo;
+  List answers = [];
+  BuildContext context;
+  List listImagesLatinoamerica = [];
   late String proyectemosTitle;
   late String sectionTitle;
+  late String? studentInfo;
   late String taskTitle;
-  List answers = [];
-  List listImagesLatinoamerica = [];
 
-  getLatinoamericaTaskThreeImages() async {
+  Future<dynamic> getLatinoamericaTaskThreeImages() async {
     final imageList = [];
-    var currentUser = getCurrentUser(context);
+    final currentUser = getCurrentUser(context);
 
-    var storage = StorageService();
+    final storage = StorageService();
 
-    var latinoamericaImage1 = await storage
+    final latinoamericaImage1 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-1.jpeg');
-    var latinoamericaImage2 = await storage
+    final latinoamericaImage2 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-2.jpeg');
-    var latinoamericaImage3 = await storage
+    final latinoamericaImage3 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-3.jpeg');
-    var latinoamericaImage4 = await storage
+    final latinoamericaImage4 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-4.jpeg');
-    var latinoamericaImage5 = await storage
+    final latinoamericaImage5 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-5.jpeg');
-    var latinoamericaImage6 = await storage
+    final latinoamericaImage6 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-6.jpeg');
-    var latinoamericaImage7 = await storage
+    final latinoamericaImage7 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-7.jpeg');
-    var latinoamericaImage8 = await storage
+    final latinoamericaImage8 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-8.jpeg');
-    var latinoamericaImage9 = await storage
+    final latinoamericaImage9 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-9.jpeg');
-    var latinoamericaImage10 = await storage
+    final latinoamericaImage10 = await storage
         .downloadLatinoamericaUrlImg('${currentUser?.email}-img-10.jpeg');
 
     try {
@@ -95,27 +96,27 @@ class LatinoamericaPdf {
       ]);
 
       for (var i = 1; i <= 10; i++) {
-        storage
+        await storage
             .deleteLatinoamericaImageFiles('${currentUser?.email}-img-$i.jpeg');
       }
       return imageList;
     } catch (e) {
-      return "Error de conversão para ImageProvider: ${e.toString()}";
+      return 'Error de conversão para ImageProvider: $e';
     }
   }
 
-  createPDF() async {
-    proyectemosTitle = "Proyectemos";
+  Future<File> createPDF() async {
+    proyectemosTitle = 'Proyectemos';
     sectionTitle = 'Uno';
-    taskTitle = "Latinoamerica";
+    taskTitle = 'Latinoamerica';
     final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
-    var studentInformation = studentInfo.split('/');
+    final studentInformation = studentInfo.split('/');
 
-    var allAnswers = await getAnswersFromFirebase();
+    final allAnswers = await getAnswersFromFirebase();
 
-    final DateTime data = DateTime.now();
-    final DateFormat formatter = DateFormat('dd/MM/yyyy');
-    final String dataFormatada = formatter.format(data);
+    final data = DateTime.now();
+    final formatter = DateFormat('dd/MM/yyyy');
+    final dataFormatada = formatter.format(data);
     final imageAnswersTaskThree = await getLatinoamericaTaskThreeImages();
 
     final infoPdfHeader = [
@@ -130,7 +131,7 @@ class LatinoamericaPdf {
       studentInformation[1],
     ];
 
-    return await generatePdf(
+    return generatePdf(
       PdfPageFormat.a4,
       allAnswers,
       infoPdfHeader,
@@ -141,16 +142,16 @@ class LatinoamericaPdf {
   }
 
   Future<List> getAnswersFromFirebase() async {
-    String doc1 = 'uno/latinoamerica/atividade_1';
-    String doc2 = 'uno/latinoamerica/atividade_2';
-    String doc3 = 'uno/latinoamerica/atividade_3';
+    const doc1 = 'uno/latinoamerica/atividade_1';
+    const doc2 = 'uno/latinoamerica/atividade_2';
+    const doc3 = 'uno/latinoamerica/atividade_3';
 
-    var repository = context.read<ProyectemosRepository>();
+    final repository = context.read<ProyectemosRepository>();
 
     try {
-      var answers1 = await repository.getAnswers(doc1);
-      var answers2 = await repository.getAnswers(doc2);
-      var answers3 = await repository.getAnswers(doc3);
+      final answers1 = await repository.getAnswers(doc1);
+      final answers2 = await repository.getAnswers(doc2);
+      final answers3 = await repository.getAnswers(doc3);
 
       answers.addAll([...answers1, ...answers2, ...answers3]);
     } on FirebaseException catch (e) {

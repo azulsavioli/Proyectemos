@@ -19,114 +19,131 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue.shade200,
-              Colors.blue.shade400,
-              Colors.blue.shade600,
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.blue.shade200,
+                Colors.blue.shade400,
+                Colors.blue.shade600,
+              ],
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: SizedBox(
+                    height: 400,
+                    width: 400,
+                    child: Image.asset(
+                      Strings.loginImage,
+                      height: 80,
+                      width: 80,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      Strings.bemvindos,
+                      style: ThemeText.h2title35White,
+                      textAlign: TextAlign.left,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      Strings.descricaoAppLogin,
+                      style: ThemeText.paragraph16White,
+                      textAlign: TextAlign.left,
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: SizedBox(
+                  height: 60,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(ThemeColors.yellow),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      loadingGoogle = true;
+                      login(context);
+                      Navigator.of(context).pushNamed('/');
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: loadingGoogle
+                          ? [
+                              const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            ]
+                          : [
+                              const FaIcon(
+                                FontAwesomeIcons.google,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Text(
+                                  Strings.iniciaSessao,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              )
+                            ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text('Aqui vai o texto de quem fez'),
+              ),
+              const SizedBox(
+                height: 75,
+              ),
             ],
           ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: SizedBox(
-                  height: 400,
-                  width: 400,
-                  child: Image.asset(
-                    Strings.loginImage,
-                    height: 80,
-                    width: 80,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    Strings.bemvindos,
-                    style: ThemeText.h2title35White,
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    Strings.descricaoAppLogin,
-                    style: ThemeText.paragraph16White,
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SizedBox(
-                height: 60,
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all(ThemeColors.yellow),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    loadingGoogle = true;
-                    final provider = Provider.of<GoogleSignInProvider>(context,
-                        listen: false);
-                    provider.googleLogin();
-                    Navigator.of(context).pushNamed('/');
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: (loadingGoogle)
-                        ? [
-                            const Padding(
-                              padding: EdgeInsets.all(16),
-                              child: SizedBox(
-                                width: 24,
-                                height: 24,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          ]
-                        : [
-                            const FaIcon(
-                              FontAwesomeIcons.google,
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text(
-                                Strings.iniciaSessao,
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            )
-                          ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
+  }
+
+  void login(BuildContext context) {
+    Provider.of<GoogleSignInProvider>(
+      context,
+      listen: false,
+    ).googleLogin();
   }
 }

@@ -41,19 +41,13 @@ class _PUnoLatinoamericaTareaUnoPageState
   bool loading = false;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
 
     controller = YoutubePlayerController(
-      initialVideoId: "R21d66HYGPw",
+      initialVideoId: 'R21d66HYGPw',
       flags: const YoutubePlayerFlags(
-        mute: false,
         autoPlay: false,
-        disableDragSeek: false,
-        loop: false,
-        isLive: false,
-        forceHD: false,
-        enableCaption: true,
       ),
     )..addListener(listener);
     idController = TextEditingController();
@@ -99,16 +93,17 @@ class _PUnoLatinoamericaTareaUnoPageState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        automaticallyImplyLeading: true,
-        title: const Text(Strings.titleLatinoamericaUno,
-            style: ThemeText.paragraph16WhiteBold),
+        title: const Text(
+          Strings.titleLatinoamericaUno,
+          style: ThemeText.paragraph16WhiteBold,
+        ),
       ),
       endDrawer: const DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +164,8 @@ class _PUnoLatinoamericaTareaUnoPageState
                     ),
                     YoutubePlayer(
                       thumbnail: const Text(
-                          "https://img.youtube.com/vi/R21d66HYGPw/hqdefault.jpg"),
+                        'https://img.youtube.com/vi/R21d66HYGPw/hqdefault.jpg',
+                      ),
                       controller: controller,
                       showVideoProgressIndicator: true,
                       progressIndicatorColor: ThemeColors.yellow,
@@ -204,18 +200,21 @@ class _PUnoLatinoamericaTareaUnoPageState
 
                             deactivate();
                             sendAnswersToFirebase(json);
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("Resposta enviada com sucesso!"),
-                              duration: Duration(seconds: 2),
-                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Resposta enviada com sucesso!'),
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
                             Navigator.pushNamed(
-                                context, '/pUno_latinoamerica_tarea_dos');
+                              context,
+                              '/pUno_latinoamerica_tarea_dos',
+                            );
                           }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: (loading)
+                          children: loading
                               ? [
                                   const Padding(
                                     padding: EdgeInsets.all(16),
@@ -230,9 +229,9 @@ class _PUnoLatinoamericaTareaUnoPageState
                                 ]
                               : [
                                   const Padding(
-                                    padding: EdgeInsets.all(16.0),
+                                    padding: EdgeInsets.all(16),
                                     child: Text(
-                                      "Contínua",
+                                      'Contínua',
                                       style: TextStyle(fontSize: 20),
                                     ),
                                   ),
@@ -251,8 +250,8 @@ class _PUnoLatinoamericaTareaUnoPageState
     );
   }
 
-  void sendAnswersToFirebase(json) async {
-    String doc = 'uno/latinoamerica/atividade_1/';
+  Future<void> sendAnswersToFirebase(Map<String, String> json) async {
+    const doc = 'uno/latinoamerica/atividade_1/';
     try {
       await context.read<ProyectemosRepository>().saveAnswers(doc, json);
     } on FirebaseException catch (e) {

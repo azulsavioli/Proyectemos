@@ -16,12 +16,11 @@ class _PageTwoState extends State<PageTwo> {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
               child: Text(
-                "Con la finalidad de poner la lengua española más cerca de tus intereses y realidad,",
+                '''Con la finalidad de poner la lengua española más cerca de tus intereses y realidad,''',
                 style: ThemeText.paragraph16WhiteBold,
                 textAlign: TextAlign.center,
               ),
@@ -37,7 +36,7 @@ class _PageTwoState extends State<PageTwo> {
             const Padding(
               padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
               child: Text(
-                "esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.",
+                '''esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.''',
                 style: ThemeText.paragraph16WhiteBold,
                 textAlign: TextAlign.center,
               ),

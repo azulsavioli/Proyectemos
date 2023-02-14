@@ -32,8 +32,6 @@ class CardProyecto extends StatelessWidget {
           height: MediaQuery.of(context).size.height * .23,
           child: Center(
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   image,
@@ -67,7 +65,7 @@ class CardProyecto extends StatelessWidget {
     );
   }
 
-  goTo(context, namedRoute) {
+  void goTo(BuildContext context, String namedRoute) {
     Navigator.pushNamed(context, namedRoute);
   }
 }

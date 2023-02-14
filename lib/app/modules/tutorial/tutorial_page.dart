@@ -27,16 +27,18 @@ class _TutorialPageState extends State<TutorialPage> {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          automaticallyImplyLeading: true,
-          title: const Text(Strings.titleTutorialesPage,
-              style: ThemeText.paragraph16WhiteBold),
+          title: const Text(
+            Strings.titleTutorialesPage,
+            style: ThemeText.paragraph16WhiteBold,
+          ),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: const Center(
-            child: Text(
-          'Tutoriales',
-          style: ThemeText.paragraph14Blue,
-        )),
+          child: Text(
+            'Tutoriales',
+            style: ThemeText.paragraph14Blue,
+          ),
+        ),
       ),
     );
   }

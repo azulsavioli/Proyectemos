@@ -12,10 +12,6 @@ GoogleSignInAccount? getCurrentUser(BuildContext context) {
     provider.googleSignIn.signInSilently();
     provider.googleLogin();
     currentUser = provider.googleSignIn.currentUser;
-  } else if (currentUser.authentication == null) {
-    provider.googleLogout();
-    provider.googleSignIn.signInSilently();
-    provider.googleLogin();
   }
   return currentUser;
 }

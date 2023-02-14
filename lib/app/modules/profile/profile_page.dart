@@ -14,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
 
-  void goTo(routeName) {
+  void goTo(String routeName) {
     Navigator.pushNamed(context, routeName);
   }
 
@@ -32,7 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(color: ThemeColors.white),
-          automaticallyImplyLeading: true,
           title: const Text(
             'Perfil',
             style: ThemeText.paragraph16WhiteBold,
@@ -51,7 +50,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 180,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircleAvatar(
                         radius: 30,
@@ -60,19 +58,21 @@ class _ProfilePageState extends State<ProfilePage> {
                           radius: 27,
                           backgroundImage: (user.photoURL == null)
                               ? const NetworkImage(
-                                  'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=')
+                                  'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
+                                )
                               : NetworkImage(user.photoURL!, scale: 40),
                         ),
                       ),
                       const SizedBox(
                         height: 16,
                       ),
-                      (user.displayName == null)
-                          ? const Text('')
-                          : Text(
-                              user.displayName!,
-                              style: ThemeText.paragraph16BlueBold,
-                            ),
+                      if (user.displayName == null)
+                        const Text('')
+                      else
+                        Text(
+                          user.displayName!,
+                          style: ThemeText.paragraph16BlueBold,
+                        ),
                       const SizedBox(
                         height: 8,
                       ),
@@ -89,42 +89,42 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Card(
                 child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: 80,
-                    child: Center(
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text(
-                                '0/14',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                'Tareas',
-                                style: ThemeText.paragraph14Gray,
-                              )
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: const [
-                              Text(
-                                '0%',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                'Conclusão',
-                                style: ThemeText.paragraph14Gray,
-                              )
-                            ],
-                          ),
-                        ]))),
+                  width: MediaQuery.of(context).size.width * .9,
+                  height: 80,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              '0/14',
+                              style: ThemeText.paragraph16BlueBold,
+                            ),
+                            Text(
+                              'Tareas',
+                              style: ThemeText.paragraph14Gray,
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              '0%',
+                              style: ThemeText.paragraph16BlueBold,
+                            ),
+                            Text(
+                              'Conclusão',
+                              style: ThemeText.paragraph14Gray,
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               // adicionar as rotas
               // CardButton(

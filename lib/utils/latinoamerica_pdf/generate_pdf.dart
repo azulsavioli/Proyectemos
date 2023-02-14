@@ -35,9 +35,9 @@ Future<File> generatePdf(
 ) async {
   final doc = pw.Document(title: 'Atividade-Latinoamerica', author: 'Maia');
 
-  var answerTask1 = allAnswers[0];
-  var answerTask2 = allAnswers[1];
-  var answerTask3 = allAnswers[2];
+  final answerTask1 = allAnswers[0];
+  final answerTask2 = allAnswers[1];
+  final answerTask3 = allAnswers[2];
 
   final profileImage = pw.MemoryImage(
     (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
@@ -60,19 +60,22 @@ Future<File> generatePdf(
                     child: pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: <pw.Widget>[
-                        pw.Text('Proyectemos',
-                            textScaleFactor: 2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(fontWeight: pw.FontWeight.bold)),
+                        pw.Text(
+                          'Proyectemos',
+                          textScaleFactor: 2,
+                          style: pw.Theme.of(context)
+                              .defaultTextStyle
+                              .copyWith(fontWeight: pw.FontWeight.bold),
+                        ),
                         pw.Padding(padding: const pw.EdgeInsets.only(top: 10)),
-                        pw.Text('Uno - Latinoamerica',
-                            textScaleFactor: 1.2,
-                            style: pw.Theme.of(context)
-                                .defaultTextStyle
-                                .copyWith(
-                                    fontWeight: pw.FontWeight.bold,
-                                    color: red)),
+                        pw.Text(
+                          'Uno - Latinoamerica',
+                          textScaleFactor: 1.2,
+                          style: pw.Theme.of(context).defaultTextStyle.copyWith(
+                                fontWeight: pw.FontWeight.bold,
+                                color: red,
+                              ),
+                        ),
                         pw.Padding(padding: const pw.EdgeInsets.only(top: 20)),
                         pw.Row(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -127,44 +130,54 @@ Future<File> generatePdf(
                   pw.SizedBox(height: 20),
                   _Category(title: 'Atividade 3'),
                   _Block(
-                      title: 'Descrição da imagem 1:',
-                      answer: '${answerTask3['resposta_1'][0]}'),
+                    title: 'Descrição da imagem 1:',
+                    answer: '${answerTask3['resposta_1'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[0]),
                   _Block(
-                      title: 'Descrição da imagem 2:',
-                      answer: '${answerTask3['resposta_2'][0]}'),
+                    title: 'Descrição da imagem 2:',
+                    answer: '${answerTask3['resposta_2'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[1]),
                   _Block(
-                      title: 'Descrição da imagem 3:',
-                      answer: '${answerTask3['resposta_3'][0]}'),
+                    title: 'Descrição da imagem 3:',
+                    answer: '${answerTask3['resposta_3'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[2]),
                   _Block(
-                      title: 'Descrição da imagem 4:',
-                      answer: '${answerTask3['resposta_4'][0]}'),
+                    title: 'Descrição da imagem 4:',
+                    answer: '${answerTask3['resposta_4'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[3]),
                   _Block(
-                      title: 'Descrição da imagem 5:',
-                      answer: '${answerTask3['resposta_5'][0]}'),
+                    title: 'Descrição da imagem 5:',
+                    answer: '${answerTask3['resposta_5'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[4]),
                   _Block(
-                      title: 'Descrição da imagem 6:',
-                      answer: '${answerTask3['resposta_6'][0]}'),
+                    title: 'Descrição da imagem 6:',
+                    answer: '${answerTask3['resposta_6'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[5]),
                   _Block(
-                      title: 'Descrição da imagem 7:',
-                      answer: '${answerTask3['resposta_7'][0]}'),
+                    title: 'Descrição da imagem 7:',
+                    answer: '${answerTask3['resposta_7'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[6]),
                   _Block(
-                      title: 'Descrição da imagem 8:',
-                      answer: '${answerTask3['resposta_8'][0]}'),
+                    title: 'Descrição da imagem 8:',
+                    answer: '${answerTask3['resposta_8'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[7]),
                   _Block(
-                      title: 'Descrição da imagem 9:',
-                      answer: '${answerTask3['resposta_9'][0]}'),
+                    title: 'Descrição da imagem 9:',
+                    answer: '${answerTask3['resposta_9'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[8]),
                   _Block(
-                      title: 'Descrição da imagem 10:',
-                      answer: '${answerTask3['resposta_10'][0]}'),
+                    title: 'Descrição da imagem 10:',
+                    answer: '${answerTask3['resposta_10'][0]}',
+                  ),
                   _ImageBlock(image: latinoamericaImages[9]),
                 ],
               ),
@@ -176,7 +189,6 @@ Future<File> generatePdf(
                   pw.Container(
                     height: pageTheme.pageFormat.availableHeight,
                     child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.center,
                       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                       children: <pw.Widget>[
                         pw.ClipOval(
@@ -204,11 +216,13 @@ Future<File> generatePdf(
 Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
   final bgShape = await rootBundle.loadString('assets/images/detalhered.svg');
 
-  format = format.applyMargin(
-      left: 2.0 * PdfPageFormat.cm,
-      top: 4.0 * PdfPageFormat.cm,
-      right: 2.0 * PdfPageFormat.cm,
-      bottom: 2.0 * PdfPageFormat.cm);
+  format.applyMargin(
+    left: 2.0 * PdfPageFormat.cm,
+    top: 4.0 * PdfPageFormat.cm,
+    right: 2.0 * PdfPageFormat.cm,
+    bottom: 2.0 * PdfPageFormat.cm,
+  );
+
   return pw.PageTheme(
     pageFormat: format,
     theme: pw.ThemeData.withFont(
@@ -228,7 +242,9 @@ Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
             ),
             pw.Positioned(
               child: pw.Transform.rotate(
-                  angle: pi, child: pw.SvgImage(svg: bgShape)),
+                angle: pi,
+                child: pw.SvgImage(svg: bgShape),
+              ),
               right: 0,
               bottom: 0,
             ),
@@ -251,35 +267,40 @@ class _Block extends pw.StatelessWidget {
   @override
   pw.Widget build(pw.Context context) {
     return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: <pw.Widget>[
-          pw.Row(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: <pw.Widget>[
-                pw.Container(
-                  width: 6,
-                  height: 6,
-                  margin: const pw.EdgeInsets.only(top: 5.5, left: 2, right: 5),
-                  decoration: const pw.BoxDecoration(
-                    color: red,
-                    shape: pw.BoxShape.circle,
-                  ),
-                ),
-                pw.Text(title,
-                    style: pw.Theme.of(context)
-                        .defaultTextStyle
-                        .copyWith(fontWeight: pw.FontWeight.bold)),
-                pw.Spacer(),
-              ]),
-          pw.Container(
-            width: 800,
-            decoration: const pw.BoxDecoration(
-                border: pw.Border(left: pw.BorderSide(color: red, width: 2))),
-            padding: const pw.EdgeInsets.only(left: 10, top: 5, bottom: 5),
-            margin: const pw.EdgeInsets.only(left: 5),
-            child: pw.Text(answer),
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: <pw.Widget>[
+        pw.Row(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: <pw.Widget>[
+            pw.Container(
+              width: 6,
+              height: 6,
+              margin: const pw.EdgeInsets.only(top: 5.5, left: 2, right: 5),
+              decoration: const pw.BoxDecoration(
+                color: red,
+                shape: pw.BoxShape.circle,
+              ),
+            ),
+            pw.Text(
+              title,
+              style: pw.Theme.of(context)
+                  .defaultTextStyle
+                  .copyWith(fontWeight: pw.FontWeight.bold),
+            ),
+            pw.Spacer(),
+          ],
+        ),
+        pw.Container(
+          width: 800,
+          decoration: const pw.BoxDecoration(
+            border: pw.Border(left: pw.BorderSide(color: red, width: 2)),
           ),
-        ]);
+          padding: const pw.EdgeInsets.only(left: 10, top: 5, bottom: 5),
+          margin: const pw.EdgeInsets.only(left: 5),
+          child: pw.Text(answer),
+        ),
+      ],
+    );
   }
 }
 
@@ -293,22 +314,29 @@ class _ImageBlock extends pw.StatelessWidget {
   @override
   pw.Widget build(pw.Context context) {
     return pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: <pw.Widget>[
-          pw.Container(
-              decoration: const pw.BoxDecoration(
-                  border: pw.Border(left: pw.BorderSide(color: red, width: 2))),
-              padding: const pw.EdgeInsets.only(left: 10, top: 5, bottom: 5),
-              margin: const pw.EdgeInsets.only(left: 5),
-              child: pw.Column(children: [
-                pw.Image(
-                  image,
-                  width: 300,
-                  height: 300,
-                ),
-                pw.SizedBox(height: 30),
-              ])),
-        ]);
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: <pw.Widget>[
+        pw.Container(
+          decoration: const pw.BoxDecoration(
+            border: pw.Border(
+              left: pw.BorderSide(color: red, width: 2),
+            ),
+          ),
+          padding: const pw.EdgeInsets.only(left: 10, top: 5, bottom: 5),
+          margin: const pw.EdgeInsets.only(left: 5),
+          child: pw.Column(
+            children: [
+              pw.Image(
+                image,
+                width: 300,
+                height: 300,
+              ),
+              pw.SizedBox(height: 30),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 

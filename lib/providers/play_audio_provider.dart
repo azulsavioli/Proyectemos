@@ -5,7 +5,7 @@ import 'package:just_audio/just_audio.dart';
 
 class PlayAudioProvider extends ChangeNotifier {
   final _justAudioPlayer = AudioPlayer();
-  double _currAudioPlaying = 0.0;
+  double _currAudioPlaying = 0;
   bool _isSongPlaying = false;
   String _audioFilePath = '';
 

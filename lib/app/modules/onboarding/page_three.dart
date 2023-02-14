@@ -16,12 +16,11 @@ class _PageThreeState extends State<PageThree> {
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Padding(
               padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
               child: Text(
-                "¡Deseamos que los momentos en la aplicación !PROYECTEMOS!",
+                '¡Deseamos que los momentos en la aplicación !PROYECTEMOS!',
                 style: ThemeText.paragraph16WhiteBold,
                 textAlign: TextAlign.center,
               ),
@@ -37,7 +36,7 @@ class _PageThreeState extends State<PageThree> {
             const Padding(
               padding: EdgeInsets.only(top: 12, left: 22, right: 22, bottom: 8),
               child: Text(
-                "sean una experiencia significativa y transformadora! ",
+                'sean una experiencia significativa y transformadora! ',
                 style: ThemeText.paragraph16WhiteBold,
                 textAlign: TextAlign.center,
               ),
