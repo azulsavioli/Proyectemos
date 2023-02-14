@@ -71,6 +71,9 @@ dependencies:
   #Splash
   flutter_native_splash: ^2.2.7
 
+  #Modal
+  modal_bottom_sheet: ^2.1.2
+
   #Launcher icon
   flutter_launcher_icons: ^0.10.0 
 
@@ -117,6 +120,9 @@ dependencies:
   #Card
   card_swiper: ^2.0.4
 
+  #Lint
+  flutterando_analysis: ^0.0.2
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -147,6 +153,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
+  
   flutter_lints: ^2.0.0 
 
 
