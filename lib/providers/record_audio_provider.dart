@@ -15,29 +15,32 @@ class RecordAudioProvider extends ChangeNotifier {
   bool get recordsDeleted => _recordsDeleted;
   String get recordedFilePath => _afterRecordingFilePath;
 
-  clearOldData() {
+  List<dynamic> clearOldData() {
     _afterRecordingFilePath = '';
     if (recordingsPaths.length > 3) {
-      recordingsPaths = [];
+      return recordingsPaths = [];
     }
     notifyListeners();
+    return recordingsPaths;
   }
 
-  recordVoice() async {
+  Future<void> recordVoice() async {
     final isPermitted = (await PermissionManagement.recordingPermission()) &&
         (await PermissionManagement.storagePermission());
     if (!isPermitted) return;
     if (!(await _record.hasPermission())) return;
     final voiceDirPath = await StorageManagement.getAudioDir;
     final voiceFilePath = StorageManagement.createRecordAudioPath(
-        dirPath: voiceDirPath, fileName: 'audio_message');
+      dirPath: voiceDirPath,
+      fileName: 'audio_message',
+    );
     await _record.start(path: voiceFilePath);
     isRecording = true;
     notifyListeners();
     showToast('Comenzó la grabación');
   }
 
-  stopRecording() async {
+  Future<void> stopRecording() async {
     String? audioFilePath;
 
     if (await _record.isRecording()) {
@@ -49,13 +52,13 @@ class RecordAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  cancelRecording() async {
+  void cancelRecording() {
     _recordsDeleted = true;
     clearOldData();
     notifyListeners();
   }
 
-  saveRecording() async {
+  void saveRecording() {
     recordingsPaths.add(_afterRecordingFilePath);
     print('RECORD PATHS LIST : $recordingsPaths');
     clearOldData();
