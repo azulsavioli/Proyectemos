@@ -8,6 +8,58 @@ import '../../../../commons/styles.dart';
 import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 
+Widget buildSwiperCards(List lista) {
+  List<Widget> swipers = [];
+  var i = 0;
+  while (i < lista.length) {
+    final cards = [];
+
+    for (var j = 0; j < 10; j++) {
+      cards.add(
+        Card(
+          child: Column(
+            children: [
+              ListTile(
+                title: Text(lista[i]['nome']),
+                subtitle: Text(
+                  lista[i]['imagem_latinoamerica_${j + 1}'][0],
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                ),
+              ),
+              Image.network(
+                lista[i]['imagem_latinoamerica_${j + 1}'][1],
+                fit: BoxFit.cover,
+                height: 300,
+                width: 300,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    i++;
+    swipers.add(
+      Container(
+        margin: const EdgeInsets.all(10),
+        child: Swiper(
+          itemCount: cards.length,
+          itemBuilder: (BuildContext context, int index) {
+            return cards[index];
+          },
+          itemWidth: 300,
+          itemHeight: 400,
+          layout: SwiperLayout.STACK,
+        ),
+      ),
+    );
+  }
+  return Column(
+    children: swipers,
+  );
+}
+
 class FeedLatinoamericaPage extends StatefulWidget {
   const FeedLatinoamericaPage({super.key});
 
@@ -16,24 +68,35 @@ class FeedLatinoamericaPage extends StatefulWidget {
 }
 
 class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
-  var studentsAnswers;
+  @override
+  void initState() {
+    getImages();
+    super.initState();
+  }
 
-  getStudentsAnswers() async {
-    String doc = 'uno/artistas-latinoamericanos/atividade_3/';
+  List students = [];
 
+  Future<dynamic> getImages() async {
     try {
-      studentsAnswers =
-          await context.read<ProyectemosRepository>().getAllStudentsAnswers();
-      print(studentsAnswers);
+      final snapshot =
+          await context.read<ProyectemosRepository>().getImagesTurma();
+      await setStudentsImageList(snapshot);
     } on FirebaseException catch (e) {
       return e.toString();
     }
   }
 
+  Future<List> setStudentsImageList(snapshot) async {
+    students = [];
+
+    for (final student in snapshot) {
+      students.add(await student);
+    }
+    return students;
+  }
+
   @override
   Widget build(BuildContext context) {
-    var studentsCardsInfo = getStudentsAnswers();
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -45,58 +108,40 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        automaticallyImplyLeading: true,
-        title: const Text(Strings.titleLatinoamericaUno,
-            style: ThemeText.paragraph16WhiteBold),
+        title: Text(
+          Strings.titleLatinoamericaUnoFeed,
+          style: ThemeText.paragraph16WhiteBold,
+        ),
       ),
       endDrawer: const DrawerMenuWidget(),
-      body: ListView(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 15),
-            child: Text(
-              textAlign: TextAlign.center,
-              'Actividades compartidas por los estudiantes',
-              style: ThemeText.h3title22yellow,
-            ),
-          ),
-          SizedBox(
-            height: 400,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Swiper(
-                layout: SwiperLayout.STACK,
-                itemHeight: 400.0,
-                itemWidth: 300.0,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: const Text('Card title 1'),
-                          subtitle: Text(
-                            'Secondary Text',
-                            style:
-                                TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        Image.network(
-                          "https://images.ctfassets.net/hrltx12pl8hq/4T3awLHLswoH7odPXFrNmA/7a8bfc9dcb8bc33cf96d20ab4eebb2a8/Shutterstock_1207028731.jpg?fit=fill&w=400&h=560&fm=webp",
-                          fit: BoxFit.cover,
-                          height: 300,
-                          width: 400,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 3,
-                pagination: const SwiperPagination(),
+      body: FutureBuilder(
+        future: getImages(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text('Ocurrió un error al intentar cargar las imágenes.'),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, left: 10, right: 10, bottom: 15),
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'Actividades compartidas por los estudiantes',
+                  style: ThemeText.paragraph16BlueBold,
+                ),
               ),
-            ),
-          ),
-        ],
+              buildSwiperCards(students)
+            ],
+          );
+        },
       ),
     );
   }

@@ -6,29 +6,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_evento_cultural.dart';
 import '../../../../commons/styles.dart';
-import '../../../../providers/record_audio_provider.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
 import '../../../proyectemos_repository.dart';
 import '../../widgets/custom_record_audio_button.dart';
 import '../../widgets/drawer_menu.dart';
 
-class CriacaoEventoDescricaoPage extends StatefulWidget {
-  const CriacaoEventoDescricaoPage({super.key});
+class CriacaoEventoPage extends StatefulWidget {
+  const CriacaoEventoPage({super.key});
 
   static List<PlatformFile> file = [];
 
   @override
-  State<CriacaoEventoDescricaoPage> createState() =>
-      _CriacaoEventoDescricaoPageState();
+  State<CriacaoEventoPage> createState() => _CriacaoEventoPageState();
 }
 
-class _CriacaoEventoDescricaoPageState
-    extends State<CriacaoEventoDescricaoPage> {
+class _CriacaoEventoPageState extends State<CriacaoEventoPage> {
   bool buttonFileSelected = false;
   Icon buttonFileIcon = const Icon(Icons.file_copy);
   Color buttonFileColor = ThemeColors.blue;
@@ -59,26 +58,31 @@ class _CriacaoEventoDescricaoPageState
 
   @override
   Widget build(BuildContext context) {
-    final audioProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final repository = context.read<ProyectemosRepository>();
+    final currentUser = getCurrentUser(context);
+
+    final audioProvider = Provider.of<RecordAudioProviderEventoCulturalImpl>(
+      context,
+      listen: false,
+    );
     final isAudioFinish = audioProvider.isRecording;
-    var recordsPathList = RecordAudioProvider.recordingsPaths;
+    var recordsPathList = RecordAudioProviderEventoCulturalImpl.recordingsPaths;
     if (recordsPathList.length > 1) {
       recordsPathList = [];
     }
 
     PlatformFile? pickedFile;
-    var isFileButtonDisabled = false;
-    var isAudioButtonDisabled = false;
+    var _isFileButtonDisabled = false;
+
     const propuestaEvento = '''
 ${StringsEventoCultural.descriptionOneEventocultural}
-        ° Elegir un artista\n
-        ° Elegir el tipo de evento\n
-        ° Elegir el sítio\n
-        ° Nombre del evento\n
-        ° El público destinatario\n
-        ° Objetivo del evento\n
-        ${StringsEventoCultural.descriptionTwoEventocultural}''';
+  ° Elegir un artista\n
+  ° Elegir el tipo de evento\n
+  ° Elegir el sítio\n
+  ° Nombre del evento\n
+  ° El público destinatario\n
+  ° Objetivo del evento\n
+${StringsEventoCultural.descriptionTwoEventocultural}''';
 
     Future selectFile(List<PlatformFile> file) async {
       final fileSelected = await FilePicker.platform.pickFiles();
@@ -157,7 +161,7 @@ ${StringsEventoCultural.descriptionOneEventocultural}
       }
     }
 
-    final listFiles = CriacaoEventoDescricaoPage.file;
+    final listFiles = CriacaoEventoPage.file;
 
     List setFiles() {
       final filePaths = [];
@@ -178,7 +182,7 @@ ${StringsEventoCultural.descriptionOneEventocultural}
     Future<dynamic> makeFirebasePaths() async {
       final listFile = setFiles();
       final firebasePathFile = await convertFileToFirebase(listFile);
-      final listAudio = RecordAudioProvider.recordingsPaths;
+      final listAudio = RecordAudioProviderEventoCulturalImpl.recordingsPaths;
       final firebasePathAudio = await convertAudioToFirebase(listAudio);
       final path = setJson(firebasePathFile, firebasePathAudio);
       return path;
@@ -189,12 +193,25 @@ ${StringsEventoCultural.descriptionOneEventocultural}
       const doc = 'uno/criacao_evento/atividade_1/';
 
       try {
-        return await context
-            .read<ProyectemosRepository>()
-            .saveAnswers(doc, json);
+        return repository.saveAnswers(doc, json);
       } on FirebaseException catch (e) {
         return e.toString();
       }
+    }
+
+    Future<List> getEmailTeacherFromFirebase() async {
+      final emails = [];
+      const doc = 'professora';
+      final repository = context.read<ProyectemosRepository>();
+
+      try {
+        final data = await repository.getTeacherEmail(doc);
+        emails.addAll(data);
+      } on FirebaseException catch (e) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+      return emails;
     }
 
     Future<void> sendEmail(currentUser, recordsPathList) async {
@@ -214,19 +231,30 @@ ${StringsEventoCultural.descriptionOneEventocultural}
         ),
       ];
 
-      const email = [
-        'comesana.alexis.silvera@gmail.com',
-        'fernandamaiadeoliveira@gmail.com'
+      final email = await getEmailTeacherFromFirebase();
+
+      final studentInfo =
+          await context.read<ProyectemosRepository>().getUserInfo();
+      final studentInformation = studentInfo.split('/');
+
+      final allStudentInfo = [
+        studentInformation[3],
+        studentInformation[0],
+        studentInformation[1],
+        studentInformation[2]
       ];
 
-      const subject = 'Atividade 1 - Criação do Evento';
-      const text = 'Atividade Criação de Evento 1ª etapa concluída!';
+      const subject = 'Atividade - Criação do Evento';
+      final text = '''
+Proyectemos\n
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+Atividade Criação de Evento 1ª etapa concluída!''';
       final emailSender = EmailSender();
 
       await emailSender.sendEmailToTeacher(
         currentUser,
         attachment,
-        email,
+        [email.first.values.first],
         subject,
         text,
       );
@@ -243,7 +271,7 @@ ${StringsEventoCultural.descriptionOneEventocultural}
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleEventoCulturalUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -257,8 +285,8 @@ ${StringsEventoCultural.descriptionOneEventocultural}
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                textAlign: TextAlign.center,
+              Text(
+                textAlign: TextAlign.start,
                 StringsEventoCultural.descriptionOneEventocultural,
                 style: ThemeText.paragraph16GrayNormal,
               ),
@@ -266,7 +294,6 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                 height: 350,
                 child: ListView(
                   physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(left: 30),
                   children: const [
                     ListTile(title: Text('° Elegir un artista;')),
                     ListTile(title: Text('° Elegir el tipo de evento;')),
@@ -277,8 +304,8 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                   ],
                 ),
               ),
-              const Text(
-                textAlign: TextAlign.center,
+              Text(
+                textAlign: TextAlign.start,
                 StringsEventoCultural.descriptionTwoEventocultural,
                 style: ThemeText.paragraph16GrayNormal,
               ),
@@ -301,13 +328,13 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                   ),
                   icon: buttonFileIcon,
                   onPressed: () {
-                    selectFile(CriacaoEventoDescricaoPage.file);
+                    selectFile(CriacaoEventoPage.file);
                     setState(
                       () {
                         if (pickedFile == null) {
-                          isFileButtonDisabled = false;
+                          _isFileButtonDisabled = false;
                         } else {
-                          isFileButtonDisabled = true;
+                          _isFileButtonDisabled = true;
                         }
                       },
                     );
@@ -344,8 +371,6 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                     ),
                   ),
                   onPressed: () {
-                    final currentUser = getCurrentUser(context);
-
                     if (recordsPathList.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -359,6 +384,7 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                           recordsPathList.length == 1) {
                         sendAnswers();
                         sendEmail(currentUser, recordsPathList);
+                        saveEventoCulturalTareaUnoCompleted();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Resposta enviada com sucesso!'),
@@ -366,7 +392,10 @@ ${StringsEventoCultural.descriptionOneEventocultural}
                           ),
                         );
                         recordsPathList = [];
-                        Navigator.pushNamed(context, '/pUno_evento_cultural');
+                        Navigator.pushNamed(
+                          context,
+                          '/pUno_evento_cultural_menu',
+                        );
                       }
                     }
                   },
@@ -389,6 +418,15 @@ ${StringsEventoCultural.descriptionOneEventocultural}
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> saveEventoCulturalTareaUnoCompleted() async {
+    const eventoTareaUnoCompleted = true;
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      'eventoTareaUnoCompleted',
+      eventoTareaUnoCompleted,
     );
   }
 }

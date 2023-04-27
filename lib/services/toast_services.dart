@@ -6,7 +6,7 @@ void showToast(
   String text, {
   bool shortToast = true,
   bool fromBottom = true,
-  Color color = ThemeColors.blue,
+  Color color = ThemeColors.green,
   Color textColor = Colors.white,
 }) {
   Fluttertoast.showToast(

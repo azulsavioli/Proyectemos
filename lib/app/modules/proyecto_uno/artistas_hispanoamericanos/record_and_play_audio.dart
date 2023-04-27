@@ -9,7 +9,7 @@ import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../providers/play_audio_provider.dart';
-import '../../../../providers/record_audio_provider.dart';
+import '../../../../providers/record_audio_provider_latinoamerica_impl.dart';
 import '../../widgets/drawer_menu.dart';
 
 class RecordAndPlayScreen extends StatefulWidget {
@@ -39,7 +39,8 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderLatinoamericaImpl>(context);
     final playProvider = Provider.of<PlayAudioProvider>(context);
 
     final arguments = ModalRoute.of(context)?.settings.arguments;
@@ -56,7 +57,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleArtistasHispanoamericanosUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -67,7 +68,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            opacity: 0.5,
+            opacity: 0.2,
             fit: BoxFit.cover,
             image: NetworkImage(
               'https://citaliarestauro.com/wp-content/uploads/2021/07/Imagem1.jpg',
@@ -81,7 +82,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
               padding: const EdgeInsets.all(16),
               child: Text(
                 question.toString(),
-                style: ThemeText.h3title22White,
+                style: ThemeText.h3title22Gray,
               ),
             ),
             const SizedBox(height: 80),
@@ -116,31 +117,34 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   Center _recordHeading() {
-    return const Center(
+    return Center(
       child: Text(
         'Grabar Audio',
-        style: ThemeText.h3title22White,
+        style: ThemeText.h3title22Gray,
       ),
     );
   }
 
   Center _playAudioHeading() {
-    return const Center(
+    return Center(
       child: Text(
         'Tocar Audio',
-        style: ThemeText.h3title22White,
+        style: ThemeText.h3title22Gray,
       ),
     );
   }
 
   InkWell _recordingSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderLatinoamericaImpl>(context);
     final recordProviderWithoutListener =
-        Provider.of<RecordAudioProvider>(context, listen: false);
-
+        Provider.of<RecordAudioProviderLatinoamericaImpl>(
+      context,
+      listen: false,
+    );
     if (recordProvider.isRecording) {
       return InkWell(
-        onTap: () async => await recordProviderWithoutListener.stopRecording(),
+        onTap: () async => recordProviderWithoutListener.stopRecording(),
         child: RippleAnimation(
           repeat: true,
           color: ThemeColors.green,
@@ -152,13 +156,14 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     }
 
     return InkWell(
-      onTap: () async => await recordProviderWithoutListener.recordVoice(),
+      onTap: () async => recordProviderWithoutListener.recordVoice(),
       child: _commonIconSection(),
     );
   }
 
   Container _commonIconSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderLatinoamericaImpl>(context);
 
     return Container(
       width: 100,
@@ -177,7 +182,8 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   Container _audioPlayingSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderLatinoamericaImpl>(context);
 
     return Container(
       width: MediaQuery.of(context).size.width - 110,
@@ -233,8 +239,10 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   InkWell _resetButton() {
-    final recordProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final recordProvider = Provider.of<RecordAudioProviderLatinoamericaImpl>(
+      context,
+      listen: false,
+    );
 
     return InkWell(
       onTap: recordProvider.cancelRecording,
@@ -257,8 +265,10 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
   }
 
   InkWell _saveButton() {
-    final recordProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final recordProvider = Provider.of<RecordAudioProviderLatinoamericaImpl>(
+      context,
+      listen: false,
+    );
 
     return InkWell(
       onTap: () => {recordProvider.saveRecording(), Navigator.pop(context)},

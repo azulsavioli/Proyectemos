@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,14 +8,14 @@ import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_latinoamerica.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../commons/strings.dart';
-import '../../../../utils/email_sender.dart';
-import '../../../../utils/get_user.dart';
-import '../../../../utils/latinoamerica_pdf/latinoamerica_pdf.dart';
-import '../../../proyectemos_repository.dart';
-import '../../widgets/drawer_menu.dart';
-import '../../widgets/step.dart';
+import '../../../../../commons/strings.dart';
+import '../../../../../utils/email_sender.dart';
+import '../../../../../utils/get_user.dart';
+import '../../../../proyectemos_repository.dart';
+import '../../../widgets/drawer_menu.dart';
+import '../../../widgets/step.dart';
 
 class PUnoLatinoamericaTareaTresPage extends StatefulWidget {
   const PUnoLatinoamericaTareaTresPage({Key? key}) : super(key: key);
@@ -99,6 +98,24 @@ class PUnoLatinoamericaTareaTresPageState
     return json;
   }
 
+  Map<String, Object> setJsonForFirebase(List<dynamic> imagesList) {
+    final user = getCurrentUser(context);
+    final json = {
+      'nome': '${user?.displayName}',
+      'imagem_latinoamerica_1': [answerUnoController.text, imagesList[0]],
+      'imagem_latinoamerica_2': [answerDosController.text, imagesList[1]],
+      'imagem_latinoamerica_3': [answerTresController.text, imagesList[2]],
+      'imagem_latinoamerica_4': [answerQuatroController.text, imagesList[3]],
+      'imagem_latinoamerica_5': [answerCincoController.text, imagesList[4]],
+      'imagem_latinoamerica_6': [answerSeisController.text, imagesList[5]],
+      'imagem_latinoamerica_7': [answerSieteController.text, imagesList[6]],
+      'imagem_latinoamerica_8': [answerOchoController.text, imagesList[7]],
+      'imagem_latinoamerica_9': [answerNueveController.text, imagesList[8]],
+      'imagem_latinoamerica_10': [answerDiezController.text, imagesList[9]]
+    };
+    return json;
+  }
+
   Future makeJson(GoogleSignInAccount? currentUser) async {
     final list = setImages();
     final firebasePaths = await convertImageToFirebase(list, currentUser);
@@ -106,14 +123,23 @@ class PUnoLatinoamericaTareaTresPageState
     return json;
   }
 
+  Future makeJsonImages(GoogleSignInAccount? currentUser) async {
+    final list = setImages();
+    final firebasePaths = await convertImageToFirebase(list, currentUser);
+    final json = setJsonForFirebase(firebasePaths);
+    return json;
+  }
+
   Future<dynamic> sendAnswers(GoogleSignInAccount? currentUser) async {
     final json = await makeJson(currentUser);
+    final jsonImages = await makeJsonImages(currentUser);
     const doc = 'uno/latinoamerica/atividade_3/';
 
     try {
       await context.read<ProyectemosRepository>().saveAnswers(doc, json);
+      await context.read<ProyectemosRepository>().saveImagesTurma(jsonImages);
       await Future.delayed(
-        const Duration(seconds: 60),
+        const Duration(seconds: 10),
         () => sendEmail(context, currentUser),
       );
     } on FirebaseException catch (e) {
@@ -121,27 +147,125 @@ class PUnoLatinoamericaTareaTresPageState
     }
   }
 
+  Future<List> getEmailTeacherFromFirebase() async {
+    final emails = [];
+    const doc = 'professora';
+    final repository = context.read<ProyectemosRepository>();
+
+    try {
+      final data = await repository.getTeacherEmail(doc);
+      emails.addAll(data);
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+    return emails;
+  }
+
   Future<void> sendEmail(
     BuildContext context,
     GoogleSignInAccount? currentUser,
   ) async {
-    final pdfMaker = LatinoamericaPdf(context);
-    final attachment = [FileAttachment(await pdfMaker.createPDF())];
-    const email = [
-      'comesana.alexis.silvera@gmail.com',
-      'fernandamaiadeoliveira@gmail.com'
+    final attachment = setupAttachments();
+    final email = await getEmailTeacherFromFirebase();
+
+    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInformation = studentInfo.split('/');
+
+    final allStudentInfo = [
+      studentInformation[3],
+      studentInformation[0],
+      studentInformation[1],
+      studentInformation[2]
     ];
-    const subject = 'Atividade Latinoamerica';
-    const text = 'Atividade Latinoamerica concluída!';
+
+    const subject = 'Atividade - Latinoamerica\n Tarea Tres';
+    final text = '''
+Proyectemos\n
+Aluno: ${allStudentInfo[0]}\n
+Escola: ${allStudentInfo[1]} - Série: ${allStudentInfo[2]} - Turma: ${allStudentInfo[3]}\n\n 
+Atividade Latinoamerica 3ª tarefa concluída!
+\n
+     Descrição Imagem 1: ${answerUnoController.text}
+     Descrição Imagem 2: ${answerDosController.text}
+     Descrição Imagem 3: ${answerTresController.text}
+     Descrição Imagem 4: ${answerQuatroController.text}
+     Descrição Imagem 5: ${answerCincoController.text} 
+     Descrição Imagem 6: ${answerSeisController.text}
+     Descrição Imagem 7: ${answerSieteController.text}
+     Descrição Imagem 8: ${answerOchoController.text}
+     Descrição Imagem 9: ${answerNueveController.text}
+     Descrição Imagem 10: ${answerDiezController.text}
+\n
+Imagens em anexo!
+''';
     final emailSender = EmailSender();
 
     await emailSender.sendEmailToTeacher(
       currentUser,
       attachment,
-      email,
+      [email.first.values.first],
       subject,
       text,
     );
+  }
+
+  List<FileAttachment> setupAttachments() {
+    final imagesList = setImages();
+    final fileOne = File(imagesList[0]);
+    final fileTwo = File(imagesList[1]);
+    final fileThree = File(imagesList[2]);
+    final fileFour = File(imagesList[3]);
+    final fileFive = File(imagesList[4]);
+    final fileSix = File(imagesList[5]);
+    final fileSeven = File(imagesList[6]);
+    final fileEight = File(imagesList[7]);
+    final fileNine = File(imagesList[8]);
+    final fileTen = File(imagesList[9]);
+
+    final attachment = [
+      FileAttachment(
+        fileOne,
+        fileName: 'Descrição Imagem 1: ${answerUnoController.text}',
+      ),
+      FileAttachment(
+        fileTwo,
+        fileName: 'Descrição Imagem 2: ${answerDosController.text}',
+      ),
+      FileAttachment(
+        fileThree,
+        fileName: 'Descrição Imagem 3: ${answerTresController.text}',
+      ),
+      FileAttachment(
+        fileFour,
+        fileName: 'Descrição Imagem 4: ${answerQuatroController.text}',
+      ),
+      FileAttachment(
+        fileFive,
+        fileName: 'Descrição Imagem 5: ${answerCincoController.text}',
+      ),
+      FileAttachment(
+        fileSix,
+        fileName: 'Descrição Imagem 6: ${answerSeisController.text}',
+      ),
+      FileAttachment(
+        fileSeven,
+        fileName: 'Descrição Imagem 7: ${answerSieteController.text}',
+      ),
+      FileAttachment(
+        fileEight,
+        fileName: 'Descrição Imagem 8: ${answerOchoController.text}',
+      ),
+      FileAttachment(
+        fileNine,
+        fileName: 'Descrição Imagem 9: ${answerNueveController.text}',
+      ),
+      FileAttachment(
+        fileTen,
+        fileName: 'Descrição Imagem 10: ${answerDiezController.text}',
+      ),
+    ];
+    return attachment;
   }
 
   List<Step> steps(
@@ -157,10 +281,10 @@ class PUnoLatinoamericaTareaTresPageState
     TextEditingController controllerDiez,
   ) {
     return [
-      const Step(
+      Step(
         title: Text(
           StringsLationamerica.titleQOnePageTresLatin,
-          style: ThemeText.h3title22BlueNormal,
+          style: ThemeText.paragraph16BlueBold,
         ),
         content: Text(
           StringsLationamerica.descriptionqOnePageTres,
@@ -276,6 +400,7 @@ class PUnoLatinoamericaTareaTresPageState
   @override
   Widget build(BuildContext context) {
     final currentUser = getCurrentUser(context);
+    var _latinoamerica = false;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -288,7 +413,7 @@ class PUnoLatinoamericaTareaTresPageState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleLatinoamericaUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -328,7 +453,12 @@ class PUnoLatinoamericaTareaTresPageState
                     duration: Duration(seconds: 2),
                   ),
                 );
-                Navigator.pushNamed(context, '/proyecto_uno');
+                _latinoamerica = true;
+                saveLatinoamericaCompleted();
+                Navigator.pushNamed(
+                  context,
+                  '/pUno_latinoamerica_menu',
+                );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -388,6 +518,15 @@ class PUnoLatinoamericaTareaTresPageState
           },
         ),
       ),
+    );
+  }
+
+  Future<void> saveLatinoamericaCompleted() async {
+    const latinoamericaTareaTresCompleted = true;
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      'latinoamericaTareaTresCompleted',
+      latinoamericaTareaTresCompleted,
     );
   }
 }

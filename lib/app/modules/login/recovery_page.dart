@@ -27,7 +27,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
         appBar: AppBar(
           backgroundColor: ThemeColors.blue,
           elevation: 0,
-          title: const Text(
+          title: Text(
             'Recuperar contraseña',
             style: ThemeText.paragraph16White,
           ),
@@ -39,7 +39,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Center(
+                Center(
                   child: Text(
                     '''Reciba un correo electrónico para\nrestablecer tu contraseña''',
                     style: ThemeText.paragraph16GrayNormal,
@@ -53,15 +53,15 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                   style: ThemeText.paragraph16GrayNormal,
                   controller: emailController,
                   cursorColor: Colors.blueGrey,
-                  decoration: const InputDecoration(
-                    enabledBorder: OutlineInputBorder(
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blueGrey),
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
                     ),
                     label: Padding(
-                      padding: EdgeInsets.only(left: 8),
+                      padding: const EdgeInsets.only(left: 8),
                       child: Text(
                         'Correo electrónico',
                         style: ThemeText.paragraph16GrayLight,
@@ -123,7 +123,7 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                         }
                     },
                     icon: const Icon(Icons.email_outlined),
-                    label: const Text(
+                    label: Text(
                       'Restablecer la contraseña',
                       style: ThemeText.paragraph16WhiteBold,
                     ),

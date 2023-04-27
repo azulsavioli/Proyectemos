@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
         bottomSheet: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          height: 80,
+          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

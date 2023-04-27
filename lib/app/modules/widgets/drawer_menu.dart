@@ -16,10 +16,10 @@ class DrawerMenuWidget extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(250, 251, 250, 1),
       child: Column(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 90,
             child: DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromRGBO(0, 159, 251, 1),
               ),
               child: Center(

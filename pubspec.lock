@@ -10,13 +10,13 @@ packages:
     source: hosted
     version: "1.0.2"
   archive:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: archive
-      sha256: "793964beb8e297995714326628881437d4211f10fc8843534bab54129cd896ee"
+      sha256: "0c8368c9b3f0abbc193b9d6133649a614204b528982bebc7026372d61677ce3a"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.7"
   args:
     dependency: transitive
     description:
@@ -217,6 +217,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.2.5"
+  firebase_app_check:
+    dependency: "direct main"
+    description:
+      name: firebase_app_check
+      sha256: "6be62db8bb168f4434522ce4eaed892f4c18dd3a6a86de33ebb7a3af04df3582"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9+1"
+  firebase_app_check_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_app_check_platform_interface
+      sha256: ab29ea054b19645093ef8894e38ca0b47d72d76e7f8b33f3624590e4b22aa012
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.5+1"
+  firebase_app_check_web:
+    dependency: transitive
+    description:
+      name: firebase_app_check_web
+      sha256: "8bda9cae00a18156dfff59828f008cfd0a55d5eb4de69c66a322eb5be552ce82"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.7+1"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -379,6 +403,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      sha256: "0a122936b450324cbdfd51be0819cc6fcebb093eb65585e9cd92263f7a1a8a39"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.7.0"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -533,6 +565,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.2"
+  group_radio_button:
+    dependency: "direct main"
+    description:
+      name: group_radio_button
+      sha256: "204de8d16b224be7fc72dade0c3afd410ff5a34417d89f74f0fd8be7a8c2b4d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   html:
     dependency: transitive
     description:
@@ -829,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.8.4"
+  pdf_compressor:
+    dependency: "direct main"
+    description:
+      name: pdf_compressor
+      sha256: "83a2e3cb5e4b526f573b9e7f4e2a19d080656c807c6f597246cd2be2349b0db5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   pdf_merger:
     dependency: "direct main"
     description:

@@ -7,8 +7,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-import '../../commons/strings_latinoamerica.dart';
-
 const PdfColor red = PdfColor.fromInt(0xfff30146);
 const PdfColor white = PdfColor.fromInt(0xffffffff);
 const sep = 120.0;
@@ -18,26 +16,33 @@ Future<File> saveDocument({
   required pw.Document pdf,
 }) async {
   final bytes = await pdf.save();
-  final dir = await getApplicationDocumentsDirectory();
-  final file = File('${dir.path}/$name');
 
-  await file.writeAsBytes(bytes);
-  return file;
+  final dir = await getApplicationDocumentsDirectory();
+
+  final pdfFile = File('${dir.path}/$name');
+
+  print(pdfFile.readAsBytes.toString());
+
+  final compressedFile = await compressPdf(pdfFile);
+
+  await compressedFile.writeAsBytes(bytes);
+
+  print(compressedFile.readAsBytes.toString());
+
+  return compressedFile;
 }
 
 Future<File> generatePdf(
   PdfPageFormat format,
-  allAnswers,
+  List allAnswers,
   List<String> infoPdfHeader,
   List<String?> studentInfo,
   List latinoamericaImages,
   String dataFormatada,
 ) async {
-  final doc = pw.Document(title: 'Atividade-Latinoamerica', author: 'Maia');
+  final doc = pw.Document(title: 'Atividade 3 - Latinoamerica', author: 'Maia');
 
-  final answerTask1 = allAnswers[0];
-  final answerTask2 = allAnswers[1];
-  final answerTask3 = allAnswers[2];
+  final answerTask3 = allAnswers[0];
 
   final profileImage = pw.MemoryImage(
     (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
@@ -87,6 +92,7 @@ Future<File> generatePdf(
                                 pw.Text('Aluno: '),
                                 pw.Text('Escola: '),
                                 pw.Text('Série: '),
+                                pw.Text('Turma: '),
                                 pw.Text(dataFormatada),
                               ],
                             ),
@@ -96,6 +102,7 @@ Future<File> generatePdf(
                                 pw.Text(studentInfo[0]!),
                                 pw.Text(studentInfo[1]!),
                                 pw.Text(studentInfo[2]!),
+                                pw.Text(studentInfo[3]!)
                               ],
                             ),
                             pw.Padding(padding: pw.EdgeInsets.zero)
@@ -103,29 +110,6 @@ Future<File> generatePdf(
                         ),
                       ],
                     ),
-                  ),
-                  _Category(title: 'Atividade 1'),
-                  _Block(
-                    title: StringsLationamerica.qOneLatinPageOne,
-                    answer: '${answerTask1['resposta_1']}',
-                  ),
-                  _Block(
-                    title: StringsLationamerica.qTwoLatinPageOne,
-                    answer: '${answerTask1['resposta_2']}',
-                  ),
-                  pw.SizedBox(height: 20),
-                  _Category(title: 'Atividade 2'),
-                  _Block(
-                    title: StringsLationamerica.qOneLationPageTwo,
-                    answer: '${answerTask2['resposta_1']}',
-                  ),
-                  _Block(
-                    title: StringsLationamerica.qTwoLatinPageTwo,
-                    answer: '${answerTask2['resposta_2']}',
-                  ),
-                  _Block(
-                    title: StringsLationamerica.qThreeLatinPageTwo,
-                    answer: '${answerTask2['resposta_3']}',
                   ),
                   pw.SizedBox(height: 20),
                   _Category(title: 'Atividade 3'),
@@ -213,6 +197,35 @@ Future<File> generatePdf(
   return saveDocument(name: 'Atividade-Latinoamerica.pdf', pdf: doc);
 }
 
+Future<File> compressPdf(File file) async {
+  final pdf = pw.Document();
+
+  // Ler o conteúdo do arquivo PDF
+  final bytes = await file.readAsBytes();
+
+  // Adicionar o arquivo PDF lido ao documento PDF
+  pdf.addPage(
+    pw.Page(
+      pageFormat: PdfPageFormat.a4,
+      build: (pw.Context context) {
+        return pw.Center(
+          child: pw.Image(pw.MemoryImage(bytes)),
+        );
+      },
+    ),
+  );
+
+  // Gerar o conteúdo do PDF compactado
+  final compressedBytes = await pdf.save();
+
+  // Salvar o conteúdo compactado como um novo arquivo PDF
+  final compressedFile =
+      File('${(await getTemporaryDirectory()).path}/compressed.pdf');
+  await compressedFile.writeAsBytes(compressedBytes);
+
+  return compressedFile;
+}
+
 Future<pw.PageTheme> _myPageTheme(PdfPageFormat format) async {
   final bgShape = await rootBundle.loadString('assets/images/detalhered.svg');
 
@@ -291,7 +304,7 @@ class _Block extends pw.StatelessWidget {
           ],
         ),
         pw.Container(
-          width: 800,
+          width: 200,
           decoration: const pw.BoxDecoration(
             border: pw.Border(left: pw.BorderSide(color: red, width: 2)),
           ),
@@ -328,8 +341,8 @@ class _ImageBlock extends pw.StatelessWidget {
             children: [
               pw.Image(
                 image,
-                width: 300,
-                height: 300,
+                width: 250,
+                height: 250,
               ),
               pw.SizedBox(height: 30),
             ],

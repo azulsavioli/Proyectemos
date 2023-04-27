@@ -1,87 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyectemos/services/storage_service.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:proyectemos/app/proyectemos_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings_latinoamerica.dart';
+import '../../../../../commons/styles.dart';
+import '../../../../../services/toast_services.dart';
+import '../../../../../utils/email_sender.dart';
+import '../../../../../utils/get_user.dart';
+import '../../../widgets/custom_text_form_field.dart';
+import '../../../widgets/drawer_menu.dart';
 
-import '../../../../commons/strings.dart';
-import '../../../../commons/strings_latinoamerica.dart';
-import '../../../../commons/styles.dart';
-import '../../../proyectemos_repository.dart';
-import '../../widgets/custom_text_form_field.dart';
-import '../../widgets/drawer_menu.dart';
-
-class PUnoLatinoamericaTareaUnoPage extends StatefulWidget {
-  const PUnoLatinoamericaTareaUnoPage({Key? key}) : super(key: key);
+class PUnoLatinoamericaTareaDosPage extends StatefulWidget {
+  const PUnoLatinoamericaTareaDosPage({Key? key}) : super(key: key);
 
   @override
-  State<PUnoLatinoamericaTareaUnoPage> createState() =>
-      _PUnoLatinoamericaTareaUnoPageState();
+  State<PUnoLatinoamericaTareaDosPage> createState() =>
+      _PUnoLatinoamericaTareaDosPageState();
 }
 
-class _PUnoLatinoamericaTareaUnoPageState
-    extends State<PUnoLatinoamericaTareaUnoPage> {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final StorageService storageService = StorageService();
-
+class _PUnoLatinoamericaTareaDosPageState
+    extends State<PUnoLatinoamericaTareaDosPage> {
   final formKey = GlobalKey<FormState>();
   final _answerUnoController = TextEditingController();
   final _answerDosController = TextEditingController();
-
-  late YoutubePlayerController controller;
-  late TextEditingController idController;
-  late TextEditingController seekToController;
-
-  late PlayerState playerState;
-  late YoutubeMetaData videoMetaData;
-  final double volume = 100;
-  final bool muted = false;
-  final bool isPlayerReady = false;
+  final _answerTresController = TextEditingController();
 
   bool loading = false;
 
   @override
-  void initState() {
-    super.initState();
-
-    controller = YoutubePlayerController(
-      initialVideoId: 'R21d66HYGPw',
-      flags: const YoutubePlayerFlags(
-        autoPlay: false,
-      ),
-    )..addListener(listener);
-    idController = TextEditingController();
-    seekToController = TextEditingController();
-    videoMetaData = const YoutubeMetaData();
-    playerState = PlayerState.buffering;
-  }
-
-  void listener() {
-    if (isPlayerReady && mounted && !controller.value.isFullScreen) {
-      setState(() {
-        playerState = controller.value.playerState;
-        videoMetaData = controller.metadata;
-      });
-    }
-  }
-
-  @override
-  void deactivate() {
-    // Pauses video while navigating to next page.
-    controller.pause();
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    idController.dispose();
-    seekToController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final currentUser = getCurrentUser(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -93,7 +44,7 @@ class _PUnoLatinoamericaTareaUnoPageState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleLatinoamericaUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -112,73 +63,69 @@ class _PUnoLatinoamericaTareaUnoPageState
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      StringsLationamerica.titleQOnePageOneLatin,
-                      style: ThemeText.paragraph16GrayNormal,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      StringsLationamerica.qOneLatinPageOne,
+                    Text(
+                      StringsLationamerica.qOneLationPageTwo,
                       style: ThemeText.paragraph14Gray,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 20,
                     ),
                     CustomTextFormField(
                       hint: 'Respuesta',
                       controller: _answerUnoController,
                       keyboardType: TextInputType.text,
                       validatorVazio: 'Ingrese tuja respuesta correctamente',
-                      validatorMenorque10:
+                      validatorMenorqueNumero:
                           'Su respuesta debe tener al menos 10 caracteres',
+                      validatorNumeroDeCaracteres: 10,
                     ),
                     const SizedBox(
-                      height: 25,
+                      height: 20,
                     ),
-                    const Text(
-                      StringsLationamerica.qTwoLatinPageOne,
+                    Text(
+                      StringsLationamerica.qTwoLatinPageTwo,
                       style: ThemeText.paragraph14Gray,
                     ),
                     const SizedBox(
-                      height: 15,
+                      height: 20,
                     ),
                     CustomTextFormField(
                       hint: 'Respuesta',
                       controller: _answerDosController,
                       keyboardType: TextInputType.text,
                       validatorVazio: 'Ingrese tuja respuesta correctamente',
-                      validatorMenorque10:
+                      validatorMenorqueNumero:
                           'Su respuesta debe tener al menos 10 caracteres',
+                      validatorNumeroDeCaracteres: 10,
+                    ),
+                    const SizedBox(
+                      height: 25,
+                    ),
+                    Text(
+                      StringsLationamerica.qThreeLatinPageTwo,
+                      style: ThemeText.paragraph14Gray,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      StringsLationamerica.titleQtwoPageOneLatin,
+                    CustomTextFormField(
+                      hint: 'Respuesta',
+                      controller: _answerTresController,
+                      keyboardType: TextInputType.text,
+                      validatorVazio: 'Ingrese tuja respuesta correctamente',
+                      validatorMenorqueNumero:
+                          'Su respuesta debe tener al menos 10 caracteres',
+                      validatorNumeroDeCaracteres: 10,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      StringsLationamerica.titleQOnePageDosLatin,
                       style: ThemeText.paragraph16GrayNormal,
                     ),
                     const SizedBox(
                       height: 20,
-                    ),
-                    YoutubePlayer(
-                      thumbnail: const Text(
-                        'https://img.youtube.com/vi/R21d66HYGPw/hqdefault.jpg',
-                      ),
-                      controller: controller,
-                      showVideoProgressIndicator: true,
-                      progressIndicatorColor: ThemeColors.yellow,
-                      progressColors: const ProgressBarColors(
-                        playedColor: ThemeColors.yellow,
-                        handleColor: ThemeColors.yellow,
-                      ),
-                      onReady: () {
-                        controller.addListener(listener);
-                      },
-                    ),
-                    const SizedBox(
-                      height: 25,
                     ),
                     SizedBox(
                       height: 60,
@@ -196,19 +143,21 @@ class _PUnoLatinoamericaTareaUnoPageState
                             final json = {
                               'resposta_1': _answerUnoController.text,
                               'resposta_2': _answerDosController.text,
+                              'resposta_3': _answerTresController.text,
                             };
-
-                            deactivate();
+                            final respostas = [
+                              _answerUnoController.text,
+                              _answerDosController.text,
+                              _answerTresController.text,
+                            ];
                             sendAnswersToFirebase(json);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Resposta enviada com sucesso!'),
-                                duration: Duration(seconds: 2),
-                              ),
-                            );
+                            sendEmail(currentUser, respostas);
+                            showToast('Resposta enviada com sucesso!');
+                            saveLatinoamericaCompleted();
+
                             Navigator.pushNamed(
                               context,
-                              '/pUno_latinoamerica_tarea_dos',
+                              '/pUno_latinoamerica_menu',
                             );
                           }
                         },
@@ -251,12 +200,75 @@ class _PUnoLatinoamericaTareaUnoPageState
   }
 
   Future<void> sendAnswersToFirebase(Map<String, String> json) async {
-    const doc = 'uno/latinoamerica/atividade_1/';
+    const doc = 'uno/latinoamerica/atividade_2/';
     try {
       await context.read<ProyectemosRepository>().saveAnswers(doc, json);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));
     }
+  }
+
+  Future<void> saveLatinoamericaCompleted() async {
+    const latinoamericaTareaDosCompleted = true;
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      'latinoamericaTareaDosCompleted',
+      latinoamericaTareaDosCompleted,
+    );
+  }
+
+  Future<List> getEmailTeacherFromFirebase() async {
+    final emails = [];
+    const doc = 'professora';
+    final repository = context.read<ProyectemosRepository>();
+
+    try {
+      final data = await repository.getTeacherEmail(doc);
+      emails.addAll(data);
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+    return emails;
+  }
+
+  Future<void> sendEmail(currentUser, respostas) async {
+    final email = await getEmailTeacherFromFirebase();
+
+    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInformation = studentInfo.split('/');
+
+    final allStudentInfo = [
+      studentInformation[3],
+      studentInformation[0],
+      studentInformation[1],
+      studentInformation[2]
+    ];
+
+    const subject = 'Atividade - Latinoamerica\n Tarea Dos';
+    final text = '''
+Proyectemos\n
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+Atividade Latinoamerica 2ª tarefa concluída!
+\n\n
+Pergunta: ${StringsLationamerica.qOneLationPageTwo}\n
+Resposta: ${respostas[0]}
+\n
+Pergunta: ${StringsLationamerica.qTwoLatinPageTwo}\n
+Resposta: ${respostas[1]}
+\n
+Pergunta: ${StringsLationamerica.qThreeLatinPageTwo}\n
+Resposta: ${respostas[2]}
+''';
+    final emailSender = EmailSender();
+
+    await emailSender.sendEmailToTeacher(
+      currentUser,
+      [],
+      [email.first.values.first],
+      subject,
+      text,
+    );
   }
 }

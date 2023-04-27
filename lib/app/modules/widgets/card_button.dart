@@ -30,20 +30,23 @@ class CardButton extends StatelessWidget {
       height: cardHeight,
       width: cardWidth,
       child: ElevatedButton.icon(
-        icon: CircleAvatar(
-          radius: 28,
-          backgroundColor: backgroundColor,
-          child: Icon(
-            icon,
-            size: iconSize,
-            color: ThemeColors.white,
+        icon: Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: CircleAvatar(
+            radius: 28,
+            backgroundColor: backgroundColor,
+            child: Icon(
+              icon,
+              size: iconSize,
+              color: ThemeColors.white,
+            ),
           ),
         ),
         style: ElevatedButton.styleFrom(
           foregroundColor: shadowColor,
           backgroundColor: Colors.white,
           elevation: 1,
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
           textStyle: ThemeText.paragraph16GrayNormal,
         ),
         onPressed: () {
@@ -52,7 +55,7 @@ class CardButton extends StatelessWidget {
         label: Row(
           children: [
             const SizedBox(
-              width: 25,
+              width: 15,
             ),
             Text(
               text,

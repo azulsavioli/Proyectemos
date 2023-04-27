@@ -8,15 +8,16 @@ import 'package:mailer/mailer.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings_artistas_latinoamericanos.dart';
 import 'package:proyectemos/utils/get_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../commons/strings.dart';
-import '../../../../commons/styles.dart';
-import '../../../../providers/record_audio_provider.dart';
-import '../../../../utils/email_sender.dart';
-import '../../../proyectemos_repository.dart';
-import '../../widgets/custom_carousel.dart';
-import '../../widgets/custom_record_audio_button.dart';
-import '../../widgets/drawer_menu.dart';
+import '../../../../../commons/strings.dart';
+import '../../../../../commons/styles.dart';
+import '../../../../../providers/record_audio_provider_latinoamerica_impl.dart';
+import '../../../../../utils/email_sender.dart';
+import '../../../../proyectemos_repository.dart';
+import '../../../widgets/custom_carousel.dart';
+import '../../../widgets/custom_record_audio_button.dart';
+import '../../../widgets/drawer_menu.dart';
 
 class PUnoArtistasLatinoamericanosTareaUnoPage extends StatefulWidget {
   const PUnoArtistasLatinoamericanosTareaUnoPage({super.key});
@@ -30,13 +31,16 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     extends State<PUnoArtistasLatinoamericanosTareaUnoPage> {
   final formKey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    loadingImages();
+    super.initState();
+  }
+
   final imgList = [
     'https://citaliarestauro.com/wp-content/uploads/2021/07/Imagem1.jpg',
-    // 'https://fridakahlo.site/wp-content/uploads/2021/04/1940-completa-3-1.jpg',
     'https://cdn.culturagenial.com/imagens/coluna-partida-cke.gif',
-    // 'https://fridakahlo.site/wp-content/uploads/2021/04/1944-completa-1-1.jpg',
     'https://cdn.culturagenial.com/imagens/o-veado-ferido-cke.jpg',
-    // 'https://fridakahlo.site/wp-content/uploads/2021/04/1946-completa.jpg',
     'https://fridakahlo.site/wp-content/uploads/2022/02/1945-completa-hope2.jpg'
   ];
 
@@ -47,15 +51,17 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     'Desesperado, 1945'
   ];
 
-  bool loading = false;
+  bool loading = true;
   bool recordsDeleted = false;
 
   @override
   Widget build(BuildContext context) {
-    final audioProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final audioProvider = Provider.of<RecordAudioProviderLatinoamericaImpl>(
+      context,
+      listen: false,
+    );
     final isAudioFinish = audioProvider.isRecording;
-    var recordsPathList = RecordAudioProvider.recordingsPaths;
+    var recordsPathList = RecordAudioProviderLatinoamericaImpl.recordingsPaths;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -68,7 +74,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleArtistasHispanoamericanosUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -87,7 +93,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Center(
+                    Center(
                       child: Text(
                         'Frida Kahlo',
                         style: ThemeText.h2title35BlueNormal,
@@ -96,11 +102,24 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                     const SizedBox(
                       height: 20,
                     ),
-                    CustomCarousel(imgList: imgList, imgNameList: imgNameList),
+                    if (loading)
+                      const SizedBox(
+                        height: 400,
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: ThemeColors.yellow,
+                          ),
+                        ),
+                      )
+                    else
+                      CustomCarousel(
+                        imgList: imgList,
+                        imgNameList: imgNameList,
+                      ),
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
+                    Text(
                       StringsArtistasLationamerica
                           .titleQOnePageOneArtistasLatin,
                       style: ThemeText.paragraph16GrayNormal,
@@ -108,7 +127,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
+                    Text(
                       StringsArtistasLationamerica.qOneArtistasLatinPageOne,
                       style: ThemeText.paragraph16GrayBold,
                     ),
@@ -120,7 +139,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                       labelButton: 'Grabar la respuesta',
                       labelButtonFinished: 'Completo',
                     ),
-                    const Text(
+                    Text(
                       StringsArtistasLationamerica.qTwoArtistasLatinPageOne,
                       style: ThemeText.paragraph16GrayBold,
                     ),
@@ -132,7 +151,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                       labelButton: 'Grabar la respuesta',
                       labelButtonFinished: 'Completo',
                     ),
-                    const Text(
+                    Text(
                       StringsArtistasLationamerica.qThreeArtistasLatinPageOne,
                       style: ThemeText.paragraph16GrayBold,
                     ),
@@ -174,8 +193,8 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                           } else {
                             if (recordsPathList.isNotEmpty &&
                                 recordsPathList.length == 3) {
-                              sendAnswers(currentUser);
-                              sendEmail(currentUser, recordsPathList);
+                              sendAnswers(currentUser, recordsPathList);
+                              saveArtistasTareaUnoCompleted();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content:
@@ -183,11 +202,12 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                                   duration: Duration(seconds: 2),
                                 ),
                               );
+                              recordsPathList = [];
+
                               Navigator.pushNamed(
                                 context,
-                                '/pUno_artistas_latinoamericanos_tarea_dos',
+                                '/pUno_artistas_menu',
                               );
-                              recordsPathList = [];
                             }
                           }
                         },
@@ -263,7 +283,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
   }
 
   Future<dynamic> makeJson(GoogleSignInAccount? currentUser) async {
-    final list = RecordAudioProvider.recordingsPaths;
+    final list = RecordAudioProviderLatinoamericaImpl.recordingsPaths;
     final firebasePaths = await convertAudioToFirebase(list, currentUser);
     final json = setJson(firebasePaths);
     return json;
@@ -278,24 +298,56 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     return json;
   }
 
-  sendAnswers(GoogleSignInAccount? currentUser) async {
+  Future sendAnswers(
+    GoogleSignInAccount? currentUser,
+    List<String> recordsPathList,
+  ) async {
     final json = await makeJson(currentUser);
     const doc = 'uno/artistas-latinoamericanos/atividade_1/';
 
     try {
-      return await context.read<ProyectemosRepository>().saveAnswers(doc, json);
+      await context.read<ProyectemosRepository>().saveAnswers(doc, json);
+      await Future.delayed(
+        const Duration(seconds: 20),
+        () => sendEmail(recordsPathList, currentUser),
+      );
     } on FirebaseException catch (e) {
       return e.toString();
     }
   }
 
+  Future<List> getEmailTeacherFromFirebase() async {
+    final emails = [];
+    const doc = 'professora';
+    final repository = context.read<ProyectemosRepository>();
+
+    try {
+      final data = await repository.getTeacherEmail(doc);
+      emails.addAll(data);
+    } on FirebaseException catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+    return emails;
+  }
+
   Future<void> sendEmail(
-    GoogleSignInAccount? currentUser,
     List<String> recordsPathList,
+    GoogleSignInAccount? currentUser,
   ) async {
     final firstAudio = File(recordsPathList[0]);
     final secondAudio = File(recordsPathList[1]);
     final thirdAudio = File(recordsPathList[2]);
+
+    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInformation = studentInfo.split('/');
+
+    final allStudentInfo = [
+      studentInformation[3],
+      studentInformation[0],
+      studentInformation[1],
+      studentInformation[2]
+    ];
 
     final attachment = [
       FileAttachment(
@@ -315,22 +367,38 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
       )
     ];
 
-    const email = [
-      'comesana.alexis.silvera@gmail.com',
-      'fernandamaiadeoliveira@gmail.com'
-    ];
+    final email = await getEmailTeacherFromFirebase();
 
-    const subject = 'Atividade 1 - Artistas Latinoamericanos';
-    const text =
-        '''Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
+    const subject = 'Atividade - Artistas Latinoamericanos 1';
+    final text = '''
+Proyectemos\n
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
     final emailSender = EmailSender();
 
     await emailSender.sendEmailToTeacher(
       currentUser,
       attachment,
-      email,
+      [email.first.values.first],
       subject,
       text,
     );
+  }
+
+  Future<void> saveArtistasTareaUnoCompleted() async {
+    const artistasTareaUnoCompleted = true;
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      'artistasTareaUnoCompleted',
+      artistasTareaUnoCompleted,
+    );
+  }
+
+  Future loadingImages() async {
+    await Future.delayed(const Duration(seconds: 5), () {
+      setState(() {
+        loading = false;
+      });
+    });
   }
 }

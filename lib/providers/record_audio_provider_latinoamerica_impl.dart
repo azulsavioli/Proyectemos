@@ -3,8 +3,10 @@ import 'package:proyectemos/services/permission_management.dart';
 import 'package:record/record.dart';
 import '../services/storage_management.dart';
 import '../services/toast_services.dart';
+import 'audio_provider_interface.dart';
 
-class RecordAudioProvider extends ChangeNotifier {
+class RecordAudioProviderLatinoamericaImpl extends ChangeNotifier
+    implements AudioProvider {
   final Record _record = Record();
   String _afterRecordingFilePath = '';
   static List<String> recordingsPaths = [];
@@ -15,6 +17,7 @@ class RecordAudioProvider extends ChangeNotifier {
   bool get recordsDeleted => _recordsDeleted;
   String get recordedFilePath => _afterRecordingFilePath;
 
+  @override
   List<dynamic> clearOldData() {
     _afterRecordingFilePath = '';
     if (recordingsPaths.length > 3) {
@@ -24,6 +27,14 @@ class RecordAudioProvider extends ChangeNotifier {
     return recordingsPaths;
   }
 
+  @override
+  void clearAllData() {
+    _afterRecordingFilePath = '';
+    recordingsPaths = [];
+    notifyListeners();
+  }
+
+  @override
   Future<void> recordVoice() async {
     final isPermitted = (await PermissionManagement.recordingPermission()) &&
         (await PermissionManagement.storagePermission());
@@ -40,6 +51,7 @@ class RecordAudioProvider extends ChangeNotifier {
     showToast('Comenzó la grabación');
   }
 
+  @override
   Future<void> stopRecording() async {
     String? audioFilePath;
 
@@ -52,12 +64,14 @@ class RecordAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   void cancelRecording() {
     _recordsDeleted = true;
     clearOldData();
     notifyListeners();
   }
 
+  @override
   void saveRecording() {
     recordingsPaths.add(_afterRecordingFilePath);
     print('RECORD PATHS LIST : $recordingsPaths');

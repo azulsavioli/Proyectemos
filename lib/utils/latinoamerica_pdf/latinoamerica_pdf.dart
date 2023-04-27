@@ -109,7 +109,8 @@ class LatinoamericaPdf {
     proyectemosTitle = 'Proyectemos';
     sectionTitle = 'Uno';
     taskTitle = 'Latinoamerica';
-    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInfo =
+        await context.read<ProyectemosRepository>().getUserInfo();
     final studentInformation = studentInfo.split('/');
 
     final allAnswers = await getAnswersFromFirebase();
@@ -129,6 +130,7 @@ class LatinoamericaPdf {
       studentInformation[3],
       studentInformation[0],
       studentInformation[1],
+      studentInformation[2]
     ];
 
     return generatePdf(
@@ -142,18 +144,15 @@ class LatinoamericaPdf {
   }
 
   Future<List> getAnswersFromFirebase() async {
-    const doc1 = 'uno/latinoamerica/atividade_1';
-    const doc2 = 'uno/latinoamerica/atividade_2';
     const doc3 = 'uno/latinoamerica/atividade_3';
 
     final repository = context.read<ProyectemosRepository>();
 
     try {
-      final answers1 = await repository.getAnswers(doc1);
-      final answers2 = await repository.getAnswers(doc2);
-      final answers3 = await repository.getAnswers(doc3);
-
-      answers.addAll([...answers1, ...answers2, ...answers3]);
+      final answers1 = await repository.getAnswers(doc3);
+      answers.addAll([
+        ...answers1,
+      ]);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.toString())));

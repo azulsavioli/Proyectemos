@@ -24,6 +24,7 @@ class EmailSender {
       ..recipients = recipients
       ..subject = subject
       ..text = text;
+
     try {
       await send(message, smtpServer);
     } on MailerException catch (e) {

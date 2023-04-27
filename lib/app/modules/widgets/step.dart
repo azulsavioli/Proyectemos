@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' hide Color;
 import 'package:image_picker/image_picker.dart';
 import 'package:proyectemos/services/toast_services.dart';
 
@@ -76,7 +77,12 @@ class _CustomStepState extends State<CustomStep> {
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
 
-    final temporaryImage = File(image.path);
+    final bytes = await File(image.path).readAsBytes();
+    final imagemfinal = decodeImage(bytes);
+
+    final compressedImage = encodeJpg(imagemfinal!, quality: 50);
+
+    final temporaryImage = await File(image.path).writeAsBytes(compressedImage);
 
     setState(() => this.image = temporaryImage);
     images.add(image);
@@ -102,7 +108,7 @@ class _CustomStepState extends State<CustomStep> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Seleciona una imagen de su camara o de su arquivo',
               style: ThemeText.paragraph14Gray,
             ),
@@ -164,7 +170,7 @@ class _CustomStepState extends State<CustomStep> {
               ],
             ),
             const Divider(),
-            const Text(
+            Text(
               'Cual la descripción de esa imagen',
               style: ThemeText.paragraph14Gray,
             ),
@@ -176,8 +182,9 @@ class _CustomStepState extends State<CustomStep> {
               controller: widget.controller,
               keyboardType: TextInputType.text,
               validatorVazio: 'Ingrese tuja respuesta correctamente',
-              validatorMenorque10:
-                  'Su respuesta debe tener al menos 10 caracteres',
+              validatorMenorqueNumero:
+                  'Su respuesta debe tener al menos 3 caracteres',
+              validatorNumeroDeCaracteres: 3,
             ),
             const SizedBox(
               height: 10,

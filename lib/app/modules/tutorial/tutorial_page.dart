@@ -27,13 +27,13 @@ class _TutorialPageState extends State<TutorialPage> {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          title: const Text(
+          title: Text(
             Strings.titleTutorialesPage,
             style: ThemeText.paragraph16WhiteBold,
           ),
         ),
         endDrawer: const DrawerMenuWidget(),
-        body: const Center(
+        body: Center(
           child: Text(
             'Tutoriales',
             style: ThemeText.paragraph14Blue,

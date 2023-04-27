@@ -83,7 +83,7 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
                 }
               });
             },
-            label: const Text(
+            label: Text(
               'Subir el archivo',
               style: ThemeText.paragraph16White,
             ),
@@ -97,7 +97,9 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
           controller: widget.controller,
           keyboardType: TextInputType.text,
           validatorVazio: 'Ingrese tuja respuesta correctamente',
-          validatorMenorque10: 'Su respuesta debe tener al menos 10 caracteres',
+          validatorMenorqueNumero:
+              'Su respuesta debe tener al menos 10 caracteres',
+          validatorNumeroDeCaracteres: 10,
         ),
         const SizedBox(
           height: 25,

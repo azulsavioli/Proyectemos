@@ -15,9 +15,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final dropSchoolValue = ValueNotifier('');
   final dropSeriesValue = ValueNotifier('');
   final dropClassroomValue = ValueNotifier('');
-  final dropSchoolOptions = ['Aplicação', 'Marista', 'Terceirão'];
-  final dropSeriesOptions = ['1º Colegial', '2º Colegial', '3º Colegial'];
-  final dropClassroomOptions = ['A1', 'B2', 'C3'];
+  final dropSchoolOptions = ['Aplicação', 'Marista'];
+  final dropSeriesOptions = ['1º Colegial', '2º Colegial'];
+  final dropClassroomOptions = ['A1', 'B2'];
 
   Future<void> saveStudentOptions() async {
     const isStudentInfoSaved = true;
@@ -34,7 +34,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         appBar: AppBar(
           backgroundColor: ThemeColors.blue,
           elevation: 0,
-          title: const Text(
+          title: Text(
             'Registro de estudiantes',
             style: ThemeText.paragraph16White,
           ),
@@ -46,7 +46,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Center(
+                Center(
                   child: Text(
                     'Elige tu escuela, grado y clase',
                     style: ThemeText.paragraph16GrayBold,
@@ -198,7 +198,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         }
                     },
-                    label: const Text(
+                    label: Text(
                       'Confirmar los datos',
                       style: ThemeText.paragraph16WhiteBold,
                     ),

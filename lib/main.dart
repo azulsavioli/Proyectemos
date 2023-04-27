@@ -1,10 +1,13 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/proyectemos_repository.dart';
 import 'package:proyectemos/providers/play_audio_provider.dart';
-import 'package:proyectemos/providers/record_audio_provider.dart';
+import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
+import 'package:proyectemos/providers/record_audio_provider_latinoamerica_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/proyectemos_app.dart';
@@ -26,6 +29,13 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await FirebaseAppCheck.instance.activate(
+    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+    androidDebugProvider: true,
+  );
+
+  await ScreenUtil.ensureScreenSize();
+
   await initializeDateFormatting().then(
     (_) => runApp(
       MultiProvider(
@@ -36,7 +46,12 @@ Future<void> main() async {
               authService: context.read<AuthService>(),
             ),
           ),
-          ChangeNotifierProvider(create: (_) => RecordAudioProvider()),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioProviderLatinoamericaImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioProviderEventoCulturalImpl(),
+          ),
           ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
         ],
         child: const Proyectemos(),

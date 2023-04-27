@@ -20,13 +20,14 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () =>
+              Navigator.pushNamed(context, '/pUno_evento_cultural_menu'),
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titlePropuestadeEventoUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -36,7 +37,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
         padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
         child: Column(
           children: [
-            const Text(
+            Text(
               StringsEventoCultural.descriptionDosEventocultural,
               style: ThemeText.paragraph16GrayNormal,
             ),
@@ -69,7 +70,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                       child: Text(
                         'Acceder al feedback',
                         style:
-                            TextStyle(fontSize: 20, color: ThemeColors.white),
+                            TextStyle(fontSize: 16, color: ThemeColors.white),
                       ),
                     ),
                   ],
@@ -91,7 +92,12 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                     ),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(
+                    context,
+                    '/pUno_send_email_prof',
+                  );
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
@@ -100,7 +106,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                       child: Text(
                         'Entrar en contacto con la profesora',
                         style:
-                            TextStyle(fontSize: 20, color: ThemeColors.white),
+                            TextStyle(fontSize: 16, color: ThemeColors.white),
                       ),
                     ),
                   ],

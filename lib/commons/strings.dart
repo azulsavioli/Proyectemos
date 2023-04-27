@@ -26,14 +26,24 @@ abstract class Strings {
       '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
   static const String iniciaSessao = 'Inicia sesión con tu cuenta de Google';
 
-  //Title tasks uno
+  //Latinoamerica
   static const String titleLatinoamericaUno = 'Latinoamérica';
+  static const String titleLatinoamericaUnoFeed = 'Latinoamérica Feed';
+  static const String titleLatinoamericaUnoFeedback = 'Latinoamérica Feedback';
+  static const String feedbackTareaUno = 'Feedback Latinoamerica\nTarea uno';
+  static const String feedbackTareaDos = 'Feedback Latinoamerica\nTarea dos';
+  static const String feedbackTareaTres = 'Feedback Latinoamerica\nTarea tres';
+
+  //Artistas
   static const String titleArtistasHispanoamericanosUno =
-      'Artistas hipanoamericanos';
+      'Artistas hispanoamericanos';
+  static const String titleArtistasHispanoamericanosUnoFeed =
+      'Artistas Feedback';
   static const String titleEventoCulturalUno = 'Evento Cultural';
   static const String titlePropuestadeEventoUno = 'La propuesta del evento';
   static const String titleFeedbackEventoUno = 'Feedback';
   static const String titleDivulgacionUno = 'Divulgación';
+  static const String titleDivulgacionUnoFeed = 'Divulgación Feed';
 
   //Paginas
   static const String titleAgendaPage = 'Agenda';

@@ -7,7 +7,8 @@ class CustomTextFormField extends StatelessWidget {
   final String hint;
   final TextInputType keyboardType;
   final String validatorVazio;
-  final String validatorMenorque10;
+  final String validatorMenorqueNumero;
+  final int validatorNumeroDeCaracteres;
 
   const CustomTextFormField({
     Key? key,
@@ -15,7 +16,8 @@ class CustomTextFormField extends StatelessWidget {
     required this.hint,
     required this.keyboardType,
     required this.validatorVazio,
-    required this.validatorMenorque10,
+    required this.validatorMenorqueNumero,
+    required this.validatorNumeroDeCaracteres,
   }) : super(key: key);
 
   @override
@@ -43,8 +45,8 @@ class CustomTextFormField extends StatelessWidget {
           if (resposta!.isEmpty) {
             return validatorVazio;
           }
-          if (resposta.length < 10) {
-            return validatorMenorque10;
+          if (resposta.length < validatorNumeroDeCaracteres) {
+            return validatorMenorqueNumero;
           }
           return null;
         }

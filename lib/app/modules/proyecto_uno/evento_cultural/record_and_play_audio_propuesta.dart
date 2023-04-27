@@ -5,11 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../providers/play_audio_provider.dart';
-import '../../../../providers/record_audio_provider.dart';
 import '../../widgets/drawer_menu.dart';
 
 class RecordAndPlayPropuestaScreen extends StatefulWidget {
@@ -41,7 +41,8 @@ class _RecordAndPlayPropuestaScreenState
 
   @override
   Widget build(BuildContext context) {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderEventoCulturalImpl>(context);
     final playProvider = Provider.of<PlayAudioProvider>(context);
 
     final arguments = ModalRoute.of(context)?.settings.arguments;
@@ -58,7 +59,7 @@ class _RecordAndPlayPropuestaScreenState
         iconTheme: const IconThemeData(
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
-        title: const Text(
+        title: Text(
           Strings.titleEventoCulturalUno,
           style: ThemeText.paragraph16WhiteBold,
         ),
@@ -119,7 +120,7 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   Center _recordHeading() {
-    return const Center(
+    return Center(
       child: Text(
         'Grabar Audio',
         style: ThemeText.h3title22Gray,
@@ -128,7 +129,7 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   Center _playAudioHeading() {
-    return const Center(
+    return Center(
       child: Text(
         'Tocar Audio',
         style: ThemeText.h3title22Gray,
@@ -137,9 +138,13 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   InkWell _recordingSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderEventoCulturalImpl>(context);
     final recordProviderWithoutListener =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+        Provider.of<RecordAudioProviderEventoCulturalImpl>(
+      context,
+      listen: false,
+    );
 
     if (recordProvider.isRecording) {
       return InkWell(
@@ -161,7 +166,8 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   Container _commonIconSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderEventoCulturalImpl>(context);
 
     return Container(
       width: 100,
@@ -180,7 +186,8 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   Container _audioPlayingSection() {
-    final recordProvider = Provider.of<RecordAudioProvider>(context);
+    final recordProvider =
+        Provider.of<RecordAudioProviderEventoCulturalImpl>(context);
 
     return Container(
       width: MediaQuery.of(context).size.width - 110,
@@ -236,8 +243,10 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   InkWell _resetButton() {
-    final recordProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final recordProvider = Provider.of<RecordAudioProviderEventoCulturalImpl>(
+      context,
+      listen: false,
+    );
 
     return InkWell(
       onTap: recordProvider.cancelRecording,
@@ -260,8 +269,10 @@ class _RecordAndPlayPropuestaScreenState
   }
 
   InkWell _saveButton() {
-    final recordProvider =
-        Provider.of<RecordAudioProvider>(context, listen: false);
+    final recordProvider = Provider.of<RecordAudioProviderEventoCulturalImpl>(
+      context,
+      listen: false,
+    );
 
     return InkWell(
       onTap: () => {recordProvider.saveRecording(), Navigator.pop(context)},

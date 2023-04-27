@@ -35,8 +35,8 @@ class CardProyecto extends StatelessWidget {
               children: [
                 Image.asset(
                   image,
-                  height: 150,
-                  width: 150,
+                  height: 120,
+                  width: 120,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

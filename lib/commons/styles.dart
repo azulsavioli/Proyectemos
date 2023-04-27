@@ -1,65 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class ThemeText {
   // H1 Poppins
-  static const TextStyle h1title45WhiteBold = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45WhiteBold = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h1title45RedBold = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45RedBold = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h1title45BlueBold = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45BlueBold = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h1title45YellowBold = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45YellowBold = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h1title45WhiteNormal = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45WhiteNormal = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h1title45RedNormal = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45RedNormal = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h1title45BlueNormal = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45BlueNormal = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h1title45YellowNormal = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45YellowNormal = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
@@ -67,8 +68,8 @@ abstract class ThemeText {
   );
 
   //H1 Ginto
-  static const TextStyle h1title45YellowBoldGinto = TextStyle(
-    fontSize: 45,
+  static TextStyle h1title45YellowBoldGinto = TextStyle(
+    fontSize: 45.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
@@ -76,64 +77,64 @@ abstract class ThemeText {
   );
 
   //H2
-  static const TextStyle h2title35White = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35White = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h2title35Red = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35Red = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h2title35Blue = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35Blue = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h2title35yellow = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35yellow = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h2title35WhiteNormal = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35WhiteNormal = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h2title35RedNormal = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35RedNormal = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h2title35BlueNormal = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35BlueNormal = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h2title35yellowNormal = TextStyle(
-    fontSize: 35,
+  static TextStyle h2title35yellowNormal = TextStyle(
+    fontSize: 35.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
@@ -141,80 +142,80 @@ abstract class ThemeText {
   );
 
   //H3
-  static const TextStyle h3title22White = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22White = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h3title22Red = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22Red = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h3title22Blue = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22Blue = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h3title22Gray = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22Gray = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h3title22GrayNormal = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22GrayNormal = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h3title22yellow = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22yellow = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle h3title22WhiteNormal = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22WhiteNormal = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h3title22RedNormal = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22RedNormal = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h3title22BlueNormal = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22BlueNormal = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle h3title22yellowNormal = TextStyle(
-    fontSize: 22,
+  static TextStyle h3title22yellowNormal = TextStyle(
+    fontSize: 22.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.yellow,
@@ -222,96 +223,96 @@ abstract class ThemeText {
   );
 
 //Paragraph 16
-  static const TextStyle paragraph16RedBold = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16RedBold = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.red,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph16BlueBold = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16BlueBold = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph16WhiteBold = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16WhiteBold = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph16GrayBold = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16GrayBold = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph16GrayNormal = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16GrayNormal = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle paragraph16GrayLight = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16GrayLight = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.grayLight,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle paragraph16White = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph16White = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle paragraph14Blue = TextStyle(
-    fontSize: 16,
+  static TextStyle paragraph14Blue = TextStyle(
+    fontSize: 16.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph14Gray = TextStyle(
-    fontSize: 14,
+  static TextStyle paragraph14Gray = TextStyle(
+    fontSize: 14.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle paragraph14GrayBold = TextStyle(
-    fontSize: 14,
+  static TextStyle paragraph14GrayBold = TextStyle(
+    fontSize: 14.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.gray,
     fontWeight: FontWeight.bold,
   );
 
-  static const TextStyle paragraph14White = TextStyle(
-    fontSize: 14,
+  static TextStyle paragraph14White = TextStyle(
+    fontSize: 14.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
 
-  static const TextStyle paragraph14WhiteBold = TextStyle(
-    fontSize: 14,
+  static TextStyle paragraph14WhiteBold = TextStyle(
+    fontSize: 14.sp,
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,

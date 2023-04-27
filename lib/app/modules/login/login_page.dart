@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -53,13 +54,13 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       Strings.bemvindos,
                       style: ThemeText.h2title35White,
                       textAlign: TextAlign.left,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text(
@@ -74,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.all(8),
                 child: SizedBox(
                   height: 60,
                   child: ElevatedButton(
@@ -88,19 +89,20 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      loadingGoogle = true;
                       login(context);
-                      Navigator.of(context).pushNamed('/');
+                      setState(() {
+                        loadingGoogle = true;
+                      });
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: loadingGoogle
                           ? [
                               const Padding(
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(8),
                                 child: SizedBox(
-                                  width: 24,
-                                  height: 24,
+                                  width: 22,
+                                  height: 22,
                                   child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
@@ -112,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                                 FontAwesomeIcons.google,
                               ),
                               const Padding(
-                                padding: EdgeInsets.all(16),
+                                padding: EdgeInsets.all(8),
                                 child: Text(
                                   Strings.iniciaSessao,
                                   style: TextStyle(fontSize: 16),
@@ -140,10 +142,19 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void login(BuildContext context) {
-    Provider.of<GoogleSignInProvider>(
-      context,
-      listen: false,
-    ).googleLogin();
+  Future<void> login(BuildContext context) async {
+    try {
+      final provider = Provider.of<GoogleSignInProvider>(
+        context,
+        listen: false,
+      );
+      await provider.googleLogin();
+      await Future.delayed(
+        const Duration(seconds: 3),
+        () => Navigator.pushNamed(context, '/'),
+      );
+    } on FirebaseAuthException {
+      rethrow;
+    }
   }
 }

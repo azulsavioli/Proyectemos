@@ -2,11 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/styles.dart';
+import '../../../../services/tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
 
-class EventoCulturalPage extends StatelessWidget {
-  const EventoCulturalPage({super.key});
+class EventoCulturalMenu extends StatefulWidget {
+  const EventoCulturalMenu({super.key});
+
+  @override
+  State<EventoCulturalMenu> createState() => _EventoCulturalMenuState();
+}
+
+class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
+  bool tareaUno = false;
+  bool feedback = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getTaskCompleted();
+  }
+
+  Future<void> getTaskCompleted() async {
+    final resultado =
+        await TasksCompletedService.getUnoEventoTaskCompletedInfo();
+
+    setState(() {
+      tareaUno = resultado[0];
+      feedback = resultado[1];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +50,14 @@ class EventoCulturalPage extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          title: const Text(
+          title: Text(
             Strings.titleEventoCulturalUno,
             style: ThemeText.paragraph16WhiteBold,
           ),
         ),
         endDrawer: const DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -41,27 +66,31 @@ class EventoCulturalPage extends StatelessWidget {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 35,
+                  iconSize: 30,
                   text: 'Creación de un evento',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_evento_cultural_descricao',
-                  backgroundColor: ThemeColors.yellow,
-                  icon: Icons.group_add,
-                  shadowColor: ThemeColors.yellow,
+                  namedRoute: '/pUno_criacao_evento_page',
+                  backgroundColor:
+                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
+                  icon: tareaUno ? Icons.check : Icons.group_add,
+                  shadowColor:
+                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 35,
+                  iconSize: 30,
                   text: 'La propuesta del evento',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: '/pUno_evento_cultural_feedback',
-                  backgroundColor: ThemeColors.yellow,
-                  icon: Icons.handshake,
-                  shadowColor: ThemeColors.yellow,
+                  backgroundColor:
+                      feedback ? ThemeColors.green : ThemeColors.yellow,
+                  icon: feedback ? Icons.check : Icons.handshake,
+                  shadowColor:
+                      feedback ? ThemeColors.green : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,

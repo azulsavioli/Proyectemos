@@ -7,7 +7,7 @@ abstract class StringsLationamerica {
   static const String titleQOnePageOneLatin =
       '''Mira el video abajo, es una canción del grupo Los Coyotes y tiene como título "300 kilos".''';
   static const String titleQtwoPageOneLatin =
-      '''Ahora mira el vídeo, pon atención en las imágenes y después contesta las preguntas en la próxima página.''';
+      '''Ahora mira el vídeo, pon atención en las imágenes y después contesta las preguntas en la próxima tarea.''';
   static const String qOneLatinPageOne =
       '''¿Conoces al grupo? ¿Ya has escuchado alguna canción suya?''';
   static const String qTwoLatinPageOne =
@@ -21,9 +21,9 @@ abstract class StringsLationamerica {
   static const String qThreeLatinPageTwo =
       '¿Reconociste algunas de las imágenes? ¿Qué eran?';
   static const String titleQOnePageDosLatin = '''
-    Si fueras a selecionar imágenes para hablar de latinoamérica como en el video: 
-    ¿Cuáles serian? Selecciona diez imágenes y súbelas en la próxima página. 
-    No te olvides de describirlas y de justificar tus elecciones.''';
+Si fueras a selecionar imágenes para hablar de latinoamérica como en el video: 
+¿Cuáles serian? Selecciona diez imágenes y súbelas en la próxima página. 
+No te olvides de describirlas y de justificar tus elecciones.''';
 
   //Questions Page tarea tres
   static const String titleQOnePageTresLatin = 'Descargar mis imágenes';

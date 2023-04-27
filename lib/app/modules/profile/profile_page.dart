@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
+import '../../../services/tasks_completed.dart';
 import '../widgets/card_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,15 +14,74 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final user = FirebaseAuth.instance.currentUser!;
+  bool latinoamericaCompleted = false;
+  bool artistasTareaUnoCompleted = false;
+  bool artistasTareaDosCompleted = false;
+  bool eventoCulturalCompleted = false;
+  bool divulgationCompleted = false;
+
+  int allTasks = 28;
+  double percentage = 0;
+  int unoTasks = 0;
+  int dosTasks = 0;
+  int tresTasks = 0;
 
   void goTo(String routeName) {
     Navigator.pushNamed(context, routeName);
   }
 
   @override
+  void initState() {
+    getUnoTaskCompleted();
+    getPercentage();
+    super.initState();
+  }
+
+  Future<int> getUnoTaskCompleted() async {
+    final resultado = await TasksCompletedService.getUnoTaskCompletedInfo();
+
+    if (resultado[0] == true) {
+      setState(() {
+        unoTasks = 3;
+      });
+    }
+    if (resultado[1] == true) {
+      setState(() {
+        unoTasks += 2;
+      });
+    }
+    if (resultado[2] == true) {
+      setState(() {
+        unoTasks += 1;
+      });
+    }
+    if (resultado[3] == true) {
+      setState(() {
+        unoTasks += 1;
+      });
+    }
+
+    return unoTasks;
+  }
+
+  Future<void> getPercentage() async {
+    final unoTasks = await getUnoTaskCompleted();
+
+    setState(() {
+      percentage = unoTasks / allTasks * 100;
+    });
+  }
+
+  int getAllTasks() {
+    return unoTasks + dosTasks + tresTasks;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
     final height = MediaQuery.of(context).size.width * .2;
+
+    final tasksCompleted = getAllTasks();
 
     return SafeArea(
       child: Scaffold(
@@ -32,12 +92,11 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(color: ThemeColors.white),
-          title: const Text(
+          title: Text(
             'Perfil',
             style: ThemeText.paragraph16WhiteBold,
           ),
         ),
-        // endDrawer: const DrawerMenuWidget(),
         body: Center(
           child: Column(
             children: [
@@ -97,9 +156,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
-                              '0/14',
+                              '$tasksCompleted/$allTasks',
                               style: ThemeText.paragraph16BlueBold,
                             ),
                             Text(
@@ -110,9 +169,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             Text(
-                              '0%',
+                              '${percentage.toStringAsFixed(0)}%',
                               style: ThemeText.paragraph16BlueBold,
                             ),
                             Text(
@@ -169,12 +228,12 @@ class _ProfilePageState extends State<ProfilePage> {
               CardButton(
                 iconSize: 25,
                 text: 'Profesor(a)',
-                backgroundColor: ThemeColors.red,
+                backgroundColor: ThemeColors.green,
                 icon: Icons.volunteer_activism_outlined,
                 cardWidth: width,
                 cardHeight: height,
-                namedRoute: '',
-                shadowColor: ThemeColors.red,
+                namedRoute: '/profile_contato_professora',
+                shadowColor: ThemeColors.green,
               ),
               const SizedBox(
                 height: 8,
@@ -188,6 +247,16 @@ class _ProfilePageState extends State<ProfilePage> {
               //   cardHeight: height,
               //   namedRoute: '',
               //   shadowColor: ThemeColors.yellow,
+              // ),
+              // CardButton(
+              //   iconSize: 25,
+              //   text: ,
+              //   backgroundColor: ThemeColors.red,
+              //   icon:
+              //   cardWidth: width,
+              //   cardHeight: height,
+              //   namedRoute: '',
+              //   shadowColor: ThemeColors.red,
               // ),
             ],
           ),
