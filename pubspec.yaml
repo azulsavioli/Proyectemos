@@ -58,6 +58,7 @@ dependencies:
   video_player: 
   youtube_player_flutter: ^8.1.1
   flutter_inappwebview: ^5.7.1+2
+  appinio_video_player: ^1.2.1
 
   #ImagePicker
   image_picker: ^0.8.6
@@ -83,7 +84,6 @@ dependencies:
   pdf: ^3.8.4
   xfile: ^1.0.0
   printing: ^5.9.3
-  pdf_compressor: ^0.2.0
 
   file_picker: ^5.2.5  
   
