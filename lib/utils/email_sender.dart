@@ -10,12 +10,18 @@ class EmailSender {
     String subject,
     String text,
   ) async {
-    final currentUserEmail = currentUser?.email;
-    final currentUserName = currentUser?.displayName;
+    var user = currentUser;
+
+    if (currentUser == null || currentUser.email == null) {
+      user = await GoogleSignIn().signIn();
+    }
+
+    final currentUserEmail = user?.email;
+    final currentUserName = user?.displayName;
 
     final recipients = email.map(Address.new).toList();
 
-    final auth = await currentUser?.authentication;
+    final auth = await user?.authentication;
     final token = auth?.accessToken;
     final smtpServer = gmailSaslXoauth2(currentUserEmail!, token!);
     final message = Message()
