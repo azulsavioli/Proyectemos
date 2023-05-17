@@ -15,7 +15,6 @@ class EventoCulturalMenu extends StatefulWidget {
 
 class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
   bool tareaUno = false;
-  bool feedback = false;
 
   @override
   void initState() {
@@ -29,7 +28,6 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
 
     setState(() {
       tareaUno = resultado[0];
-      feedback = resultado[1];
     });
   }
 
@@ -70,27 +68,14 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
                   text: 'Creación de un evento',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_criacao_evento_page',
+                  namedRoute: tareaUno
+                      ? '/pUno_evento_cultural_feedback'
+                      : '/pUno_criacao_evento_page',
                   backgroundColor:
                       tareaUno ? ThemeColors.green : ThemeColors.yellow,
                   icon: tareaUno ? Icons.check : Icons.group_add,
                   shadowColor:
                       tareaUno ? ThemeColors.green : ThemeColors.yellow,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CardButton(
-                  iconSize: 30,
-                  text: 'La propuesta del evento',
-                  cardWidth: width,
-                  cardHeight: height,
-                  namedRoute: '/pUno_evento_cultural_feedback',
-                  backgroundColor:
-                      feedback ? ThemeColors.green : ThemeColors.yellow,
-                  icon: feedback ? Icons.check : Icons.handshake,
-                  shadowColor:
-                      feedback ? ThemeColors.green : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
