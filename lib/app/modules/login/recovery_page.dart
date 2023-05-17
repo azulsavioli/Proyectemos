@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
+import '../../../services/toast_services.dart';
+
 class RecoveryPasswordPage extends StatefulWidget {
   const RecoveryPasswordPage({Key? key}) : super(key: key);
 
@@ -100,26 +102,29 @@ class _RecoveryPasswordPageState extends State<RecoveryPasswordPage> {
                       if (formKey.currentState!.validate())
                         {
                           resetPassword.call().then(
-                                (value) =>
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      '''Correo electrónico de recuperación de contraseña enviado''',
-                                    ),
-                                  ),
-                                ),
+                                (value) => showToast(
+                                    '''Correo electrónico de recuperación de contraseña enviado'''),
+                                //     ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text(
+                                //       '''Correo electrónico de recuperación de contraseña enviado''',
+                                //     ),
+                                //   ),
+                                // ),
                               ),
                           Navigator.pop(context)
                         }
                       else
                         {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                '''¡Ups! Ha ocurrido un error y su correo electrónico de recuperación de contraseña no ha sido enviado. ¡Inténtalo de nuevo!''',
-                              ),
-                            ),
-                          ),
+                          showToast(
+                              '''¡Ups! Ha ocurrido un error y su correo electrónico de recuperación de contraseña no ha sido enviado. ¡Inténtalo de nuevo!'''),
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     content: Text(
+                          //       '''¡Ups! Ha ocurrido un error y su correo electrónico de recuperación de contraseña no ha sido enviado. ¡Inténtalo de nuevo!''',
+                          //     ),
+                          //   ),
+                          // ),
                         }
                     },
                     icon: const Icon(Icons.email_outlined),

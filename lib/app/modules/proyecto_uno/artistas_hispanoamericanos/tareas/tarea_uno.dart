@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../providers/record_audio_provider_latinoamerica_impl.dart';
+import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
 import '../../../../proyectemos_repository.dart';
 import '../../../widgets/custom_carousel.dart';
@@ -122,14 +123,14 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                     Text(
                       StringsArtistasLationamerica
                           .titleQOnePageOneArtistasLatin,
-                      style: ThemeText.paragraph16GrayNormal,
+                      style: ThemeText.paragraph14Gray,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     Text(
                       StringsArtistasLationamerica.qOneArtistasLatinPageOne,
-                      style: ThemeText.paragraph16GrayBold,
+                      style: ThemeText.paragraph14GrayBold,
                     ),
                     CustomRecordAudioButton(
                       question:
@@ -141,7 +142,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                     ),
                     Text(
                       StringsArtistasLationamerica.qTwoArtistasLatinPageOne,
-                      style: ThemeText.paragraph16GrayBold,
+                      style: ThemeText.paragraph14GrayBold,
                     ),
                     CustomRecordAudioButton(
                       question:
@@ -153,7 +154,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
                     ),
                     Text(
                       StringsArtistasLationamerica.qThreeArtistasLatinPageOne,
-                      style: ThemeText.paragraph16GrayBold,
+                      style: ThemeText.paragraph14GrayBold,
                     ),
                     CustomRecordAudioButton(
                       question: StringsArtistasLationamerica
@@ -181,27 +182,19 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
 
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 3) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  '''
+                            showToast(
+                              '''
 ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!
 ''',
-                                ),
-                              ),
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
                             );
                           } else {
                             if (recordsPathList.isNotEmpty &&
                                 recordsPathList.length == 3) {
                               sendAnswers(currentUser, recordsPathList);
                               saveArtistasTareaUnoCompleted();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text('Resposta enviada com sucesso!'),
-                                  duration: Duration(seconds: 2),
-                                ),
-                              );
+                              showToast(Strings.tareaConcluida);
                               recordsPathList = [];
 
                               Navigator.pushNamed(

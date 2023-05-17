@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_evento_cultural.dart';
 import '../../../../commons/styles.dart';
+import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
 import '../../../proyectemos_repository.dart';
@@ -372,12 +373,10 @@ Atividade Criação de Evento 1ª etapa concluída!''';
                   ),
                   onPressed: () {
                     if (recordsPathList.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            '''¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!''',
-                          ),
-                        ),
+                      showToast(
+                        '''¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!''',
+                        color: ThemeColors.red,
+                        textColor: ThemeColors.white,
                       );
                     } else {
                       if (recordsPathList.isNotEmpty &&
@@ -385,12 +384,7 @@ Atividade Criação de Evento 1ª etapa concluída!''';
                         sendAnswers();
                         sendEmail(currentUser, recordsPathList);
                         saveEventoCulturalTareaUnoCompleted();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Resposta enviada com sucesso!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
+                        showToast(Strings.tareaConcluida);
                         recordsPathList = [];
                         Navigator.pushNamed(
                           context,

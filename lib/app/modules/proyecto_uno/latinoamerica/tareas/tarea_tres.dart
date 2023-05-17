@@ -11,6 +11,7 @@ import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../commons/strings.dart';
+import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
 import '../../../../../utils/get_user.dart';
 import '../../../../proyectemos_repository.dart';
@@ -446,13 +447,7 @@ Imagens em anexo!
               if (formKey.currentState!.validate() &&
                   selectedImages.length == 10) {
                 sendAnswers(currentUser);
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(Strings.tareaConcluida),
-                    duration: Duration(seconds: 2),
-                  ),
-                );
+                showToast(Strings.tareaConcluida);
                 _latinoamerica = true;
                 saveLatinoamericaCompleted();
                 Navigator.pushNamed(
@@ -460,13 +455,10 @@ Imagens em anexo!
                   '/pUno_latinoamerica_menu',
                 );
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      '''Selecciona una imagen de su cámara o de su archivo y escriba su descripción''',
-                    ),
-                    duration: Duration(seconds: 2),
-                  ),
+                showToast(
+                  '''Selecciona una imagen de su cámara o de su archivo y escriba su descripción''',
+                  color: ThemeColors.red,
+                  textColor: ThemeColors.white,
                 );
               }
             }

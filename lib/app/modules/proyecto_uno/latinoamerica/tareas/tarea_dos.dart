@@ -152,7 +152,8 @@ class _PUnoLatinoamericaTareaDosPageState
                             ];
                             sendAnswersToFirebase(json);
                             sendEmail(currentUser, respostas);
-                            showToast('Resposta enviada com sucesso!');
+                            showToast(Strings.tareaConcluida);
+
                             saveLatinoamericaCompleted();
 
                             Navigator.pushNamed(

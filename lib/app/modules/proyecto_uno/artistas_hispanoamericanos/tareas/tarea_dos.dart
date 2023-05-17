@@ -13,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../commons/strings_artistas_latinoamericanos.dart';
 import '../../../../../commons/styles.dart';
+import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
 import '../../../../../utils/get_user.dart';
 import '../../../../proyectemos_repository.dart';
@@ -299,12 +300,7 @@ ${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStuden
                       sendAnswers();
                       sendEmail(currentUser);
                       saveArtistasTareaDosCompleted();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Resposta enviada com sucesso!'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
+                      showToast(Strings.tareaConcluida);
                       Navigator.pushNamed(context, '/pUno_artistas_menu');
                     },
                     child: Row(

@@ -12,6 +12,8 @@ import '../../../../commons/strings.dart';
 import '../../../../commons/strings_divulgacao.dart';
 import '../../../../commons/styles.dart';
 import '../../../../services/firebase/firebase_converter.dart';
+import '../../../../services/tasks_completed.dart';
+import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
 import '../../../proyectemos_repository.dart';
@@ -62,6 +64,7 @@ class _DivulgacaoPageState extends State<DivulgacaoPage> {
       'uno-video_divulgacao/$email-video.jpeg',
     );
     final json = {
+      'aluno': user?.displayName,
       'resposta_1': firebasePaths[0],
     };
     return json;
@@ -70,19 +73,11 @@ class _DivulgacaoPageState extends State<DivulgacaoPage> {
   Future<dynamic> sendAnswers(OpcoesCompartilhamento sendingType) async {
     final json = await makeJson();
 
-    const docTodos = 'evento_cultural/';
-    const docTurma = 'evento_cultural_videos/';
-
-    final doc =
-        sendingType == OpcoesCompartilhamento.todos ? docTodos : docTurma;
-
     try {
       if (sendingType == OpcoesCompartilhamento.todos) {
-        return context
-            .read<ProyectemosRepository>()
-            .saveAnswersPublic(doc, json);
+        return context.read<ProyectemosRepository>().saveVideosPublic(json);
       } else {
-        return context.read<ProyectemosRepository>().saveVideosTurma(doc, json);
+        return context.read<ProyectemosRepository>().saveVideosTurma(json);
       }
     } on FirebaseException catch (e) {
       return e.toString();
@@ -152,6 +147,23 @@ Video do Evento Cultural ''';
 
   @override
   Widget build(BuildContext context) {
+    bool divulgacao = false;
+
+    Future<void> getTaskCompleted() async {
+      final resultado =
+          await TasksCompletedService.getUnoDivulgationCompletedInfo();
+
+      setState(() {
+        divulgacao = resultado[0];
+      });
+    }
+
+    void restoreTasks() {
+      TasksCompletedService.restoreAllTasks();
+      getTaskCompleted();
+      showToast('Tareas resetadas con successo!');
+    }
+
     final currentUser = getCurrentUser(context);
 
     return Scaffold(
@@ -267,12 +279,10 @@ Video do Evento Cultural ''';
                   ),
                   onPressed: () {
                     if (pickedFile == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            '''¡No se puede compartir el video! Selecione el video!''',
-                          ),
-                        ),
+                      showToast(
+                        '''¡No se puede compartir el video! Selecione el video!''',
+                        color: ThemeColors.red,
+                        textColor: ThemeColors.white,
                       );
                     } else {
                       if (pickedFile != null) {
@@ -280,12 +290,7 @@ Video do Evento Cultural ''';
                         sendEmail(currentUser!);
                         saveDivulgationCompleted();
                         saveDivulgationFeedType(sendingType);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Resposta enviada com sucesso!'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
+                        showToast(Strings.tareaConcluida);
                         Navigator.pushNamed(context, '/proyecto_uno');
                       }
                     }
@@ -308,6 +313,14 @@ Video do Evento Cultural ''';
           ),
         ),
       ),
+      floatingActionButton: ElevatedButton.icon(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(ThemeColors.red),
+        ),
+        onPressed: restoreTasks,
+        icon: const Icon(Icons.restore),
+        label: const Text('Reset'),
+      ),
     );
   }
 
@@ -321,7 +334,7 @@ Video do Evento Cultural ''';
     }
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool('feedTurma', feedTurma);
-    await preferences.setBool('feedTurma', feedAll);
+    await preferences.setBool('feedTodos', feedAll);
   }
 
   Future<void> saveDivulgationCompleted() async {

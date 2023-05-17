@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/styles.dart';
+import '../../../services/toast_services.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -179,23 +180,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         {
                           saveStudentOptions.call().then(
                                 (value) =>
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Datos salvos com sucesso'),
-                                  ),
-                                ),
+                                    showToast('Datos salvos com sucesso'),
+                                //     ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //     content: Text(),
+                                //   ),
+                                // ),
                               ),
                           Navigator.pushNamed(context, '/proyectos')
                         }
                       else
                         {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!''',
-                              ),
-                            ),
-                          ),
+                          showToast(
+                              '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!'''),
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //   const SnackBar(
+                          //     content: Text(
+                          //       ,
+                          //     ),
+                          //   ),
+                          // ),
                         }
                     },
                     label: Text(
