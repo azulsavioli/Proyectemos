@@ -1,5 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,91 +7,21 @@ import '../../../../commons/styles.dart';
 import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 
-Widget buildSwiperCards(List lista) {
-  List<Widget> swipers = [];
-  var i = 0;
-  while (i < lista.length) {
-    final cards = [];
-
-    for (var j = 0; j < 10; j++) {
-      cards.add(
-        Card(
-          child: Column(
-            children: [
-              ListTile(
-                title: Text(lista[i]['nome']),
-                subtitle: Text(
-                  lista[i]['imagem_latinoamerica_${j + 1}'][0],
-                  style: TextStyle(
-                    color: Colors.black.withOpacity(0.6),
-                  ),
-                ),
-              ),
-              Image.network(
-                lista[i]['imagem_latinoamerica_${j + 1}'][1],
-                fit: BoxFit.cover,
-                height: 300,
-                width: 300,
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-    i++;
-    swipers.add(
-      Container(
-        margin: const EdgeInsets.all(10),
-        child: Swiper(
-          itemCount: cards.length,
-          itemBuilder: (BuildContext context, int index) {
-            return cards[index];
-          },
-          itemWidth: 300,
-          itemHeight: 400,
-          layout: SwiperLayout.STACK,
-        ),
-      ),
-    );
-  }
-  return Column(
-    children: swipers,
-  );
-}
-
 class FeedLatinoamericaPage extends StatefulWidget {
-  const FeedLatinoamericaPage({super.key});
+  const FeedLatinoamericaPage({Key? key}) : super(key: key);
 
   @override
   State<FeedLatinoamericaPage> createState() => _FeedLatinoamericaPageState();
 }
 
 class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
+  late Stream<List<dynamic>> _imagesStream;
+
   @override
   void initState() {
-    getImages();
+    _imagesStream =
+        context.read<ProyectemosRepository>().getImagesTurmaStream();
     super.initState();
-  }
-
-  List students = [];
-
-  Future<dynamic> getImages() async {
-    try {
-      final snapshot =
-          await context.read<ProyectemosRepository>().getImagesTurma();
-      await setStudentsImageList(snapshot);
-    } on FirebaseException catch (e) {
-      return e.toString();
-    }
-  }
-
-  Future<List> setStudentsImageList(snapshot) async {
-    students = [];
-
-    for (final student in snapshot) {
-      students.add(await student);
-    }
-    return students;
   }
 
   @override
@@ -114,8 +43,8 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         ),
       ),
       endDrawer: const DrawerMenuWidget(),
-      body: FutureBuilder(
-        future: getImages(),
+      body: StreamBuilder<List<dynamic>>(
+        stream: _imagesStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
@@ -127,22 +56,76 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
               child: CircularProgressIndicator(),
             );
           }
+          final students = snapshot.data ?? [];
+
           return ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.only(
                     top: 20, left: 10, right: 10, bottom: 15),
                 child: Text(
-                  textAlign: TextAlign.center,
                   'Actividades compartidas por los estudiantes',
+                  textAlign: TextAlign.center,
                   style: ThemeText.paragraph16BlueBold,
                 ),
               ),
-              buildSwiperCards(students)
+              buildSwiperCards(students),
             ],
           );
         },
       ),
+    );
+  }
+
+  Widget buildSwiperCards(List<dynamic> lista) {
+    List<Widget> swipers = [];
+    var i = 0;
+    while (i < lista.length) {
+      final cards = [];
+
+      for (var j = 0; j < 10; j++) {
+        cards.add(
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(lista[i]['nome']),
+                  subtitle: Text(
+                    lista[i]['imagem_latinoamerica_${j + 1}'][0],
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.6),
+                    ),
+                  ),
+                ),
+                Image.network(
+                  lista[i]['imagem_latinoamerica_${j + 1}'][1],
+                  fit: BoxFit.cover,
+                  height: 300,
+                  width: 300,
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+      i++;
+      swipers.add(
+        Container(
+          margin: const EdgeInsets.all(10),
+          child: Swiper(
+            itemCount: cards.length,
+            itemBuilder: (BuildContext context, int index) {
+              return cards[index];
+            },
+            itemWidth: 300,
+            itemHeight: 400,
+            layout: SwiperLayout.STACK,
+          ),
+        ),
+      );
+    }
+    return Column(
+      children: swipers,
     );
   }
 }
