@@ -5,7 +5,6 @@ import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
-import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/criacao_evento_feedback.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/criacao_evento_page.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 import 'package:proyectemos/commons/auth_check.dart';
@@ -19,15 +18,15 @@ import 'modules/profile/enviar_email_professora_perfil.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
-import 'modules/proyecto_uno/artistas_hispanoamericanos/feed_artistas.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/record_and_play_audio.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_dos.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_uno.dart';
 import 'modules/proyecto_uno/divulgacion/divulgacao_tarea_page.dart';
-import 'modules/proyecto_uno/divulgacion/feed_divulgacion.dart';
+import 'modules/proyecto_uno/divulgacion/feed_divulgation.dart';
 import 'modules/proyecto_uno/divulgacion/feedback_tarea_divulgacion.dart';
+import 'modules/proyecto_uno/evento_cultural/feedback_tarea_evento_cultural.dart';
 import 'modules/proyecto_uno/evento_cultural/record_and_play_audio_propuesta.dart';
 import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
@@ -68,14 +67,9 @@ class Proyectemos extends StatelessWidget {
                 '/profile': (context) => const ProfilePage(),
                 '/profile_contato_professora': (context) =>
                     const EnvioEmailProfesoraPerfil(),
-                // '/tarefas_cumplidas': (context) => const TarefasCompletasPage(),
-                // '/tarefas_pendientes': (context) => const TarefasIncompletasPage(),
-                // '/agenda': (context) => const AgendaPage(),
-                // '/tutorial': (context) => const TutorialPage(),
                 '/recoveryPassword': (context) => const RecoveryPasswordPage(),
                 '/proyectos': (context) => const ProyectosPage(),
                 '/proyecto_uno': (context) => const ProyectoUnoPage(),
-
                 '/pUno_latinoamerica_menu': (context) =>
                     const PUnoLatinoamericaMenu(),
                 '/pUno_latinoamerica_tarea_uno': (context) =>
@@ -92,30 +86,26 @@ class Proyectemos extends StatelessWidget {
                     const FeedbackTareaDosLatinoamerica(),
                 '/pUno_latinoamerica_feedback_tarea_tres': (context) =>
                     const FeedbackTareaTresLatinoamerica(),
-
                 '/pUno_artistas_menu': (context) => const PUnoArtistasMenu(),
                 '/pUno_artistas_latinoamericanos_tarea_uno': (context) =>
                     const PUnoArtistasLatinoamericanosTareaUnoPage(),
                 '/pUno_artistas_latinoamericanos_tarea_dos': (context) =>
                     const PUnoArtistasLatinoamericanosTareaDosPage(),
-                '/pUno_artistas_feed': (context) => const FeedArtistasPage(),
                 '/pUno_artistas_feedback_tarea_uno': (context) =>
                     const FeedbackTareaUnoArtistas(),
                 '/pUno_artistas_feedback_tarea_dos': (context) =>
                     const FeedbackTareaDosArtistas(),
-
                 '/pUno_evento_cultural_menu': (context) =>
                     const EventoCulturalMenu(),
                 '/pUno_criacao_evento_page': (context) =>
                     const CriacaoEventoPage(),
                 '/pUno_evento_cultural_feedback': (context) =>
-                    const CriacaoEventoFeedback(),
-
+                    const FeedbackTareaEventoCultural(),
                 '/pUno_divulgacao_page': (context) => const DivulgacaoPage(),
                 '/pUno_divulgacao_feedback': (context) =>
                     const FeedbackTareaDivulgacion(),
                 '/pUno_feed_divulgacao': (context) =>
-                    const FeedDivulgacionPage(),
+                    const FeedDivulgationPage(),
                 '/pUno_send_email_prof': (context) =>
                     const EnvioEmailProfesora(),
                 '/proyecto_dos': (context) => const ProyectoDosPage(),
