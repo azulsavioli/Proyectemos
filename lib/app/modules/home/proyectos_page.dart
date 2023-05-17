@@ -32,38 +32,38 @@ class ProyectosPage extends StatelessWidget {
         endDrawer: const DrawerMenuWidget(),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CardProyecto(
                   image: Strings.imageUno,
                   title: Strings.titleCardUno,
-                  titleColor: ThemeText.h3title22Red,
+                  titleColor: ThemeText.h3title20Red,
                   description: Strings.descriptionCardUno,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.red,
                   namedRoute: '/proyecto_uno',
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 CardProyecto(
                   image: Strings.imageDos,
                   title: Strings.titleCardDos,
-                  titleColor: ThemeText.h3title22Blue,
+                  titleColor: ThemeText.h3title20Blue,
                   description: Strings.descriptionCardDos,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.blue,
                   namedRoute: '/proyecto_dos',
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 20,
                 ),
                 CardProyecto(
                   image: Strings.imageTres,
                   title: Strings.titleCardTres,
-                  titleColor: ThemeText.h3title22yellow,
+                  titleColor: ThemeText.h3title20yellow,
                   description: Strings.descriptionCardDos,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.yellow,
