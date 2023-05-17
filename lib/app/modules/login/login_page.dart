@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
@@ -38,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 60),
+                  padding: const EdgeInsets.only(top: 28),
                   child: SizedBox(
                     height: 400,
                     width: 400,
@@ -72,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.all(8),
@@ -113,11 +114,13 @@ class _LoginPageState extends State<LoginPage> {
                               const FaIcon(
                                 FontAwesomeIcons.google,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(8),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
                                 child: Text(
                                   Strings.iniciaSessao,
-                                  style: TextStyle(fontSize: 16),
+                                  style: TextStyle(
+                                    fontSize: ScreenUtil().setSp(14),
+                                  ),
                                 ),
                               )
                             ],
@@ -126,14 +129,19 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 30,
+                height: 20,
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Text('Aqui vai o texto de quem fez'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  '''
+O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''',
+                  style: ThemeText.paragraph12White,
+                  textAlign: TextAlign.left,
+                ),
               ),
               const SizedBox(
-                height: 75,
+                height: 20,
               ),
             ],
           ),
