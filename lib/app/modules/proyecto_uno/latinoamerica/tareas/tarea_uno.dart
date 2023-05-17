@@ -214,7 +214,7 @@ class _PUnoLatinoamericaTareaUnoPageState
                             sendEmail(currentUser, respostas);
                             sendAnswersToFirebase(json);
                             saveLatinoamericaCompleted();
-                            showToast('Resposta enviada com sucesso!');
+                            showToast(Strings.tareaConcluida);
                             Navigator.pushNamed(
                               context,
                               '/pUno_latinoamerica_menu',
