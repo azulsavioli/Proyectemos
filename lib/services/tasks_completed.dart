@@ -23,7 +23,7 @@ class TasksCompletedService {
       artistas = true;
     }
 
-    if (eventList[0] && eventList[1]) {
+    if (eventList[0]) {
       eventoCultural = true;
     }
 
@@ -78,10 +78,8 @@ class TasksCompletedService {
     final sharedPreferences = await SharedPreferences.getInstance();
     final tareaUnoEvento =
         sharedPreferences.getBool('eventoTareaUnoCompleted') ?? false;
-    final feedbackEvento =
-        sharedPreferences.getBool('eventoReceivedFeedbackCompleted') ?? false;
 
-    if (tareaUnoEvento && feedbackEvento == true) {
+    if (tareaUnoEvento == true) {
       final preferences = await SharedPreferences.getInstance();
       await preferences.setBool(
         'eventoCulturalCompleted',
@@ -89,7 +87,7 @@ class TasksCompletedService {
       );
     }
 
-    return [tareaUnoEvento, feedbackEvento];
+    return [tareaUnoEvento];
   }
 
   static Future<List<bool>> getUnoDivulgationCompletedInfo() async {
@@ -139,5 +137,13 @@ class TasksCompletedService {
       'divulgationCompleted',
       divulgationCompleted,
     );
+  }
+
+  static Future<List<bool>> getUnoDivulgationFeedType() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final feedTurma = sharedPreferences.getBool('feedTurma') ?? false;
+    final feedTodos = sharedPreferences.getBool('feedTodos') ?? false;
+
+    return [feedTurma, feedTodos];
   }
 }
