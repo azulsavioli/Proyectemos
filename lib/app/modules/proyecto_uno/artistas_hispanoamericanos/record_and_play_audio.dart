@@ -82,7 +82,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
               padding: const EdgeInsets.all(16),
               child: Text(
                 question.toString(),
-                style: ThemeText.h3title22Gray,
+                style: ThemeText.h3title20Gray,
               ),
             ),
             const SizedBox(height: 80),
@@ -120,7 +120,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     return Center(
       child: Text(
         'Grabar Audio',
-        style: ThemeText.h3title22Gray,
+        style: ThemeText.h3title20Gray,
       ),
     );
   }
@@ -129,7 +129,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
     return Center(
       child: Text(
         'Tocar Audio',
-        style: ThemeText.h3title22Gray,
+        style: ThemeText.h3title20Gray,
       ),
     );
   }

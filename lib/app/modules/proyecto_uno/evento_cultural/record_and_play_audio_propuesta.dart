@@ -123,7 +123,7 @@ class _RecordAndPlayPropuestaScreenState
     return Center(
       child: Text(
         'Grabar Audio',
-        style: ThemeText.h3title22Gray,
+        style: ThemeText.h3title20Gray,
       ),
     );
   }
@@ -132,7 +132,7 @@ class _RecordAndPlayPropuestaScreenState
     return Center(
       child: Text(
         'Tocar Audio',
-        style: ThemeText.h3title22Gray,
+        style: ThemeText.h3title20Gray,
       ),
     );
   }

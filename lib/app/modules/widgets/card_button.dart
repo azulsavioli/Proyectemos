@@ -33,7 +33,7 @@ class CardButton extends StatelessWidget {
         icon: Padding(
           padding: const EdgeInsets.only(left: 8),
           child: CircleAvatar(
-            radius: 28,
+            radius: 25,
             backgroundColor: backgroundColor,
             child: Icon(
               icon,
@@ -47,7 +47,7 @@ class CardButton extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 1,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-          textStyle: ThemeText.paragraph16GrayNormal,
+          textStyle: ThemeText.paragraph14Gray,
         ),
         onPressed: () {
           Navigator.of(context).pushNamed(namedRoute);
@@ -59,7 +59,7 @@ class CardButton extends StatelessWidget {
             ),
             Text(
               text,
-              style: ThemeText.paragraph16GrayNormal,
+              style: ThemeText.paragraph14Gray,
             ),
           ],
         ),

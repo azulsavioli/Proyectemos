@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_evento_cultural.dart';
@@ -64,13 +65,15 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(
                         'Acceder al feedback',
-                        style:
-                            TextStyle(fontSize: 16, color: ThemeColors.white),
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(15),
+                          color: ThemeColors.white,
+                        ),
                       ),
                     ),
                   ],
@@ -100,13 +103,15 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(
                         'Entrar en contacto con la profesora',
-                        style:
-                            TextStyle(fontSize: 16, color: ThemeColors.white),
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(15),
+                          color: ThemeColors.white,
+                        ),
                       ),
                     ),
                   ],

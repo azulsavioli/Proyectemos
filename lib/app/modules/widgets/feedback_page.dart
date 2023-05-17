@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,14 +78,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
             Text(
               widget.tareaTitle,
               style: ThemeText.paragraph16BlueBold,
-              // textAlign: TextAlign.center,
             ),
             const SizedBox(
               height: 20,
             ),
             Text(
               feedback,
-              style: ThemeText.paragraph16GrayNormal,
+              style: ThemeText.paragraph14Gray,
             ),
             const SizedBox(
               height: 20,
@@ -110,13 +110,15 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(
-                        'Entrar en contacto con la profesora',
-                        style:
-                            TextStyle(fontSize: 16, color: ThemeColors.white),
+                        'Contacto con la profesora',
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(16),
+                          color: ThemeColors.white,
+                        ),
                       ),
                     ),
                   ],
