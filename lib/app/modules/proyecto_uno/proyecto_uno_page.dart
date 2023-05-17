@@ -95,9 +95,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   text: 'Artistas\nhispanoamericanos',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: artistasCompleted
-                      ? '/pUno_artistas_feed'
-                      : '/pUno_artistas_menu',
+                  namedRoute: '/pUno_artistas_menu',
                   backgroundColor:
                       artistasCompleted ? ThemeColors.green : ThemeColors.blue,
                   icon: artistasCompleted ? Icons.check : Icons.group,
