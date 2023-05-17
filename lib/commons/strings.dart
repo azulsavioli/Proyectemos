@@ -35,13 +35,21 @@ abstract class Strings {
   static const String feedbackTareaTres = 'Feedback Latinoamerica\nTarea tres';
 
   //Artistas
-  static const String titleArtistasHispanoamericanosUno =
+  static const String titleArtistasHispanoamericanos =
       'Artistas hispanoamericanos';
-  static const String titleArtistasHispanoamericanosUnoFeed =
-      'Artistas Feedback';
+  static const String titleArtistasHispanoamericanosUno =
+      'Feedback Tarea Uno Artistas hispanoamericanos';
+  static const String titleArtistasHispanoamericanosDos =
+      'Feedback Tarea Dos Artistas hispanoamericanos';
+
+  //Evento cultural
   static const String titleEventoCulturalUno = 'Evento Cultural';
+  static const String titleEventoCulturalUnoFeed = 'Feedback Evento Cultural';
+
   static const String titlePropuestadeEventoUno = 'La propuesta del evento';
   static const String titleFeedbackEventoUno = 'Feedback';
+
+  //Divulgacion
   static const String titleDivulgacionUno = 'Divulgación';
   static const String titleDivulgacionUnoFeed = 'Divulgación Feed';
 
