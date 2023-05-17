@@ -29,10 +29,10 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  await FirebaseAppCheck.instance.activate(
-    webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-    androidDebugProvider: true,
-  );
+  // await FirebaseAppCheck.instance.activate(
+  //   webRecaptchaSiteKey: 'recaptcha-v3-site-key',
+  //   androidDebugProvider: true,
+  // );
 
   await ScreenUtil.ensureScreenSize();
 
