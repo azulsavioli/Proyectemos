@@ -144,21 +144,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
             ),
           ),
         ),
-        floatingActionButton: ElevatedButton.icon(
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(ThemeColors.red),
-          ),
-          onPressed: restoreTasks,
-          icon: const Icon(Icons.restore),
-          label: const Text('Reset'),
-        ),
       ),
     );
-  }
-
-  void restoreTasks() {
-    TasksCompletedService.restoreAllTasks();
-    getTaskCompleted();
-    showToast('Tareas resetadas con successo!');
   }
 }
