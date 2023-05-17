@@ -34,94 +34,6 @@ class ProyectemosRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future saveImagesTurma(answer) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-
-    await db.collection('escola/$studentInfo/imagens_turma/').doc().set(answer);
-
-    notifyListeners();
-  }
-
-  Future saveAnswersPublic(doc, answer) async {
-    await db.collection('escola/videos/public/').doc(doc).set(answer);
-    notifyListeners();
-  }
-
-  Future getVideosPublic(String doc) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final tasksAnswers = [];
-
-    final DocumentReference document =
-        db.collection('escola/videos/public/').doc('/$doc');
-
-    try {
-      await document.get().then((snapshot) {
-        if (snapshot.data() != null) {
-          tasksAnswers.add(snapshot.data());
-        }
-      });
-    } on FirebaseException catch (e) {
-      return e.toString();
-    }
-    notifyListeners();
-    return tasksAnswers;
-  }
-
-  Future saveVideosTurma(String doc, answer) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    await db
-        .collection('escola/$studentInfo/videos_turma/')
-        .doc(doc)
-        .set(answer);
-
-    notifyListeners();
-  }
-
-  Future getVideosTurma(String doc) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final tasksAnswers = [];
-
-    final DocumentReference document =
-        db.collection('escola/$studentInfo/videos_turma/').doc('/$doc');
-
-    try {
-      await document.get().then((snapshot) {
-        if (snapshot.data() != null) {
-          tasksAnswers.add(snapshot.data());
-        }
-      });
-    } on FirebaseException catch (e) {
-      return e.toString();
-    }
-    notifyListeners();
-    return tasksAnswers;
-  }
-
-  Future getTeacherEmail(String doc) async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final tasksAnswers = [];
-
-    final DocumentReference document =
-        db.collection('escola/$studentInfo/email_professora/').doc('/$doc');
-
-    try {
-      await document.get().then((snapshot) {
-        if (snapshot.data() != null) {
-          tasksAnswers.add(snapshot.data());
-        }
-      });
-    } on FirebaseException catch (e) {
-      return e.toString();
-    }
-    notifyListeners();
-    return tasksAnswers;
-  }
-
   Future getAnswers(String doc) async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentInfo = sharedPreferences.getString('studentInfo');
@@ -144,6 +56,30 @@ class ProyectemosRepository extends ChangeNotifier {
     return tasksAnswers;
   }
 
+  Future saveImagesTurma(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+
+    await db.collection('escola/$studentInfo/imagens_turma/').doc().set(answer);
+
+    notifyListeners();
+  }
+
+  Stream<List<Map<String, dynamic>>> getImagesTurmaStream() async* {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('escola/$studentInfo/imagens_turma')
+        .get();
+
+    final studentsImages = querySnapshot.docs
+        .map((documentSnapshot) => documentSnapshot.data())
+        .toList();
+
+    yield studentsImages.cast<Map<String, dynamic>>();
+  }
+
   Future<List<Map<String, dynamic>>> getImagesTurma() async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentInfo = sharedPreferences.getString('studentInfo');
@@ -163,68 +99,116 @@ class ProyectemosRepository extends ChangeNotifier {
     return studentsImages.cast<Map<String, dynamic>>();
   }
 
-  // Future getImagesTurma() async {
+  Future saveVideosPublic(answer) async {
+    await db
+        .collection('escola/videos_public/evento_cultural/')
+        .doc()
+        .set(answer);
+    notifyListeners();
+  }
+
+  // Stream<List<Map<String, dynamic>>> getVideosPublicStream() async* {
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   studentInfo = sharedPreferences.getString('studentInfo');
+  //   final videosPublic = [];
+
+  //   final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('escola/videos_public/evento_cultural/')
+  //       .get();
+
+  //   for (final documentSnapshot in querySnapshot.docs) {
+  //     if (documentSnapshot.exists) {
+  //       videosPublic.add(documentSnapshot.data());
+  //     }
+  //   }
+
+  //   yield videosPublic.cast<Map<String, dynamic>>();
+  // }
+
+  Future<List<Map<String, dynamic>>> getVideosPublic() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+    final videosPublic = [];
+
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('escola/videos_public/evento_cultural/')
+        .get();
+
+    for (final documentSnapshot in querySnapshot.docs) {
+      if (documentSnapshot.exists) {
+        videosPublic.add(documentSnapshot.data());
+      }
+    }
+
+    notifyListeners();
+    return videosPublic.cast<Map<String, dynamic>>();
+  }
+
+  Future saveVideosTurma(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+    await db.collection('escola/$studentInfo/videos_turma/').doc().set(answer);
+
+    notifyListeners();
+  }
+
+  // Stream<List<Map<String, dynamic>>> getVideosTurmaStream() async* {
   //   sharedPreferences = await SharedPreferences.getInstance();
   //   studentInfo = sharedPreferences.getString('studentInfo');
   //   final studentsImages = [];
 
-  //   final DocumentReference document =
-  //       db.collection('escola/$studentInfo/imagens_turma/').doc();
+  //   final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //       .collection('escola/$studentInfo/videos_turma/')
+  //       .get();
 
-  //   try {
-  //     await document.get().then((snapshot) {
-  //       if (snapshot.data() != null) {
-  //         studentsImages.add(snapshot.data());
-  //       }
-  //     });
-  //   } on FirebaseException catch (e) {
-  //     return e.toString();
+  //   for (final documentSnapshot in querySnapshot.docs) {
+  //     if (documentSnapshot.exists) {
+  //       studentsImages.add(documentSnapshot.data());
+  //     }
   //   }
-  //   notifyListeners();
-  //   return studentsImages;
+
+  //   yield studentsImages.cast<Map<String, dynamic>>();
   // }
 
-  // Future getStreamSnapshot() async {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentInfo = sharedPreferences.getString('studentInfo');
+  Future<List<Map<String, dynamic>>> getVideosTurma() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+    final studentsImages = [];
 
-  //   try {
-  //     db
-  //         .collection(
-  //           'escola/$studentInfo/imagens_latinoamerica/alunos_feed/',
-  //         )
-  //         .orderBy('postTimeStamp', descending: true)
-  //         .snapshots();
-  //   } on FirebaseException catch (e) {
-  //     return e.toString();
-  //   }
-  //   notifyListeners();
-  // }
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('escola/$studentInfo/videos_turma/')
+        .get();
 
-  // Future getLatinoamericaImages() async {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentInfo = sharedPreferences.getString('studentInfo');
-  //   final imagesLatinoamerica = [];
-  //   final emailsMatch =
-  //       RegExp(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b');
+    for (final documentSnapshot in querySnapshot.docs) {
+      if (documentSnapshot.exists) {
+        studentsImages.add(documentSnapshot.data());
+      }
+    }
 
-  //   try {
-  //     await db
-  //         .collection(
-  //           'escola/$studentInfo/imagens_latinoamerica/alunos/alunos_feed/',
-  //         )
-  //         .get()
-  //         .then((QuerySnapshot querySnapshot) {
-  //       for (final doc in querySnapshot.docs) {
-  //         imagesLatinoamerica.add(doc);
-  //       }
-  //     });
-  //   } on FirebaseException catch (e) {
-  //     return e.toString();
-  //   }
-  //   notifyListeners();
-  //   return imagesLatinoamerica;
-  // }
+    notifyListeners();
+    return studentsImages.cast<Map<String, dynamic>>();
+  }
+
+  Future getTeacherEmail(String doc) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentInfo = sharedPreferences.getString('studentInfo');
+    final tasksAnswers = [];
+
+    final DocumentReference document =
+        db.collection('escola/$studentInfo/email_professora/').doc('/$doc');
+
+    try {
+      await document.get().then((snapshot) {
+        if (snapshot.data() != null) {
+          tasksAnswers.add(snapshot.data());
+        }
+      });
+    } on FirebaseException catch (e) {
+      return e.toString();
+    }
+    notifyListeners();
+    return tasksAnswers;
+  }
 
   Future removeAnswers(String doc) async {
     sharedPreferences = await SharedPreferences.getInstance();
