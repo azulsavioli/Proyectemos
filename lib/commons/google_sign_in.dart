@@ -6,7 +6,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   final auth = FirebaseAuth.instance;
   final googleSignIn = GoogleSignIn(scopes: ['https://mail.google.com/']);
 
-  GoogleSignInAccount? _user;
+  late GoogleSignInAccount? _user;
 
   GoogleSignInAccount get user => _user!;
 
@@ -35,6 +35,6 @@ class GoogleSignInProvider extends ChangeNotifier {
   Future googleLogout() async {
     await auth.signOut();
     await googleSignIn.disconnect();
-    FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
   }
 }

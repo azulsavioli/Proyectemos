@@ -16,7 +16,7 @@ class AuthService extends ChangeNotifier {
     _authCheck();
   }
 
-  _authCheck() {
+  void _authCheck() {
     _auth.authStateChanges().listen((User? user) {
       userAuth = (user == null) ? null : user;
       isLoading = false;
@@ -24,7 +24,7 @@ class AuthService extends ChangeNotifier {
     });
   }
 
-  _getUser() {
+  void _getUser() {
     userAuth = _auth.currentUser;
     notifyListeners();
   }
@@ -55,7 +55,7 @@ class AuthService extends ChangeNotifier {
     }
   }
 
-  logout() async {
+  Future<void> logout() async {
     await _auth.signOut();
     _getUser();
   }

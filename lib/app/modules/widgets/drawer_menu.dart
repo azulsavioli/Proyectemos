@@ -91,7 +91,7 @@ class DrawerMenuWidget extends StatelessWidget {
     );
   }
 
-  void logout() async {
+  void logout() {
     try {
       AuthService().logout();
     } on AuthException catch (e) {

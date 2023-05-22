@@ -74,7 +74,6 @@ class RecordAudioProviderLatinoamericaImpl extends ChangeNotifier
   @override
   void saveRecording() {
     recordingsPaths.add(_afterRecordingFilePath);
-    print('RECORD PATHS LIST : $recordingsPaths');
     clearOldData();
     showToast('Grabación guardada');
     notifyListeners();

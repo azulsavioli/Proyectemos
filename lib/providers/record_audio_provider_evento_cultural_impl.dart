@@ -74,7 +74,6 @@ class RecordAudioProviderEventoCulturalImpl extends ChangeNotifier
   @override
   void saveRecording() {
     recordingsPaths.add(_afterRecordingFilePath);
-    print('RECORD PATHS LIST EVENTO: $recordingsPaths');
     clearOldData();
     showToast('Grabación guardada');
     notifyListeners();

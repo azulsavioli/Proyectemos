@@ -21,9 +21,8 @@ class CustomUploadForm extends StatefulWidget {
 }
 
 class _CustomUploadFormState extends State<CustomUploadForm> {
-  bool _isButtonDisabled = false;
-
   bool buttonFileSelected = false;
+  bool isButtonDisabled = false;
   Icon buttonFileIcon = const Icon(Icons.file_copy);
   Color buttonFileColor = ThemeColors.blue;
 
@@ -77,9 +76,9 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
               selectFile(CustomUploadForm.listFiles);
               setState(() {
                 if (pickedFile == null) {
-                  _isButtonDisabled = false;
+                  isButtonDisabled = false;
                 } else {
-                  _isButtonDisabled = true;
+                  isButtonDisabled = true;
                 }
               });
             },

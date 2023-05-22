@@ -80,8 +80,8 @@ class PlayAudioProvider extends ChangeNotifier {
   }
 
   get currLoadingStatus {
-    final currTime = (_currAudioPlaying /
-        (_justAudioPlayer.duration?.inMicroseconds.ceilToDouble() ?? 1.0));
+    final currTime = _currAudioPlaying /
+        (_justAudioPlayer.duration?.inMicroseconds.ceilToDouble() ?? 1.0);
 
     return currTime > 1.0 ? 1.0 : currTime;
   }
