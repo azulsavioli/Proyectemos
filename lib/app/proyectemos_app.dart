@@ -12,8 +12,6 @@ import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import 'modules/home/proyectos_page.dart';
-import 'modules/login/recovery_page.dart';
-import 'modules/login/registration_page.dart';
 import 'modules/profile/enviar_email_professora_perfil.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
@@ -37,6 +35,8 @@ import 'modules/proyecto_uno/latinoamerica/tareas/tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/tareas/tarea_tres.dart';
 import 'modules/proyecto_uno/latinoamerica/tareas/tarea_uno.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
+import 'modules/recovery/recovery_page.dart';
+import 'modules/registration/registration_page.dart';
 import 'modules/widgets/enviar_email_professora.dart';
 
 class Proyectemos extends StatelessWidget {

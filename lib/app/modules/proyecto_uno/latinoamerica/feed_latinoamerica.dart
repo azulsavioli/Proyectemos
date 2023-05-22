@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/styles.dart';
-import '../../../proyectemos_repository.dart';
+import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 
 class FeedLatinoamericaPage extends StatefulWidget {
@@ -62,7 +62,11 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 20, left: 10, right: 10, bottom: 15),
+                  top: 20,
+                  left: 10,
+                  right: 10,
+                  bottom: 15,
+                ),
                 child: Text(
                   'Actividades compartidas por los estudiantes',
                   textAlign: TextAlign.center,

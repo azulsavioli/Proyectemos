@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:proyectemos/app/proyectemos_repository.dart';
+import 'package:proyectemos/repository/proyectemos_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../commons/strings_latinoamerica.dart';

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/styles.dart';
-import '../../proyectemos_repository.dart';
+import '../../../repository/proyectemos_repository.dart';
 import 'drawer_menu.dart';
 
 class FeedbackPage extends StatefulWidget {

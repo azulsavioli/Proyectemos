@@ -12,10 +12,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_evento_cultural.dart';
 import '../../../../commons/styles.dart';
+import '../../../../repository/proyectemos_repository.dart';
 import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
-import '../../../proyectemos_repository.dart';
 import '../../widgets/custom_record_audio_button.dart';
 import '../../widgets/drawer_menu.dart';
 
@@ -234,8 +234,7 @@ ${StringsEventoCultural.descriptionTwoEventocultural}''';
 
       final email = await getEmailTeacherFromFirebase();
 
-      final studentInfo =
-          await context.read<ProyectemosRepository>().getUserInfo();
+      final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
       final studentInformation = studentInfo.split('/');
 
       final allStudentInfo = [

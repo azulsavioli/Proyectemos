@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/styles.dart';
+import '../../../../repository/proyectemos_repository.dart';
 import '../../../../services/tasks_completed.dart';
-import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 
 class FeedDivulgationPage extends StatefulWidget {

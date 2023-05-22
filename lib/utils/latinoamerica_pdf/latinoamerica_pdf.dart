@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:proyectemos/utils/get_user.dart';
 import 'package:proyectemos/utils/latinoamerica_pdf/generate_pdf.dart';
 
-import '../../app/proyectemos_repository.dart';
+import '../../repository/proyectemos_repository.dart';
 import '../../services/storage_service.dart';
 
 class TextAnswers {

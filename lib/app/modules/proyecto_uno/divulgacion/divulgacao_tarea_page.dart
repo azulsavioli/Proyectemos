@@ -11,12 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../commons/strings.dart';
 import '../../../../commons/strings_divulgacao.dart';
 import '../../../../commons/styles.dart';
+import '../../../../repository/proyectemos_repository.dart';
 import '../../../../services/firebase/firebase_converter.dart';
 import '../../../../services/tasks_completed.dart';
 import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
-import '../../../proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
 
 class DivulgacaoPage extends StatefulWidget {
@@ -29,6 +29,8 @@ class DivulgacaoPage extends StatefulWidget {
 enum OpcoesCompartilhamento { turma, todos }
 
 class _DivulgacaoPageState extends State<DivulgacaoPage> {
+  bool divulgacao = false;
+
   OpcoesCompartilhamento? sendingType = OpcoesCompartilhamento.todos;
 
   bool isButtonDisabled = false;
@@ -147,8 +149,6 @@ Video do Evento Cultural ''';
 
   @override
   Widget build(BuildContext context) {
-    bool divulgacao = false;
-
     Future<void> getTaskCompleted() async {
       final resultado =
           await TasksCompletedService.getUnoDivulgationCompletedInfo();
@@ -156,12 +156,6 @@ Video do Evento Cultural ''';
       setState(() {
         divulgacao = resultado[0];
       });
-    }
-
-    void restoreTasks() {
-      TasksCompletedService.restoreAllTasks();
-      getTaskCompleted();
-      showToast('Tareas resetadas con successo!');
     }
 
     final currentUser = getCurrentUser(context);
@@ -312,14 +306,6 @@ Video do Evento Cultural ''';
             ],
           ),
         ),
-      ),
-      floatingActionButton: ElevatedButton.icon(
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(ThemeColors.red),
-        ),
-        onPressed: restoreTasks,
-        icon: const Icon(Icons.restore),
-        label: const Text('Reset'),
       ),
     );
   }

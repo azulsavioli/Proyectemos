@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
-import 'package:proyectemos/app/modules/login/registration_page.dart';
+import 'package:proyectemos/app/modules/registration/registration_page.dart';
 import 'package:proyectemos/main.dart';
 
 import '../app/modules/onboarding/onboarding_page.dart';

@@ -8,10 +8,10 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../commons/strings_latinoamerica.dart';
 import '../../../../../commons/styles.dart';
+import '../../../../../repository/proyectemos_repository.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
 import '../../../../../utils/get_user.dart';
-import '../../../../proyectemos_repository.dart';
 import '../../../widgets/custom_text_form_field.dart';
 import '../../../widgets/drawer_menu.dart';
 

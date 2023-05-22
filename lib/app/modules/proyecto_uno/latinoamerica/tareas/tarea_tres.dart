@@ -11,10 +11,10 @@ import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../commons/strings.dart';
+import '../../../../../repository/proyectemos_repository.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
 import '../../../../../utils/get_user.dart';
-import '../../../../proyectemos_repository.dart';
 import '../../../widgets/drawer_menu.dart';
 import '../../../widgets/step.dart';
 
@@ -39,6 +39,7 @@ class PUnoLatinoamericaTareaTresPageState
   final answerNueveController = TextEditingController();
   final answerDiezController = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  bool latinoamerica = false;
 
   List<XFile> selectedImages = CustomStep.images;
 
@@ -401,7 +402,6 @@ Imagens em anexo!
   @override
   Widget build(BuildContext context) {
     final currentUser = getCurrentUser(context);
-    var _latinoamerica = false;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -448,7 +448,7 @@ Imagens em anexo!
                   selectedImages.length == 10) {
                 sendAnswers(currentUser);
                 showToast(Strings.tareaConcluida);
-                _latinoamerica = true;
+                latinoamerica = true;
                 saveLatinoamericaCompleted();
                 Navigator.pushNamed(
                   context,
