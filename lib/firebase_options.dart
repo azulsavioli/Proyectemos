@@ -63,8 +63,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '333978861746',
     projectId: 'proyectemos-9924c',
     storageBucket: 'proyectemos-9924c.appspot.com',
-    androidClientId: '333978861746-u37519fam3uaqu9gukmatg8adf0utlej.apps.googleusercontent.com',
-    iosClientId: '333978861746-28s4hghi0m8sbgfafdjt4tc5rue1eoff.apps.googleusercontent.com',
+    androidClientId:
+        '333978861746-u37519fam3uaqu9gukmatg8adf0utlej.apps.googleusercontent.com',
+    iosClientId:
+        '333978861746-28s4hghi0m8sbgfafdjt4tc5rue1eoff.apps.googleusercontent.com',
     iosBundleId: 'com.example.proyectemos',
   );
 }
