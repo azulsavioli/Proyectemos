@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../../commons/strings.dart';
@@ -6,11 +7,11 @@ import '../../../../../commons/strings_latinoamerica.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 
-class TareaUnoController {
+class TareaUnoController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   final subject = 'Atividade - Latinoamerica\n Tarea Uno';
   final doc = 'uno/latinoamerica/atividade_1/';
-  final task = 'latinoamericaTareaDosCompleted';
+  final task = 'latinoamericaTareaUnoCompleted';
   List<String> studentInformations = [];
 
   Future<void> sendAnswers(
@@ -35,13 +36,14 @@ class TareaUnoController {
         [],
       );
       await _repository.sendAnswersToFirebase(json, doc);
+      await _repository.saveTaskCompleted(task);
+      showToast(Strings.tareaConcluida);
+
+      notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
       showToast('Ocurrio un erro no envio dos datos!');
     }
-    await _repository.saveTaskCompleted(task);
-
-    showToast(Strings.tareaConcluida);
   }
 
   List<String> makeAnswersList(

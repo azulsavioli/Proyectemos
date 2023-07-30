@@ -101,7 +101,6 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(authService.userAuth?.uid)
         .collection(task);
     try {
-      // await studentTaskRef.add(answer);
       await studentTaskRef.doc().set(answer);
     } on Exception catch (e) {
       e.toString();
@@ -163,28 +162,31 @@ class ProyectemosRepository extends ChangeNotifier {
         .collection('turmas')
         .doc(classroomId)
         .collection('imagens_turma')
-        .doc(authService.userAuth?.uid)
-        .collection('imagens');
+        .doc(authService.userAuth?.uid);
 
     try {
-      await studentTaskRef.add(answer);
+      await studentTaskRef.set(answer);
     } on Exception catch (e) {
       e.toString();
     }
     notifyListeners();
   }
 
-  Stream<List<Map<String, dynamic>>?> getImagesTurmaStream() async* {
+  Stream<List<Map<String, dynamic>>> getImagesTurmaStream() {
+    return Stream.fromFuture(_getImagesTurma());
+  }
+
+  Future<List<Map<String, dynamic>>> _getImagesTurma() async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
     studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
-    final studentsImages = [];
+    final studentsImages = <Map<String, dynamic>>[];
 
     final schoolId = await getSchoolId(studentSchoolInfo);
     final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
     if (schoolId.isEmpty || classroomId.isEmpty) {
-      return;
+      return studentsImages;
     }
 
     final studentTaskRef = db
@@ -197,14 +199,46 @@ class ProyectemosRepository extends ChangeNotifier {
     try {
       await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
         for (final doc in querySnapshot.docs) {
-          studentsImages.add(doc.data());
+          studentsImages.add(doc.data() as Map<String, dynamic>);
         }
       });
     } catch (error) {
-      error.toString();
+      print(error.toString());
     }
-    yield studentsImages.cast<Map<String, dynamic>>();
+    return studentsImages;
   }
+
+  // Stream<List<Map<String, dynamic>>?> getImagesTurmaStream() async* {
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+  //   studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+  //   final studentsImages = [];
+
+  //   final schoolId = await getSchoolId(studentSchoolInfo);
+  //   final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+  //   if (schoolId.isEmpty || classroomId.isEmpty) {
+  //     return;
+  //   }
+
+  //   final studentTaskRef = db
+  //       .collection('escolas')
+  //       .doc(schoolId)
+  //       .collection('turmas')
+  //       .doc(classroomId)
+  //       .collection('imagens_turma');
+
+  //   try {
+  //     await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+  //       for (final doc in querySnapshot.docs) {
+  //         studentsImages.add(doc.data());
+  //       }
+  //     });
+  //   } catch (error) {
+  //     error.toString();
+  //   }
+  //   yield studentsImages.cast<Map<String, dynamic>>();
+  // }
 
   Future saveVideosPublic(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
@@ -347,7 +381,7 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('professores');
+        .collection('professore');
 
     try {
       await teacherInfoRef.get().then((QuerySnapshot querySnapshot) {

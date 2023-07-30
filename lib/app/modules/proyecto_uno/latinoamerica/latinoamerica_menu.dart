@@ -77,7 +77,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: '300 kilos',
+                  text: tareaUno ? 'Feedback 300 kilos' : '300 kilos',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno
@@ -93,7 +93,9 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Tu Latinoamérica',
+                  text: tareaDos
+                      ? 'Feedback\nTu Latinoamérica'
+                      : 'Tu Latinoamérica',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaDos
@@ -114,9 +116,9 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                     cardWidth: width,
                     cardHeight: height,
                     namedRoute: '/pUno_latinoamerica_feed',
-                    backgroundColor: ThemeColors.red,
+                    backgroundColor: ThemeColors.green,
                     icon: Icons.image,
-                    shadowColor: ThemeColors.red,
+                    shadowColor: ThemeColors.green,
                   ),
                 const SizedBox(
                   height: 20,

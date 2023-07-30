@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,13 +12,18 @@ import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../widgets/step.dart';
 
-class TareaDosController {
+class TareaDosController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   final subject = 'Atividade - Latinoamerica\n Tarea Dos';
   final doc = 'uno/latinoamerica/atividade_2/';
-  final task = 'latinoamericaTareaDosCompleted';
+
   List<String> studentInformations = [];
   List<XFile> selectedImages = CustomStep.images;
+
+  Future<void> saveTaskCompleted() async {
+    const task = 'latinoamericaTareaDosCompleted';
+    await _repository.saveTaskCompleted(task);
+  }
 
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
@@ -41,13 +47,14 @@ class TareaDosController {
         attachment,
       );
       await _repository.sendAnswersToFirebase(json, doc);
+      await _repository.saveClassroomImages(json);
+      showToast(Strings.tareaConcluida);
+
+      notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
       showToast('Ocurrio un erro no envio dos datos!');
     }
-    await _repository.saveTaskCompleted(task);
-
-    showToast(Strings.tareaConcluida);
   }
 
   List<FileAttachment> setupAttachments(

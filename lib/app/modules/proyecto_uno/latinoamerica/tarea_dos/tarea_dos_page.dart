@@ -119,7 +119,9 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                         textNine,
                         textTen,
                       );
-                      _tareaDosController.sendAnswers(currentUser, answerList);
+                      _tareaDosController
+                        ..sendAnswers(currentUser, answerList)
+                        ..saveTaskCompleted();
                       showToast(Strings.tareaConcluida);
                       latinoamerica = true;
                       Navigator.pushNamed(
@@ -164,7 +166,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                             ),
                             onPressed: details.onStepCancel,
                             child: const Text(
-                              'Cancelar',
+                              'Volver',
                               style: TextStyle(color: ThemeColors.blue),
                             ),
                           ),
