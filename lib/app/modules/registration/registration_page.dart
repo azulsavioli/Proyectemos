@@ -18,8 +18,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final formKey = GlobalKey<FormState>();
   final _repository = RepositoryImpl();
   final _controller = RegistrationController();
-  var dropdownValor1;
-  var dropdownValor2;
+  var dropdownValor1 = '';
+  var dropdownValor2 = '';
+
   bool schoolChoosed = false;
   List schools = [];
 
@@ -32,6 +33,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           title: Text(
             'Registro de estudiantes',
             style: ThemeText.paragraph16White,
+            textAlign: TextAlign.center,
           ),
         ),
         body: Padding(
@@ -63,8 +65,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         return const Center(child: CircularProgressIndicator());
                       }
 
-                      snapshot.data!.insert(0, 'Selecione sua escuela!');
-                      dropdownValor1 ??= snapshot.data![0];
+                      List<String> schoolOptions = ['Selecione sua escuela!'];
+                      schoolOptions.addAll(snapshot.data!);
 
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
@@ -81,13 +83,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         iconEnabledColor: ThemeColors.yellow,
                         isExpanded: true,
                         onChanged: (option) {
-                          setState(() {
-                            dropdownValor1 = option;
-                            schoolChoosed = true;
-                          });
+                          if (option == 'Selecione sua escuela!') {
+                            showToast(
+                              color: ThemeColors.red,
+                              'Por favor, selecione uma escola válida',
+                            );
+                          } else {
+                            setState(() {
+                              dropdownValor1 = option!;
+                              dropdownValor2 = '';
+                              schoolChoosed = true;
+                            });
+                          }
                         },
-                        items: snapshot.data
-                            ?.map<DropdownMenuItem<String>>((String value) {
+                        items: schoolOptions
+                            .map<DropdownMenuItem<String>>((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -117,8 +127,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           );
                         }
 
-                        snapshot.data!.insert(0, 'Selecione sua clase!');
-                        dropdownValor2 ??= snapshot.data![0];
+                        List<String> classOptions = ['Selecione sua clase!'];
+                        classOptions.addAll(snapshot.data!);
 
                         return DropdownButtonFormField<String>(
                           decoration: InputDecoration(
@@ -136,12 +146,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           iconEnabledColor: ThemeColors.yellow,
                           isExpanded: true,
                           onChanged: (option) {
-                            setState(() {
-                              dropdownValor2 = option;
-                            });
+                            if (option == 'Selecione sua clase!') {
+                              showToast(
+                                color: ThemeColors.red,
+                                'Por favor, selecione uma clase válida',
+                              );
+                            } else {
+                              setState(() {
+                                dropdownValor2 = option!;
+                              });
+                            }
                           },
-                          items: snapshot.data
-                              ?.map<DropdownMenuItem<String>>((String value) {
+                          items: classOptions
+                              .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),
