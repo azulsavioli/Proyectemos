@@ -62,25 +62,23 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
   void initState() {
     super.initState();
 
-    setState(() {
-      focusNode1 = FocusNode();
-      focusNode2 = FocusNode();
-      focusNode3 = FocusNode();
-      focusNode4 = FocusNode();
-      focusNode5 = FocusNode();
+    focusNode1 = FocusNode();
+    focusNode2 = FocusNode();
+    focusNode3 = FocusNode();
+    focusNode4 = FocusNode();
+    focusNode5 = FocusNode();
 
-      youTubeController = YoutubePlayerController(
-        initialVideoId: 'R21d66HYGPw',
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          controlsVisibleAtStart: true,
-        ),
-      )..addListener(listener);
-      idController = TextEditingController();
-      seekToController = TextEditingController();
-      videoMetaData = const YoutubeMetaData();
-      playerState = PlayerState.buffering;
-    });
+    youTubeController = YoutubePlayerController(
+      initialVideoId: 'R21d66HYGPw',
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        controlsVisibleAtStart: true,
+      ),
+    )..addListener(listener);
+    idController = TextEditingController();
+    seekToController = TextEditingController();
+    videoMetaData = const YoutubeMetaData();
+    playerState = PlayerState.buffering;
   }
 
   void listener() {
@@ -94,25 +92,20 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
 
   @override
   void deactivate() {
-    setState(() {
-      youTubeController.dispose();
-    });
     super.deactivate();
   }
 
   @override
   void dispose() {
-    setState(() {
-      pageController.dispose();
-      youTubeController.dispose();
-      idController.dispose();
-      seekToController.dispose();
-      focusNode1.dispose();
-      focusNode2.dispose();
-      focusNode3.dispose();
-      focusNode4.dispose();
-      focusNode5.dispose();
-    });
+    pageController.dispose();
+    youTubeController.dispose();
+    idController.dispose();
+    seekToController.dispose();
+    focusNode1.dispose();
+    focusNode2.dispose();
+    focusNode3.dispose();
+    focusNode4.dispose();
+    focusNode5.dispose();
     super.dispose();
   }
 
@@ -131,7 +124,12 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+          // onPressed: () => Navigator.of(context).pop(),.
+          onPressed: () {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pop();
+            });
+          },
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(
@@ -167,6 +165,9 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
               }
               if (index == 5) {
                 focusNode5.requestFocus();
+              }
+              if (index == 6) {
+                FocusScope.of(context).unfocus();
               }
               setState(() {
                 pageChanged = index;
