@@ -20,7 +20,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
 
   @override
   void initState() {
-    _imagesStream = _repository.getImagesTurmaStream() as Stream<List>;
+    _imagesStream = _repository.getImagesTurmaStream();
     super.initState();
   }
 

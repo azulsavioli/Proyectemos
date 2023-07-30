@@ -28,15 +28,6 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     return {for (var e in jsonList) e.keys.first: e.values.first};
   }
 
-  // @override
-  // Future<void> saveTaskCompleted(taskName) async {
-  //   final preferences = await SharedPreferences.getInstance();
-  //   await preferences.setBool(
-  //     taskName,
-  //     true,
-  //   );
-  // }
-
   @override
   Future<void> saveTaskCompleted(T taskName) async {
     final preferences = await SharedPreferences.getInstance();
@@ -46,20 +37,21 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     );
   }
 
-  // @override
-  // Future<void> sendAnswersToFirebase(Map<T, T> json, T doc) async {
-  //   try {
-  //     await _repository.saveAnswers(doc, json);
-  //   } on FirebaseException catch (e) {
-  //     e.toString();
-  //   }
-  // }
-
   @override
   Future<void> sendAnswersToFirebase(Map<T, T> json, T doc) async {
     final convertedJson = _convertMapToStringDynamic(json);
     try {
       await _repository.saveAnswers(doc.toString(), convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
+  @override
+  Future<void> saveClassroomImages(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.saveImagesTurma(convertedJson);
     } on FirebaseException catch (e) {
       e.toString();
     }
@@ -72,25 +64,6 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     });
     return convertedMap;
   }
-
-  // @override
-  // Future<void> sendEmail(
-  //   GoogleSignInAccount? currentUser,
-  //   List answersList,
-  //   subject,
-  //   message,
-  //   attachment,
-  // ) async {
-  //   final email = await getEmailTeacherFromFirebase();
-
-  //   await emailSender.sendEmailToTeacher(
-  //     currentUser,
-  //     attachment,
-  //     [email.first.values.first],
-  //     subject,
-  //     message,
-  //   );
-  // }
 
   @override
   Future<void> sendEmail(
@@ -112,34 +85,6 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
       );
     }
   }
-
-  // @override
-  // Future getEmailTeacherFromFirebase() async {
-  //   final emails = [];
-  //   const doc = 'professora';
-
-  //   try {
-  //     final data = await _repository.getTeacherEmail(doc);
-  //     emails.addAll(data);
-  //   } on FirebaseException catch (e) {
-  //     e.toString();
-  //   }
-  //   return emails;
-  // }
-
-  // @override
-  // Future<List<String>> getEmailTeacherFromFirebase() async {
-  //   final emails = [];
-
-  //   try {
-  //     final data = await _repository.getTeacherEmail();
-  //     emails.addAll(await data);
-
-  //   } on FirebaseException catch (e) {
-  //     e.toString();
-  //   }
-  //   return emails;
-  // }
 
   @override
   Future<List<String>> getStudentInfo() async {
@@ -218,24 +163,6 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     return classRoom;
   }
 
-  // @override
-  // Future<List<String>>? getSchoolsInfo() async {
-  //   final schoolsRef = FirebaseFirestore.instance.collection('escolas');
-
-  //   final schools = [];
-
-  //   try {
-  //     await schoolsRef.get().then((QuerySnapshot querySnapshot) {
-  //       for (final doc in querySnapshot.docs) {
-  //         schools.add(doc.data().toString());
-  //       }
-  //     });
-  //   } catch (error) {
-  //     error.toString();
-  //   }
-  //   return schools;
-  // }
-
   @override
   Future<List> getClassesInfo() {
     // TODO: implement getClassesInfo
@@ -253,38 +180,4 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     // TODO: implement getEmailTeacherFromFirebase
     throw UnimplementedError();
   }
-
-  // @override
-  // Future<List<String>>? getTeachersInfo() async {
-  //   final teachersRef = FirebaseFirestore.instance.collection(
-  //     'professores',
-  //   );
-
-  //   var teachers;
-
-  //   await teachersRef.get().then((QuerySnapshot querySnapshot) {
-  //     teachers = querySnapshot.docs;
-  //   }).catchError((error) {
-  //     print("Erro ao obter os documentos: $error");
-  //   });
-
-  //   return teachers;
-  // }
-
-  // @override
-  // Future<List<String>>? getClassesInfo() async {
-  //   final turmasRef = FirebaseFirestore.instance.collection(
-  //     'turmas',
-  //   );
-
-  //   var turmas;
-
-  //   await turmasRef.get().then((QuerySnapshot querySnapshot) {
-  //     turmas = querySnapshot.docs;
-  //   }).catchError((error) {
-  //     print("Erro ao obter os documentos: $error");
-  //   });
-
-  //   return turmas;
-  // }
 }
