@@ -30,6 +30,11 @@ class PUnoArtistasLatinoamericanosTareaDosPage extends StatefulWidget {
 
 class _PUnoArtistasLatinoamericanosTareaDosPageState
     extends State<PUnoArtistasLatinoamericanosTareaDosPage> {
+  late SharedPreferences sharedPreferences;
+  String studentSchoolInfo = '';
+  String studentClassRoomInfo = '';
+  final _repository = ProyectemosRepository();
+
   @override
   void initState() {
     super.initState();
@@ -154,11 +159,10 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
 
   Future<List> getEmailTeacherFromFirebase() async {
     final emails = [];
-    const doc = 'professora';
     final repository = context.read<ProyectemosRepository>();
 
     try {
-      final data = await repository.getTeacherEmail(doc);
+      final data = await repository.getTeacherEmail();
       emails.addAll(data);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
@@ -170,11 +174,10 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
   Future<void> sendEmail(GoogleSignInAccount? currentUser) async {
     final attachment = setupAttachments();
     final email = await getEmailTeacherFromFirebase();
-    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInfo = await _repository.getUserInfo();
     final studentInformation = studentInfo.split('/');
 
     final allStudentInfo = [
-      studentInformation[3],
       studentInformation[0],
       studentInformation[1],
       studentInformation[2]
@@ -183,7 +186,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
     const subject = 'Atividade - Artistas Latinoamericanos 2';
     final text = '''
 Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
         Atividade Artistas Latinoamericanos 2ª etapa concluída!
         \nPaís: ${randonCountrys[0]} - Artista: ${answerUnoController.text}
         \nPaís: ${randonCountrys[1]} - Artista: ${answerDosController.text}
@@ -240,7 +243,7 @@ ${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStuden
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,

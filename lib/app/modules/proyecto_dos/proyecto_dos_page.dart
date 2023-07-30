@@ -27,10 +27,10 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
           ),
           title: Text(
             Strings.titleCardDos,
-            style: ThemeText.paragraph16WhiteBold,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Center(
           child: Text(
             'En desarrollo',

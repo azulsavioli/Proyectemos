@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../services/tasks_completed.dart';
 import '../widgets/card_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,75 +13,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final _controller = ProfileController();
   final user = FirebaseAuth.instance.currentUser!;
-  bool latinoamericaCompleted = false;
-  bool artistasTareaUnoCompleted = false;
-  bool artistasTareaDosCompleted = false;
-  bool eventoCulturalCompleted = false;
-  bool divulgationCompleted = false;
-
-  int allTasks = 28;
-  double percentage = 0;
-  int unoTasks = 0;
-  int dosTasks = 0;
-  int tresTasks = 0;
-
-  void goTo(String routeName) {
-    Navigator.pushNamed(context, routeName);
-  }
 
   @override
   void initState() {
-    getUnoTaskCompleted();
-    getPercentage();
-    super.initState();
-  }
-
-  Future<int> getUnoTaskCompleted() async {
-    final resultado = await TasksCompletedService.getUnoTaskCompletedInfo();
-
-    if (resultado[0] == true) {
-      setState(() {
-        unoTasks = 3;
-      });
-    }
-    if (resultado[1] == true) {
-      setState(() {
-        unoTasks += 2;
-      });
-    }
-    if (resultado[2] == true) {
-      setState(() {
-        unoTasks += 1;
-      });
-    }
-    if (resultado[3] == true) {
-      setState(() {
-        unoTasks += 1;
-      });
-    }
-
-    return unoTasks;
-  }
-
-  Future<void> getPercentage() async {
-    final unoTasks = await getUnoTaskCompleted();
-
     setState(() {
-      percentage = unoTasks / allTasks * 100;
+      _controller
+        ..getUnoTaskCompleted()
+        ..getPercentage();
     });
-  }
 
-  int getAllTasks() {
-    return unoTasks + dosTasks + tresTasks;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
     final height = MediaQuery.of(context).size.width * .2;
-
-    final tasksCompleted = getAllTasks();
+    final tasksCompleted = _controller.getAllTasks();
 
     return SafeArea(
       child: Scaffold(
@@ -158,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '$tasksCompleted/$allTasks',
+                              '$tasksCompleted/$_controller.allTasks',
                               style: ThemeText.paragraph16BlueBold,
                             ),
                             Text(
@@ -171,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '${percentage.toStringAsFixed(0)}%',
+                              '${_controller.percentage.toStringAsFixed(0)}%',
                               style: ThemeText.paragraph16BlueBold,
                             ),
                             Text(
@@ -185,43 +135,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              // adicionar as rotas
-              // CardButton(
-              //   iconSize: 25,
-              //   text: 'Notificaciones',
-              //   backgroundColor: ThemeColors.red,
-              //   icon: Icons.access_alarm_outlined,
-              //   cardWidth: width,
-              //   cardHeight: height,
-              //   namedRoute: '',
-              //   shadowColor: ThemeColors.red,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // CardButton(
-              //   iconSize: 25,
-              //   text: 'Informaciones',
-              //   backgroundColor: ThemeColors.yellow,
-              //   icon: Icons.announcement_outlined,
-              //   cardWidth: width,
-              //   cardHeight: height,
-              //   namedRoute: '',
-              //   shadowColor: ThemeColors.yellow,
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // CardButton(
-              //   iconSize: 25,
-              //   text: 'Logros',
-              //   backgroundColor: ThemeColors.blue,
-              //   icon: Icons.workspace_premium,
-              //   cardWidth: width,
-              //   cardHeight: height,
-              //   namedRoute: '',
-              //   shadowColor: ThemeColors.blue,
-              // ),
               const SizedBox(
                 height: 8,
               ),
@@ -238,26 +151,6 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 8,
               ),
-              // CardButton(
-              //   iconSize: 25,
-              //   text: 'Configuraciones',
-              //   backgroundColor: ThemeColors.yellow,
-              //   icon: Icons.settings_rounded,
-              //   cardWidth: width,
-              //   cardHeight: height,
-              //   namedRoute: '',
-              //   shadowColor: ThemeColors.yellow,
-              // ),
-              // CardButton(
-              //   iconSize: 25,
-              //   text: ,
-              //   backgroundColor: ThemeColors.red,
-              //   icon:
-              //   cardWidth: width,
-              //   cardHeight: height,
-              //   namedRoute: '',
-              //   shadowColor: ThemeColors.red,
-              // ),
             ],
           ),
         ),

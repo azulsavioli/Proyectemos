@@ -12,15 +12,14 @@ import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import 'modules/home/proyectos_page.dart';
-import 'modules/profile/enviar_email_professora_perfil.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/record_and_play_audio.dart';
+import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_artistas_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_dos.dart';
-import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_uno.dart';
 import 'modules/proyecto_uno/divulgacion/divulgacao_tarea_page.dart';
 import 'modules/proyecto_uno/divulgacion/feed_divulgation.dart';
 import 'modules/proyecto_uno/divulgacion/feedback_tarea_divulgacion.dart';
@@ -28,15 +27,13 @@ import 'modules/proyecto_uno/evento_cultural/feedback_tarea_evento_cultural.dart
 import 'modules/proyecto_uno/evento_cultural/record_and_play_audio_propuesta.dart';
 import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
-import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_tres.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/latinoamerica/latinoamerica_menu.dart';
-import 'modules/proyecto_uno/latinoamerica/tareas/tarea_dos.dart';
-import 'modules/proyecto_uno/latinoamerica/tareas/tarea_tres.dart';
-import 'modules/proyecto_uno/latinoamerica/tareas/tarea_uno.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_page.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
-import 'modules/recovery/recovery_page.dart';
 import 'modules/registration/registration_page.dart';
+import 'modules/teacher_contact/teacher_contact.dart';
 import 'modules/widgets/enviar_email_professora.dart';
 
 class Proyectemos extends StatelessWidget {
@@ -52,7 +49,7 @@ class Proyectemos extends StatelessWidget {
           builder: (context, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: title,
+              title: Proyectemos.title,
               theme: ThemeData(
                 primaryColor: ThemeColors.blue,
                 secondaryHeaderColor: ThemeColors.yellow,
@@ -67,28 +64,23 @@ class Proyectemos extends StatelessWidget {
                 '/profile': (context) => const ProfilePage(),
                 '/profile_contato_professora': (context) =>
                     const EnvioEmailProfesoraPerfil(),
-                '/recoveryPassword': (context) => const RecoveryPasswordPage(),
                 '/proyectos': (context) => const ProyectosPage(),
                 '/proyecto_uno': (context) => const ProyectoUnoPage(),
                 '/pUno_latinoamerica_menu': (context) =>
                     const PUnoLatinoamericaMenu(),
                 '/pUno_latinoamerica_tarea_uno': (context) =>
-                    const PUnoLatinoamericaTareaUnoPage(),
+                    const TareaUnoLatinoamericaPage(),
                 '/pUno_latinoamerica_tarea_dos': (context) =>
-                    const PUnoLatinoamericaTareaDosPage(),
-                '/pUno_latinoamerica_tarea_tres': (context) =>
-                    const PUnoLatinoamericaTareaTresPage(),
+                    const TareaDosLatinoamericaPage(),
                 '/pUno_latinoamerica_feed': (context) =>
                     const FeedLatinoamericaPage(),
                 '/pUno_latinoamerica_feedback_tarea_uno': (context) =>
                     const FeedbackTareaUnoLatinoamerica(),
                 '/pUno_latinoamerica_feedback_tarea_dos': (context) =>
                     const FeedbackTareaDosLatinoamerica(),
-                '/pUno_latinoamerica_feedback_tarea_tres': (context) =>
-                    const FeedbackTareaTresLatinoamerica(),
                 '/pUno_artistas_menu': (context) => const PUnoArtistasMenu(),
-                '/pUno_artistas_latinoamericanos_tarea_uno': (context) =>
-                    const PUnoArtistasLatinoamericanosTareaUnoPage(),
+                '/pUno_artistas_frida': (context) =>
+                    const TareaArtistasLatinoamericanosPage(),
                 '/pUno_artistas_latinoamericanos_tarea_dos': (context) =>
                     const PUnoArtistasLatinoamericanosTareaDosPage(),
                 '/pUno_artistas_feedback_tarea_uno': (context) =>

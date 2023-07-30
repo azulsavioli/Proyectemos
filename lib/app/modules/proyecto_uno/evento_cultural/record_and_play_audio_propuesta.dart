@@ -64,7 +64,7 @@ class _RecordAndPlayPropuestaScreenState
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Container(
           decoration: const BoxDecoration(

@@ -55,10 +55,10 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
           ),
           title: Text(
             Strings.titleCardUno,
-            style: ThemeText.paragraph16WhiteBold,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(

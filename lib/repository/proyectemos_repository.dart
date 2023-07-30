@@ -6,11 +6,12 @@ import '../services/firebase/db_firestore_helper.dart';
 
 class ProyectemosRepository extends ChangeNotifier {
   late FirebaseFirestore db;
-  late AuthService authService;
+  AuthService authService = AuthService();
   late SharedPreferences sharedPreferences;
-  late String? studentInfo;
+  String studentSchoolInfo = '';
+  String studentClassRoomInfo = '';
 
-  ProyectemosRepository({required this.authService}) {
+  ProyectemosRepository() {
     _startRepository();
   }
 
@@ -22,31 +23,119 @@ class ProyectemosRepository extends ChangeNotifier {
     db = DBFirestore.get();
   }
 
-  Future saveAnswers(doc, answer) async {
+  Future<List<DocumentSnapshot>> getAllSchools() async {
+    var schools;
+
+    await FirebaseFirestore.instance
+        .collection('escolas')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      schools = querySnapshot.docs;
+    });
+
+    return schools;
+  }
+
+  Future<String> getSchoolId(String schoolNameParams) async {
+    final schoolsRef = FirebaseFirestore.instance.collection('escolas');
+    String schoolId = '';
+
+    try {
+      await schoolsRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          final schoolName = doc.data();
+          if (schoolName == null) return;
+          if ((schoolName as Map)['schoolName'] == schoolNameParams) {
+            schoolId = doc.id.toString();
+          }
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
+    return schoolId;
+  }
+
+  Future<String> getClassRoomId(String schoolId, String classNameParams) async {
+    final classRoomRef = FirebaseFirestore.instance
+        .collection('escolas/')
+        .doc('$schoolId/')
+        .collection('turmas');
+    String classRoomId = '';
+
+    try {
+      await classRoomRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          final className = doc.data();
+          if (className == null) return;
+          if ((className as Map)['classRoom'] == classNameParams) {
+            classRoomId = doc.id.toString();
+            break;
+          }
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
+    return classRoomId;
+  }
+
+  Future<void> saveAnswers<T>(String task, Map<String, T> answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
 
-    await db
-        .collection('escola/$studentInfo/${authService.userAuth!.email}/')
-        .doc(doc)
-        .set(answer);
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('alunos')
+        .doc(authService.userAuth?.uid)
+        .collection(task);
+    try {
+      // await studentTaskRef.add(answer);
+      await studentTaskRef.doc().set(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
     notifyListeners();
   }
 
-  Future getAnswers(String doc) async {
+  Future getAnswers(String task) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
     final tasksAnswers = [];
 
-    final DocumentReference document = db
-        .collection('escola/$studentInfo/${authService.userAuth!.email}/')
-        .doc('/$doc');
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('alunos')
+        .doc(authService.userAuth?.uid)
+        .collection(task);
     try {
-      await document.get().then((snapshot) {
-        if (snapshot.data() != null) {
-          tasksAnswers.add(snapshot.data());
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          final task = doc.data();
+          if (task == null) return;
+          tasksAnswers.add(task);
         }
       });
     } on FirebaseException catch (e) {
@@ -58,171 +147,243 @@ class ProyectemosRepository extends ChangeNotifier {
 
   Future saveImagesTurma(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
 
-    await db.collection('escola/$studentInfo/imagens_turma/').doc().set(answer);
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('imagens_turma')
+        .doc(authService.userAuth?.uid)
+        .collection('imagens');
+
+    try {
+      await studentTaskRef.add(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
     notifyListeners();
   }
 
-  Stream<List<Map<String, dynamic>>> getImagesTurmaStream() async* {
+  Stream<List<Map<String, dynamic>>?> getImagesTurmaStream() async* {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentsImages = [];
 
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('escola/$studentInfo/imagens_turma')
-        .get();
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
-    final studentsImages = querySnapshot.docs
-        .map((documentSnapshot) => documentSnapshot.data())
-        .toList();
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
 
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('imagens_turma');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data());
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
     yield studentsImages.cast<Map<String, dynamic>>();
   }
 
-  Future<List<Map<String, dynamic>>> getImagesTurma() async {
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final studentsImages = [];
-
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('escola/$studentInfo/imagens_turma')
-        .get();
-
-    for (final documentSnapshot in querySnapshot.docs) {
-      if (documentSnapshot.exists) {
-        studentsImages.add(documentSnapshot.data());
-      }
-    }
-
-    notifyListeners();
-    return studentsImages.cast<Map<String, dynamic>>();
-  }
-
   Future saveVideosPublic(answer) async {
-    await db
-        .collection('escola/videos_public/evento_cultural/')
-        .doc()
-        .set(answer);
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('videos_publicos_evento_cultural');
+
+    try {
+      await studentTaskRef.add(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
     notifyListeners();
   }
 
-  // Stream<List<Map<String, dynamic>>> getVideosPublicStream() async* {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentInfo = sharedPreferences.getString('studentInfo');
-  //   final videosPublic = [];
-
-  //   final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //       .collection('escola/videos_public/evento_cultural/')
-  //       .get();
-
-  //   for (final documentSnapshot in querySnapshot.docs) {
-  //     if (documentSnapshot.exists) {
-  //       videosPublic.add(documentSnapshot.data());
-  //     }
-  //   }
-
-  //   yield videosPublic.cast<Map<String, dynamic>>();
-  // }
-
-  Future<List<Map<String, dynamic>>> getVideosPublic() async {
+  Future<List<Map<String, dynamic>>?> getVideosPublic() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final videosPublic = [];
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final videosStudents = [];
 
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('escola/videos_public/evento_cultural/')
-        .get();
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
-    for (final documentSnapshot in querySnapshot.docs) {
-      if (documentSnapshot.exists) {
-        videosPublic.add(documentSnapshot.data());
-      }
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return null;
     }
 
+    final videosPublicRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('videos_publicos_evento_cultural');
+
+    try {
+      await videosPublicRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          videosStudents.add(doc.data());
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
     notifyListeners();
-    return videosPublic.cast<Map<String, dynamic>>();
+
+    return videosStudents.cast<Map<String, dynamic>>();
   }
 
   Future saveVideosTurma(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    await db.collection('escola/$studentInfo/videos_turma/').doc().set(answer);
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
 
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('videos_turma')
+        .doc(authService.userAuth?.uid)
+        .collection('videos');
+
+    try {
+      await studentTaskRef.add(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
     notifyListeners();
   }
 
-  // Stream<List<Map<String, dynamic>>> getVideosTurmaStream() async* {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentInfo = sharedPreferences.getString('studentInfo');
-  //   final studentsImages = [];
-
-  //   final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //       .collection('escola/$studentInfo/videos_turma/')
-  //       .get();
-
-  //   for (final documentSnapshot in querySnapshot.docs) {
-  //     if (documentSnapshot.exists) {
-  //       studentsImages.add(documentSnapshot.data());
-  //     }
-  //   }
-
-  //   yield studentsImages.cast<Map<String, dynamic>>();
-  // }
-
-  Future<List<Map<String, dynamic>>> getVideosTurma() async {
+  Future<List<Map<String, dynamic>>?> getVideosTurma() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
     final studentsImages = [];
 
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('escola/$studentInfo/videos_turma/')
-        .get();
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
-    for (final documentSnapshot in querySnapshot.docs) {
-      if (documentSnapshot.exists) {
-        studentsImages.add(documentSnapshot.data());
-      }
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return null;
     }
 
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('videos_turma')
+        .doc(authService.userAuth?.uid)
+        .collection('videos');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data());
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
     notifyListeners();
+
     return studentsImages.cast<Map<String, dynamic>>();
   }
 
-  Future getTeacherEmail(String doc) async {
+  Future getTeacherEmail() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    final tasksAnswers = [];
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final teacherInfo = [];
+    final teacherEmailList = [];
 
-    final DocumentReference document =
-        db.collection('escola/$studentInfo/email_professora/').doc('/$doc');
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return null;
+    }
+
+    final teacherInfoRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('professores');
 
     try {
-      await document.get().then((snapshot) {
-        if (snapshot.data() != null) {
-          tasksAnswers.add(snapshot.data());
+      await teacherInfoRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          teacherInfo.add(doc.data());
+        }
+        for (var i = 0; i < teacherInfo.length; i++) {
+          teacherEmailList.add(teacherInfo[i]['teacherEmail']);
         }
       });
-    } on FirebaseException catch (e) {
-      return e.toString();
+    } catch (error) {
+      error.toString();
     }
     notifyListeners();
-    return tasksAnswers;
+
+    return teacherEmailList;
   }
 
-  Future removeAnswers(String doc) async {
+  Future<String> getUserInfo() async {
     sharedPreferences = await SharedPreferences.getInstance();
-    studentInfo = sharedPreferences.getString('studentInfo');
-    await db
-        .collection('escola/$studentInfo${authService.userAuth!.email}/')
-        .doc(doc)
-        .delete();
 
-    notifyListeners();
-  }
+    final studentSchoolTemp = sharedPreferences.getString('studentSchoolInfo');
+    final studentClassRoomTemp =
+        sharedPreferences.getString('studentClassRoomInfo');
 
-  String getUserInfo() {
-    return '$studentInfo/${authService.userAuth!.displayName}';
+    if (studentSchoolTemp == null || studentClassRoomTemp == null) {
+      throw Exception('studentSchoolInfo or studentClassRoomInfo is null');
+    }
+
+    final studentSchoolInfo = studentSchoolTemp;
+    final studentClassRoomInfo = studentClassRoomTemp;
+
+    final studentInfo =
+        '${authService.userAuth!.displayName}/$studentSchoolInfo/$studentClassRoomInfo';
+
+    return studentInfo;
   }
 
   Future<String>? getUserAuthToken() {

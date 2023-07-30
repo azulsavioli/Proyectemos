@@ -33,7 +33,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
         child: Column(

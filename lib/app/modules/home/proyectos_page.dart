@@ -27,9 +27,9 @@ class ProyectosPage extends StatelessWidget {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          title: Text(Strings.title, style: ThemeText.paragraph16WhiteBold),
+          title: Text(Strings.title, style: ThemeText.paragraph14WhiteBold),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

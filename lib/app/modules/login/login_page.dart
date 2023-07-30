@@ -1,12 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-import 'package:proyectemos/commons/google_sign_in.dart';
+
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../commons/strings.dart';
+import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,6 +15,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _controller = LoginController();
   bool loadingGoogle = false;
 
   @override
@@ -90,7 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onPressed: () {
-                      login(context);
+                      _controller.login().then(
+                            (value) => Future.delayed(
+                              const Duration(seconds: 3),
+                              () => Navigator.pushNamed(context, '/'),
+                            ),
+                          );
                       setState(() {
                         loadingGoogle = true;
                       });
@@ -134,8 +139,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  '''
-O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''',
+                  Strings.capesDescription,
                   style: ThemeText.paragraph12White,
                   textAlign: TextAlign.left,
                 ),
@@ -148,21 +152,5 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
         ),
       ),
     );
-  }
-
-  Future<void> login(BuildContext context) async {
-    try {
-      final provider = Provider.of<GoogleSignInProvider>(
-        context,
-        listen: false,
-      );
-      await provider.googleLogin();
-      await Future.delayed(
-        const Duration(seconds: 3),
-        () => Navigator.pushNamed(context, '/'),
-      );
-    } on FirebaseAuthException {
-      rethrow;
-    }
   }
 }

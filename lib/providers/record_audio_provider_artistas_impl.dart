@@ -5,13 +5,13 @@ import '../services/storage_management.dart';
 import '../services/toast_services.dart';
 import 'audio_provider_interface.dart';
 
-class RecordAudioProviderLatinoamericaImpl extends ChangeNotifier
+class RecordAudioArtistasProviderImpl extends ChangeNotifier
     implements AudioProvider {
   final Record _record = Record();
   String _afterRecordingFilePath = '';
   static List<String> recordingsPaths = [];
 
-  bool isRecording = false;
+  late bool isRecording = false;
   bool _recordsDeleted = false;
 
   bool get recordsDeleted => _recordsDeleted;

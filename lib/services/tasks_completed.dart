@@ -15,7 +15,7 @@ class TasksCompletedService {
     var artistas = false;
     var eventoCultural = false;
 
-    if (latinoamericaList[0] && latinoamericaList[1] && latinoamericaList[2]) {
+    if (latinoamericaList[0] && latinoamericaList[1]) {
       latinoamerica = true;
     }
 
@@ -36,12 +36,8 @@ class TasksCompletedService {
         sharedPreferences.getBool('latinoamericaTareaUnoCompleted') ?? false;
     final tareaDosLatinoamerica =
         sharedPreferences.getBool('latinoamericaTareaDosCompleted') ?? false;
-    final tareaTresLatinoamerica =
-        sharedPreferences.getBool('latinoamericaTareaTresCompleted') ?? false;
 
-    if (tareaUnoLatinoamerica &&
-        tareaDosLatinoamerica &&
-        tareaTresLatinoamerica == true) {
+    if (tareaUnoLatinoamerica && tareaDosLatinoamerica == true) {
       final preferences = await SharedPreferences.getInstance();
       await preferences.setBool(
         'latinoamericaCompleted',
@@ -52,7 +48,6 @@ class TasksCompletedService {
     return [
       tareaUnoLatinoamerica,
       tareaDosLatinoamerica,
-      tareaTresLatinoamerica,
     ];
   }
 

@@ -321,6 +321,38 @@ abstract class ThemeText {
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle paragraph12Red = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.red,
+    fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle paragraph12RedBold = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.red,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle paragraph12Blue = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.blue,
+    fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle paragraph12BlueBold = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.blue,
+    fontWeight: FontWeight.bold,
+  );
+
   static TextStyle paragraph12White = TextStyle(
     fontSize: ScreenUtil().setSp(12),
     letterSpacing: 1,

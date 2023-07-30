@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:provider/provider.dart';
 
 import '../../../commons/styles.dart';
-import '../../../repository/proyectemos_repository.dart';
-import '../../../utils/email_sender.dart';
+
 import '../../../utils/get_user.dart';
 import '../widgets/custom_text_form_field.dart';
+import 'teacher_controller.dart';
 
 class EnvioEmailProfesoraPerfil extends StatefulWidget {
   const EnvioEmailProfesoraPerfil({super.key});
@@ -21,53 +18,32 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
   final formKey = GlobalKey<FormState>();
   final _assuntoController = TextEditingController();
   final _descricaoController = TextEditingController();
+  late FocusNode focusNode1;
+  late FocusNode focusNode2;
 
-  Future<List> getEmailTeacherFromFirebase() async {
-    final emails = [];
-    const doc = 'professora';
-    final repository = context.read<ProyectemosRepository>();
+  @override
+  void initState() {
+    super.initState();
 
-    try {
-      final data = await repository.getTeacherEmail(doc);
-      emails.addAll(data);
-    } on FirebaseException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
-    }
-    return emails;
+    setState(() {
+      focusNode1 = FocusNode();
+      focusNode2 = FocusNode();
+    });
   }
 
-  Future<void> sendEmail(GoogleSignInAccount currentUser) async {
-    final email = await getEmailTeacherFromFirebase();
-
-    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
-    final studentInformation = studentInfo.split('/');
-
-    final allStudentInfo = [
-      studentInformation[3],
-      studentInformation[0],
-      studentInformation[1],
-      studentInformation[2]
-    ];
-
-    final subject = _assuntoController.text;
-    final text = '''
-Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
-${_descricaoController.text}''';
-    final emailSender = EmailSender();
-
-    await emailSender.sendEmailToTeacher(
-      currentUser,
-      [],
-      [email.first.values.first],
-      subject,
-      text,
-    );
+  @override
+  void dispose() {
+    setState(() {
+      focusNode1.dispose();
+      focusNode2.dispose();
+    });
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final _controller = TeacherController(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -97,25 +73,25 @@ ${_descricaoController.text}''';
               height: 20,
             ),
             CustomTextFormField(
+              focusNode: focusNode1,
               hint: 'Assunto',
               controller: _assuntoController,
               keyboardType: TextInputType.text,
               validatorVazio: 'Ingrese tuja respuesta correctamente',
               validatorMenorqueNumero:
-                  'Su respuesta debe tener al menos 10 caracteres',
-              validatorNumeroDeCaracteres: 10,
+                  'Su respuesta debe tener al menos 3 caracteres',
             ),
             const SizedBox(
               height: 20,
             ),
             CustomTextFormField(
+              focusNode: focusNode1,
               hint: 'Mensaje',
               controller: _descricaoController,
               keyboardType: TextInputType.text,
               validatorVazio: 'Ingrese tuja respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 10 caracteres',
-              validatorNumeroDeCaracteres: 10,
             ),
             const SizedBox(
               height: 20,
@@ -135,7 +111,11 @@ ${_descricaoController.text}''';
                 onPressed: () {
                   final currentUser = getCurrentUser(context);
 
-                  sendEmail(currentUser!);
+                  _controller.sendEmail(
+                    currentUser!,
+                    _assuntoController.text,
+                    _descricaoController.text,
+                  );
                   Navigator.pushNamed(
                     context,
                     '/pUno_evento_cultural_feedback',

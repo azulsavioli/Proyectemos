@@ -64,8 +64,4 @@ class CardProyecto extends StatelessWidget {
       ),
     );
   }
-
-  void goTo(BuildContext context, String namedRoute) {
-    Navigator.pushNamed(context, namedRoute);
-  }
 }

@@ -23,6 +23,25 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
   String? tareaTitle;
   final formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
+  final _repository = ProyectemosRepository();
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      focusNode = FocusNode();
+    });
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      focusNode.dispose();
+    });
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -30,41 +49,33 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
     tareaTitle = ModalRoute.of(context)?.settings.arguments as String?;
   }
 
-  Future<List> getEmailTeacherFromFirebase() async {
+  Future getEmailTeacherFromFirebase() async {
     final emails = [];
-    const doc = 'professora';
-    final repository = context.read<ProyectemosRepository>();
 
     try {
-      final data = await repository.getTeacherEmail(doc);
+      final data = await _repository.getTeacherEmail();
       emails.addAll(data);
     } on FirebaseException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      e.toString();
     }
-    return emails;
+    return emails.first;
   }
 
   Future<void> sendEmail(GoogleSignInAccount currentUser) async {
-    final repository = context.read<ProyectemosRepository>();
-
     final email = await getEmailTeacherFromFirebase();
-
-    final studentInfo = repository.getUserInfo();
+    final studentInfo = await _repository.getUserInfo();
     final studentInformation = studentInfo.split('/');
 
     final allStudentInfo = [
-      studentInformation[3],
       studentInformation[0],
       studentInformation[1],
       studentInformation[2]
     ];
-
     final subject = 'Mediação feedback tarea $tareaTitle';
     final text = '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
-Escola: ${allStudentInfo[1]} - Série: ${allStudentInfo[2]} - Turma: ${allStudentInfo[3]}\n\n 
+Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n\n 
 ${_emailController.text}''';
     final emailSender = EmailSender();
 
@@ -95,7 +106,7 @@ ${_emailController.text}''';
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
         child: Column(
@@ -109,13 +120,13 @@ ${_emailController.text}''';
               height: 20,
             ),
             CustomTextFormField(
+              focusNode: focusNode,
               hint: 'Respuesta',
               controller: _emailController,
               keyboardType: TextInputType.text,
               validatorVazio: 'Ingrese tuja respuesta correctamente',
               validatorMenorqueNumero:
-                  'Su respuesta debe tener al menos 10 caracteres',
-              validatorNumeroDeCaracteres: 10,
+                  'Su respuesta debe tener al menos 3 caracteres',
             ),
             const SizedBox(
               height: 20,

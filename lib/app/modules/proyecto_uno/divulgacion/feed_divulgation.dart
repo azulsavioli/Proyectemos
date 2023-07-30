@@ -127,7 +127,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: StreamBuilder<List>(
         stream: _videosStreamController.stream,
         builder: (context, snapshot) {
@@ -171,7 +171,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
     List listStudents,
     List<CustomVideoPlayerController> videoControllers,
   ) {
-    List<Widget> cards = [];
+    final cards = <Widget>[];
     var i = 0;
     while (i < listStudents.length) {
       cards.add(

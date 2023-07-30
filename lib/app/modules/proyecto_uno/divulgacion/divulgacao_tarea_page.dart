@@ -30,6 +30,7 @@ enum OpcoesCompartilhamento { turma, todos }
 
 class _DivulgacaoPageState extends State<DivulgacaoPage> {
   bool divulgacao = false;
+  final _repository = ProyectemosRepository();
 
   OpcoesCompartilhamento? sendingType = OpcoesCompartilhamento.todos;
 
@@ -88,11 +89,10 @@ class _DivulgacaoPageState extends State<DivulgacaoPage> {
 
   Future<List> getEmailTeacherFromFirebase() async {
     final emails = [];
-    const doc = 'professora';
     final repository = context.read<ProyectemosRepository>();
 
     try {
-      final data = await repository.getTeacherEmail(doc);
+      final data = await repository.getTeacherEmail();
       emails.addAll(data);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
@@ -111,21 +111,18 @@ class _DivulgacaoPageState extends State<DivulgacaoPage> {
 
   Future<void> sendEmail(GoogleSignInAccount currentUser) async {
     final email = await getEmailTeacherFromFirebase();
-
-    final studentInfo =
-        await context.read<ProyectemosRepository>().getUserInfo();
+    final studentInfo = await _repository.getUserInfo();
     final studentInformation = studentInfo.split('/');
 
-    final filePathList = setFiles();
-
-    final firstArchive = File(filePathList[0]!);
-
     final allStudentInfo = [
-      studentInformation[3],
       studentInformation[0],
       studentInformation[1],
       studentInformation[2]
     ];
+
+    final filePathList = setFiles();
+
+    final firstArchive = File(filePathList[0]!);
 
     final attachment = [
       FileAttachment(firstArchive, fileName: 'Video_evento_cultural'),
@@ -134,7 +131,7 @@ class _DivulgacaoPageState extends State<DivulgacaoPage> {
     const subject = 'Video evento cultural';
     final text = '''
 Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
 Video do Evento Cultural ''';
     final emailSender = EmailSender();
 
@@ -176,7 +173,7 @@ Video do Evento Cultural ''';
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
@@ -295,7 +292,7 @@ Video do Evento Cultural ''';
                       Padding(
                         padding: EdgeInsets.all(16),
                         child: Text(
-                          '¡Compartir!',
+                          'Compartir',
                           style: TextStyle(fontSize: 20),
                         ),
                       ),

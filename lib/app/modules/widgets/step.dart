@@ -89,8 +89,27 @@ class _CustomStepState extends State<CustomStep> {
     return image;
   }
 
-  void validate(BuildContext context) {
+  void validate() {
     return showToast('¡Por favor seleccione su imagen!');
+  }
+
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      focusNode = FocusNode();
+    });
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      focusNode.dispose();
+    });
+    super.dispose();
   }
 
   @override
@@ -129,7 +148,7 @@ class _CustomStepState extends State<CustomStep> {
                         ImageSource.gallery,
                       );
                       if (image == null) {
-                        validate(context);
+                        validate();
                       } else if (image != null) {
                         setState(() {
                           buttonFileColor = ThemeColors.green;
@@ -178,13 +197,13 @@ class _CustomStepState extends State<CustomStep> {
               height: 10,
             ),
             CustomTextFormField(
+              focusNode: focusNode,
               hint: 'Respuesta',
               controller: widget.controller,
               keyboardType: TextInputType.text,
               validatorVazio: 'Ingrese tuja respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
-              validatorNumeroDeCaracteres: 3,
             ),
             const SizedBox(
               height: 10,

@@ -6,9 +6,8 @@ import '../../../commons/google_sign_in.dart';
 import '../../../services/auth_services.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
-  const DrawerMenuWidget({Key? key}) : super(key: key);
-
-  get context => null;
+  DrawerMenuWidget({Key? key}) : super(key: key);
+  final authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,27 +36,6 @@ class DrawerMenuWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/home');
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.calendar_month_outlined),
-          //   title: const Text('Agenda'),
-          //   onTap: () {
-          //     Navigator.of(context).pushNamed('/agenda');
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.task_alt),
-          //   title: const Text('Tareas Cumplidas'),
-          //   onTap: () {
-          //     Navigator.of(context).pushNamed('/tarefas_cumplidas');
-          //   },
-          // ),
-          // ListTile(
-          //   leading: const Icon(Icons.auto_stories_outlined),
-          //   title: const Text('Tareas Pendientes'),
-          //   onTap: () {
-          //     Navigator.of(context).pushNamed('/tarefas_pendientes');
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
@@ -65,13 +43,6 @@ class DrawerMenuWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/profile');
             },
           ),
-          // ListTile(
-          //   leading: const Icon(Icons.tips_and_updates_outlined),
-          //   title: const Text('Tutoriales'),
-          //   onTap: () {
-          //     Navigator.of(context).pushNamed('/tutorial');
-          //   },
-          // ),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Salir'),
@@ -81,7 +52,7 @@ class DrawerMenuWidget extends StatelessWidget {
               if (provider.googleSignIn.currentUser != null) {
                 provider.googleLogout();
               } else {
-                logout();
+                authService.logout();
               }
               Navigator.of(context).pushNamed('/login');
             },
@@ -89,14 +60,5 @@ class DrawerMenuWidget extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  void logout() {
-    try {
-      AuthService().logout();
-    } on AuthException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.message)));
-    }
   }
 }

@@ -16,7 +16,6 @@ class PUnoLatinoamericaMenu extends StatefulWidget {
 class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
-  bool tareaTres = false;
   bool timerEnded = false;
 
   @override
@@ -32,10 +31,9 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
     setState(() {
       tareaUno = resultado[0];
       tareaDos = resultado[1];
-      tareaTres = resultado[2];
     });
 
-    if (tareaUno && tareaDos && tareaTres) {
+    if (tareaUno && tareaDos) {
       await Future.delayed(
         const Duration(seconds: 5),
         () => setState(
@@ -64,10 +62,10 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
           ),
           title: Text(
             Strings.titleLatinoamericaUno,
-            style: ThemeText.paragraph16WhiteBold,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(
@@ -79,7 +77,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Descubre la musica',
+                  text: '300 kilos',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno
@@ -95,7 +93,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Describe la musica',
+                  text: 'Tu Latinoamérica',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaDos
@@ -103,29 +101,13 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                       : '/pUno_latinoamerica_tarea_dos',
                   backgroundColor:
                       tareaDos ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaDos ? Icons.check : Icons.edit,
+                  icon: tareaDos ? Icons.check : Icons.image,
                   shadowColor: tareaDos ? ThemeColors.green : ThemeColors.red,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                CardButton(
-                  iconSize: 30,
-                  text: 'Selección de imágenes\nLatinoamérica',
-                  cardWidth: width,
-                  cardHeight: height,
-                  namedRoute: tareaTres
-                      ? '/pUno_latinoamerica_feedback_tarea_tres'
-                      : '/pUno_latinoamerica_tarea_tres',
-                  backgroundColor:
-                      tareaTres ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaTres ? Icons.check : Icons.image,
-                  shadowColor: tareaTres ? ThemeColors.green : ThemeColors.red,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                if (tareaUno && tareaDos && tareaTres && timerEnded)
+                if (tareaUno && tareaDos && timerEnded)
                   CardButton(
                     iconSize: 30,
                     text: 'Feed de imágenes\nLatinoamérica',

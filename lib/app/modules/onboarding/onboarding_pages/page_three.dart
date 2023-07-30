@@ -50,7 +50,7 @@ class _PageThreeState extends State<PageThree> {
               bottom: 4,
             ),
             child: Text(
-              'sean una experiencia significativa y transformadora! ',
+              'sean una experiencia significativa y transformadora!',
               style: ThemeText.paragraph16WhiteBold,
               textAlign: TextAlign.start,
             ),

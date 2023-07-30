@@ -16,11 +16,11 @@ class FeedLatinoamericaPage extends StatefulWidget {
 
 class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
   late Stream<List<dynamic>> _imagesStream;
+  final _repository = ProyectemosRepository();
 
   @override
   void initState() {
-    _imagesStream =
-        context.read<ProyectemosRepository>().getImagesTurmaStream();
+    _imagesStream = _repository.getImagesTurmaStream() as Stream<List>;
     super.initState();
   }
 
@@ -39,10 +39,10 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         ),
         title: Text(
           Strings.titleLatinoamericaUnoFeed,
-          style: ThemeText.paragraph16WhiteBold,
+          style: ThemeText.paragraph14WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: StreamBuilder<List<dynamic>>(
         stream: _imagesStream,
         builder: (context, snapshot) {
@@ -82,7 +82,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
   }
 
   Widget buildSwiperCards(List<dynamic> lista) {
-    List<Widget> swipers = [];
+    final swipers = <Widget>[];
     var i = 0;
     while (i < lista.length) {
       final cards = [];

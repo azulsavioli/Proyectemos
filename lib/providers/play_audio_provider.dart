@@ -79,7 +79,7 @@ class PlayAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  get currLoadingStatus {
+  double get currLoadingStatus {
     final currTime = _currAudioPlaying /
         (_justAudioPlayer.duration?.inMicroseconds.ceilToDouble() ?? 1.0);
 

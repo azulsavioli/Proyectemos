@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../commons/strings.dart';
 import '../../../../../commons/styles.dart';
-import '../../../../../providers/record_audio_provider_latinoamerica_impl.dart';
+import '../../../../../providers/record_audio_provider_artistas_impl.dart';
 import '../../../../../repository/proyectemos_repository.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/email_sender.dart';
@@ -31,6 +31,7 @@ class PUnoArtistasLatinoamericanosTareaUnoPage extends StatefulWidget {
 class _PUnoArtistasLatinoamericanosTareaUnoPageState
     extends State<PUnoArtistasLatinoamericanosTareaUnoPage> {
   final formKey = GlobalKey<FormState>();
+  final _repository = ProyectemosRepository();
 
   @override
   void initState() {
@@ -57,12 +58,12 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
 
   @override
   Widget build(BuildContext context) {
-    final audioProvider = Provider.of<RecordAudioProviderLatinoamericaImpl>(
+    final audioProvider = Provider.of<RecordAudioArtistasProviderImpl>(
       context,
       listen: false,
     );
     final isAudioFinish = audioProvider.isRecording;
-    var recordsPathList = RecordAudioProviderLatinoamericaImpl.recordingsPaths;
+    var recordsPathList = RecordAudioArtistasProviderImpl.recordingsPaths;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -80,7 +81,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Form(
           key: formKey,
@@ -276,7 +277,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
   }
 
   Future<dynamic> makeJson(GoogleSignInAccount? currentUser) async {
-    final list = RecordAudioProviderLatinoamericaImpl.recordingsPaths;
+    final list = RecordAudioArtistasProviderImpl.recordingsPaths;
     final firebasePaths = await convertAudioToFirebase(list, currentUser);
     final json = setJson(firebasePaths);
     return json;
@@ -311,11 +312,10 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
 
   Future<List> getEmailTeacherFromFirebase() async {
     final emails = [];
-    const doc = 'professora';
     final repository = context.read<ProyectemosRepository>();
 
     try {
-      final data = await repository.getTeacherEmail(doc);
+      final data = await repository.getTeacherEmail();
       emails.addAll(data);
     } on FirebaseException catch (e) {
       ScaffoldMessenger.of(context)
@@ -332,11 +332,10 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     final secondAudio = File(recordsPathList[1]);
     final thirdAudio = File(recordsPathList[2]);
 
-    final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+    final studentInfo = await _repository.getUserInfo();
     final studentInformation = studentInfo.split('/');
 
     final allStudentInfo = [
-      studentInformation[3],
       studentInformation[0],
       studentInformation[1],
       studentInformation[2]
@@ -365,7 +364,7 @@ class _PUnoArtistasLatinoamericanosTareaUnoPageState
     const subject = 'Atividade - Artistas Latinoamericanos 1';
     final text = '''
 Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
 Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
     final emailSender = EmailSender();
 

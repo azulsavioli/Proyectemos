@@ -26,6 +26,25 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
   Icon buttonFileIcon = const Icon(Icons.file_copy);
   Color buttonFileColor = ThemeColors.blue;
 
+  late FocusNode focusNode;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      focusNode = FocusNode();
+    });
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      focusNode.dispose();
+    });
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     PlatformFile? pickedFile;
@@ -92,13 +111,13 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
           height: 15,
         ),
         CustomTextFormField(
+          focusNode: focusNode,
           hint: 'Nombre del artista',
           controller: widget.controller,
           keyboardType: TextInputType.text,
           validatorVazio: 'Ingrese tuja respuesta correctamente',
           validatorMenorqueNumero:
-              'Su respuesta debe tener al menos 10 caracteres',
-          validatorNumeroDeCaracteres: 10,
+              'Su respuesta debe tener al menos 3 caracteres',
         ),
         const SizedBox(
           height: 25,

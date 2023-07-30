@@ -53,7 +53,7 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
             style: ThemeText.paragraph16WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(

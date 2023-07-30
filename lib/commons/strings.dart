@@ -25,6 +25,8 @@ abstract class Strings {
   static const String descricaoAppLogin =
       '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
   static const String iniciaSessao = 'Inicia sesión con tu cuenta de Google';
+  static const String capesDescription = '''
+O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''';
 
   //Latinoamerica
   static const String titleLatinoamericaUno = 'Latinoamérica';

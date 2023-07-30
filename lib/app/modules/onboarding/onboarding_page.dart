@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/registration/registration_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:proyectemos/repository/proyectemos_repository.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'page_one.dart';
-import 'page_three.dart';
-import 'page_two.dart';
+import 'onboarding_controller.dart';
+import 'onboarding_pages/page_one.dart';
+import 'onboarding_pages/page_three.dart';
+import 'onboarding_pages/page_two.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -17,19 +17,22 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   final controller = PageController();
+  final _onboardingController = OnboardingController();
   int pageChanged = 0;
+
+  final _repository = ProyectemosRepository();
+  final schoolInformations = [];
+
+  @override
+  void initState() {
+    schoolInformations.add(_repository.getAllSchools());
+    super.initState();
+  }
 
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
-  }
-
-  Future<void> storeOnboardingInfo() async {
-    const isCompleted = true;
-    final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool('onboarding', isCompleted);
   }
 
   @override
@@ -57,13 +60,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
               if (pageChanged == 0)
                 TextButton(
                   onPressed: () => {
-                    storeOnboardingInfo(),
+                    _onboardingController.storeOnboardingInfo(),
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(),
+                        builder: (context) => const RegistrationPage(),
                       ),
-                    )
+                    ),
                   },
                   child: const Text(
                     'Pular',
@@ -104,7 +107,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               if (pageChanged == 2)
                 TextButton(
                   onPressed: () => {
-                    storeOnboardingInfo(),
+                    _onboardingController.storeOnboardingInfo(),
                     Navigator.push(
                       context,
                       MaterialPageRoute(

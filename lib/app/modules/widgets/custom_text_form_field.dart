@@ -8,7 +8,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final String validatorVazio;
   final String validatorMenorqueNumero;
-  final int validatorNumeroDeCaracteres;
+  final FocusNode focusNode;
 
   const CustomTextFormField({
     Key? key,
@@ -17,12 +17,14 @@ class CustomTextFormField extends StatelessWidget {
     required this.keyboardType,
     required this.validatorVazio,
     required this.validatorMenorqueNumero,
-    required this.validatorNumeroDeCaracteres,
+    required this.focusNode,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
+      autofocus: true,
       maxLines: null,
       controller: controller,
       decoration: InputDecoration(
@@ -45,7 +47,7 @@ class CustomTextFormField extends StatelessWidget {
           if (resposta!.isEmpty) {
             return validatorVazio;
           }
-          if (resposta.length < validatorNumeroDeCaracteres) {
+          if (resposta.length < 3) {
             return validatorMenorqueNumero;
           }
           return null;

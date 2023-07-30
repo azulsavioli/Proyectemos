@@ -66,10 +66,10 @@ class _FeedbackPageState extends State<FeedbackPage> {
         ),
         title: Text(
           widget.pageTitle,
-          style: ThemeText.paragraph16WhiteBold,
+          style: ThemeText.paragraph14WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
         child: Column(

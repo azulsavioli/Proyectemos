@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:proyectemos/app/modules/registration/registration_controller.dart';
+import 'package:proyectemos/repository/repository_impl.dart';
 
 import '../../../commons/styles.dart';
 import '../../../services/toast_services.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({Key? key}) : super(key: key);
+  const RegistrationPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
@@ -13,21 +16,12 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final formKey = GlobalKey<FormState>();
-  final dropSchoolValue = ValueNotifier('');
-  final dropSeriesValue = ValueNotifier('');
-  final dropClassroomValue = ValueNotifier('');
-  final dropSchoolOptions = ['Aplicação', 'Marista'];
-  final dropSeriesOptions = ['1º Colegial', '2º Colegial'];
-  final dropClassroomOptions = ['A1', 'B2'];
-
-  Future<void> saveStudentOptions() async {
-    const isStudentInfoSaved = true;
-    final preferences = await SharedPreferences.getInstance();
-    final studentInfo =
-        '${dropSchoolValue.value}/${dropSeriesValue.value}/${dropClassroomValue.value}';
-    await preferences.setString('studentInfo', studentInfo);
-    await preferences.setBool('studentInfoSaved', isStudentInfoSaved);
-  }
+  final _repository = RepositoryImpl();
+  final _controller = RegistrationController();
+  var dropdownValor1;
+  var dropdownValor2;
+  bool schoolChoosed = false;
+  List schools = [];
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -49,7 +43,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               children: [
                 Center(
                   child: Text(
-                    'Elige tu escuela, grado y clase',
+                    'Elige tu escuela y clase',
                     style: ThemeText.paragraph16GrayBold,
                     textAlign: TextAlign.center,
                   ),
@@ -59,9 +53,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 SizedBox(
                   height: 70,
-                  child: ValueListenableBuilder(
-                    valueListenable: dropSchoolValue,
-                    builder: (BuildContext context, String value, _) {
+                  child: FutureBuilder<List<String>>(
+                    future: _repository.getSchoolsInfo(),
+                    builder: (
+                      BuildContext context,
+                      AsyncSnapshot<List<String>> snapshot,
+                    ) {
+                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+
+                      snapshot.data!.insert(0, 'Selecione sua escuela!');
+                      dropdownValor1 ??= snapshot.data![0];
+
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
@@ -72,20 +76,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           padding: EdgeInsets.only(left: 12),
                           child: Text('Elige tu escuela'),
                         ),
-                        value: (value.isEmpty) ? null : value,
+                        value: (dropdownValor1.isEmpty) ? null : dropdownValor1,
                         iconSize: 42,
                         iconEnabledColor: ThemeColors.yellow,
                         isExpanded: true,
-                        onChanged: (option) =>
-                            dropSchoolValue.value = option.toString(),
-                        items: dropSchoolOptions
-                            .map(
-                              (op) => DropdownMenuItem(
-                                value: op,
-                                child: Text(op),
-                              ),
-                            )
-                            .toList(),
+                        onChanged: (option) {
+                          setState(() {
+                            dropdownValor1 = option;
+                            schoolChoosed = true;
+                          });
+                        },
+                        items: snapshot.data
+                            ?.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       );
                     },
                   ),
@@ -93,75 +100,57 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const SizedBox(
                   height: 12,
                 ),
-                SizedBox(
-                  height: 70,
-                  child: ValueListenableBuilder(
-                    valueListenable: dropSeriesValue,
-                    builder: (BuildContext context, String value, _) {
-                      return DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
+                if (!schoolChoosed)
+                  const SizedBox()
+                else
+                  SizedBox(
+                    height: 70,
+                    child: FutureBuilder<List<String>>(
+                      future: _repository.getClassRoomInfo(dropdownValor1),
+                      builder: (
+                        BuildContext context,
+                        AsyncSnapshot<List<String>> snapshot,
+                      ) {
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+
+                        snapshot.data!.insert(0, 'Selecione sua clase!');
+                        dropdownValor2 ??= snapshot.data![0];
+
+                        return DropdownButtonFormField<String>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
                           ),
-                        ),
-                        hint: const Padding(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Text('Elige tu grado'),
-                        ),
-                        value: (value.isEmpty) ? null : value,
-                        iconSize: 42,
-                        iconEnabledColor: ThemeColors.yellow,
-                        isExpanded: true,
-                        onChanged: (option) =>
-                            dropSeriesValue.value = option.toString(),
-                        items: dropSeriesOptions
-                            .map(
-                              (op) => DropdownMenuItem(
-                                value: op,
-                                child: Text(op),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                SizedBox(
-                  height: 70,
-                  child: ValueListenableBuilder(
-                    valueListenable: dropClassroomValue,
-                    builder: (BuildContext context, String value, _) {
-                      return DropdownButtonFormField<String>(
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
+                          hint: const Padding(
+                            padding: EdgeInsets.only(left: 12),
+                            child: Text('Elige tu grado'),
                           ),
-                        ),
-                        hint: const Padding(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Text('Elige tu clase'),
-                        ),
-                        value: (value.isEmpty) ? null : value,
-                        iconSize: 42,
-                        iconEnabledColor: ThemeColors.yellow,
-                        isExpanded: true,
-                        onChanged: (option) =>
-                            dropClassroomValue.value = option.toString(),
-                        items: dropClassroomOptions
-                            .map(
-                              (op) => DropdownMenuItem(
-                                value: op,
-                                child: Text(op),
-                              ),
-                            )
-                            .toList(),
-                      );
-                    },
+                          value:
+                              (dropdownValor2.isEmpty) ? null : dropdownValor2,
+                          iconSize: 42,
+                          iconEnabledColor: ThemeColors.yellow,
+                          isExpanded: true,
+                          onChanged: (option) {
+                            setState(() {
+                              dropdownValor2 = option;
+                            });
+                          },
+                          items: snapshot.data
+                              ?.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
                   ),
-                ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -176,19 +165,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                     ),
                     onPressed: () => {
-                      if (formKey.currentState!.validate())
+                      if (dropdownValor1 != 'Selecione sua escuela!' &&
+                          dropdownValor2 != 'Selecione sua clase!')
                         {
-                          saveStudentOptions.call().then(
-                                (value) =>
-                                    showToast('Datos salvos com sucesso'),
-                              ),
-                          Navigator.pushNamed(context, '/proyectos')
+                          _controller.saveStudentOptions(
+                            dropdownValor1,
+                            dropdownValor2,
+                            formKey,
+                            context,
+                          )
                         }
                       else
                         {
                           showToast(
-                            '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!''',
-                          ),
+                            color: ThemeColors.red,
+                            'Seleciona sus datos correctamente',
+                          )
                         }
                     },
                     label: Text(

@@ -27,10 +27,10 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
           ),
           title: Text(
             Strings.titleCardTres,
-            style: ThemeText.paragraph16WhiteBold,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Center(
           child: Text(
             'En desarrollo',

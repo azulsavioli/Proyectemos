@@ -51,11 +51,11 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
           title: Text(
-            Strings.titleArtistasHispanoamericanosUno,
-            style: ThemeText.paragraph16WhiteBold,
+            Strings.titleArtistasHispanoamericanos,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: const DrawerMenuWidget(),
+        endDrawer: DrawerMenuWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(
@@ -67,12 +67,12 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Grabar audios',
+                  text: 'Frida Kahlo',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno
                       ? '/pUno_artistas_feedback_tarea_uno'
-                      : '/pUno_artistas_latinoamericanos_tarea_uno',
+                      : '/pUno_artistas_frida',
                   backgroundColor:
                       tareaUno ? ThemeColors.green : ThemeColors.blue,
                   icon: tareaUno ? Icons.check : Icons.record_voice_over,

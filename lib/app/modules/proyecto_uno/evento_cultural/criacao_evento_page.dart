@@ -29,6 +29,8 @@ class CriacaoEventoPage extends StatefulWidget {
 }
 
 class _CriacaoEventoPageState extends State<CriacaoEventoPage> {
+  final _repository = ProyectemosRepository();
+
   bool buttonFileSelected = false;
   Icon buttonFileIcon = const Icon(Icons.file_copy);
   Color buttonFileColor = ThemeColors.blue;
@@ -202,11 +204,10 @@ ${StringsEventoCultural.descriptionTwoEventocultural}''';
 
     Future<List> getEmailTeacherFromFirebase() async {
       final emails = [];
-      const doc = 'professora';
       final repository = context.read<ProyectemosRepository>();
 
       try {
-        final data = await repository.getTeacherEmail(doc);
+        final data = await repository.getTeacherEmail();
         emails.addAll(data);
       } on FirebaseException catch (e) {
         ScaffoldMessenger.of(context)
@@ -234,20 +235,18 @@ ${StringsEventoCultural.descriptionTwoEventocultural}''';
 
       final email = await getEmailTeacherFromFirebase();
 
-      final studentInfo = context.read<ProyectemosRepository>().getUserInfo();
+      final studentInfo = await _repository.getUserInfo();
       final studentInformation = studentInfo.split('/');
 
       final allStudentInfo = [
-        studentInformation[3],
         studentInformation[0],
         studentInformation[1],
         studentInformation[2]
       ];
-
       const subject = 'Atividade - Criação do Evento';
       final text = '''
 Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]} - ${allStudentInfo[3]}\n\n 
+${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
 Atividade Criação de Evento 1ª etapa concluída!''';
       final emailSender = EmailSender();
 
@@ -276,7 +275,7 @@ Atividade Criação de Evento 1ª etapa concluída!''';
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: const DrawerMenuWidget(),
+      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),

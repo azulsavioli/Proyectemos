@@ -5,14 +5,14 @@ import 'package:mailer/smtp_server/gmail.dart';
 class EmailSender {
   Future sendEmailToTeacher(
     GoogleSignInAccount? currentUser,
-    List<FileAttachment> attachment,
+    List<Attachment> attachment,
     List<String> email,
     String subject,
     String text,
   ) async {
     var user = currentUser;
 
-    if (currentUser == null || currentUser.email == null) {
+    if (currentUser == null) {
       user = await GoogleSignIn().signIn();
     }
 
