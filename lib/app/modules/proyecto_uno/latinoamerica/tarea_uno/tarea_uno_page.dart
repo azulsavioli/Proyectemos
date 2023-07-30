@@ -124,7 +124,6 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          // onPressed: () => Navigator.of(context).pop(),.
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               Navigator.of(context).pop();
