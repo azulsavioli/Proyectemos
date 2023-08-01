@@ -211,130 +211,139 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
           ),
         ),
       ),
-      bottomSheet: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        height: 60,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (pageChanged == 0)
-              const SizedBox(
-                width: 65,
-              )
-            else
-              TextButton(
-                onPressed: () {
-                  pageController.previousPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: const Text(
-                  'Voltar',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
+      bottomSheet: loading
+          ? const LinearProgressIndicator(
+              minHeight: 20,
+              color: ThemeColors.blue,
+            )
+          : Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (pageChanged == 0)
+                    const SizedBox(
+                      width: 65,
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        pageController.previousPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: const Text(
+                        'Voltar',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  Center(
+                    child: SmoothPageIndicator(
+                      controller: pageController,
+                      count: 7,
+                      effect: const WormEffect(
+                        dotHeight: 10,
+                        dotWidth: 10,
+                        activeDotColor: Colors.blueAccent,
+                        dotColor: Colors.black26,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            Center(
-              child: SmoothPageIndicator(
-                controller: pageController,
-                count: 7,
-                effect: const WormEffect(
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  activeDotColor: Colors.blueAccent,
-                  dotColor: Colors.black26,
-                ),
+                  if (pageChanged == 6)
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          if (pageChanged == 1) {
+                            youTubeController.addListener(listener);
+                          } else {
+                            youTubeController.removeListener(listener);
+                          }
+                        });
+                        deactivate();
+                        if (textControllerOne.text.isEmpty ||
+                            textControllerTwo.text.isEmpty ||
+                            textControllerThree.text.isEmpty ||
+                            textControllerFour.text.isEmpty ||
+                            textControllerFive.text.isEmpty) {
+                          showToast(
+                            color: ThemeColors.red,
+                            'Vuelve y ingrese tuja respuesta correctamente',
+                          );
+                        } else {
+                          final respostas = _tareaUnoController.makeAnswersList(
+                            textOne,
+                            textTwo,
+                            textThree,
+                            textFour,
+                            textFive,
+                          );
+                          setState(() {
+                            loading = true;
+                          });
+                          _tareaUnoController
+                              .sendAnswers(
+                                currentUser,
+                                respostas,
+                              )
+                              .then(
+                                (value) => Navigator.pushNamed(
+                                  context,
+                                  '/pUno_latinoamerica_menu',
+                                ),
+                              );
+                        }
+                      },
+                      child: const Text(
+                        'Concluir',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (pageChanged == 1) {
+                            youTubeController.addListener(listener);
+                          } else {
+                            youTubeController.removeListener(listener);
+                          }
+                        });
+                        if (pageChanged == 6) {
+                          deactivate();
+                        }
+
+                        pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: const Text(
+                        'Próximo',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
               ),
             ),
-            if (pageChanged == 6)
-              TextButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(ThemeColors.blue),
-                ),
-                onPressed: () {
-                  setState(() {
-                    if (pageChanged == 1) {
-                      youTubeController.addListener(listener);
-                    } else {
-                      youTubeController.removeListener(listener);
-                    }
-                  });
-                  deactivate();
-                  if (textControllerOne.text.isEmpty ||
-                      textControllerTwo.text.isEmpty ||
-                      textControllerThree.text.isEmpty ||
-                      textControllerFour.text.isEmpty ||
-                      textControllerFive.text.isEmpty) {
-                    showToast(
-                      color: ThemeColors.red,
-                      'Vuelve y ingrese tuja respuesta correctamente',
-                    );
-                  } else {
-                    final respostas = _tareaUnoController.makeAnswersList(
-                      textOne,
-                      textTwo,
-                      textThree,
-                      textFour,
-                      textFive,
-                    );
-
-                    _tareaUnoController.sendAnswers(
-                      currentUser,
-                      respostas,
-                    );
-
-                    Navigator.pushNamed(
-                      context,
-                      '/pUno_latinoamerica_menu',
-                    );
-                  }
-                },
-                child: const Text(
-                  'Concluir',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
-            else
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    if (pageChanged == 1) {
-                      youTubeController.addListener(listener);
-                    } else {
-                      youTubeController.removeListener(listener);
-                    }
-                  });
-                  if (pageChanged == 6) {
-                    deactivate();
-                  }
-
-                  pageController.nextPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: const Text(
-                  'Próximo',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
     );
   }
 }

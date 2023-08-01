@@ -31,7 +31,6 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
   final answerDiezController = TextEditingController();
   final _tareaDosController = TareaDosController();
   final formKey = GlobalKey<FormState>();
-  bool latinoamerica = false;
 
   int currentStep = 0;
 
@@ -121,13 +120,12 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                       );
                       _tareaDosController
                         ..sendAnswers(currentUser, answerList)
-                        ..saveTaskCompleted();
-                      showToast(Strings.tareaConcluida);
-                      latinoamerica = true;
-                      Navigator.pushNamed(
-                        context,
-                        '/pUno_latinoamerica_menu',
-                      );
+                        ..saveTaskCompleted().then(
+                          (value) => Navigator.pushNamed(
+                            context,
+                            '/pUno_latinoamerica_menu',
+                          ),
+                        );
                     } else {
                       showToast(
                         '''Selecciona una imagen de su cámara o de su archivo y escriba su descripción''',

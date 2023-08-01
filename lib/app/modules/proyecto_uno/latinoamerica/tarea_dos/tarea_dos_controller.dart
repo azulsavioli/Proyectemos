@@ -196,13 +196,6 @@ class TareaDosController extends ChangeNotifier {
     return json;
   }
 
-  // Future makeJson(List<String> answersList) async {
-  //   final list = setImages();
-  //   final imagesList = await convertImageToFirebase(list);
-  //   final json = createJson(answersList, imagesList);
-  //   return json;
-  // }
-
   Future makeJsonImages(List<String> answersList) async {
     final list = setImages();
     final imagesList = await convertImageToFirebase(list);

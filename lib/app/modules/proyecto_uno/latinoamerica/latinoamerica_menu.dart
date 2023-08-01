@@ -119,6 +119,18 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                     backgroundColor: ThemeColors.green,
                     icon: Icons.image,
                     shadowColor: ThemeColors.green,
+                  )
+                else
+                  Card(
+                    child: SizedBox(
+                      height: height,
+                      width: width,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: ThemeColors.blue,
+                        ),
+                      ),
+                    ),
                   ),
                 const SizedBox(
                   height: 20,

@@ -31,6 +31,8 @@ dependencies:
   # uuid: ^3.0.5
   cloud_firestore: ^4.8.2
 
+  jumping_dot: ^0.0.6
+
   #Authentication
   firebase_auth: ^4.6.3
   google_sign_in: ^6.1.4

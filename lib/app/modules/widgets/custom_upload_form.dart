@@ -30,18 +30,14 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
 
   @override
   void initState() {
+    focusNode = FocusNode();
+    focusNode.requestFocus();
     super.initState();
-
-    setState(() {
-      focusNode = FocusNode();
-    });
   }
 
   @override
   void dispose() {
-    setState(() {
-      focusNode.dispose();
-    });
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -52,14 +48,14 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
     Future selectFile(List<PlatformFile> listFiles) async {
       final fileSelected = await FilePicker.platform.pickFiles();
       if (fileSelected == null) return;
-
-      setState(() {
-        pickedFile = fileSelected.files.first;
-        buttonFileColor = ThemeColors.green;
-        buttonFileIcon = const Icon(Icons.check);
-        buttonFileSelected = true;
-      });
-
+      if (mounted) {
+        setState(() {
+          pickedFile = fileSelected.files.first;
+          buttonFileColor = ThemeColors.green;
+          buttonFileIcon = const Icon(Icons.check);
+          buttonFileSelected = true;
+        });
+      }
       listFiles.add(pickedFile!);
       return pickedFile;
     }
@@ -72,6 +68,18 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
         Text(
           widget.title,
           style: ThemeText.paragraph16GrayBold,
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        CustomTextFormField(
+          focusNode: focusNode,
+          hint: 'Nombre del artista',
+          controller: widget.controller,
+          keyboardType: TextInputType.text,
+          validatorVazio: 'Ingrese tuja respuesta correctamente',
+          validatorMenorqueNumero:
+              'Su respuesta debe tener al menos 3 caracteres',
         ),
         const SizedBox(
           height: 25,
@@ -93,31 +101,21 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
             icon: buttonFileIcon,
             onPressed: () {
               selectFile(CustomUploadForm.listFiles);
-              setState(() {
-                if (pickedFile == null) {
-                  isButtonDisabled = false;
-                } else {
-                  isButtonDisabled = true;
-                }
-              });
+              if (mounted) {
+                setState(() {
+                  if (pickedFile == null) {
+                    isButtonDisabled = false;
+                  } else {
+                    isButtonDisabled = true;
+                  }
+                });
+              }
             },
             label: Text(
               'Subir el archivo',
               style: ThemeText.paragraph16White,
             ),
           ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        CustomTextFormField(
-          focusNode: focusNode,
-          hint: 'Nombre del artista',
-          controller: widget.controller,
-          keyboardType: TextInputType.text,
-          validatorVazio: 'Ingrese tuja respuesta correctamente',
-          validatorMenorqueNumero:
-              'Su respuesta debe tener al menos 3 caracteres',
         ),
         const SizedBox(
           height: 25,
