@@ -18,8 +18,8 @@ import 'modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/record_and_play_audio.dart';
-import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_artistas_page.dart';
-import 'modules/proyecto_uno/artistas_hispanoamericanos/tareas/tarea_dos.dart';
+import 'modules/proyecto_uno/artistas_hispanoamericanos/tarea_dos/tarea_dos_page.dart';
+import 'modules/proyecto_uno/artistas_hispanoamericanos/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/divulgacion/divulgacao_tarea_page.dart';
 import 'modules/proyecto_uno/divulgacion/feed_divulgation.dart';
 import 'modules/proyecto_uno/divulgacion/feedback_tarea_divulgacion.dart';
@@ -81,7 +81,7 @@ class Proyectemos extends StatelessWidget {
                 '/pUno_artistas_menu': (context) => const PUnoArtistasMenu(),
                 '/pUno_artistas_frida': (context) =>
                     const TareaArtistasLatinoamericanosPage(),
-                '/pUno_artistas_latinoamericanos_tarea_dos': (context) =>
+                '/pUno_artistas_tarea_dos': (context) =>
                     const PUnoArtistasLatinoamericanosTareaDosPage(),
                 '/pUno_artistas_feedback_tarea_uno': (context) =>
                     const FeedbackTareaUnoArtistas(),

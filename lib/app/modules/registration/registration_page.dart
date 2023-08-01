@@ -183,7 +183,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                     onPressed: () => {
                       if (dropdownValor1 != 'Selecione sua escuela!' &&
-                          dropdownValor2 != 'Selecione sua clase!')
+                          dropdownValor2 != 'Selecione sua clase!' &&
+                          dropdownValor1.isNotEmpty &&
+                          dropdownValor2.isNotEmpty)
                         {
                           _controller.saveStudentOptions(
                             dropdownValor1,
