@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/strings.dart';
+import '../../../../repository/repository_impl.dart';
 import '../../../../services/tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
@@ -14,6 +15,7 @@ class PUnoArtistasMenu extends StatefulWidget {
 }
 
 class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
+  final _repository = RepositoryImpl();
   bool tareaUno = false;
   bool tareaDos = false;
 
@@ -56,6 +58,12 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
           ),
         ),
         endDrawer: DrawerMenuWidget(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _repository.resetTaskCompleted('artistasTareaUnoCompleted');
+            getTaskCompleted();
+          },
+        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(
@@ -67,7 +75,7 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Frida Kahlo',
+                  text: tareaUno ? 'Feedback Frida Kahlo' : 'Frida Kahlo',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno
@@ -83,12 +91,14 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Selección de archivos',
+                  text: tareaDos
+                      ? 'Feedback\nSelección de archivos'
+                      : 'Selección de archivos',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaDos
                       ? '/pUno_artistas_feedback_tarea_dos'
-                      : '/pUno_artistas_latinoamericanos_tarea_dos',
+                      : '/pUno_artistas_tarea_dos',
                   backgroundColor:
                       tareaDos ? ThemeColors.green : ThemeColors.blue,
                   icon: tareaDos ? Icons.check : Icons.file_copy,
