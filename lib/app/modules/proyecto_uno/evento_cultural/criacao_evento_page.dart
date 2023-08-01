@@ -72,7 +72,8 @@ class _CriacaoEventoPageState extends State<CriacaoEventoPage> {
     if (recordsPathList.length > 1) {
       recordsPathList = [];
     }
-
+    PlatformFile? pickedFile;
+    var _isFileButtonDisabled = false;
 
     const propuestaEvento = '''
 ${StringsEventoCultural.descriptionOneEventocultural}
