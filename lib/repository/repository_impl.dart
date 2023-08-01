@@ -37,6 +37,14 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     );
   }
 
+  Future<void> resetTaskCompleted(T taskName) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      taskName.toString(),
+      false,
+    );
+  }
+
   @override
   Future<void> sendAnswersToFirebase(Map<T, T> json, T doc) async {
     final convertedJson = _convertMapToStringDynamic(json);

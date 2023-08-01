@@ -8,7 +8,6 @@ import 'package:proyectemos/commons/styles.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
-import '../../../widgets/drawer_menu.dart';
 
 class TareaDosLatinoamericaPage extends StatefulWidget {
   const TareaDosLatinoamericaPage({Key? key}) : super(key: key);
@@ -65,7 +64,6 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Column(
           children: [

@@ -15,7 +15,6 @@ class PUnoArtistasMenu extends StatefulWidget {
 }
 
 class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
-  final _repository = RepositoryImpl();
   bool tareaUno = false;
   bool tareaDos = false;
 
@@ -58,12 +57,6 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
           ),
         ),
         endDrawer: DrawerMenuWidget(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _repository.resetTaskCompleted('artistasTareaUnoCompleted');
-            getTaskCompleted();
-          },
-        ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(

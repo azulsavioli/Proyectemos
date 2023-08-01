@@ -17,7 +17,6 @@ import '../../../../services/tasks_completed.dart';
 import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
-import '../../widgets/drawer_menu.dart';
 
 class DivulgacaoPage extends StatefulWidget {
   const DivulgacaoPage({super.key});
@@ -173,7 +172,6 @@ Video do Evento Cultural ''';
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),

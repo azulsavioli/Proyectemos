@@ -17,7 +17,6 @@ import '../../../../services/toast_services.dart';
 import '../../../../utils/email_sender.dart';
 import '../../../../utils/get_user.dart';
 import '../../widgets/custom_record_audio_button.dart';
-import '../../widgets/drawer_menu.dart';
 
 class CriacaoEventoPage extends StatefulWidget {
   const CriacaoEventoPage({super.key});
@@ -74,8 +73,6 @@ class _CriacaoEventoPageState extends State<CriacaoEventoPage> {
       recordsPathList = [];
     }
 
-    PlatformFile? pickedFile;
-    var _isFileButtonDisabled = false;
 
     const propuestaEvento = '''
 ${StringsEventoCultural.descriptionOneEventocultural}
@@ -275,7 +272,6 @@ Atividade Criação de Evento 1ª etapa concluída!''';
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: DrawerMenuWidget(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
