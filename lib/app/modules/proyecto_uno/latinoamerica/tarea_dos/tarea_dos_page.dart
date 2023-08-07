@@ -23,11 +23,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
   final answerTresController = TextEditingController();
   final answerQuatroController = TextEditingController();
   final answerCincoController = TextEditingController();
-  final answerSeisController = TextEditingController();
-  final answerSieteController = TextEditingController();
-  final answerOchoController = TextEditingController();
-  final answerNueveController = TextEditingController();
-  final answerDiezController = TextEditingController();
+
   final _tareaDosController = TareaDosController();
   final formKey = GlobalKey<FormState>();
 
@@ -42,11 +38,6 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
     final textThree = answerTresController.text;
     final textFour = answerQuatroController.text;
     final textFive = answerCincoController.text;
-    final textSix = answerSeisController.text;
-    final textSeven = answerSieteController.text;
-    final textEight = answerOchoController.text;
-    final textNine = answerNueveController.text;
-    final textTen = answerDiezController.text;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -88,33 +79,23 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                   answerTresController,
                   answerQuatroController,
                   answerCincoController,
-                  answerSeisController,
-                  answerSieteController,
-                  answerOchoController,
-                  answerNueveController,
-                  answerDiezController,
                 ),
                 onStepContinue: () {
-                  final isLastStep = currentStep == 10;
+                  final isLastStep = currentStep == 5;
 
-                  if (currentStep < 11 - 1) {
+                  if (currentStep < 6 - 1) {
                     setState(() => currentStep++);
                   }
 
                   if (isLastStep) {
                     if (formKey.currentState!.validate() &&
-                        _tareaDosController.selectedImages.length == 10) {
+                        _tareaDosController.selectedImages.length == 5) {
                       final answerList = _tareaDosController.makeAnswersList(
                         textOne,
                         textTwo,
                         textThree,
                         textFour,
                         textFive,
-                        textSix,
-                        textSeven,
-                        textEight,
-                        textNine,
-                        textTen,
                       );
                       _tareaDosController
                         ..sendAnswers(currentUser, answerList)
@@ -150,7 +131,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                 },
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
-                  final isLastStep = currentStep == 10;
+                  final isLastStep = currentStep == 5;
                   return Row(
                     children: <Widget>[
                       if (currentStep != 0)

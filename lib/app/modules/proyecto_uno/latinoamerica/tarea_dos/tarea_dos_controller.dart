@@ -66,11 +66,6 @@ class TareaDosController extends ChangeNotifier {
     final fileThree = File(imagesList[2]);
     final fileFour = File(imagesList[3]);
     final fileFive = File(imagesList[4]);
-    final fileSix = File(imagesList[5]);
-    final fileSeven = File(imagesList[6]);
-    final fileEight = File(imagesList[7]);
-    final fileNine = File(imagesList[8]);
-    final fileTen = File(imagesList[9]);
 
     final attachment = [
       FileAttachment(
@@ -92,26 +87,6 @@ class TareaDosController extends ChangeNotifier {
       FileAttachment(
         fileFive,
         fileName: 'Descrição Imagem 5: ${answersList[4]}',
-      ),
-      FileAttachment(
-        fileSix,
-        fileName: 'Descrição Imagem 6: ${answersList[5]}',
-      ),
-      FileAttachment(
-        fileSeven,
-        fileName: 'Descrição Imagem 7: ${answersList[6]}',
-      ),
-      FileAttachment(
-        fileEight,
-        fileName: 'Descrição Imagem 8: ${answersList[7]}',
-      ),
-      FileAttachment(
-        fileNine,
-        fileName: 'Descrição Imagem 9: ${answersList[8]}',
-      ),
-      FileAttachment(
-        fileTen,
-        fileName: 'Descrição Imagem 10: ${answersList[9]}',
       ),
     ];
     return attachment;
@@ -167,11 +142,6 @@ class TareaDosController extends ChangeNotifier {
       'resposta_3': [answersList[2], imagesList[2]],
       'resposta_4': [answersList[3], imagesList[3]],
       'resposta_5': [answersList[4], imagesList[4]],
-      'resposta_6': [answersList[5], imagesList[5]],
-      'resposta_7': [answersList[6], imagesList[6]],
-      'resposta_8': [answersList[7], imagesList[7]],
-      'resposta_9': [answersList[8], imagesList[8]],
-      'resposta_10': [answersList[9], imagesList[9]],
     };
     return json;
   }
@@ -187,11 +157,6 @@ class TareaDosController extends ChangeNotifier {
       'imagem_latinoamerica_3': [answersList[2], imagesList[2]],
       'imagem_latinoamerica_4': [answersList[3], imagesList[3]],
       'imagem_latinoamerica_5': [answersList[4], imagesList[4]],
-      'imagem_latinoamerica_6': [answersList[5], imagesList[5]],
-      'imagem_latinoamerica_7': [answersList[6], imagesList[6]],
-      'imagem_latinoamerica_8': [answersList[7], imagesList[7]],
-      'imagem_latinoamerica_9': [answersList[8], imagesList[8]],
-      'imagem_latinoamerica_10': [answersList[9], imagesList[9]]
     };
     return json;
   }
@@ -218,11 +183,6 @@ Descrição Imagem 2: ${respostas[1]}
 Descrição Imagem 3: ${respostas[2]}
 Descrição Imagem 4: ${respostas[3]}
 Descrição Imagem 5: ${respostas[4]} 
-Descrição Imagem 6: ${respostas[5]}
-Descrição Imagem 7: ${respostas[6]}
-Descrição Imagem 8: ${respostas[7]}
-Descrição Imagem 9: ${respostas[8]}
-Descrição Imagem 10: ${respostas[9]}
 \n
 Imagens em anexo!
 ''';
@@ -235,11 +195,6 @@ Imagens em anexo!
     String textThree,
     String textFour,
     String textFive,
-    String textSix,
-    String textSeven,
-    String textEight,
-    String textNine,
-    String textTen,
   ) {
     final respostas = [
       textOne,
@@ -247,11 +202,6 @@ Imagens em anexo!
       textThree,
       textFour,
       textFive,
-      textSix,
-      textSeven,
-      textEight,
-      textNine,
-      textTen,
     ];
     return respostas;
   }

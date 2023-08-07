@@ -20,12 +20,15 @@ class IntroTareaLatinoamericaPage extends StatefulWidget {
 }
 
 class _IntroTareaLatinoamericaPageState
-    extends State<IntroTareaLatinoamericaPage> {
+    extends State<IntroTareaLatinoamericaPage>
+    with AutomaticKeepAliveClientMixin {
   TextEditingController get controller => widget.controller;
   FocusNode get focusNode => widget.focusNode;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -62,4 +65,7 @@ class _IntroTareaLatinoamericaPageState
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

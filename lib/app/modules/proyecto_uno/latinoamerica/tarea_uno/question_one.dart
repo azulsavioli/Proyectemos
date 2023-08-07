@@ -36,7 +36,7 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(
-            height: 50,
+            height: 40,
           ),
           YoutubePlayer(
             thumbnail: const Text(
@@ -45,13 +45,34 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
             controller: controller,
             showVideoProgressIndicator: true,
             progressIndicatorColor: ThemeColors.yellow,
-            progressColors: const ProgressBarColors(
-              playedColor: ThemeColors.yellow,
-              handleColor: ThemeColors.yellow,
-            ),
             onReady: () {
               controller.addListener(listener);
             },
+            bottomActions: [
+              const SizedBox(
+                width: 10,
+              ),
+              Flexible(child: CurrentPosition()),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 6,
+                child: ProgressBar(
+                  colors: const ProgressBarColors(
+                    playedColor: ThemeColors.yellow,
+                    handleColor: ThemeColors.yellow,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Flexible(child: RemainingDuration()),
+              const SizedBox(
+                width: 5,
+              ),
+            ],
           ),
           const SizedBox(
             height: 25,

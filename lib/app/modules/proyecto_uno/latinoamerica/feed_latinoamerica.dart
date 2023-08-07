@@ -1,6 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../commons/styles.dart';
@@ -87,7 +86,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
     while (i < lista.length) {
       final cards = [];
 
-      for (var j = 0; j < 10; j++) {
+      for (var j = 0; j < 5; j++) {
         cards.add(
           Card(
             child: Column(
@@ -103,7 +102,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
                 ),
                 Image.network(
                   lista[i]['imagem_latinoamerica_${j + 1}'][1],
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitHeight,
                   height: 300,
                   width: 300,
                 ),

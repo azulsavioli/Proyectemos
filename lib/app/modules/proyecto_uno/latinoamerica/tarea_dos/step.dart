@@ -10,11 +10,6 @@ List<Step> steps(
   TextEditingController controllerTres,
   TextEditingController controllerQuatro,
   TextEditingController controllerCinco,
-  TextEditingController controllerSeis,
-  TextEditingController controllerSiete,
-  TextEditingController controllerOcho,
-  TextEditingController controllerNueve,
-  TextEditingController controllerDiez,
 ) {
   return [
     Step(
@@ -75,56 +70,6 @@ List<Step> steps(
         stepIndex: 5,
         currentStep: 5,
         controller: controllerCinco,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 6'),
-      content: CustomStep(
-        title: 'Sesta imagen',
-        stepIndex: 6,
-        currentStep: 6,
-        controller: controllerSeis,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 7'),
-      content: CustomStep(
-        title: 'Septima imagen',
-        stepIndex: 7,
-        currentStep: 7,
-        controller: controllerSiete,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 8'),
-      content: CustomStep(
-        title: 'Ochava imagen',
-        stepIndex: 8,
-        currentStep: 8,
-        controller: controllerOcho,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 9'),
-      content: CustomStep(
-        title: 'Nuena imagen',
-        stepIndex: 9,
-        currentStep: 9,
-        controller: controllerNueve,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 10'),
-      content: CustomStep(
-        title: 'Decima imagen',
-        stepIndex: 10,
-        currentStep: 10,
-        controller: controllerDiez,
       ),
       isActive: true,
     ),

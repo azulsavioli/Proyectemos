@@ -35,7 +35,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
 
     if (tareaUno && tareaDos) {
       await Future.delayed(
-        const Duration(seconds: 5),
+        const Duration(seconds: 3),
         () => setState(
           () => timerEnded = true,
         ),
@@ -120,7 +120,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                     icon: Icons.image,
                     shadowColor: ThemeColors.green,
                   )
-                else
+                else if (tareaUno && tareaDos)
                   Card(
                     child: SizedBox(
                       height: height,
