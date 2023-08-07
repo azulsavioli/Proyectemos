@@ -30,7 +30,7 @@ class _PageThreeState extends State<PageThree> {
             ),
             child: Text(
               '¡Deseamos que los momentos en la aplicación !PROYECTEMOS!',
-              style: ThemeText.paragraph16WhiteBold,
+              style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
           ),
@@ -51,7 +51,7 @@ class _PageThreeState extends State<PageThree> {
             ),
             child: Text(
               'sean una experiencia significativa y transformadora!',
-              style: ThemeText.paragraph16WhiteBold,
+              style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
           )

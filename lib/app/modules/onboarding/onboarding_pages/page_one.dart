@@ -40,7 +40,7 @@ class PageOne extends StatelessWidget {
               children: [
                 Text(
                   '''Esta aplicación ha sido pensada como un lugar para explorar tu creatividad, para encuentros e interacciones con tus compañeros(as) y profesores(as).''',
-                  style: ThemeText.paragraph16WhiteBold,
+                  style: ThemeText.paragraph14WhiteBold,
                   textAlign: TextAlign.start,
                 ),
               ],

@@ -30,7 +30,7 @@ class _PageTwoState extends State<PageTwo> {
             ),
             child: Text(
               '''Con la finalidad de poner la lengua española más cerca de tus intereses y realidad,''',
-              style: ThemeText.paragraph16WhiteBold,
+              style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
           ),
@@ -51,7 +51,7 @@ class _PageTwoState extends State<PageTwo> {
             ),
             child: Text(
               '''esta aplicación está dividida en 3 grandes proyectos: proyecto UNO, proyecto DOS y proyecto TRÉS.''',
-              style: ThemeText.paragraph16WhiteBold,
+              style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
           )
