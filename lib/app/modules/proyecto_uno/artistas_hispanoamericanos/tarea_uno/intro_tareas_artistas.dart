@@ -55,43 +55,45 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Text(
-              'Frida Kahlo',
-              style: ThemeText.h2title35BlueNormal,
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          if (loading)
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             const SizedBox(
-              height: 400,
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: ThemeColors.yellow,
-                ),
-              ),
-            )
-          else
-            CustomCarousel(
-              imgList: imgList,
-              imgNameList: imgNameList,
+              height: 20,
             ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            StringsArtistasLationamerica.titleQOnePageOneArtistasLatin,
-            style: ThemeText.paragraph14Gray,
-          ),
-        ],
+            Center(
+              child: Text(
+                'Frida Kahlo',
+                style: ThemeText.h2title35BlueNormal,
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            if (loading)
+              const SizedBox(
+                height: 400,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: ThemeColors.yellow,
+                  ),
+                ),
+              )
+            else
+              CustomCarousel(
+                imgList: imgList,
+                imgNameList: imgNameList,
+              ),
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              StringsArtistasLationamerica.titleQOnePageOneArtistasLatin,
+              style: ThemeText.paragraph14Gray,
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -112,39 +112,6 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
     return json;
   }
 
-  // Future sendAnswers(
-  //   ctx,
-  //   GoogleSignInAccount? currentUser,
-  //   List<String> recordsPathList,
-  // ) async {
-  //   final json = await makeJson(currentUser);
-
-  //   try {
-  //     await ctx.read<ProyectemosRepository>().saveAnswers(doc, json);
-  //     await Future.delayed(
-  //       const Duration(seconds: 20),
-  //       () => sendEmail(ctx, recordsPathList, currentUser),
-  //     );
-  //   } on FirebaseException catch (e) {
-  //     return e.toString();
-  //   }
-  // }
-
-  // Future<List> getEmailTeacherFromFirebase(ctx) async {
-  //   final emails = [];
-  //   const doc = 'professora';
-  //   final repository = ctx.read<ProyectemosRepository>();
-
-  //   try {
-  //     final data = await repository.getTeacherEmail(doc);
-  //     emails.addAll(data);
-  //   } on FirebaseException catch (e) {
-  //     ScaffoldMessenger.of(ctx)
-  //         .showSnackBar(SnackBar(content: Text(e.toString())));
-  //   }
-  //   return emails;
-  // }
-
   List<FileAttachment> createAudioAttachments(
     List<String> recordsPathList,
   ) {
@@ -172,61 +139,6 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
     return attachment;
   }
 
-//   Future<void> sendEmail(
-//     ctx,
-//     List<String> recordsPathList,
-//     GoogleSignInAccount? currentUser,
-//   ) async {
-//     final firstAudio = File(recordsPathList[0]);
-//     final secondAudio = File(recordsPathList[1]);
-//     final thirdAudio = File(recordsPathList[2]);
-
-//     final studentInfo = ctx.read<ProyectemosRepository>().getUserInfo();
-//     final studentInformation = studentInfo.split('/');
-
-//     final allStudentInfo = [
-//       studentInformation[3],
-//       studentInformation[0],
-//       studentInformation[1],
-//       studentInformation[2]
-//     ];
-
-//     final attachment = [
-//       FileAttachment(
-//         firstAudio,
-//         contentType: 'audio/mp3',
-//         fileName: 'Primeiro Audio',
-//       ),
-//       FileAttachment(
-//         secondAudio,
-//         contentType: 'audio/mp3',
-//         fileName: 'Segundo Audio',
-//       ),
-//       FileAttachment(
-//         thirdAudio,
-//         contentType: 'audio/mp3',
-//         fileName: 'Terceiro Audio',
-//       )
-//     ];
-
-//     final email = await getEmailTeacherFromFirebase(ctx);
-
-//     const subject = 'Atividade - Artistas Latinoamericanos 1';
-//     final text = '''
-// Proyectemos\n
-// ${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n
-// Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
-//     final emailSender = EmailSender();
-
-//     await emailSender.sendEmailToTeacher(
-//       currentUser,
-//       attachment,
-//       [email[0]],
-//       subject,
-//       text,
-//     );
-//   }
-
   String createEmailMessage(
     List<String> allStudentInfo,
   ) {
@@ -237,13 +149,4 @@ Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n
 Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
     return text;
   }
-
-  // Future<void> saveArtistasTareaUnoCompleted() async {
-  //   const artistasTareaUnoCompleted = true;
-  //   final preferences = await SharedPreferences.getInstance();
-  //   await preferences.setBool(
-  //     'artistasTareaUnoCompleted',
-  //     artistasTareaUnoCompleted,
-  //   );
-  // }
 }

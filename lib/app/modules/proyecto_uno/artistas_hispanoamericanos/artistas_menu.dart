@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/strings.dart';
-import '../../../../repository/repository_impl.dart';
 import '../../../../services/tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
