@@ -5,7 +5,6 @@ import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
-import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/criacao_evento_page.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 import 'package:proyectemos/commons/auth_check.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
@@ -25,6 +24,7 @@ import 'modules/proyecto_uno/divulgacion/feed_divulgation.dart';
 import 'modules/proyecto_uno/divulgacion/feedback_tarea_divulgacion.dart';
 import 'modules/proyecto_uno/evento_cultural/feedback_tarea_evento_cultural.dart';
 import 'modules/proyecto_uno/evento_cultural/record_and_play_audio_propuesta.dart';
+import 'modules/proyecto_uno/evento_cultural/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_uno.dart';
@@ -90,7 +90,7 @@ class Proyectemos extends StatelessWidget {
                 '/pUno_evento_cultural_menu': (context) =>
                     const EventoCulturalMenu(),
                 '/pUno_criacao_evento_page': (context) =>
-                    const CriacaoEventoPage(),
+                    const TareaEventoCulturalPage(),
                 '/pUno_evento_cultural_feedback': (context) =>
                     const FeedbackTareaEventoCultural(),
                 '/pUno_divulgacao_page': (context) => const DivulgacaoPage(),
