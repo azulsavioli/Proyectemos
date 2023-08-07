@@ -73,7 +73,7 @@ class _CustomStepState extends State<CustomStep> {
   File? image;
 
   Future pickImage(List<XFile> images, ImageSource source) async {
-    if (images.length >= 10) images = [];
+    if (images.length >= 5) images = [];
     final image = await ImagePicker().pickImage(source: source);
     if (image == null) return;
 
@@ -164,28 +164,31 @@ class _CustomStepState extends State<CustomStep> {
                 const SizedBox(
                   width: 5,
                 ),
-                // Expanded(
-                //   child: ElevatedButton.icon(
-                //       style: ButtonStyle(
-                //         backgroundColor:
-                //             MaterialStateProperty.all(buttonCameraColor),
-                //       ),
-                //       onPressed: () async {
-                //         final image = await pickImage(
-                //             CustomStep.images, ImageSource.camera);
-                //         if (image == null) {
-                //           validate(context);
-                //         } else if (image != null) {
-                //           setState(() {
-                //             buttonCameraColor = ThemeColors.green;
-                //             buttonCameraIcon = const Icon(Icons.check);
-                //             buttonCameraSelected = true;
-                //           });
-                //         }
-                //       },
-                //       icon: buttonCameraIcon,
-                //       label: const Text('Cámara')),
-                // ),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(buttonCameraColor),
+                    ),
+                    onPressed: () async {
+                      final image = await pickImage(
+                        CustomStep.images,
+                        ImageSource.camera,
+                      );
+                      if (image == null) {
+                        validate();
+                      } else if (image != null) {
+                        setState(() {
+                          buttonCameraColor = ThemeColors.green;
+                          buttonCameraIcon = const Icon(Icons.check);
+                          buttonCameraSelected = true;
+                        });
+                      }
+                    },
+                    icon: buttonCameraIcon,
+                    label: const Text('Cámara'),
+                  ),
+                ),
               ],
             ),
             const Divider(),
