@@ -28,7 +28,7 @@ class _IntroTareaDosArtistasHispanoamericanosPageState
           ),
           Center(
             child: Text(
-              Strings.titleArtistasHispanoamericanosUno,
+              Strings.titleArtistasHispanoamericanosDos,
               style: ThemeText.paragraph14Blue,
             ),
           ),

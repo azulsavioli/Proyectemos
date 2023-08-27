@@ -16,7 +16,7 @@ abstract class StringsArtistasLationamerica {
   //Questions Page tarea dos
   static const String titleQOnePageDosArtistasLatin = '''
 Ahora es el momento de conocer y buscar más acerca de los artistas hispanoamericános.\n
-La propuesta es que en parejas ustedes busquen un artista de los países indicados y que suban una sobra suya, sea una pintura, una canción, una película, um poema, etc...\n
+La propuesta es que en parejas ustedes busquen un artista de los países indicados y que suban una obra suya, sea una pintura, una canción, una película, un poema, etc...\n
 Esos archivos van a ser públicos para sus compañeros. Asi todos pueden intercambiar informaciones.
  ''';
 }

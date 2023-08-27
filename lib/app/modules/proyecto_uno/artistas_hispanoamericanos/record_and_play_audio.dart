@@ -10,7 +10,6 @@ import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 import '../../../../commons/strings.dart';
 import '../../../../providers/play_audio_provider.dart';
 import '../../../../providers/record_audio_provider_artistas_impl.dart';
-import '../../widgets/drawer_menu.dart';
 
 class RecordAndPlayScreen extends StatefulWidget {
   const RecordAndPlayScreen({Key? key}) : super(key: key);
@@ -62,7 +61,6 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: DrawerMenuWidget(),
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,

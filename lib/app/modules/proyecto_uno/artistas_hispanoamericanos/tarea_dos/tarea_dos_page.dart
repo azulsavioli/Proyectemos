@@ -75,7 +75,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titleArtistasHispanoamericanosUno,
+          Strings.titleArtistasHispanoamericanosDos,
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
@@ -143,7 +143,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                         );
                       },
                       child: const Text(
-                        'Voltar',
+                        'Volver',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey,
@@ -200,7 +200,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                         }
                       },
                       child: const Text(
-                        'Concluir',
+                        'Enviar',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,
