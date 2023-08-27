@@ -53,6 +53,18 @@ class _ProfilePageState extends State<ProfilePage> {
             style: ThemeText.paragraph16WhiteBold,
           ),
         ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.delete),
+          onPressed: () {
+            _repository
+              ..resetTaskCompleted('artistasTareaDosCompleted')
+              ..resetTaskCompleted('artistasTareaUnoCompleted')
+              ..resetTaskCompleted('latinoamericaTareaDosCompleted')
+              ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
+              ..resetTaskCompleted('eventoTareaUnoCompleted')
+              ..resetTaskCompleted('divulgationCompleted');
+          },
+        ),
         body: Center(
           child: Column(
             children: [
