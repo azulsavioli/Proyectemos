@@ -138,16 +138,20 @@ flutter_icons:
   android: "launcher_icon"
   adaptative_icon_background: "#ffffff"
   adaptative_icon_foreground: "assets/images/splash_logo.png"
+  lints: ^2.1.1
 
 dev_dependencies:
+
   flutter_test:
     sdk: flutter
   mockito:
   build_runner:
+  lints: ^2.0.1
   
   #Lint
   flutterando_analysis: ^0.0.2
   # flutter_lints: ^2.0.0 
+  # lints: ^2.1.1
 
 flutter:
 

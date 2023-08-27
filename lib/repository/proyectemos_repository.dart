@@ -208,38 +208,6 @@ class ProyectemosRepository extends ChangeNotifier {
     return studentsImages;
   }
 
-  // Stream<List<Map<String, dynamic>>?> getImagesTurmaStream() async* {
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
-  //   studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
-  //   final studentsImages = [];
-
-  //   final schoolId = await getSchoolId(studentSchoolInfo);
-  //   final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
-
-  //   if (schoolId.isEmpty || classroomId.isEmpty) {
-  //     return;
-  //   }
-
-  //   final studentTaskRef = db
-  //       .collection('escolas')
-  //       .doc(schoolId)
-  //       .collection('turmas')
-  //       .doc(classroomId)
-  //       .collection('imagens_turma');
-
-  //   try {
-  //     await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
-  //       for (final doc in querySnapshot.docs) {
-  //         studentsImages.add(doc.data());
-  //       }
-  //     });
-  //   } catch (error) {
-  //     error.toString();
-  //   }
-  //   yield studentsImages.cast<Map<String, dynamic>>();
-  // }
-
   Future saveVideosPublic(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;

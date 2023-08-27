@@ -29,7 +29,6 @@ import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/latinoamerica/latinoamerica_menu.dart';
-import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_page.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_uno_page.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';

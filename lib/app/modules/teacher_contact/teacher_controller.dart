@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../repository/repository_impl.dart';
-import '../../../utils/email_sender.dart';
 
 class TeacherController {
   final BuildContext context;
@@ -15,37 +14,32 @@ class TeacherController {
     String subject,
     String description,
   ) async {
-//    final email = await getEmailTeacherFromFirebase();
-//    final studentInfo = await _repository.getUserInfo();
-//    final studentInformation = studentInfo.split('/');
+    final message = createEmailMessage(
+      subject,
+      description,
+      await _repository.getStudentInfo(),
+    );
 
-//    final allStudentInfo = [
-//      studentInformation[0],
-//      studentInformation[1],
-//      studentInformation[2]
-//    ];
+    await _repository.sendEmail(
+      currentUser,
+      [],
+      subject,
+      message,
+      [],
+    );
+  }
 
-    final emailSender = EmailSender();
-
-//    await emailSender.sendEmailToTeacher(
-//      currentUser,
-    //    [],
-//      [email.first.values.first],
-    //  subject,
-    //    text,
-//    );
-//  }
-
-    String createEmailMessage(
-      List<String> allStudentInfo,
-      List<String> respostas,
-    ) {
-      final text = '''
+  String createEmailMessage(
+    String subject,
+    String description,
+    List<String> allStudentInfo,
+  ) {
+    final text = '''
 Proyectemos\n
-${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
+Aluno: ${allStudentInfo[0]}\n
+Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
+$subject\n\n
 $description''';
-
-      return text;
-    }
+    return text;
   }
 }

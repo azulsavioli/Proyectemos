@@ -15,11 +15,9 @@ abstract class Repository<T, U, V> {
     U message,
     List<Attachment> attachment,
   );
-  Future<List<String>> getEmailTeacherFromFirebase();
   Future<List<String>>? getSchoolsInfo();
+  Future<String> getSchoolId(String schoolNameParams);
   Future<List<String>>? getClassRoomInfo(String schoolName);
-  Future<List> getTeachersInfo();
-  Future<List> getClassesInfo();
   Future<void> saveClassroomImages(Map<T, T> json);
   Future<void> savePublicVideo(Map<T, T> json);
   Future<void> saveClassroomVideo(Map<T, T> json);

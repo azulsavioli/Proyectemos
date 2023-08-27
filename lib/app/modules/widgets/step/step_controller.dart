@@ -10,7 +10,7 @@ class StepController {
 
   Future pickImage(List<XFile> images, ImageSource source) async {
     try {
-      if (images.length >= 5) images = [];
+      if (images.length >= 5) images.clear();
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) return;
 

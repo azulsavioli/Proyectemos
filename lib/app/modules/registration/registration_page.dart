@@ -65,8 +65,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         return const Center(child: CircularProgressIndicator());
                       }
 
-                      List<String> schoolOptions = ['Selecione sua escuela!'];
-                      schoolOptions.addAll(snapshot.data!);
+                      final schoolOptions = [
+                        'Selecione sua escuela!',
+                        ...snapshot.data!
+                      ];
 
                       return DropdownButtonFormField<String>(
                         decoration: InputDecoration(
@@ -127,8 +129,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           );
                         }
 
-                        List<String> classOptions = ['Selecione sua clase!'];
-                        classOptions.addAll(snapshot.data!);
+                        final classOptions = [
+                          'Selecione sua clase!',
+                          ...snapshot.data!
+                        ];
 
                         return DropdownButtonFormField<String>(
                           decoration: InputDecoration(

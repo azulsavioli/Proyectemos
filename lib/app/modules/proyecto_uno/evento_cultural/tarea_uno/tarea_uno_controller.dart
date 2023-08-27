@@ -176,7 +176,6 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
 
   List setFiles() {
     final filePaths = [];
-    print("setFiles chamado, lista de arquivos: $files");
     for (final item in files) {
       filePaths.add(item.path);
     }

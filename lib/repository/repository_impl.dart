@@ -174,7 +174,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
         .collection('escolas/')
         .doc('$schoolId/')
         .collection('turmas');
-    List<String> classRoom = [];
+    final classRoom = <String>[];
 
     try {
       await classRoomRef.get().then((QuerySnapshot querySnapshot) {
@@ -189,23 +189,5 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     }
 
     return classRoom;
-  }
-
-  @override
-  Future<List> getClassesInfo() {
-    // TODO: implement getClassesInfo
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List> getTeachersInfo() {
-    // TODO: implement getTeachersInfo
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<String>> getEmailTeacherFromFirebase() {
-    // TODO: implement getEmailTeacherFromFirebase
-    throw UnimplementedError();
   }
 }

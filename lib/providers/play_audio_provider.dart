@@ -13,12 +13,12 @@ class PlayAudioProvider extends ChangeNotifier {
 
   String get currSongPath => _audioFilePath;
 
-  setAudioFilePath(String filePath) {
+  void setAudioFilePath(String filePath) {
     _audioFilePath = filePath;
     notifyListeners();
   }
 
-  clearCurrAudioPath() {
+  void clearCurrAudioPath() {
     _audioFilePath = '';
     notifyListeners();
   }
@@ -63,7 +63,7 @@ class PlayAudioProvider extends ChangeNotifier {
         _reset();
       }
     } catch (e) {
-      return 'Error in playaudio: $e';
+      return e.toString();
     }
   }
 
@@ -74,7 +74,7 @@ class PlayAudioProvider extends ChangeNotifier {
     updateSongPlayingStatus(false);
   }
 
-  updateSongPlayingStatus(bool update) {
+  void updateSongPlayingStatus(bool update) {
     _isSongPlaying = update;
     notifyListeners();
   }
