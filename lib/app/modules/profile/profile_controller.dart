@@ -11,7 +11,7 @@ class ProfileController {
     final resultado = await TasksCompletedService.getUnoTaskCompletedInfo();
 
     if (resultado[0] == true) {
-      unoTasks = 3;
+      unoTasks = 2;
     }
     if (resultado[1] == true) {
       unoTasks += 2;

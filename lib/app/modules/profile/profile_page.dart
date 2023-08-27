@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:proyectemos/repository/repository_impl.dart';
 
 import '../widgets/card_button.dart';
 
@@ -15,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _controller = ProfileController();
   final user = FirebaseAuth.instance.currentUser!;
+  final _repository = RepositoryImpl();
 
   @override
   void initState() {
@@ -31,7 +33,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
     final height = MediaQuery.of(context).size.width * .2;
-    final tasksCompleted = _controller.getAllTasks();
+    var tasksCompleted = 0;
+
+    setState(() {
+      tasksCompleted = _controller.getAllTasks();
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -87,7 +93,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       Text(
                         user.email!,
-                        style: ThemeText.paragraph16GrayNormal,
+                        style: ThemeText.paragraph14Gray,
                       ),
                       const SizedBox(
                         height: 8,
@@ -108,7 +114,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '$tasksCompleted/$_controller.allTasks',
+                              '$tasksCompleted/${_controller.allTasks}',
                               style: ThemeText.paragraph16BlueBold,
                             ),
                             Text(
