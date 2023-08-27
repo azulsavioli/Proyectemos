@@ -32,7 +32,7 @@ class _RevisionQuestionsLatinoamericaState
               height: 15,
             ),
             Text(
-              '¡Revise sus respuestas y presione el botón enviar!',
+              '¡Revisa tus respuestas y presiona el botón enviar!',
               style: ThemeText.h3title20BlueNormal,
             ),
             const SizedBox(
@@ -56,7 +56,7 @@ class _RevisionQuestionsLatinoamericaState
               height: 15,
             ),
             Text(
-              StringsLationamerica.qTwoLatin,
+              StringsLationamerica.qTwoLatinTwo,
               style: ThemeText.paragraph16GrayNormal,
             ),
             if (controllerList[1].text.isNotEmpty)

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../../commons/strings_latinoamerica.dart';
-import '../../../../../../commons/styles.dart';
+import '../../../widgets/custom_text_form_field.dart';
 
 class QuestionLatinoamericaOne extends StatefulWidget {
-  final YoutubePlayerController controller;
-  final Function() listener;
+  final TextEditingController controller;
+  final FocusNode focusNode;
 
   const QuestionLatinoamericaOne({
     Key? key,
     required this.controller,
-    required this.listener,
+    required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -20,8 +20,8 @@ class QuestionLatinoamericaOne extends StatefulWidget {
 }
 
 class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
-  YoutubePlayerController get controller => widget.controller;
-  Function() get listener => widget.listener;
+  TextEditingController get controller => widget.controller;
+  FocusNode get focusNode => widget.focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -32,51 +32,31 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            StringsLationamerica.titleQtwoPageOneLatin,
+            StringsLationamerica.qTwoLatinOne,
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
-          YoutubePlayer(
-            thumbnail: const Text(
-              'https://img.youtube.com/vi/R21d66HYGPw/hqdefault.jpg',
-            ),
-            controller: controller,
-            showVideoProgressIndicator: true,
-            progressIndicatorColor: ThemeColors.yellow,
-            onReady: () {
-              controller.addListener(listener);
-            },
-            bottomActions: [
-              const SizedBox(
-                width: 10,
-              ),
-              Flexible(child: CurrentPosition()),
-              const SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                flex: 6,
-                child: ProgressBar(
-                  colors: const ProgressBarColors(
-                    playedColor: ThemeColors.yellow,
-                    handleColor: ThemeColors.yellow,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Flexible(child: RemainingDuration()),
-              const SizedBox(
-                width: 5,
-              ),
-            ],
+          Text(
+            StringsLationamerica.qTwoLatinTwo,
+            style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(
-            height: 25,
+            height: 15,
           ),
+          CustomTextFormField(
+            focusNode: focusNode,
+            hint: 'Respuesta',
+            controller: controller,
+            keyboardType: TextInputType.text,
+            validatorVazio: 'Ingrese tuja respuesta correctamente',
+            validatorMenorqueNumero:
+                'Su respuesta debe tener al menos 3 caracteres',
+          ),
+          const SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

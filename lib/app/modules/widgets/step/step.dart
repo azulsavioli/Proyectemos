@@ -5,8 +5,9 @@ import 'package:image/image.dart' hide Color;
 import 'package:image_picker/image_picker.dart';
 import 'package:proyectemos/services/toast_services.dart';
 
-import '../../../commons/styles.dart';
-import 'custom_text_form_field.dart';
+import '../../../../commons/styles.dart';
+import '../custom_text_form_field.dart';
+import 'step_controller.dart';
 
 class CustomStepInheritedWidget extends InheritedWidget {
   final bool buttonFileSelected;
@@ -70,29 +71,7 @@ class _CustomStepState extends State<CustomStep> {
   Icon buttonCameraIcon = const Icon(Icons.camera_alt_outlined);
   Color buttonFileColor = ThemeColors.red;
   Color buttonCameraColor = ThemeColors.yellow;
-  File? image;
-
-  Future pickImage(List<XFile> images, ImageSource source) async {
-    if (images.length >= 5) images = [];
-    final image = await ImagePicker().pickImage(source: source);
-    if (image == null) return;
-
-    final bytes = await File(image.path).readAsBytes();
-    final imagemfinal = decodeImage(bytes);
-
-    final compressedImage = encodeJpg(imagemfinal!, quality: 50);
-
-    final temporaryImage = await File(image.path).writeAsBytes(compressedImage);
-
-    setState(() => this.image = temporaryImage);
-    images.add(image);
-    return image;
-  }
-
-  void validate() {
-    return showToast('¡Por favor seleccione su imagen!');
-  }
-
+  final _controller = StepController();
   late FocusNode focusNode;
 
   @override
@@ -143,12 +122,12 @@ class _CustomStepState extends State<CustomStep> {
                           MaterialStateProperty.all(buttonFileColor),
                     ),
                     onPressed: () async {
-                      final image = await pickImage(
+                      final image = await _controller.pickImage(
                         CustomStep.images,
                         ImageSource.gallery,
                       );
                       if (image == null) {
-                        validate();
+                        _controller.validate();
                       } else if (image != null) {
                         setState(() {
                           buttonFileColor = ThemeColors.green;
@@ -171,12 +150,12 @@ class _CustomStepState extends State<CustomStep> {
                           MaterialStateProperty.all(buttonCameraColor),
                     ),
                     onPressed: () async {
-                      final image = await pickImage(
+                      final image = await _controller.pickImage(
                         CustomStep.images,
                         ImageSource.camera,
                       );
                       if (image == null) {
-                        validate();
+                        _controller.validate();
                       } else if (image != null) {
                         setState(() {
                           buttonCameraColor = ThemeColors.green;

@@ -151,10 +151,10 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                 focusNode1.requestFocus();
               }
               if (index == 1) {
-                FocusScope.of(context).unfocus();
+                focusNode2.requestFocus();
               }
               if (index == 2) {
-                focusNode2.requestFocus();
+                FocusScope.of(context).unfocus();
               }
               if (index == 3) {
                 focusNode3.requestFocus();
@@ -179,12 +179,12 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                 controller: textControllerOne,
               ),
               QuestionLatinoamericaOne(
-                controller: youTubeController,
-                listener: listener,
-              ),
-              QuestionLatinoamericaTwo(
                 focusNode: focusNode2,
                 controller: textControllerTwo,
+              ),
+              QuestionLatinoamericaTwo(
+                controller: youTubeController,
+                listener: listener,
               ),
               QuestionLatinoamericaThree(
                 focusNode: focusNode3,
@@ -236,7 +236,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                         );
                       },
                       child: const Text(
-                        'Voltar',
+                        'Volver',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey,
@@ -305,7 +305,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                         }
                       },
                       child: const Text(
-                        'Concluir',
+                        'Enviar',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.white,

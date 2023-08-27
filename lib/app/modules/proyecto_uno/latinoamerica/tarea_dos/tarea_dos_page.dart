@@ -24,7 +24,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
   final answerQuatroController = TextEditingController();
   final answerCincoController = TextEditingController();
 
-  final _tareaDosController = TareaDosController();
+  final _tareaDosController = LatinoamericaTareaDosController();
   final formKey = GlobalKey<FormState>();
 
   int currentStep = 0;
@@ -81,9 +81,9 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                   answerCincoController,
                 ),
                 onStepContinue: () {
-                  final isLastStep = currentStep == 5;
+                  final isLastStep = currentStep == 4;
 
-                  if (currentStep < 6 - 1) {
+                  if (currentStep < 5 - 1) {
                     setState(() => currentStep++);
                   }
 
@@ -98,13 +98,13 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                         textFive,
                       );
                       _tareaDosController
-                        ..sendAnswers(currentUser, answerList)
-                        ..saveTaskCompleted().then(
-                          (value) => Navigator.pushNamed(
-                            context,
-                            '/pUno_latinoamerica_menu',
-                          ),
-                        );
+                          .sendAnswers(currentUser, answerList)
+                          .then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pUno_latinoamerica_menu',
+                            ),
+                          );
                     } else {
                       showToast(
                         '''Selecciona una imagen de su cámara o de su archivo y escriba su descripción''',
@@ -131,7 +131,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                 },
                 controlsBuilder:
                     (BuildContext context, ControlsDetails details) {
-                  final isLastStep = currentStep == 5;
+                  final isLastStep = currentStep == 4;
                   return Row(
                     children: <Widget>[
                       if (currentStep != 0)
@@ -154,7 +154,7 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: details.onStepContinue,
-                          child: Text(isLastStep ? 'Concluir' : 'Continuar'),
+                          child: Text(isLastStep ? 'Enviar' : 'Continuar'),
                         ),
                       ),
                     ],

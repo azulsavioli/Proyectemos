@@ -360,6 +360,14 @@ abstract class ThemeText {
     color: ThemeColors.white,
     fontWeight: FontWeight.normal,
   );
+
+  static TextStyle paragraph12WhiteBold = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.white,
+    fontWeight: FontWeight.bold,
+  );
 }
 
 abstract class ThemeColors {

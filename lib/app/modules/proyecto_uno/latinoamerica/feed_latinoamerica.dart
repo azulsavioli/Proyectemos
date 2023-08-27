@@ -57,24 +57,30 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
           }
           final students = snapshot.data ?? [];
 
-          return ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20,
-                  left: 10,
-                  right: 10,
-                  bottom: 15,
+          if (students.isNotEmpty) {
+            return ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 10,
+                    right: 10,
+                    bottom: 15,
+                  ),
+                  child: Text(
+                    'Actividades compartidas por los estudiantes',
+                    textAlign: TextAlign.center,
+                    style: ThemeText.paragraph16BlueBold,
+                  ),
                 ),
-                child: Text(
-                  'Actividades compartidas por los estudiantes',
-                  textAlign: TextAlign.center,
-                  style: ThemeText.paragraph16BlueBold,
-                ),
-              ),
-              buildSwiperCards(students),
-            ],
-          );
+                buildSwiperCards(students),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
     );

@@ -76,7 +76,7 @@ Atividade Latinoamerica 1ª tarefa concluída!
 Pergunta: ${StringsLationamerica.qOneLatin}
 Resposta: ${respostas[0]}
 \n
-Pergunta: ${StringsLationamerica.qTwoLatin}
+Pergunta: ${StringsLationamerica.qTwoLatinTwo}
 Resposta: ${respostas[1]}
 \n
 Pergunta: ${StringsLationamerica.qThreeLatin}

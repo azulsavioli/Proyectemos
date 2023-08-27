@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,20 +10,26 @@ import 'package:mailer/mailer.dart';
 import '../../../../../commons/strings.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
-import '../../../widgets/step.dart';
+import '../../../widgets/step/step.dart';
 
-class TareaDosController extends ChangeNotifier {
+class LatinoamericaTareaDosController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   final subject = 'Atividade - Latinoamerica\n Tarea Dos';
   final doc = 'uno/latinoamerica/atividade_2/';
+  final task = 'latinoamericaTareaDosCompleted';
+
+  final formKey = GlobalKey<FormState>();
+  int currentStep = 0;
+  final isLastStep = 4;
+
+  final answerUnoController = TextEditingController();
+  final answerDosController = TextEditingController();
+  final answerTresController = TextEditingController();
+  final answerQuatroController = TextEditingController();
+  final answerCincoController = TextEditingController();
 
   List<String> studentInformations = [];
   List<XFile> selectedImages = CustomStep.images;
-
-  Future<void> saveTaskCompleted() async {
-    const task = 'latinoamericaTareaDosCompleted';
-    await _repository.saveTaskCompleted(task);
-  }
 
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
@@ -48,6 +54,8 @@ class TareaDosController extends ChangeNotifier {
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomImages(json);
+      await _repository.saveTaskCompleted(task);
+
       showToast(Strings.tareaConcluida);
 
       notifyListeners();

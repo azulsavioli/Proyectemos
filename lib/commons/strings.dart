@@ -39,14 +39,13 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
   //Artistas
   static const String titleArtistasHispanoamericanos =
       'Artistas hispanoamericanos';
-  static const String titleArtistasHispanoamericanosUno =
-      'Feedback Tarea Uno Artistas hispanoamericanos';
+  static const String titleArtistasHispanoamericanosUno = 'Frida Kahlo';
   static const String titleArtistasHispanoamericanosDos =
-      'Feedback Tarea Dos Artistas hispanoamericanos';
+      'Selección de archivos';
 
   //Evento cultural
   static const String titleEventoCulturalUno = 'Evento Cultural';
-  static const String titleEventoCulturalUnoFeed = 'Feedback Evento Cultural';
+  static const String titleEventoCulturalUnoFeed = 'Creación de un evento';
 
   static const String titlePropuestadeEventoUno = 'La propuesta del evento';
   static const String titleFeedbackEventoUno = 'Feedback';

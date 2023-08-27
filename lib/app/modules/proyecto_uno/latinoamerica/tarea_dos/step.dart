@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_latinoamerica.dart';
-import '../../../../../commons/styles.dart';
-import '../../../widgets/step.dart';
+import '../../../widgets/step/step.dart';
 
 List<Step> steps(
   TextEditingController controllerUno,
@@ -13,18 +11,7 @@ List<Step> steps(
 ) {
   return [
     Step(
-      title: Text(
-        StringsLationamerica.titleQOnePageTresLatin,
-        style: ThemeText.paragraph16BlueBold,
-      ),
-      content: Text(
-        StringsLationamerica.descriptionqOnePageTres,
-        style: ThemeText.paragraph14Gray,
-      ),
-      isActive: true,
-    ),
-    Step(
-      title: const Text('Etapa 1'),
+      title: const Text('Imagen 1'),
       content: CustomStep(
         title: 'Primera imagen',
         stepIndex: 1,
@@ -34,7 +21,7 @@ List<Step> steps(
       isActive: true,
     ),
     Step(
-      title: const Text('Etapa 2'),
+      title: const Text('Imagen 2'),
       content: CustomStep(
         title: 'Segunda imagen',
         stepIndex: 2,
@@ -44,7 +31,7 @@ List<Step> steps(
       isActive: true,
     ),
     Step(
-      title: const Text('Etapa 3'),
+      title: const Text('Imagen 3'),
       content: CustomStep(
         title: 'Tercera imagen',
         stepIndex: 3,
@@ -54,7 +41,7 @@ List<Step> steps(
       isActive: true,
     ),
     Step(
-      title: const Text('Etapa 4'),
+      title: const Text('Imagen 4'),
       content: CustomStep(
         title: 'Cuarta imagen',
         stepIndex: 4,
@@ -64,7 +51,7 @@ List<Step> steps(
       isActive: true,
     ),
     Step(
-      title: const Text('Etapa 5'),
+      title: const Text('Imagen 5'),
       content: CustomStep(
         title: 'Quinta imagen',
         stepIndex: 5,
