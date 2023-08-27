@@ -1,4 +1,11 @@
 abstract class Strings {
+
+  // General
+  static const String appName = 'Proyectemos';
+  static const String appVersion = 'v1.0.0';
+  static const String author = 'Maia de Oliveira, F.';
+  static const String email = 'violet.labs.contato@gmail.com';
+
 // ProyectosPage
 
   //Images

@@ -51,6 +51,7 @@ class Proyectemos extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: Proyectemos.title,
               theme: ThemeData(
+                visualDensity: VisualDensity.adaptivePlatformDensity,
                 primaryColor: ThemeColors.blue,
                 secondaryHeaderColor: ThemeColors.yellow,
               ),
