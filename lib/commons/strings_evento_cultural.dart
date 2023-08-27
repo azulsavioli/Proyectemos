@@ -10,17 +10,19 @@ Por ejemplo, pueden crear una exposición de pinturas del artista en algún muse
 
   static const String descriptionTwoEventocultural = '''
 Para eso es importante que tengan en cuenta algunos de los seguientes puntos:
-  ° Elegir un artista\n
-  ° Elegir el tipo de evento\n
-  ° Elegir el sítio\n
-  ° Nombre del evento\n
-  ° El público destinatario\n
-  ° Objetivo del evento\n''';
+''';
+  static const String topicOne = 'Elegir un artista';
+  static const String topicTwo = 'Elegir el tipo de evento';
+  static const String topicThree = 'Elegir el sítio';
+  static const String topicFour = 'Nombre del evento';
+  static const String topicFive = 'El público destinatario';
+  static const String topicSix = 'Objetivo del evento';
 
   static const String descriptionThreeEventocultural = '''
 Después que decidan sobre estos puntos se lo presenten a la profesora.\n
 Deben enviar la propuesta del evento de manera escrita(imágen, slide o texto) y oral (audio).\n
-Despúes, la profesora les dará la devolución si el evento está apto para ser creado.''';
+Después, la profesora les dará la devolución si el evento estará apto para ser compartido con los compañeros. 
+''';
 
   static const String questionEventoCulturalAudio =
       '''¡Graben la propuesta del evento de manera oral (audio)!''';

@@ -65,7 +65,9 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: 'Creación de un evento',
+                  text: tareaUno
+                      ? 'Feedback\nCreación de un evento'
+                      : 'Creación de un evento',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno

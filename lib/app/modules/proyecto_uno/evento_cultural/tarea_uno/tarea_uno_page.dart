@@ -12,15 +12,16 @@ import 'intro_three_tareas_evento_cultural.dart';
 import 'intro_two_tareas_evento_cultural.dart';
 import 'tarea_uno_controller.dart';
 
-class TareaEventoCulturalPage extends StatefulWidget {
-  const TareaEventoCulturalPage({Key? key}) : super(key: key);
+class PUnoEventoCulturalTareaPage extends StatefulWidget {
+  const PUnoEventoCulturalTareaPage({Key? key}) : super(key: key);
 
   @override
-  State<TareaEventoCulturalPage> createState() =>
-      _TareaEventoCulturalPageState();
+  State<PUnoEventoCulturalTareaPage> createState() =>
+      _PUnoEventoCulturalTareaPageState();
 }
 
-class _TareaEventoCulturalPageState extends State<TareaEventoCulturalPage> {
+class _PUnoEventoCulturalTareaPageState
+    extends State<PUnoEventoCulturalTareaPage> {
   final _controller = EventoCulturalTareaUnoController();
   bool loading = false;
   final formKey = GlobalKey<FormState>();
@@ -34,7 +35,11 @@ class _TareaEventoCulturalPageState extends State<TareaEventoCulturalPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.of(context).pop();
+            });
+          },
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(
@@ -86,7 +91,7 @@ class _TareaEventoCulturalPageState extends State<TareaEventoCulturalPage> {
                         );
                       },
                       child: const Text(
-                        'Voltar',
+                        'Volver',
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey,
@@ -127,24 +132,19 @@ class _TareaEventoCulturalPageState extends State<TareaEventoCulturalPage> {
                           setState(() {
                             loading = true;
                           });
-                          if (_controller.recordsPathList.isEmpty) {
-                            showToast(
-                              '''¡No se puede enviar la respuesta! Envie su archivo, graba lo audio y haz clic en compartir!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
-                            );
-                          } else {
-                            if (_controller.recordsPathList.isNotEmpty &&
-                                _controller.recordsPathList.length == 1) {
-                              _controller.sendAnswers(
-                                currentUser,
-                              );
 
-                              Navigator.pushNamed(
-                                context,
-                                '/pUno_evento_cultural_menu',
-                              );
-                            }
+                          if (_controller.recordsPathList.isNotEmpty &&
+                              _controller.recordsPathList.length == 1) {
+                            _controller
+                                .sendAnswers(
+                                  currentUser,
+                                )
+                                .then(
+                                  (value) => Navigator.pushNamed(
+                                    context,
+                                    '/pUno_evento_cultural_menu',
+                                  ),
+                                );
                           }
                         }
                       },

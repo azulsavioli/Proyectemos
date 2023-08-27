@@ -10,7 +10,6 @@ import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
 import '../../../../commons/strings.dart';
 import '../../../../providers/play_audio_provider.dart';
-import '../../widgets/drawer_menu.dart';
 
 class RecordAndPlayPropuestaScreen extends StatefulWidget {
   const RecordAndPlayPropuestaScreen({Key? key}) : super(key: key);
@@ -64,56 +63,55 @@ class _RecordAndPlayPropuestaScreenState
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      endDrawer: DrawerMenuWidget(),
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              opacity: 0.1,
-              fit: BoxFit.fitHeight,
-              image: NetworkImage(
-                'https://media.istockphoto.com/id/623702486/pt/foto/south-america-map-3d-illustration.jpg?s=612x612&w=0&k=20&c=5hPtUPLSwnQktWO2fPhEa1JsuPNNo1lcvJCwvmwNnE0=',
-              ),
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            opacity: 0.111,
+            fit: BoxFit.cover,
+            image: NetworkImage(
+              'https://media.istockphoto.com/id/623702486/pt/foto/south-america-map-3d-illustration.jpg?s=612x612&w=0&k=20&c=5hPtUPLSwnQktWO2fPhEa1JsuPNNo1lcvJCwvmwNnE0=',
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 25),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  question.toString(),
-                  style: ThemeText.paragraph16GrayBold,
-                ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                question.toString(),
+                style: ThemeText.paragraph16GrayBold,
               ),
-              if (recordProvider.recordedFilePath.isEmpty)
-                _recordHeading()
-              else
-                _playAudioHeading(),
+            ),
+            if (recordProvider.recordedFilePath.isEmpty)
+              _recordHeading()
+            else
+              _playAudioHeading(),
+            const SizedBox(height: 20),
+            if (recordProvider.recordedFilePath.isEmpty)
+              _recordingSection()
+            else
+              _audioPlayingSection(),
+            if (recordProvider.recordedFilePath.isNotEmpty &&
+                !playProvider.isSongPlaying)
               const SizedBox(height: 20),
-              if (recordProvider.recordedFilePath.isEmpty)
-                _recordingSection()
-              else
-                _audioPlayingSection(),
-              if (recordProvider.recordedFilePath.isNotEmpty &&
-                  !playProvider.isSongPlaying)
-                const SizedBox(height: 20),
-              if (recordProvider.recordedFilePath.isNotEmpty &&
-                  !playProvider.isSongPlaying)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _resetButton(),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    _saveButton(),
-                  ],
-                ),
-              const SizedBox(height: 40),
-            ],
-          ),
+            if (recordProvider.recordedFilePath.isNotEmpty &&
+                !playProvider.isSongPlaying)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _resetButton(),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  _saveButton(),
+                ],
+              ),
+            const SizedBox(height: 40),
+          ],
         ),
       ),
     );
@@ -174,7 +172,7 @@ class _RecordAndPlayPropuestaScreenState
       height: 100,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: ThemeColors.green,
+        color: recordProvider.isRecording ? ThemeColors.red : ThemeColors.green,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Icon(

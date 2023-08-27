@@ -65,8 +65,6 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
 
     pickedFile = fileSelected.files.first;
     files.add(pickedFile!);
-    print("Arquivo selecionado: ${pickedFile!.name}");
-    print("Lista de arquivos agora: $files");
     notifyListeners();
     return pickedFile;
   }
