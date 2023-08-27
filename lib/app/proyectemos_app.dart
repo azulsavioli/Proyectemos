@@ -19,9 +19,9 @@ import 'modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_
 import 'modules/proyecto_uno/artistas_hispanoamericanos/record_and_play_audio.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tarea_dos/tarea_dos_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tarea_uno/tarea_uno_page.dart';
-import 'modules/proyecto_uno/divulgacion/divulgacao_tarea_page.dart';
 import 'modules/proyecto_uno/divulgacion/feed_divulgation.dart';
 import 'modules/proyecto_uno/divulgacion/feedback_tarea_divulgacion.dart';
+import 'modules/proyecto_uno/divulgacion/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/evento_cultural/feedback_tarea_evento_cultural.dart';
 import 'modules/proyecto_uno/evento_cultural/record_and_play_audio_propuesta.dart';
 import 'modules/proyecto_uno/evento_cultural/tarea_uno/tarea_uno_page.dart';
@@ -30,6 +30,7 @@ import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/latinoamerica/latinoamerica_menu.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_page.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_uno_page.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
 import 'modules/registration/registration_page.dart';
@@ -71,7 +72,7 @@ class Proyectemos extends StatelessWidget {
                 '/pUno_latinoamerica_tarea_uno': (context) =>
                     const TareaUnoLatinoamericaPage(),
                 '/pUno_latinoamerica_tarea_dos': (context) =>
-                    const TareaDosLatinoamericaPage(),
+                    const PUnoLatinoamericaTareaDosPage(),
                 '/pUno_latinoamerica_feed': (context) =>
                     const FeedLatinoamericaPage(),
                 '/pUno_latinoamerica_feedback_tarea_uno': (context) =>
@@ -90,10 +91,11 @@ class Proyectemos extends StatelessWidget {
                 '/pUno_evento_cultural_menu': (context) =>
                     const EventoCulturalMenu(),
                 '/pUno_criacao_evento_page': (context) =>
-                    const TareaEventoCulturalPage(),
+                    const PUnoEventoCulturalTareaPage(),
                 '/pUno_evento_cultural_feedback': (context) =>
                     const FeedbackTareaEventoCultural(),
-                '/pUno_divulgacao_page': (context) => const DivulgacaoPage(),
+                '/pUno_divulgacao_page': (context) =>
+                    const TareaDivulgacaoPage(),
                 '/pUno_divulgacao_feedback': (context) =>
                     const FeedbackTareaDivulgacion(),
                 '/pUno_feed_divulgacao': (context) =>

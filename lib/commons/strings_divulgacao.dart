@@ -10,7 +10,7 @@ La divulgación será por medio de un video que va a circular por las redes soci
 No se olviden que hay que tener todas las informaciones importantes para el publico, y que el abordaje que hagan tiene que despertar su interes y curiosidad.
  ''';
 
-  static const String descricaoDibulgacaoCompartir = '''
+  static const String descricaoDivulgacaoCompartir = '''
 Ese es el espacio para descargar el video de dibulgación de los eventos creados por todos ustedes.\n
 Ustedes puden elegir publicarlo de manera publica (todos los que utilizan la aplicación van a poder verlo), o privado (solo su grupo de la escuela van a poder verlo).
   ''';

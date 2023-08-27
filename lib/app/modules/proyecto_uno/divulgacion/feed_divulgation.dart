@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
+import 'package:chewie/chewie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,10 +24,12 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
   bool feedTodos = false;
   late VideoPlayerController videoPlayerController;
   late List<String> videosList;
-  late List<CustomVideoPlayerController> customVideoPlayerControllers;
-  late CustomVideoPlayerController customVideoPlayerController;
+  // late List<CustomVideoPlayerController> customVideoPlayerControllers;
+  late List<ChewieController> videoPlayerControllers;
+  // late CustomVideoPlayerController customVideoPlayerController;
   List students = [];
   late StreamController<List> _videosStreamController;
+  late ChewieController chewieController;
 
   @override
   void initState() {
@@ -37,7 +40,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
 
   @override
   void dispose() {
-    for (final controller in customVideoPlayerControllers) {
+    for (final controller in videoPlayerControllers) {
       controller.dispose();
     }
     _videosStreamController.close();
@@ -94,19 +97,25 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
     return videosList;
   }
 
-  List<CustomVideoPlayerController> initVideoControllers() {
-    customVideoPlayerControllers = [];
+  List<ChewieController> initVideoControllers() {
+    videoPlayerControllers = [];
 
     for (final video in videosList) {
-      customVideoPlayerController = CustomVideoPlayerController(
-        context: context,
-        videoPlayerController: VideoPlayerController.network(
-          video,
-        )..initialize().then((value) => setState(() {})),
-      );
-      customVideoPlayerControllers.add(customVideoPlayerController);
+      try {
+        videoPlayerController = VideoPlayerController.networkUrl(
+          Uri.parse(video),
+        )..initialize().then((value) => setState(() {}));
+
+        chewieController = ChewieController(
+          videoPlayerController: videoPlayerController,
+        );
+      } catch (error) {
+        error.toString();
+      }
+
+      videoPlayerControllers.add(chewieController);
     }
-    return customVideoPlayerControllers;
+    return videoPlayerControllers;
   }
 
   @override
@@ -133,7 +142,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(
-              child: Text('Ocurrió un error al intentar cargar las imágenes.'),
+              child: Text('Ocurrió un error al intentar cargar los videos.'),
             );
           }
           if (!snapshot.hasData) {
@@ -158,7 +167,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
                 const SizedBox(
                   height: 25,
                 ),
-                buildCards(students, customVideoPlayerControllers),
+                buildCards(students, videoPlayerControllers),
               ],
             ),
           );
@@ -169,7 +178,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
 
   Widget buildCards(
     List listStudents,
-    List<CustomVideoPlayerController> videoControllers,
+    List<ChewieController> videoControllers,
   ) {
     final cards = <Widget>[];
     var i = 0;
@@ -185,10 +194,10 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
                 ),
               ),
               SizedBox(
-                width: 600,
+                width: 360,
                 height: 400,
-                child: CustomVideoPlayer(
-                  customVideoPlayerController: videoControllers[i],
+                child: Chewie(
+                  controller: videoControllers[i],
                 ),
               ),
             ],

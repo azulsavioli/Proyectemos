@@ -65,6 +65,26 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     }
   }
 
+  @override
+  Future<void> saveClassroomVideo(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.saveVideosTurma(convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
+  @override
+  Future<void> savePublicVideo(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.saveVideosPublic(convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
   Map<String, dynamic> _convertMapToStringDynamic(Map<T, T> inputMap) {
     final convertedMap = <String, dynamic>{};
     inputMap.forEach((key, value) {
