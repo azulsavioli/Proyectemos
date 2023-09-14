@@ -62,7 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ..resetTaskCompleted('latinoamericaTareaDosCompleted')
               ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
               ..resetTaskCompleted('eventoTareaUnoCompleted')
-              ..resetTaskCompleted('divulgationCompleted');
+              ..resetTaskCompleted('divulgationCompleted')
+              ..resetTaskCompleted('conocesPodcastCompleted');
           },
         ),
         body: Center(

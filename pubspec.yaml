@@ -84,13 +84,14 @@ dependencies:
   #Permissions
   permission_handler: ^10.2.0
 
-  #Audio Recorder
+  #Audio
   # flutter_sound: ^9.2.13
   record: ^4.4.4
   simple_ripple_animation: ^0.0.3
   just_audio: ^0.9.29
   percent_indicator: ^4.2.2
   fluttertoast: ^8.0.9
+  audioplayers: ^5.1.0
 
   #Data
   # flutter_secure_storage: ^6.0.0
@@ -132,12 +133,12 @@ flutter_native_splash:
   ios: true
 
 flutter_icons:
-  image_path: "assets/images/splash_logo.png"
+  image_path: "assets/images/logo.png"
   ios: true
   remove_alpha_ios: true
   android: "launcher_icon"
   adaptative_icon_background: "#ffffff"
-  adaptative_icon_foreground: "assets/images/splash_logo.png"
+  adaptative_icon_foreground: "assets/images/icon-android.png"
   lints: ^2.1.1
 
 dev_dependencies:

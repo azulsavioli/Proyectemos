@@ -11,6 +11,11 @@ import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import 'modules/home/proyectos_page.dart';
+import 'modules/proyecto_dos/como_crear_podcast/como_crear_podcast_menu.dart';
+import 'modules/proyecto_dos/como_crear_podcast/tarea_dos/tarea_dos_como_crear_podcast.dart';
+import 'modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
+import 'modules/proyecto_dos/conoces_podcast/tarea_uno/record_and_play_audio_conoces_podcast.dart';
+import 'modules/proyecto_dos/conoces_podcast/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
@@ -29,7 +34,7 @@ import 'modules/proyecto_uno/latinoamerica/feed_latinoamerica.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_dos.dart';
 import 'modules/proyecto_uno/latinoamerica/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_uno/latinoamerica/latinoamerica_menu.dart';
-import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_uno_page.dart';
+import 'modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_page.dart';
 import 'modules/proyecto_uno/latinoamerica/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_uno/proyecto_uno_page.dart';
 import 'modules/registration/registration_page.dart';
@@ -66,6 +71,10 @@ class Proyectemos extends StatelessWidget {
                 '/profile_contato_professora': (context) =>
                     const EnvioEmailProfesoraPerfil(),
                 '/proyectos': (context) => const ProyectosPage(),
+                '/record_and_play': (context) => const RecordAndPlayScreen(),
+
+//projeto uno
+
                 '/proyecto_uno': (context) => const ProyectoUnoPage(),
                 '/pUno_latinoamerica_menu': (context) =>
                     const PUnoLatinoamericaMenu(),
@@ -94,6 +103,8 @@ class Proyectemos extends StatelessWidget {
                     const PUnoEventoCulturalTareaPage(),
                 '/pUno_evento_cultural_feedback': (context) =>
                     const FeedbackTareaEventoCultural(),
+                '/record_and_play_propuesta': (context) =>
+                    const RecordAndPlayPropuestaScreen(),
                 '/pUno_divulgacao_page': (context) =>
                     const TareaDivulgacaoPage(),
                 '/pUno_divulgacao_feedback': (context) =>
@@ -102,11 +113,31 @@ class Proyectemos extends StatelessWidget {
                     const FeedDivulgationPage(),
                 '/pUno_send_email_prof': (context) =>
                     const EnvioEmailProfesora(),
+
+//projeto dos
+
                 '/proyecto_dos': (context) => const ProyectoDosPage(),
+                '/pDos_conocesPodcast': (context) => const PDosConocesPodcast(),
+                '/record_and_play_conoces_podcast': (context) =>
+                    const RecordAndPlayConocesPodcastScreen(),
+                '/pDos_comoCrearPodcast_menu': (context) =>
+                    const PDosComoCrearPodcastMenu(),
+                '/pDos_escuchar_podcast_tarea_uno': (context) =>
+                    const TareaUnoEscucharPodcast(),
+//  '/pDos_escuchar_podcast_feedback_tarea_uno'
+                '/pDos_crear_un_podcast_tarea_dos': (context) =>
+                    const TareaDosCrearUnPodcast(),
+//  '/pDos_crear_un_podcast_feedback_tarea_dos'
+
+                // '/pDos_laEncuesta_menu': (context) =>
+                //     const PDosLaEncuestaMenu(),
+                // '/pDos_creacionEncuesta': (context) => const PDosCreacionEncuesta()
+
+                // '/pDos_grabacionPodcast_menu': (context) =>
+                //     const PDosGrabacionPodcastMenu(),
+
+//projeto tres
                 '/proyecto_tres': (context) => const ProyectoTresPage(),
-                '/record_and_play': (context) => const RecordAndPlayScreen(),
-                '/record_and_play_propuesta': (context) =>
-                    const RecordAndPlayPropuestaScreen(),
               },
             );
           },

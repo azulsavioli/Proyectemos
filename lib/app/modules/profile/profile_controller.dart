@@ -1,14 +1,14 @@
-import '../../../services/tasks_completed.dart';
+import '../../../services/uno_tasks_completed.dart';
 
 class ProfileController {
   int unoTasks = 0;
   int dosTasks = 0;
   int tresTasks = 0;
-  int allTasks = 28;
+  int allTasks = 29;
   double percentage = 0;
 
   Future<int> getUnoTaskCompleted() async {
-    final resultado = await TasksCompletedService.getUnoTaskCompletedInfo();
+    final resultado = await UnoTasksCompletedService.getUnoTaskCompletedInfo();
 
     if (resultado[0] == true) {
       unoTasks = 2;

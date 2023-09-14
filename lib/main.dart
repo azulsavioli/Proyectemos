@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/providers/play_audio_provider.dart';
 import 'package:proyectemos/providers/record_audio_provider_artistas_impl.dart';
+import 'package:proyectemos/providers/record_audio_provider_conoces_podcast_impl.dart';
 import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
 import 'package:proyectemos/repository/proyectemos_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,6 +53,9 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => RecordAudioProviderEventoCulturalImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioConocesPodcastProviderImpl(),
           ),
           ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
         ],
