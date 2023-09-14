@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../../../commons/strings.dart';
-import '../../../../../commons/strings_latinoamerica.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 

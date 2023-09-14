@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../../commons/strings.dart';
-import '../../../../services/tasks_completed.dart';
+import '../../../../commons/strings/strings.dart';
+import '../../../../services/uno_tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
 
@@ -26,7 +26,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
 
   Future<void> getTaskCompleted() async {
     final resultado =
-        await TasksCompletedService.getUnoLatinoamericaTaskCompletedInfo();
+        await UnoTasksCompletedService.getUnoLatinoamericaTaskCompletedInfo();
 
     setState(() {
       tareaUno = resultado[0];

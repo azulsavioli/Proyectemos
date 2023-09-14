@@ -5,7 +5,7 @@ import 'package:proyectemos/services/toast_services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../services/storage_service.dart';
 import '../../../../../utils/get_user.dart';
@@ -135,7 +135,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titleLatinoamericaUno,
+          Strings.title300kilos,
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),

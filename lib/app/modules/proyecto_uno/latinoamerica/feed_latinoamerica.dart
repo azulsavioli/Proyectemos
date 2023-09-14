@@ -1,7 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../commons/strings.dart';
+import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';

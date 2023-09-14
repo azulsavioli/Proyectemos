@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings.dart';
-import '../../../../../commons/strings_artistas_latinoamericanos.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/strings/strings_artistas_latinoamericanos.dart';
 import '../../../../../commons/styles.dart';
 
 class IntroTareaDosArtistasHispanoamericanosPage extends StatefulWidget {

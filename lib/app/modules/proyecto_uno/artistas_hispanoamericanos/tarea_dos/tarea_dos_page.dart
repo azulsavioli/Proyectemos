@@ -8,7 +8,7 @@ import 'package:proyectemos/app/modules/proyecto_uno/artistas_hispanoamericanos/
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';

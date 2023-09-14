@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../../../../commons/strings_latinoamerica.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 import '../../../widgets/custom_text_form_field.dart';
 
 class QuestionLatinoamericaThree extends StatefulWidget {
@@ -41,6 +41,7 @@ class _QuestionLatinoamericaThreeState
           ),
           CustomTextFormField(
             focusNode: focusNode,
+            textInputAction: TextInputAction.none,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 
-import '../../../commons/strings.dart';
+import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
-import '../../../services/tasks_completed.dart';
+import '../../../services/uno_tasks_completed.dart';
 import '../widgets/drawer_menu.dart';
 
 class ProyectoUnoPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
   }
 
   Future<void> getTaskCompleted() async {
-    final resultado = await TasksCompletedService.getUnoTaskCompletedInfo();
+    final resultado = await UnoTasksCompletedService.getUnoTaskCompletedInfo();
 
     setState(() {
       latinoamericaCompleted = resultado[0];

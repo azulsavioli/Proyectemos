@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../../../commons/strings_artistas_latinoamericanos.dart';
+import '../../../../../commons/strings/strings_artistas_latinoamericanos.dart';
 import '../../../widgets/custom_record_audio_button.dart';
 import 'tarea_uno_controller.dart';
 

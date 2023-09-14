@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_evento_cultural.dart';
+import '../../../../../commons/strings/strings_evento_cultural.dart';
 import '../../../../../commons/styles.dart';
 
 class IntroTareaUnoEventoCulturalPage extends StatefulWidget {

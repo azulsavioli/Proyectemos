@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../../../commons/strings_latinoamerica.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 
 class RevisionQuestionsLatinoamerica extends StatefulWidget {
   final List<TextEditingController> controllerList;

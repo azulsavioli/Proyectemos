@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../../../commons/strings.dart';
-
+import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
 import '../../../repository/proyectemos_repository.dart';
 import '../../../utils/email_sender.dart';
@@ -120,6 +119,7 @@ ${_emailController.text}''';
             ),
             CustomTextFormField(
               focusNode: focusNode,
+              textInputAction: TextInputAction.none,
               hint: 'Respuesta',
               controller: _emailController,
               keyboardType: TextInputType.text,

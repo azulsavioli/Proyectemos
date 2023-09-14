@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_latinoamerica.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 import '../../../../../commons/styles.dart';
 
 class IntroTareaUnoLatinoamericaPage extends StatefulWidget {

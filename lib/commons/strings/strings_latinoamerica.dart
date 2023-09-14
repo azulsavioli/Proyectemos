@@ -1,6 +1,4 @@
 abstract class StringsLationamerica {
-// ProyectosPage
-
   //Latinoamerica
 
   //Questions Page tarea uno

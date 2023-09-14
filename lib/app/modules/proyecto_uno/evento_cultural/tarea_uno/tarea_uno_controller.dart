@@ -9,7 +9,7 @@ import 'package:mailer/mailer.dart';
 import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../services/toast_services.dart';
 
 class EventoCulturalTareaUnoController extends ChangeNotifier {

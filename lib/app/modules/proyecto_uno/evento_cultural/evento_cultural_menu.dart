@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../../../commons/strings.dart';
+import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
-import '../../../../services/tasks_completed.dart';
+import '../../../../services/uno_tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
 
@@ -24,10 +24,10 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
 
   Future<void> getTaskCompleted() async {
     final resultado =
-        await TasksCompletedService.getUnoEventoTaskCompletedInfo();
+        await UnoTasksCompletedService.getUnoEventoTaskCompletedInfo();
 
     setState(() {
-      tareaUno = resultado[0];
+      tareaUno = resultado;
     });
   }
 
@@ -50,7 +50,7 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
           ),
           title: Text(
             Strings.titleEventoCulturalUno,
-            style: ThemeText.paragraph16WhiteBold,
+            style: ThemeText.paragraph14WhiteBold,
           ),
         ),
         endDrawer: DrawerMenuWidget(),

@@ -6,10 +6,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../commons/strings.dart';
+import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
-import '../../../../services/tasks_completed.dart';
+import '../../../../services/uno_tasks_completed.dart';
 import '../../widgets/drawer_menu.dart';
 
 class FeedDivulgationPage extends StatefulWidget {
@@ -53,7 +53,8 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
   }
 
   Future<void> getFeedTask() async {
-    final resultado = await TasksCompletedService.getUnoDivulgationFeedType();
+    final resultado =
+        await UnoTasksCompletedService.getUnoDivulgationFeedType();
 
     setState(() {
       feedTurma = resultado[0];

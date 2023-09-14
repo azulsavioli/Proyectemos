@@ -74,6 +74,7 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
         ),
         CustomTextFormField(
           focusNode: focusNode,
+          textInputAction: TextInputAction.none,
           hint: 'Nombre del artista',
           controller: widget.controller,
           keyboardType: TextInputType.text,

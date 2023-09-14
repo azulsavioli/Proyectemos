@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/tarea_uno/tarea_evento_cultural.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
@@ -46,7 +46,7 @@ class _PUnoEventoCulturalTareaPageState
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titleArtistasHispanoamericanos,
+          Strings.titleEventoCulturalUnoFeed,
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),

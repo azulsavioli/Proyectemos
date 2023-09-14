@@ -74,6 +74,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
             ),
             CustomTextFormField(
               focusNode: focusNode1,
+              textInputAction: TextInputAction.next,
               hint: 'Assunto',
               controller: _assuntoController,
               keyboardType: TextInputType.text,
@@ -86,6 +87,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
             ),
             CustomTextFormField(
               focusNode: focusNode1,
+              textInputAction: TextInputAction.done,
               hint: 'Mensaje',
               controller: _descricaoController,
               keyboardType: TextInputType.text,

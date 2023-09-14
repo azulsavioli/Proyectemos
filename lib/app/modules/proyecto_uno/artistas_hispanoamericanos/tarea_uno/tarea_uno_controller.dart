@@ -7,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../providers/record_audio_provider_artistas_impl.dart';
 import '../../../../../services/toast_services.dart';
 
@@ -18,7 +18,6 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
   final doc = 'uno/artistas-latinoamericanos/atividade_1/';
   final task = 'artistasTareaUnoCompleted';
 
-  final audioProvider = RecordAudioArtistasProviderImpl();
   bool isAudioFinish = RecordAudioArtistasProviderImpl().isRecording;
   List<String> recordsPathList =
       RecordAudioArtistasProviderImpl.recordingsPaths;
@@ -146,7 +145,7 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
-Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp4.''';
+Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp3.''';
     return text;
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../../../commons/strings_latinoamerica.dart';
 import '../../../../../../commons/styles.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 
 class QuestionLatinoamericaTwo extends StatefulWidget {
   final YoutubePlayerController controller;

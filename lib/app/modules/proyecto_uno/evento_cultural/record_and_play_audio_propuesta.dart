@@ -8,7 +8,7 @@ import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
-import '../../../../commons/strings.dart';
+import '../../../../commons/strings/strings.dart';
 import '../../../../providers/play_audio_provider.dart';
 
 class RecordAndPlayPropuestaScreen extends StatefulWidget {
@@ -71,7 +71,7 @@ class _RecordAndPlayPropuestaScreenState
             opacity: 0.111,
             fit: BoxFit.cover,
             image: NetworkImage(
-              'https://media.istockphoto.com/id/623702486/pt/foto/south-america-map-3d-illustration.jpg?s=612x612&w=0&k=20&c=5hPtUPLSwnQktWO2fPhEa1JsuPNNo1lcvJCwvmwNnE0=',
+              Strings.propuestaImage,
             ),
           ),
         ),

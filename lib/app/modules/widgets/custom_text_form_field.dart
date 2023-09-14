@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   final String validatorVazio;
   final String validatorMenorqueNumero;
   final FocusNode focusNode;
+  final TextInputAction textInputAction;
 
   const CustomTextFormField({
     Key? key,
@@ -18,12 +19,14 @@ class CustomTextFormField extends StatelessWidget {
     required this.validatorVazio,
     required this.validatorMenorqueNumero,
     required this.focusNode,
+    required this.textInputAction,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       focusNode: focusNode,
+      textInputAction: textInputAction,
       autofocus: true,
       maxLines: null,
       controller: controller,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../commons/strings.dart';
+import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
 import '../widgets/card_proyects.dart';
 import '../widgets/drawer_menu.dart';

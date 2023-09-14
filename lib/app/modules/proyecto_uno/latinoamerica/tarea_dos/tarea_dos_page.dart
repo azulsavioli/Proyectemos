@@ -1,44 +1,32 @@
 import 'package:flutter/material.dart';
-
-import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/step.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_controller.dart';
-import 'package:proyectemos/commons/strings_latinoamerica.dart';
-import 'package:proyectemos/commons/styles.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/styles.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
+import 'intro_tareas_latinoamerica.dart';
+import 'question_one_latinoamerica.dart';
 
-class TareaDosLatinoamericaPage extends StatefulWidget {
-  const TareaDosLatinoamericaPage({Key? key}) : super(key: key);
+class PUnoLatinoamericaTareaDosPage extends StatefulWidget {
+  const PUnoLatinoamericaTareaDosPage({Key? key}) : super(key: key);
 
   @override
-  State<TareaDosLatinoamericaPage> createState() =>
-      TareaDosLatinoamericaPageState();
+  State<PUnoLatinoamericaTareaDosPage> createState() =>
+      _PUnoLatinoamericaTareaDosPageState();
 }
 
-class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
-  final answerUnoController = TextEditingController();
-  final answerDosController = TextEditingController();
-  final answerTresController = TextEditingController();
-  final answerQuatroController = TextEditingController();
-  final answerCincoController = TextEditingController();
+class _PUnoLatinoamericaTareaDosPageState
+    extends State<PUnoLatinoamericaTareaDosPage> {
+  final _controller = LatinoamericaTareaDosController();
+  bool loading = false;
+  final pageController = PageController();
 
-  final _tareaDosController = LatinoamericaTareaDosController();
-  final formKey = GlobalKey<FormState>();
-
-  int currentStep = 0;
+  int pageChanged = 0;
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
-    final textOne = answerUnoController.text;
-    final textTwo = answerDosController.text;
-    final textThree = answerTresController.text;
-    final textFour = answerQuatroController.text;
-    final textFive = answerCincoController.text;
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -51,120 +39,134 @@ class TareaDosLatinoamericaPageState extends State<TareaDosLatinoamericaPage> {
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titleLatinoamericaUno,
-          style: ThemeText.paragraph16WhiteBold,
+          Strings.titleTuLatinoamerica,
+          style: ThemeText.paragraph14WhiteBold,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 30, left: 30, right: 16),
-              child: Text(
-                StringsLationamerica.titleQOnePageDosLatin,
-                style: ThemeText.paragraph14Gray,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Form(
-              key: formKey,
-              child: Stepper(
-                physics: const ClampingScrollPhysics(),
-                currentStep: currentStep,
-                steps: steps(
-                  answerUnoController,
-                  answerDosController,
-                  answerTresController,
-                  answerQuatroController,
-                  answerCincoController,
-                ),
-                onStepContinue: () {
-                  final isLastStep = currentStep == 4;
-
-                  if (currentStep < 5 - 1) {
-                    setState(() => currentStep++);
-                  }
-
-                  if (isLastStep) {
-                    if (formKey.currentState!.validate() &&
-                        _tareaDosController.selectedImages.length == 5) {
-                      final answerList = _tareaDosController.makeAnswersList(
-                        textOne,
-                        textTwo,
-                        textThree,
-                        textFour,
-                        textFive,
-                      );
-                      _tareaDosController
-                          .sendAnswers(currentUser, answerList)
-                          .then(
-                            (value) => Navigator.pushNamed(
-                              context,
-                              '/pUno_latinoamerica_menu',
-                            ),
-                          );
-                    } else {
-                      showToast(
-                        '''Selecciona una imagen de su cámara o de su archivo y escriba su descripción''',
-                        color: ThemeColors.red,
-                        textColor: ThemeColors.white,
-                      );
-                    }
-                  }
-                },
-                onStepTapped: (step) {
-                  setState(() {
-                    currentStep = step;
-                  });
-                },
-                onStepCancel: () {
-                  if (currentStep > 0) {
-                    setState(() => currentStep--);
-                  }
-                  if (currentStep == 0) {
-                    return;
-                  } else {
-                    setState(() => currentStep--);
-                  }
-                },
-                controlsBuilder:
-                    (BuildContext context, ControlsDetails details) {
-                  final isLastStep = currentStep == 4;
-                  return Row(
-                    children: <Widget>[
-                      if (currentStep != 0)
-                        Expanded(
-                          child: ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor:
-                                  MaterialStateProperty.all(ThemeColors.white),
-                            ),
-                            onPressed: details.onStepCancel,
-                            child: const Text(
-                              'Volver',
-                              style: TextStyle(color: ThemeColors.blue),
-                            ),
-                          ),
-                        ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: details.onStepContinue,
-                          child: Text(isLastStep ? 'Enviar' : 'Continuar'),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
+      body: PageView(
+        onPageChanged: (index) {
+          setState(() {
+            pageChanged = index;
+          });
+        },
+        controller: pageController,
+        children: [
+          const IntroTareaUnoLatinoamericaPage(),
+          QuestionLatinoamericaTareaDos(controller: _controller),
+        ],
       ),
+      bottomSheet: loading
+          ? const LinearProgressIndicator(
+              minHeight: 20,
+              color: ThemeColors.blue,
+            )
+          : Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (pageChanged == 0)
+                    const SizedBox(
+                      width: 65,
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        pageController.previousPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: const Text(
+                        'Volver',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  Center(
+                    child: SmoothPageIndicator(
+                      controller: pageController,
+                      count: 2,
+                      effect: const WormEffect(
+                        dotHeight: 10,
+                        dotWidth: 10,
+                        activeDotColor: Colors.blueAccent,
+                        dotColor: Colors.black26,
+                      ),
+                    ),
+                  ),
+                  if (pageChanged == 1)
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                      ),
+                      onPressed: () async {
+                        final currentUser = getCurrentUser(context);
+
+                        if (_controller.isLastStep == 4 && pageChanged == 1) {
+                          if (_controller.formKey.currentState!.validate() &&
+                              _controller.selectedImages.length == 5) {
+                            setState(() {
+                              loading = true;
+                            });
+                            final answerList = _controller.makeAnswersList(
+                              _controller.answerUnoController.text,
+                              _controller.answerDosController.text,
+                              _controller.answerTresController.text,
+                              _controller.answerQuatroController.text,
+                              _controller.answerCincoController.text,
+                            );
+                            await _controller
+                                .sendAnswers(currentUser, answerList)
+                                .then(
+                                  (value) => Navigator.pushNamed(
+                                    context,
+                                    '/pUno_latinoamerica_menu',
+                                  ),
+                                );
+                          } else {
+                            showToast(
+                              color: ThemeColors.red,
+                              'Vuelve y ingrese tujas respuestas correctamente',
+                            );
+                          }
+                        }
+                      },
+                      child: const Text(
+                        'Enviar',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: const Text(
+                        'Próximo',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
     );
   }
 }

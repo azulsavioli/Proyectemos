@@ -4,7 +4,7 @@ import 'package:proyectemos/app/modules/proyecto_uno/divulgacion/tarea_uno/tarea
 import 'package:proyectemos/services/toast_services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../utils/get_user.dart';
 import 'intro_tareas_divulgacao_dos.dart';
@@ -21,7 +21,6 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
   final _controller = DivulgacaoController();
   bool loading = false;
 
-  final formKey = GlobalKey<FormState>();
   final pageController = PageController();
 
   int pageChanged = 0;

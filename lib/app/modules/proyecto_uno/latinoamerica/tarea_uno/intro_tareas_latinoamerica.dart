@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../commons/strings_latinoamerica.dart';
 import '../../../../../../commons/styles.dart';
+import '../../../../../commons/strings/strings_latinoamerica.dart';
 import '../../../widgets/custom_text_form_field.dart';
 
 class IntroTareaLatinoamericaPage extends StatefulWidget {
@@ -51,6 +51,7 @@ class _IntroTareaLatinoamericaPageState
           ),
           CustomTextFormField(
             focusNode: focusNode,
+            textInputAction: TextInputAction.none,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,

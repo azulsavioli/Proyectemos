@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:proyectemos/commons/styles.dart';
 
-import '../../../commons/strings.dart';
+import '../../../commons/strings/strings.dart';
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {

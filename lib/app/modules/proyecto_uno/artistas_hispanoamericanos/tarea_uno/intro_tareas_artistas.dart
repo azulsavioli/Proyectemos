@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_artistas_latinoamericanos.dart';
+import '../../../../../commons/strings/strings_artistas_latinoamericanos.dart';
 import '../../../../../commons/styles.dart';
 import '../../../widgets/custom_carousel.dart';
 import 'tarea_uno_controller.dart';

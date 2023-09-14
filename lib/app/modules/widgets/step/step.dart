@@ -176,6 +176,7 @@ class _CustomStepState extends State<CustomStep> {
             ),
             CustomTextFormField(
               focusNode: focusNode,
+              textInputAction: TextInputAction.none,
               hint: 'Respuesta',
               controller: widget.controller,
               keyboardType: TextInputType.text,

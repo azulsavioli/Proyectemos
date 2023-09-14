@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../providers/record_audio_provider_artistas_impl.dart';
 import '../../../../../services/toast_services.dart';
@@ -22,7 +22,6 @@ class TareaArtistasLatinoamericanosPage extends StatefulWidget {
 
 class _TareaArtistasLatinoamericanosPageState
     extends State<TareaArtistasLatinoamericanosPage> {
-  final audioProvider = RecordAudioArtistasProviderImpl();
   final isAudioFinish = RecordAudioArtistasProviderImpl().isRecording;
   List<String> recordsPathList =
       RecordAudioArtistasProviderImpl.recordingsPaths;

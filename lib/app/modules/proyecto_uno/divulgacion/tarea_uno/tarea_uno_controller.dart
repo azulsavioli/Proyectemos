@@ -9,7 +9,7 @@ import 'package:mailer/mailer.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../../commons/strings/strings.dart';
 import '../../../../../services/toast_services.dart';
 import 'question_one_divulgacao.dart';
 

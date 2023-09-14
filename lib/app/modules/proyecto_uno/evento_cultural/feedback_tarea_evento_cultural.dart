@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings.dart';
+import '../../../../commons/strings/strings.dart';
 import '../../widgets/feedback_page.dart';
 
 class FeedbackTareaEventoCultural extends StatefulWidget {

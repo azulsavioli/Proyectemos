@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../commons/strings.dart';
-import '../../../../commons/strings_evento_cultural.dart';
+import '../../../../commons/strings/strings.dart';
+import '../../../../commons/strings/strings_evento_cultural.dart';
 import '../../../../commons/styles.dart';
 import '../../widgets/drawer_menu.dart';
 

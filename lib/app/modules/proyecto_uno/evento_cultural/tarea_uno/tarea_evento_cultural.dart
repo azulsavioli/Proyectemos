@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_evento_cultural.dart';
+import '../../../../../commons/strings/strings_evento_cultural.dart';
 import '../../../../../commons/styles.dart';
 import '../../../widgets/custom_record_audio_button.dart';
 import 'tarea_uno_controller.dart';

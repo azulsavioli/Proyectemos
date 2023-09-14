@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings_divulgacao.dart';
+import '../../../../../commons/strings/strings_divulgacao.dart';
 import '../../../../../commons/styles.dart';
 
 class IntroTareaDosDivulgacaoPage extends StatefulWidget {
