@@ -63,7 +63,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
               ..resetTaskCompleted('eventoTareaUnoCompleted')
               ..resetTaskCompleted('divulgationCompleted')
-              ..resetTaskCompleted('conocesPodcastCompleted');
+              ..resetTaskCompleted('conocesPodcastCompleted')
+              ..resetTaskCompleted('comoCrearPodcastTareaUnoCompleted')
+              ..resetTaskCompleted('comoCrearPodcastTareaDosCompleted')
+              ..resetTaskCompleted('laEncuestaTareaUnoCompleted')
+              ..resetTaskCompleted('laEncuestaTareaDosCompleted');
           },
         ),
         body: Center(
@@ -133,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Text(
                               'Tareas',
                               style: ThemeText.paragraph14Gray,
-                            )
+                            ),
                           ],
                         ),
                         Column(
@@ -146,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             Text(
                               'Conclusão',
                               style: ThemeText.paragraph14Gray,
-                            )
+                            ),
                           ],
                         ),
                       ],

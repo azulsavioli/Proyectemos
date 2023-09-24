@@ -18,7 +18,9 @@ abstract class Repository<T, U, V> {
   Future<List<String>>? getSchoolsInfo();
   Future<String> getSchoolId(String schoolNameParams);
   Future<List<String>>? getClassRoomInfo(String schoolName);
+  Future<List<String>?> getClassroomStudentNames();
   Future<void> saveClassroomImages(Map<T, T> json);
   Future<void> savePublicVideo(Map<T, T> json);
   Future<void> saveClassroomVideo(Map<T, T> json);
+  Future<void> saveClassroomStudents(Map<T, T> json);
 }

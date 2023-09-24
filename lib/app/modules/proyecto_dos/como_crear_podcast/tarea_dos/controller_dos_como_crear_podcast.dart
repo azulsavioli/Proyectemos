@@ -6,12 +6,13 @@ import 'package:proyectemos/commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 
-class ControllerEscucharPodcast extends ChangeNotifier {
+class ControllerCrearUnPodcast extends ChangeNotifier {
   final _repository = RepositoryImpl();
   final subject =
-      'Atividade - Cómo crear un Podcast - Escuchar Podcast\n Tarea Uno';
-  final doc = 'dos/como_crear_un_podcast/atividade_1/';
-  final task = 'comoCrearPodcastTareaUnoCompleted';
+      'Atividade - Cómo crear un Podcast - Crear un Podcast\n Tarea Dos';
+  final doc = 'dos/como_crear_un_podcast/atividade_2/';
+  final task = 'comoCrearPodcastTareaDosCompleted';
+  final studentGroup = [];
 
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
@@ -49,11 +50,17 @@ class ControllerEscucharPodcast extends ChangeNotifier {
     String textOne,
     String textTwo,
     String textThree,
+    String textFour,
+    String textFive,
+    String textSix,
   ) {
     final respostas = [
       textOne,
       textTwo,
       textThree,
+      textFour,
+      textFive,
+      textSix,
     ];
     return respostas;
   }
@@ -62,21 +69,31 @@ class ControllerEscucharPodcast extends ChangeNotifier {
     List<String> allStudentInfo,
     List<String> respostas,
   ) {
-    final text = '''
-Proyectemos\n
-Aluno: ${allStudentInfo[0]}\n
-Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
-Atividade Cómo crear un podcast 1ª tarefa concluída!
-\n
-Paso 1:
-Resposta: ${respostas[0]}
-\n
-Paso 2: 
-Resposta: ${respostas[1]}
-\n
-Paso 3: 
-Resposta: ${respostas[2]}
+    var studentsNames = '';
 
+    if (studentGroup.length == 2) {
+      studentsNames = '''
+Aluno 1: ${studentGroup[0]}
+Aluno 2: ${studentGroup[1]}''';
+    } else {
+      studentsNames = '''
+Aluno 1: ${studentGroup[0]}
+Aluno 2: ${studentGroup[1]}
+Aluno 3: ${studentGroup[2]}''';
+    }
+
+    final text = '''
+Proyectemos
+Aluno: ${allStudentInfo[0]}
+Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}
+Atividade Cómo crear un podcast 2ª tarefa concluída!\n
+$studentsNames\n
+Resposta: ${respostas[0]}
+Resposta: ${respostas[1]}
+Resposta: ${respostas[2]}
+Resposta: ${respostas[3]}
+Resposta: ${respostas[4]}
+Resposta: ${respostas[5]}
 ''';
     return text;
   }

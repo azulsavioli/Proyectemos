@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos/services/toast_services.dart';
+import 'package:proyectemos/utils/get_user.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings/strings_conoces_podcast.dart';
+import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
-import '../../../../../providers/record_audio_provider_conoces_podcast_impl.dart';
-import '../../../../../utils/get_user.dart';
-import 'question_dos_conoces_podcast.dart';
-import 'question_one_conoces_podcast.dart';
-import 'question_quatro_conoces_podcast.dart';
-import 'question_tres_conoces_podcast.dart';
+import '../../../../../services/toast_services.dart';
+import 'question_dos_que_es_una_encuesta.dart';
+import 'question_one_que_es_una_encuesta.dart';
+import 'question_tres_que_es_una_encuesta.dart';
 import 'tarea_uno_controller.dart';
 
-class PDosConocesPodcast extends StatefulWidget {
-  const PDosConocesPodcast({Key? key}) : super(key: key);
+class TareaUnoQueEsUnaEncuesta extends StatefulWidget {
+  const TareaUnoQueEsUnaEncuesta({super.key});
 
   @override
-  State<PDosConocesPodcast> createState() => _PDosConocesPodcastState();
+  State<TareaUnoQueEsUnaEncuesta> createState() =>
+      _TareaUnoQueEsUnaEncuestaState();
 }
 
-class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
-  final _controller = ConocesPodcastController();
-  final isAudioFinish = RecordAudioConocesPodcastProviderImpl().isRecording;
-  List<String> recordsPathList =
-      RecordAudioConocesPodcastProviderImpl.recordingsPaths;
+class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
+  final _controller = QueEsUnaEncuestaController();
+  final textControllerOne = TextEditingController();
+  late FocusNode focusNode1;
+
   bool loading = false;
 
   final formKey = GlobalKey<FormState>();
@@ -32,7 +31,22 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
   int pageChanged = 0;
 
   @override
+  void initState() {
+    super.initState();
+    focusNode1 = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    focusNode1.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final currentUser = getCurrentUser(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -45,7 +59,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          StringsConocesPodcast.titleConocesPodcastUno,
+          StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),
@@ -57,17 +71,15 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
         },
         controller: pageController,
         children: [
-          QuestionConocesPodcastOne(
+          QuestionQueEsUnaEncuestaOne(
             controller: _controller,
           ),
-          QuestionConocesPodcastDos(
+          QuestionQueEsUnaEncuestaDos(
             controller: _controller,
           ),
-          QuestionConocesPodcastTres(
-            controller: _controller,
-          ),
-          QuestionConocesPodcastQuatro(
-            controller: _controller,
+          QuestionQueEsUnaEncuestaTres(
+            focusNode: focusNode1,
+            textController: textControllerOne,
           ),
         ],
       ),
@@ -107,7 +119,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                   Center(
                     child: SmoothPageIndicator(
                       controller: pageController,
-                      count: 4,
+                      count: 3,
                       effect: const WormEffect(
                         dotHeight: 10,
                         dotWidth: 10,
@@ -116,42 +128,33 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                       ),
                     ),
                   ),
-                  if (pageChanged == 3)
+                  if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        final currentUser = getCurrentUser(context);
-
-                        if (recordsPathList.isEmpty ||
-                            recordsPathList.length < 2 &&
-                                _controller.answer1 == '' ||
-                            _controller.answer2 == '') {
+                        if (textControllerOne.text.isEmpty) {
                           showToast(
-                            '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
                             color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            'Vuelve y ingrese tujas respuestas correctamente',
                           );
                         } else {
-                          if (recordsPathList.isNotEmpty &&
-                                  recordsPathList.length == 2 &&
-                                  _controller.answer1 != '' ||
-                              _controller.answer2 != '') {
-                            setState(() {
-                              loading = true;
-                            });
-                            await _controller
-                                .sendAnswers(currentUser, recordsPathList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
-                                    context,
-                                    '/proyecto_dos',
-                                  ),
-                                );
-                          }
+                          setState(() {
+                            loading = true;
+                          });
+                          await _controller
+                              .sendAnswers(
+                                currentUser,
+                                textControllerOne.text,
+                              )
+                              .then(
+                                (value) => Navigator.pushNamed(
+                                  context,
+                                  '/pDos_laEncuesta_menu',
+                                ),
+                              );
                         }
                       },
                       child: const Text(

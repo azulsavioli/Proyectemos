@@ -54,6 +54,8 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = getCurrentUser(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -84,7 +86,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
             textControllerList: [
               textControllerOne,
               textControllerTwo,
-              textControllerThree
+              textControllerThree,
             ],
           ),
         ],
@@ -141,8 +143,6 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                             MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        final currentUser = getCurrentUser(context);
-
                         if (textControllerOne.text.isEmpty ||
                             textControllerTwo.text.isEmpty ||
                             textControllerThree.text.isEmpty) {
@@ -151,12 +151,18 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                             'Vuelve y ingrese tujas respuestas correctamente',
                           );
                         } else {
+                          final respostas = _controller.makeAnswersList(
+                            textControllerOne.text,
+                            textControllerTwo.text,
+                            textControllerThree.text,
+                          );
                           setState(() {
                             loading = true;
                           });
                           await _controller
                               .sendAnswers(
                                 currentUser,
+                                respostas,
                               )
                               .then(
                                 (value) => Navigator.pushNamed(

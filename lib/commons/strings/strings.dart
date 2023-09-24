@@ -69,16 +69,23 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
 
   //ConocesPodcast
   static const String titleConocesPodcast = '¿Conoces el podcast?';
-  static const String titleComoCrearPodcast = 'Cómo crear un podcast';
-
   static const String titlefeedbackConocesPodcast =
-      'Feedback ¿Conoces el podcast?';
+      'Feedback\n¿Conoces el podcast?';
   static const String conocesPodcastImage =
       'https://c0.wallpaperflare.com/preview/876/415/643/mic-podcast-microphone-broadcasting.jpg';
 
   // Como crear podcast
   static const String titleEscucharPodcast = 'Escuchar podcast';
+  static const String titleFeedbackEscucharPodcast =
+      'Feedback\nEscuchar podcast';
   static const String titleCrearUnPodcast = 'Crear un podcast';
+  static const String titleComoCrearPodcast = 'Cómo crear un podcast';
+  static const String titlefeedbackComoCrearPodcast =
+      'Feedback\nCómo crear un podcast';
+
+  // La encuesta
+  static const String titleLaEncuesta = 'La encuesta';
+  static const String titleFeedbackLaEncuesta = 'Feedback/nLa encuesta';
 
   //Paginas
   static const String titleAgendaPage = 'Agenda';

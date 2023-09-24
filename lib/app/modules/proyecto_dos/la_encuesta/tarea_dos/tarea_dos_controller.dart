@@ -1,17 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:proyectemos/commons/strings/strings.dart';
 
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 
-class ControllerEscucharPodcast extends ChangeNotifier {
+class TareaDosComoCrearUnaEncuestaController extends ChangeNotifier {
   final _repository = RepositoryImpl();
-  final subject =
-      'Atividade - Cómo crear un Podcast - Escuchar Podcast\n Tarea Uno';
-  final doc = 'dos/como_crear_un_podcast/atividade_1/';
-  final task = 'comoCrearPodcastTareaUnoCompleted';
+  final subject = 'Atividade - Como crear una encuesta';
+  final doc = 'dos/la-encuesta/atividade_2/';
+  final task = 'laEncuestaTareaDosCompleted';
 
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
@@ -66,18 +66,12 @@ class ControllerEscucharPodcast extends ChangeNotifier {
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
-Atividade Cómo crear un podcast 1ª tarefa concluída!
-\n
-Paso 1:
-Resposta: ${respostas[0]}
-\n
-Paso 2: 
-Resposta: ${respostas[1]}
-\n
-Paso 3: 
-Resposta: ${respostas[2]}
+Respostas:\n
+${StringsLaEncuesta.questionOneLaEncuestaTareaDos}: ${respostas[0]}\n
+${StringsLaEncuesta.questionTwoLaEncuestaTareaDos}: ${respostas[1]}\n 
+${StringsLaEncuesta.questionThreeLaEncuestaTareaDos}: ${respostas[2]}\n 
 
-''';
+Atividade Que es una encuesta concluída!''';
     return text;
   }
 }

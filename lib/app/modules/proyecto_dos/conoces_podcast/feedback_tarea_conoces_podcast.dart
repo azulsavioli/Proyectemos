@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import '../../../../commons/strings/strings.dart';
 import '../../widgets/feedback_page.dart';
 
-class FeedbackTareaDivulgacion extends StatefulWidget {
-  const FeedbackTareaDivulgacion({super.key});
+class FeedbackTareaConocesPodcast extends StatefulWidget {
+  const FeedbackTareaConocesPodcast({super.key});
 
   @override
-  State<FeedbackTareaDivulgacion> createState() =>
-      _FeedbackTareaStateDivulgacion();
+  State<FeedbackTareaConocesPodcast> createState() =>
+      _FeedbackTareaStateConocesPodcast();
 }
 
-class _FeedbackTareaStateDivulgacion extends State<FeedbackTareaDivulgacion> {
+class _FeedbackTareaStateConocesPodcast
+    extends State<FeedbackTareaConocesPodcast> {
   final String firebaseDoc = 'dos/feedback/conoces_podcast/tarea/feedback';
   final String pageTitle = Strings.titleConocesPodcast;
   final String tareaTitle = Strings.titlefeedbackConocesPodcast;

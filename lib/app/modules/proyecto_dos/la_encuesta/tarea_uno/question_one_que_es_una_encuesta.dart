@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/modules/proyecto_dos/conoces_podcast/tarea_uno/tarea_uno_controller.dart';
 
-import '../../../../../commons/strings/strings_conoces_podcast.dart';
+import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
 import '../../../widgets/custom_radio_button.dart';
+import 'tarea_uno_controller.dart';
 
-class QuestionConocesPodcastOne extends StatefulWidget {
-  final ConocesPodcastController controller;
+class QuestionQueEsUnaEncuestaOne extends StatefulWidget {
+  final QueEsUnaEncuestaController controller;
 
-  const QuestionConocesPodcastOne({
+  const QuestionQueEsUnaEncuestaOne({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   @override
-  State<QuestionConocesPodcastOne> createState() =>
-      _QuestionConocesPodcastOneState();
+  State<QuestionQueEsUnaEncuestaOne> createState() =>
+      _QuestionQueEsUnaEncuestaOneState();
 }
 
-class _QuestionConocesPodcastOneState extends State<QuestionConocesPodcastOne>
+class _QuestionQueEsUnaEncuestaOneState
+    extends State<QuestionQueEsUnaEncuestaOne>
     with AutomaticKeepAliveClientMixin {
-  ConocesPodcastController get _controller => widget.controller;
+  QueEsUnaEncuestaController get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _QuestionConocesPodcastOneState extends State<QuestionConocesPodcastOne>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            StringsConocesPodcast.questionOneConocesPodcast,
+            StringsLaEncuesta.questionOneLaEncuestaTareaUno,
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(

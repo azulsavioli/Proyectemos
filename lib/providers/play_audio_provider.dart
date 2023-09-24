@@ -23,6 +23,50 @@ class PlayAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  playAssetAudio(String assetPath, {bool update = true}) async {
+    try {
+      _justAudioPlayer.positionStream.listen((event) {
+        _currAudioPlaying = event.inMicroseconds.ceilToDouble();
+        if (update) notifyListeners();
+      });
+
+      _justAudioPlayer.playerStateStream.listen((event) {
+        if (event.processingState == ProcessingState.completed) {
+          _justAudioPlayer.stop();
+          _reset();
+        }
+      });
+
+      if (_audioFilePath != assetPath) {
+        setAudioFilePath(assetPath);
+
+        await _justAudioPlayer.setAsset(assetPath); // Modificado para setAsset
+        updateSongPlayingStatus(true);
+        await _justAudioPlayer.play();
+      }
+
+      if (_justAudioPlayer.processingState == ProcessingState.idle) {
+        await _justAudioPlayer.setAsset(assetPath); // Modificado para setAsset
+        updateSongPlayingStatus(true);
+
+        await _justAudioPlayer.play();
+      } else if (_justAudioPlayer.playing) {
+        updateSongPlayingStatus(false);
+
+        await _justAudioPlayer.pause();
+      } else if (_justAudioPlayer.processingState == ProcessingState.ready) {
+        updateSongPlayingStatus(true);
+
+        await _justAudioPlayer.play();
+      } else if (_justAudioPlayer.processingState ==
+          ProcessingState.completed) {
+        _reset();
+      }
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   playAudio(File incomingAudioFile, {bool update = true}) async {
     try {
       _justAudioPlayer.positionStream.listen((event) {

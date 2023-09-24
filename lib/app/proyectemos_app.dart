@@ -12,10 +12,18 @@ import 'package:proyectemos/commons/styles.dart';
 
 import 'modules/home/proyectos_page.dart';
 import 'modules/proyecto_dos/como_crear_podcast/como_crear_podcast_menu.dart';
+import 'modules/proyecto_dos/como_crear_podcast/tarea_dos/feedback_tarea_dos_conoces_podcast.dart';
 import 'modules/proyecto_dos/como_crear_podcast/tarea_dos/tarea_dos_como_crear_podcast.dart';
+import 'modules/proyecto_dos/como_crear_podcast/tarea_uno/feedback_tarea_uno_conoces_podcast.dart';
 import 'modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
+import 'modules/proyecto_dos/conoces_podcast/feedback_tarea_conoces_podcast.dart';
 import 'modules/proyecto_dos/conoces_podcast/tarea_uno/record_and_play_audio_conoces_podcast.dart';
 import 'modules/proyecto_dos/conoces_podcast/tarea_uno/tarea_uno_page.dart';
+import 'modules/proyecto_dos/la_encuesta/la_encuesta_menu.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_dos/feedback_tarea_como_crear_una_encuesta.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_dos/tarea_dos_page.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_uno/feedback_tarea_que_es_escuesta.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
@@ -118,19 +126,32 @@ class Proyectemos extends StatelessWidget {
 
                 '/proyecto_dos': (context) => const ProyectoDosPage(),
                 '/pDos_conocesPodcast': (context) => const PDosConocesPodcast(),
+                '/pDos_conocesPodcast_feedback': (context) =>
+                    const FeedbackTareaConocesPodcast(),
                 '/record_and_play_conoces_podcast': (context) =>
                     const RecordAndPlayConocesPodcastScreen(),
                 '/pDos_comoCrearPodcast_menu': (context) =>
                     const PDosComoCrearPodcastMenu(),
                 '/pDos_escuchar_podcast_tarea_uno': (context) =>
                     const TareaUnoEscucharPodcast(),
-//  '/pDos_escuchar_podcast_feedback_tarea_uno'
+                '/pDos_escuchar_podcast_feedback_tarea_uno': (context) =>
+                    const FeedbackTareaUnoComoCrearPodcast(),
                 '/pDos_crear_un_podcast_tarea_dos': (context) =>
                     const TareaDosCrearUnPodcast(),
-//  '/pDos_crear_un_podcast_feedback_tarea_dos'
+                '/pDos_crear_un_podcast_feedback_tarea_dos': (context) =>
+                    const FeedbackTareaDosComoCrearPodcast(),
 
-                // '/pDos_laEncuesta_menu': (context) =>
-                //     const PDosLaEncuestaMenu(),
+                '/pDos_laEncuesta_menu': (context) =>
+                    const PDosLaEncuestaMenu(),
+                '/pDos_que_es_una_encuesta_tarea_uno': (context) =>
+                    const TareaUnoQueEsUnaEncuesta(),
+                '/pDos_que_es_una_encuesta_feedback_tarea_uno': (context) =>
+                    const FeedbackTareaUnoLaEncuesta(),
+                '/pDos_crear_una_encuesta_tarea_dos': (context) =>
+                    const TareaDosComoCrearUnaEncuestaPage(),
+                '/pDos_crear_una_encuesta_feedback_tarea_dos': (context) =>
+                    const FeedbackTareaDosLaEncuesta(),
+
                 // '/pDos_creacionEncuesta': (context) => const PDosCreacionEncuesta()
 
                 // '/pDos_grabacionPodcast_menu': (context) =>

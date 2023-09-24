@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/modules/proyecto_dos/conoces_podcast/tarea_uno/tarea_uno_controller.dart';
 
-import '../../../../../commons/strings/strings_conoces_podcast.dart';
+import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
 import '../../../widgets/custom_radio_button.dart';
+import 'tarea_uno_controller.dart';
 
-class QuestionConocesPodcastOne extends StatefulWidget {
-  final ConocesPodcastController controller;
+class QuestionQueEsUnaEncuestaDos extends StatefulWidget {
+  final QueEsUnaEncuestaController controller;
 
-  const QuestionConocesPodcastOne({
+  const QuestionQueEsUnaEncuestaDos({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   @override
-  State<QuestionConocesPodcastOne> createState() =>
-      _QuestionConocesPodcastOneState();
+  State<QuestionQueEsUnaEncuestaDos> createState() =>
+      _QuestionQueEsUnaEncuestaDosState();
 }
 
-class _QuestionConocesPodcastOneState extends State<QuestionConocesPodcastOne>
+class _QuestionQueEsUnaEncuestaDosState
+    extends State<QuestionQueEsUnaEncuestaDos>
     with AutomaticKeepAliveClientMixin {
-  ConocesPodcastController get _controller => widget.controller;
+  QueEsUnaEncuestaController get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class _QuestionConocesPodcastOneState extends State<QuestionConocesPodcastOne>
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            StringsConocesPodcast.questionOneConocesPodcast,
+            StringsLaEncuesta.questionTwoLaEncuestaTareaUno,
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(
@@ -40,7 +41,7 @@ class _QuestionConocesPodcastOneState extends State<QuestionConocesPodcastOne>
           ),
           CustomRadioButton(
             onSelected: (value) {
-              _controller.answer1 = value;
+              _controller.answer2 = value;
             },
           ),
           const SizedBox(

@@ -25,7 +25,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     for (var i = 0; i < answersList.length; i++) {
       jsonList.add({'resposta_$i': answersList[i]});
     }
-    return {for (var e in jsonList) e.keys.first: e.values.first};
+    return {for (final e in jsonList) e.keys.first: e.values.first};
   }
 
   @override
@@ -60,6 +60,16 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     final convertedJson = _convertMapToStringDynamic(json);
     try {
       await _repository.saveImagesTurma(convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
+  @override
+  Future<void> saveClassroomStudents(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.saveClassroomStudents(convertedJson);
     } on FirebaseException catch (e) {
       e.toString();
     }
@@ -129,7 +139,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   @override
   Future<List<String>> getSchoolsInfo() async {
     final schoolsRef = FirebaseFirestore.instance.collection('escolas');
-    List<String> schools = [];
+    final schools = <String>[];
 
     try {
       await schoolsRef.get().then((QuerySnapshot querySnapshot) {
@@ -149,7 +159,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   @override
   Future<String> getSchoolId(String schoolNameParams) async {
     final schoolsRef = FirebaseFirestore.instance.collection('escolas');
-    String schoolId = '';
+    var schoolId = '';
 
     try {
       await schoolsRef.get().then((QuerySnapshot querySnapshot) {
@@ -157,7 +167,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
           final schoolName = doc.data();
           if (schoolName == null) return;
           if ((schoolName as Map)['schoolName'] == schoolNameParams) {
-            schoolId = doc.id.toString();
+            schoolId = doc.id;
           }
         }
       });
@@ -189,5 +199,17 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
     }
 
     return classRoom;
+  }
+
+  @override
+  Future<List<String>?> getClassroomStudentNames() async {
+    List<String>? studentsList = [];
+
+    try {
+      studentsList = await _repository.getStudents();
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+    return studentsList;
   }
 }
