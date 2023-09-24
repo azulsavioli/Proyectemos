@@ -54,7 +54,7 @@ class _PageTwoState extends State<PageTwo> {
               style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
-          )
+          ),
         ],
       ),
     );

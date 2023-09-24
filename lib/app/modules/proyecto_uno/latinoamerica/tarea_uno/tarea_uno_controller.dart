@@ -12,7 +12,6 @@ class TareaUnoController extends ChangeNotifier {
   final subject = 'Atividade - Latinoamerica\n Tarea Uno';
   final doc = 'uno/latinoamerica/atividade_1/';
   final task = 'latinoamericaTareaUnoCompleted';
-  List<String> studentInformations = [];
 
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,

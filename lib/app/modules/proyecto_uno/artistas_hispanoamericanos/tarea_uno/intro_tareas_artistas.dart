@@ -41,14 +41,14 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
     'https://citaliarestauro.com/wp-content/uploads/2021/07/Imagem1.jpg',
     'https://cdn.culturagenial.com/imagens/coluna-partida-cke.gif',
     'https://cdn.culturagenial.com/imagens/o-veado-ferido-cke.jpg',
-    'https://fridakahlo.site/wp-content/uploads/2022/02/1945-completa-hope2.jpg'
+    'https://fridakahlo.site/wp-content/uploads/2022/02/1945-completa-hope2.jpg',
   ];
 
   final imgNameList = [
     'Autorretrato con collar de espinas, 1940',
     'La columna rota, 1944',
     'El venado herido, 1946',
-    'Desesperado, 1945'
+    'Desesperado, 1945',
   ];
 
   @override

@@ -47,7 +47,7 @@ class _QuestionArtistashispanoamericanosTwoState
           ),
           const SizedBox(
             height: 20,
-          )
+          ),
         ],
       ),
     );

@@ -54,7 +54,7 @@ class _PageThreeState extends State<PageThree> {
               style: ThemeText.paragraph14WhiteBold,
               textAlign: TextAlign.start,
             ),
-          )
+          ),
         ],
       ),
     );

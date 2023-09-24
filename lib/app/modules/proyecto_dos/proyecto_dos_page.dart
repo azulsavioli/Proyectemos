@@ -77,10 +77,14 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: '¿Conoces un podcast?',
+                  text: conocesPodcastCompleted
+                      ? Strings.titlefeedbackConocesPodcast
+                      : Strings.titleConocesPodcast,
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pDos_conocesPodcast',
+                  namedRoute: conocesPodcastCompleted
+                      ? '/pDos_conocesPodcast_feedback'
+                      : '/pDos_conocesPodcast',
                   backgroundColor: conocesPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.red,
@@ -115,7 +119,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   text: 'La encuesta',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pUno_latinoamerica_menu',
+                  namedRoute: '/pDos_laEncuesta_menu',
                   backgroundColor:
                       laEncuestaCompleted ? ThemeColors.green : ThemeColors.red,
                   icon: laEncuestaCompleted ? Icons.check : Icons.person,

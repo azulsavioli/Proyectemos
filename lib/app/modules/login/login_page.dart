@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                                     color: Colors.white,
                                   ),
                                 ),
-                              )
+                              ),
                             ]
                           : [
                               const FaIcon(
@@ -127,7 +127,7 @@ class _LoginPageState extends State<LoginPage> {
                                     fontSize: ScreenUtil().setSp(14),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                     ),
                   ),

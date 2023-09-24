@@ -107,7 +107,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
                   ),
                   _saveButton(),
                 ],
-              )
+              ),
           ],
         ),
       ),

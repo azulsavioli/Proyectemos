@@ -57,7 +57,7 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
           ),
           const SizedBox(
             height: 20,
-          )
+          ),
         ],
       ),
     );

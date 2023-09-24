@@ -81,7 +81,7 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
       'Porto Rico',
       'Espanha',
       'Uruguai',
-      'Venezuela'
+      'Venezuela',
     ];
 
     while (randonCountrys.length < 5) {

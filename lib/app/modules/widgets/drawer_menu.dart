@@ -56,7 +56,7 @@ class DrawerMenuWidget extends StatelessWidget {
               }
               Navigator.of(context).pushNamed('/login');
             },
-          )
+          ),
         ],
       ),
     );

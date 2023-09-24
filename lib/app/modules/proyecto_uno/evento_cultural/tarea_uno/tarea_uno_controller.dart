@@ -72,7 +72,7 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
   Map<String, List> setJson(filePath, audioPath) {
     final json = {
       'resposta_1_file': [filePath[0]],
-      'resposta_2_audio': [audioPath[0]]
+      'resposta_2_audio': [audioPath[0]],
     };
     return json;
   }

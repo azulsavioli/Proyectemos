@@ -123,9 +123,9 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                     '/pUno_evento_cultural_feedback',
                   );
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(

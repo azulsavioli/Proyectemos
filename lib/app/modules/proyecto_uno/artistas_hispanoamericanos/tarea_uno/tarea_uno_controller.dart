@@ -133,7 +133,7 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
         thirdAudio,
         contentType: 'audio/mp3',
         fileName: 'Terceiro Audio',
-      )
+      ),
     ];
     return attachment;
   }

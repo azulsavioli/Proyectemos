@@ -56,7 +56,7 @@ class CardProyecto extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

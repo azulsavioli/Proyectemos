@@ -67,7 +67,7 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
     final allStudentInfo = [
       studentInformation[0],
       studentInformation[1],
-      studentInformation[2]
+      studentInformation[2],
     ];
     final subject = 'Mediação feedback tarea $tareaTitle';
     final text = '''
@@ -147,9 +147,9 @@ ${_emailController.text}''';
                   sendEmail(currentUser!);
                   Navigator.pop(context);
                 },
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
