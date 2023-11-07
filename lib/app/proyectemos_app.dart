@@ -5,6 +5,7 @@ import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
+import 'package:proyectemos/app/modules/proyecto_dos/creacion_encuesta/creacion_encuesta_feedback.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 import 'package:proyectemos/commons/auth_check.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
@@ -16,13 +17,22 @@ import 'modules/proyecto_dos/como_crear_podcast/tarea_dos/feedback_tarea_dos_con
 import 'modules/proyecto_dos/como_crear_podcast/tarea_dos/tarea_dos_como_crear_podcast.dart';
 import 'modules/proyecto_dos/como_crear_podcast/tarea_uno/feedback_tarea_uno_conoces_podcast.dart';
 import 'modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
-import 'modules/proyecto_dos/conoces_podcast/feedback_tarea_conoces_podcast.dart';
-import 'modules/proyecto_dos/conoces_podcast/tarea_uno/record_and_play_audio_conoces_podcast.dart';
-import 'modules/proyecto_dos/conoces_podcast/tarea_uno/tarea_uno_page.dart';
+import 'modules/proyecto_dos/el_podcast/feedback_tarea_conoces_podcast.dart';
+import 'modules/proyecto_dos/el_podcast/tarea_uno/record_and_play_audio_conoces_podcast.dart';
+import 'modules/proyecto_dos/el_podcast/tarea_uno/tarea_uno_page.dart';
+import 'modules/proyecto_dos/creacion_encuesta/tarea_uno/tarea_uno_page.dart';
+import 'modules/proyecto_dos/grabacion_podcast/feed_grabacion_podcast.dart';
+import 'modules/proyecto_dos/grabacion_podcast/grabacion_podcast_menu.dart';
+import 'modules/proyecto_dos/grabacion_podcast/tarea_dos/feedback_tarea_dos_grabacion_podcast.dart';
+import 'modules/proyecto_dos/grabacion_podcast/tarea_dos/tarea_dos_page.dart';
+import 'modules/proyecto_dos/grabacion_podcast/tarea_uno/feedback_tarea_uno_grabacion_podcast.dart';
+import 'modules/proyecto_dos/grabacion_podcast/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_dos/la_encuesta/la_encuesta_menu.dart';
 import 'modules/proyecto_dos/la_encuesta/tarea_dos/feedback_tarea_como_crear_una_encuesta.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_dos/record_and_play_audio_la_encuesta.dart';
 import 'modules/proyecto_dos/la_encuesta/tarea_dos/tarea_dos_page.dart';
 import 'modules/proyecto_dos/la_encuesta/tarea_uno/feedback_tarea_que_es_escuesta.dart';
+import 'modules/proyecto_dos/la_encuesta/tarea_uno/record_and_play_audio_la_encuesta.dart';
 import 'modules/proyecto_dos/la_encuesta/tarea_uno/tarea_uno_page.dart';
 import 'modules/proyecto_dos/proyecto_dos_page.dart';
 import 'modules/proyecto_tres/proyecto_tres_page.dart';
@@ -140,22 +150,36 @@ class Proyectemos extends StatelessWidget {
                     const TareaDosCrearUnPodcast(),
                 '/pDos_crear_un_podcast_feedback_tarea_dos': (context) =>
                     const FeedbackTareaDosComoCrearPodcast(),
-
                 '/pDos_laEncuesta_menu': (context) =>
                     const PDosLaEncuestaMenu(),
                 '/pDos_que_es_una_encuesta_tarea_uno': (context) =>
                     const TareaUnoQueEsUnaEncuesta(),
                 '/pDos_que_es_una_encuesta_feedback_tarea_uno': (context) =>
                     const FeedbackTareaUnoLaEncuesta(),
+                '/record_and_play_la_encuesta_tarea_uno': (context) =>
+                    const RecordAndPlayLaEncuestaTareaUnoScreen(),
                 '/pDos_crear_una_encuesta_tarea_dos': (context) =>
                     const TareaDosComoCrearUnaEncuestaPage(),
                 '/pDos_crear_una_encuesta_feedback_tarea_dos': (context) =>
                     const FeedbackTareaDosLaEncuesta(),
-
-                // '/pDos_creacionEncuesta': (context) => const PDosCreacionEncuesta()
-
-                // '/pDos_grabacionPodcast_menu': (context) =>
-                //     const PDosGrabacionPodcastMenu(),
+                '/record_and_play_la_encuesta_tarea_dos': (context) =>
+                    const RecordAndPlayLaEncuestaTareaDosScreen(),
+                '/pDos_creacionEncuesta': (context) =>
+                    const PDosCreacionEncuesta(),
+                '/pDos_creacionEncuesta_feedback': (context) =>
+                    const FeedbackTareaCreacionEncuesta(),
+                '/pDos_grabacionPodcast_menu': (context) =>
+                    const PDosGrabacionPodcastMenu(),
+                '/pDos_grabacion_podcast_tarea_uno': (context) =>
+                    const TareaUnoGrabacionPodcast(),
+                '/pDos_grabacion_podcast_feedback_tarea_uno': (context) =>
+                    const FeedbackTareaUnoGrabacionPodcast(),
+                '/pDos_grabacion_podcast_tarea_dos': (context) =>
+                    const TareaDosGrabacionPodcastPage(),
+                '/pDos_grabacion_podcast_feedback_tarea_dos': (context) =>
+                    const FeedbackTareaDosGrabacionPodcast(),
+                '/pDos_grabacion_podcast_feed': (context) =>
+                    const FeedGrabacionPodcastPage(),
 
 //projeto tres
                 '/proyecto_tres': (context) => const ProyectoTresPage(),

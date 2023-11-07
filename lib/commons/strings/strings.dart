@@ -25,6 +25,7 @@ abstract class Strings {
 
   //Feedbacks
   static const String tareaConcluida = 'Tarea concluída com sucesso!';
+  static const String emailEnviado = 'Email enviado com sucesso!';
 
   //Login
   static const String bemvindos = '!Bienvenidos a Proyectemos!';
@@ -68,9 +69,8 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
 // Proyectos DOS Page
 
   //ConocesPodcast
-  static const String titleConocesPodcast = '¿Conoces el podcast?';
-  static const String titlefeedbackConocesPodcast =
-      'Feedback\n¿Conoces el podcast?';
+  static const String titleConocesPodcast = 'El podcast';
+  static const String titlefeedbackConocesPodcast = 'Feedback El podcast';
   static const String conocesPodcastImage =
       'https://c0.wallpaperflare.com/preview/876/415/643/mic-podcast-microphone-broadcasting.jpg';
 
@@ -86,6 +86,15 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
   // La encuesta
   static const String titleLaEncuesta = 'La encuesta';
   static const String titleFeedbackLaEncuesta = 'Feedback/nLa encuesta';
+
+  // Creacion encuesta
+  static const String titleCreacionEncuesta = 'Creación de la encuesta';
+  static const String titleFeedbackCreacionEncuesta =
+      'Feedback/nCreación de la encuesta';
+
+  //Grabacion Podcast
+  static const String titleGrabacionPodcast = 'Grabación del podcast';
+  static const String titleGrabacionPodcastFeed = 'Feed Grabación del podcast';
 
   //Paginas
   static const String titleAgendaPage = 'Agenda';

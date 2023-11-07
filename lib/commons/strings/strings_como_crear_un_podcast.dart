@@ -1,7 +1,7 @@
 abstract class StringsComoCrearUnPodcast {
   //Tarea uno
   static const String questionTareaUnoEscucharPodcast =
-      '''Escucha el podcast y escribe los X pasos necesarios para crear un podcast.''';
+      '''Escucha el podcast y escribe los 6 pasos necesarios para crearlo.''';
 
   //Tarea Dos
   static const String introTareaDosCrearUnPodcast =
@@ -13,7 +13,10 @@ abstract class StringsComoCrearUnPodcast {
   static const String questionTwoTareaDosCrearUnPodcast =
       '¿Cuál será el nombre del podcast?';
   static const String questionThreeTareaDosCrearUnPodcast =
-      '''¿Cuál será la identidad visual del podcast?\nPuede ser una logo, un dibujo o cualquier cosa visual que identifique el podcast.''';
+      '¿Cuál será la identidad visual del podcast?';
+
+  static const String questionThreeTareaDosCrearUnPodcastOption =
+      'Puede ser una logo, un dibujo o cualquier cosa visual que identifique el podcast.';
   static const String questionFourTareaDosCrearUnPodcast =
       '¿Cuál será la estructura del podcast?';
   static const String questionFiveTareaDosCrearUnPodcast =

@@ -386,6 +386,70 @@ class ProyectemosRepository extends ChangeNotifier {
     return studentsImages;
   }
 
+  Future savePodcastTurma(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('podcast_turma')
+        .doc(authService.userAuth?.uid);
+
+    try {
+      await studentTaskRef.set(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
+    notifyListeners();
+  }
+
+  Stream<List<Map<String, dynamic>>> getPodcastTurmaStream() {
+    return Stream.fromFuture(_getPodcastTurma());
+  }
+
+  Future<List<Map<String, dynamic>>> _getPodcastTurma() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentsImages = <Map<String, dynamic>>[];
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return studentsImages;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('podcast_turma');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data()! as Map<String, dynamic>);
+        }
+      });
+    } catch (error) {
+      print(error);
+    }
+    return studentsImages;
+  }
+
   Future saveVideosPublic(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;

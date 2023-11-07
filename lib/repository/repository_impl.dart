@@ -66,6 +66,16 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   }
 
   @override
+  Future<void> saveClassroomPodcast(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.savePodcastTurma(convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
+  @override
   Future<void> saveClassroomStudents(Map<T, T> json) async {
     final convertedJson = _convertMapToStringDynamic(json);
     try {

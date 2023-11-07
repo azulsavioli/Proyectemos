@@ -13,6 +13,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app/proyectemos_app.dart';
 import 'commons/firebase_options.dart';
+import 'providers/record_audio_provider_la_encuesta_tarea_dos.dart';
+import 'providers/record_audio_provider_la_encuesta_tarea_uno.dart';
 import 'services/auth_services.dart';
 
 bool? isOnboardingCompleted;
@@ -56,6 +58,12 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => RecordAudioConocesPodcastProviderImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioLaEncuestaTareaUnoProviderImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioLaEncuestaTareaDosProviderImpl(),
           ),
           ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
         ],

@@ -23,4 +23,5 @@ abstract class Repository<T, U, V> {
   Future<void> savePublicVideo(Map<T, T> json);
   Future<void> saveClassroomVideo(Map<T, T> json);
   Future<void> saveClassroomStudents(Map<T, T> json);
+  Future<void> saveClassroomPodcast(Map<T, T> json);
 }
