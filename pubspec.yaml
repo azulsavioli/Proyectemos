@@ -48,6 +48,9 @@ dependencies:
   video_player: ^2.7.0
   chewie: ^1.7.0
   
+  #url
+  url_launcher: ^6.1.14
+
   #ImagePicker
   image_picker: ^1.0.0
   image: ^4.0.17
@@ -95,7 +98,6 @@ dependencies:
   firebase_storage: ^11.2.4
   # firebase_app_check: ^0.0.9+1
   # mockito: ^5.4.0
-  # firebase_app_check: ^0.0.9+1
 
 flutter_native_splash:
   image: assets/images/splash_logo.png
@@ -129,7 +131,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/audios/teste.mp3
+    - assets/audios/proyecto2.mp3
 
   fonts:
     - family: Poppins
