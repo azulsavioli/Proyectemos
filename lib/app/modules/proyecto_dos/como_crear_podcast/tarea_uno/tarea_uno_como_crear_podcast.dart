@@ -27,9 +27,16 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   final textControllerOne = TextEditingController();
   final textControllerTwo = TextEditingController();
   final textControllerThree = TextEditingController();
+  final textControllerFour = TextEditingController();
+  final textControllerFive = TextEditingController();
+  final textControllerSix = TextEditingController();
+
   late FocusNode focusNode1;
   late FocusNode focusNode2;
   late FocusNode focusNode3;
+  late FocusNode focusNode4;
+  late FocusNode focusNode5;
+  late FocusNode focusNode6;
   bool loading = false;
 
   final pageController = PageController();
@@ -42,6 +49,9 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
+    focusNode4 = FocusNode();
+    focusNode5 = FocusNode();
+    focusNode6 = FocusNode();
   }
 
   @override
@@ -49,6 +59,9 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
     focusNode1.dispose();
     focusNode2.dispose();
     focusNode3.dispose();
+    focusNode4.dispose();
+    focusNode5.dispose();
+    focusNode6.dispose();
     super.dispose();
   }
 
@@ -82,11 +95,21 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
         children: [
           const IntroTareaUnoComoCrearPodcastPage(),
           QuestionComoCrearPodcast(
-            focusNodeList: [focusNode1, focusNode2, focusNode3],
+            focusNodeList: [
+              focusNode1,
+              focusNode2,
+              focusNode3,
+              focusNode4,
+              focusNode5,
+              focusNode6,
+            ],
             textControllerList: [
               textControllerOne,
               textControllerTwo,
               textControllerThree,
+              textControllerFour,
+              textControllerFive,
+              textControllerSix,
             ],
           ),
         ],
@@ -145,7 +168,10 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                       onPressed: () async {
                         if (textControllerOne.text.isEmpty ||
                             textControllerTwo.text.isEmpty ||
-                            textControllerThree.text.isEmpty) {
+                            textControllerThree.text.isEmpty ||
+                            textControllerFour.text.isEmpty ||
+                            textControllerFive.text.isEmpty ||
+                            textControllerSix.text.isEmpty) {
                           showToast(
                             color: ThemeColors.red,
                             'Vuelve y ingrese tujas respuestas correctamente',
@@ -155,6 +181,9 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                             textControllerOne.text,
                             textControllerTwo.text,
                             textControllerThree.text,
+                            textControllerFour.text,
+                            textControllerFive.text,
+                            textControllerSix.text,
                           );
                           setState(() {
                             loading = true;

@@ -70,7 +70,7 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                   iconSize: 30,
                   text: tareaUno
                       ? 'Feedback Escuchar Podcast'
-                      : 'Escuchar Podcast',
+                      : 'Escuchar el podcast',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaUno
@@ -88,8 +88,8 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                 CardButton(
                   iconSize: 30,
                   text: tareaDos
-                      ? 'Feedback\nCrear un poscast'
-                      : 'Crear un poscast',
+                      ? 'Feedback\nCrear un Podcast'
+                      : 'Crear un Podcast',
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: tareaDos

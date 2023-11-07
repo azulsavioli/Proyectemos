@@ -49,11 +49,17 @@ class ControllerEscucharPodcast extends ChangeNotifier {
     String textOne,
     String textTwo,
     String textThree,
+    String textFour,
+    String textFive,
+    String textSix,
   ) {
     final respostas = [
       textOne,
       textTwo,
       textThree,
+      textFour,
+      textFive,
+      textSix,
     ];
     return respostas;
   }
@@ -76,6 +82,15 @@ Resposta: ${respostas[1]}
 \n
 Paso 3: 
 Resposta: ${respostas[2]}
+\n
+Paso 4: 
+Resposta: ${respostas[3]}
+\n
+Paso 5: 
+Resposta: ${respostas[4]}
+\n
+Paso 6: 
+Resposta: ${respostas[5]}
 
 ''';
     return text;

@@ -29,39 +29,6 @@ class _IntroTareaDosComoCrearPodcastPageState
 
   Map<String, bool> nameSelection = {};
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final currentUser = getCurrentUser(context);
-
-  //   studentsNamesFuture = _repository.getStudents();
-  //   studentsNamesFuture?.then((names) {
-  //     if (names != null) {
-  //       for (final name in names) {
-  //         if (!nameSelection.containsKey(name)) {
-  //           nameSelection[name] = (name == currentUser?.displayName) || false;
-  //         }
-  //       }
-  //       setState(() {});
-  //     }
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final currentUser = getCurrentUser(context);
-  //   studentsNamesFuture = _repository.getStudents();
-  //   studentsNamesFuture?.then((names) {
-  //     if (names != null) {
-  //       for (final name in names) {
-  //         nameSelection[name] = (name == currentUser?.displayName);
-  //       }
-  //       setState(() {});
-  //     }
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();

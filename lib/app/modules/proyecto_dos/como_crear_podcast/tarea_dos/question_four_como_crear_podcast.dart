@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_como_crear_un_podcast.dart';
 
 import '../../../../../commons/styles.dart';
-import '../../../widgets/custom_text_form_field.dart';
+import '../../../widgets/custom_radio_button.dart';
+import 'controller_dos_como_crear_podcast.dart';
 
 class QuestionFourComoCrearPodcast extends StatefulWidget {
-  final TextEditingController controller;
-  final FocusNode focusNode;
+  final ControllerCrearUnPodcast controller;
 
   const QuestionFourComoCrearPodcast({
     super.key,
     required this.controller,
-    required this.focusNode,
   });
 
   @override
@@ -22,8 +21,7 @@ class QuestionFourComoCrearPodcast extends StatefulWidget {
 class _QuestionFourComoCrearPodcastState
     extends State<QuestionFourComoCrearPodcast>
     with AutomaticKeepAliveClientMixin {
-  TextEditingController get controller => widget.controller;
-  FocusNode get focusNode => widget.focusNode;
+  ControllerCrearUnPodcast get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +45,15 @@ class _QuestionFourComoCrearPodcastState
               const SizedBox(
                 height: 20,
               ),
-              CustomTextFormField(
-                focusNode: focusNode,
-                textInputAction: TextInputAction.next,
-                hint: 'Respuesta',
-                controller: controller,
-                keyboardType: TextInputType.text,
-                validatorVazio: 'Ingrese tuja respuesta correctamente',
-                validatorMenorqueNumero:
-                    'Su respuesta debe tener al menos 3 caracteres',
+              const SizedBox(
+                height: 15,
+              ),
+              CustomRadioButton(
+                firstChoise: 'entrevista',
+                secondChoise: 'charla\nentre los miembros',
+                onSelected: (value) {
+                  _controller.estructuraPodcast = value;
+                },
               ),
               const SizedBox(
                 height: 20,

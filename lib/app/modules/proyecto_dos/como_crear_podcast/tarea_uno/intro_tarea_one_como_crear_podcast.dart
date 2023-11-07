@@ -27,18 +27,18 @@ class _IntroTareaUnoComoCrearPodcastPageState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            StringsComoCrearUnPodcast.questionTareaUnoEscucharPodcast,
+            style: ThemeText.paragraph16GrayNormal,
+          ),
           const SizedBox(
             height: 20,
           ),
           const CustomAudioPlayer(
-            audioPath: 'assets/audios/teste.mp3',
+            audioPath: 'assets/audios/proyecto2.mp3',
           ),
           const SizedBox(
             height: 40,
-          ),
-          Text(
-            StringsComoCrearUnPodcast.questionTareaUnoEscucharPodcast,
-            style: ThemeText.paragraph16GrayNormal,
           ),
         ],
       ),

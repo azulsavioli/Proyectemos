@@ -32,15 +32,11 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
   final textControllerTwo = TextEditingController();
   final textControllerThree = TextEditingController();
   final textControllerFour = TextEditingController();
-  final textControllerFive = TextEditingController();
-  final textControllerSix = TextEditingController();
 
   late FocusNode focusNode1;
   late FocusNode focusNode2;
   late FocusNode focusNode3;
   late FocusNode focusNode4;
-  late FocusNode focusNode5;
-  late FocusNode focusNode6;
 
   int pageChanged = 0;
 
@@ -51,8 +47,6 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
     focusNode4 = FocusNode();
-    focusNode5 = FocusNode();
-    focusNode6 = FocusNode();
   }
 
   @override
@@ -62,8 +56,6 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
     focusNode2.dispose();
     focusNode3.dispose();
     focusNode4.dispose();
-    focusNode5.dispose();
-    focusNode6.dispose();
   }
 
   @override
@@ -99,16 +91,16 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
               focusNode2.requestFocus();
             }
             if (index == 3) {
-              focusNode3.requestFocus();
+              FocusScope.of(context).unfocus();
             }
             if (index == 4) {
-              focusNode4.requestFocus();
+              FocusScope.of(context).unfocus();
             }
             if (index == 5) {
-              focusNode5.requestFocus();
+              focusNode3.requestFocus();
             }
             if (index == 6) {
-              focusNode6.requestFocus();
+              focusNode4.requestFocus();
             }
             setState(() {
               pageChanged = index;
@@ -128,20 +120,18 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
               focusNode: focusNode2,
             ),
             QuestionThreeComoCrearPodcast(
+              controller: _controller,
+            ),
+            QuestionFourComoCrearPodcast(
+              controller: _controller,
+            ),
+            QuestionFiveComoCrearPodcast(
               controller: textControllerThree,
               focusNode: focusNode3,
             ),
-            QuestionFourComoCrearPodcast(
+            QuestionSixComoCrearPodcast(
               controller: textControllerFour,
               focusNode: focusNode4,
-            ),
-            QuestionFiveComoCrearPodcast(
-              controller: textControllerFive,
-              focusNode: focusNode5,
-            ),
-            QuestionSixComoCrearPodcast(
-              controller: textControllerSix,
-              focusNode: focusNode6,
             ),
           ],
         ),
@@ -202,8 +192,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             textControllerTwo.text.isEmpty ||
                             textControllerThree.text.isEmpty ||
                             textControllerFour.text.isEmpty ||
-                            textControllerFive.text.isEmpty ||
-                            textControllerSix.text.isEmpty) {
+                            _controller.studentGroup.length <= 1) {
                           showToast(
                             color: ThemeColors.red,
                             'Vuelve y ingrese tuja respuesta correctamente',
@@ -214,8 +203,6 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             textControllerTwo.text,
                             textControllerThree.text,
                             textControllerFour.text,
-                            textControllerFive.text,
-                            textControllerSix.text,
                           );
                           setState(() {
                             loading = true;
