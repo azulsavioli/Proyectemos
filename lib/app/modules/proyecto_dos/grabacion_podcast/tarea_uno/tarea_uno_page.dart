@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_grabacion_podcast.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
