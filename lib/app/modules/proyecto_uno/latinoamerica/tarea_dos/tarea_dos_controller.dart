@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,7 +11,7 @@ import 'package:mailer/mailer.dart';
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
-import '../../../widgets/step/step.dart';
+import '../../../widgets/step/custom_step_item.dart';
 
 class LatinoamericaTareaDosController extends ChangeNotifier {
   final _repository = RepositoryImpl();
@@ -109,36 +110,36 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
     return imgPaths;
   }
 
-  Future convertImageToFirebase(
-    List<String> imgPaths,
-  ) async {
-    final firebaseStorage = FirebaseStorage.instance;
-    final firebasePaths = [];
-    final email = _repository.authService.userAuth?.email;
+  // Future convertImageToFirebase(
+  //   List<String> imgPaths,
+  // ) async {
+  //   final firebaseStorage = FirebaseStorage.instance;
+  //   final firebasePaths = [];
+  //   final email = _repository.authService.userAuth?.email;
 
-    var counter = 0;
+  //   var counter = 0;
 
-    try {
-      for (final img in imgPaths) {
-        if (imgPaths.isEmpty) return;
-        final file = File(img);
-        counter++;
+  //   try {
+  //     for (final img in imgPaths) {
+  //       if (imgPaths.isEmpty) return;
+  //       final file = File(img);
+  //       counter++;
 
-        final snapshot = await firebaseStorage
-            .ref()
-            .child('uno-latinoamerica-images/$email-img-$counter.jpeg')
-            .putFile(file)
-            .whenComplete(() => null);
+  //       final snapshot = await firebaseStorage
+  //           .ref()
+  //           .child('uno-latinoamerica-images/$email-img-$counter.jpeg')
+  //           .putFile(file)
+  //           .whenComplete(() => null);
 
-        final downloadUrl = await snapshot.ref.getDownloadURL();
+  //       final downloadUrl = await snapshot.ref.getDownloadURL();
 
-        firebasePaths.add(downloadUrl);
-      }
-      return firebasePaths;
-    } on PlatformException catch (e) {
-      return 'Failed to convert image: ${e.message}';
-    }
-  }
+  //       firebasePaths.add(downloadUrl);
+  //     }
+  //     return firebasePaths;
+  //   } on PlatformException catch (e) {
+  //     return 'Failed to convert image: ${e.message}';
+  //   }
+  // }
 
   Map<String, Object> createJson(
     List<String> answersList,
@@ -171,10 +172,18 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
 
   Future makeJsonImages(List<String> answersList) async {
     final list = setImages();
-    final imagesList = await convertImageToFirebase(list);
-    final json = createJsonForFirebase(answersList, imagesList);
+    final email = _repository.authService.userAuth?.email;
+    final imagesList = await compute(convertImageToFirebase, [list, email]);
+    final json = createJsonForFirebase(answersList, imagesList as List<String>);
     return json;
   }
+
+  // Future makeJsonImages(List<String> answersList) async {
+  //   final list = setImages();
+  //   final imagesList = await convertImageToFirebase(list);
+  //   final json = createJsonForFirebase(answersList, imagesList);
+  //   return json;
+  // }
 
   String createEmailMessage(
     List<String> allStudentInfo,
@@ -212,5 +221,36 @@ Imagens em anexo!
       textFive,
     ];
     return respostas;
+  }
+}
+
+Future<List<String>> convertImageToFirebase(List<Object?> params) async {
+  final List<String> imgPaths = params[0] as List<String>;
+  final String? email = params[1] as String?;
+  final firebaseStorage = FirebaseStorage.instance;
+  final firebasePaths = <String>[];
+
+  var counter = 0;
+
+  try {
+    for (final img in imgPaths) {
+      if (imgPaths.isEmpty) return [];
+      final file = File(img);
+      counter++;
+
+      final snapshot = await firebaseStorage
+          .ref()
+          .child('uno-latinoamerica-images/$email-img-$counter.jpeg')
+          .putFile(file)
+          .whenComplete(() => null);
+
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+
+      firebasePaths.add(downloadUrl);
+    }
+    return firebasePaths;
+  } on PlatformException catch (e) {
+    print('Failed to convert image: ${e.message}');
+    return [];
   }
 }

@@ -23,6 +23,24 @@ class _PUnoLatinoamericaTareaDosPageState
   bool loading = false;
   final pageController = PageController();
 
+  @override
+  void initState() {
+    super.initState();
+    pageController.addListener(_onPageViewScroll);
+  }
+
+  void _onPageViewScroll() {
+    if (pageController.page == pageController.page?.round()) {}
+  }
+
+  @override
+  void dispose() {
+    pageController
+      ..removeListener(_onPageViewScroll)
+      ..dispose();
+    super.dispose();
+  }
+
   int pageChanged = 0;
 
   @override
@@ -45,9 +63,11 @@ class _PUnoLatinoamericaTareaDosPageState
       ),
       body: PageView(
         onPageChanged: (index) {
-          setState(() {
-            pageChanged = index;
-          });
+          if (mounted) {
+            setState(() {
+              pageChanged = index;
+            });
+          }
         },
         controller: pageController,
         children: [
@@ -101,52 +121,70 @@ class _PUnoLatinoamericaTareaDosPageState
                     ),
                   ),
                   if (pageChanged == 1)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
-                      ),
-                      onPressed: () async {
-                        final currentUser = getCurrentUser(context);
-
-                        if (_controller.isLastStep == 4 && pageChanged == 1) {
-                          if (_controller.formKey.currentState!.validate() &&
-                              _controller.selectedImages.length == 5) {
-                            setState(() {
-                              loading = true;
-                            });
-                            final answerList = _controller.makeAnswersList(
-                              _controller.answerUnoController.text,
-                              _controller.answerDosController.text,
-                              _controller.answerTresController.text,
-                              _controller.answerQuatroController.text,
-                              _controller.answerCincoController.text,
-                            );
-                            await _controller
-                                .sendAnswers(currentUser, answerList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
-                                    context,
-                                    '/pUno_latinoamerica_menu',
-                                  ),
-                                );
-                          } else {
-                            showToast(
-                              color: ThemeColors.red,
-                              'Vuelve y ingrese tujas respuestas correctamente',
-                            );
-                          }
-                        }
-                      },
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                    if (_controller.selectedImages.length == 5)
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              ThemeColors.blue),
                         ),
-                      ),
-                    )
+                        onPressed: () async {
+                          final currentUser = getCurrentUser(context);
+
+                          if (_controller.isLastStep == 4 && pageChanged == 1) {
+                            if (_controller.formKey.currentState!.validate() &&
+                                _controller.selectedImages.length == 5) {
+                              setState(() {
+                                loading = true;
+                              });
+                              final answerList = _controller.makeAnswersList(
+                                _controller.answerUnoController.text,
+                                _controller.answerDosController.text,
+                                _controller.answerTresController.text,
+                                _controller.answerQuatroController.text,
+                                _controller.answerCincoController.text,
+                              );
+                              await _controller
+                                  .sendAnswers(currentUser, answerList)
+                                  .then(
+                                    (value) => {
+                                      if (mounted)
+                                        {
+                                          Navigator.pushNamed(
+                                            context,
+                                            '/pUno_latinoamerica_menu',
+                                          ),
+                                        },
+                                    },
+                                  );
+                            }
+                          }
+                        },
+                        child: const Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          showToast(
+                            color: ThemeColors.red,
+                            'Vuelve y ingrese tujas respuestas correctamente',
+                          );
+                        },
+                        child: const Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
                   else
                     TextButton(
                       onPressed: () {

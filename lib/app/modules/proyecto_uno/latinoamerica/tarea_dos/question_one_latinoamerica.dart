@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_controller.dart';
 
 import '../../../../../commons/styles.dart';
-import 'step.dart';
+import '../../../widgets/step/step.dart';
 
 class QuestionLatinoamericaTareaDos extends StatefulWidget {
   final LatinoamericaTareaDosController controller;
@@ -55,17 +55,23 @@ class _QuestionLatinoamericaTareaDosState
                 ),
                 onStepContinue: () {
                   if (_controller.currentStep < 5 - 1) {
-                    setState(() => _controller.currentStep++);
+                    if (mounted) {
+                      setState(() => _controller.currentStep++);
+                    }
                   }
                 },
                 onStepTapped: (step) {
-                  setState(() {
-                    _controller.currentStep = step;
-                  });
+                  if (mounted) {
+                    setState(() {
+                      _controller.currentStep = step;
+                    });
+                  }
                 },
                 onStepCancel: () {
                   if (_controller.currentStep > 0) {
-                    setState(() => _controller.currentStep--);
+                    if (mounted) {
+                      setState(() => _controller.currentStep--);
+                    }
                   }
                   if (_controller.currentStep == 0) {
                     return;
