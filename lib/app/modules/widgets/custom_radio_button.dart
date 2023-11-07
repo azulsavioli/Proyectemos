@@ -3,8 +3,15 @@ import 'package:proyectemos/commons/styles.dart';
 
 class CustomRadioButton extends StatefulWidget {
   final Function(String) onSelected;
+  final String firstChoise;
+  final String secondChoise;
 
-  const CustomRadioButton({required this.onSelected, super.key});
+  const CustomRadioButton({
+    required this.onSelected,
+    super.key,
+    required this.firstChoise,
+    required this.secondChoise,
+  });
 
   @override
   State<CustomRadioButton> createState() => _CustomRadioButtonState();
@@ -23,8 +30,8 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           Expanded(
             child: RadioListTile(
               activeColor: ThemeColors.yellow,
-              title: const Text('Si'),
-              value: 'Si',
+              title: Text(widget.firstChoise),
+              value: widget.firstChoise,
               groupValue: answer,
               onChanged: (value) {
                 setState(() {
@@ -37,8 +44,8 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           Expanded(
             child: RadioListTile(
               activeColor: ThemeColors.yellow,
-              title: const Text('No'),
-              value: 'No',
+              title: Text(widget.secondChoise),
+              value: widget.secondChoise,
               groupValue: answer,
               onChanged: (value) {
                 setState(() {
