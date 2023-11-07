@@ -135,8 +135,8 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   cardWidth: width,
                   cardHeight: height,
                   namedRoute: creacionEncuestaCompleted
-                      ? '/pUno_feed_divulgacao'
-                      : '/pUno_divulgacao_page',
+                      ? '/pDos_creacionEncuesta_feedback'
+                      : '/pDos_creacionEncuesta',
                   backgroundColor: creacionEncuestaCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
@@ -154,9 +154,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   text: 'Grabación del podcast',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: grabacionPodcastCompleted
-                      ? '/pUno_feed_divulgacao'
-                      : '/pUno_divulgacao_page',
+                  namedRoute: '/pDos_grabacionPodcast_menu',
                   backgroundColor: grabacionPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
