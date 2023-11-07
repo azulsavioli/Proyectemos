@@ -6,6 +6,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../commons/styles.dart';
+import '../../../../../providers/record_audio_provider_la_encuesta_tarea_dos.dart';
 import '../../../../../services/storage_service.dart';
 import '../../../../../utils/get_user.dart';
 import 'intro_tarea_dos_como_crear_una_encuesta.dart';
@@ -14,7 +15,6 @@ import 'question_dos_como_crear_una_encuesta.dart';
 import 'question_one_como_crear_una_encuesta.dart';
 import 'question_tres_como_crear_una_encuesta.dart';
 import 'tarea_dos_controller.dart';
-import 'tarea_uno_revision.dart';
 
 class TareaDosComoCrearUnaEncuestaPage extends StatefulWidget {
   const TareaDosComoCrearUnaEncuestaPage({Key? key}) : super(key: key);
@@ -28,14 +28,13 @@ class _TareaDosComoCrearUnaEncuestaPageState
     extends State<TareaDosComoCrearUnaEncuestaPage> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final StorageService storageService = StorageService();
-  final _tareaUnoController = TareaDosComoCrearUnaEncuestaController();
+  final _controller = TareaDosComoCrearUnaEncuestaController();
+
+  List<String> recordsPathList =
+      RecordAudioLaEncuestaTareaDosProviderImpl.recordingsPaths;
 
   final _formKey = GlobalKey<FormState>();
   final pageController = PageController();
-
-  final textControllerOne = TextEditingController();
-  final textControllerTwo = TextEditingController();
-  final textControllerThree = TextEditingController();
 
   int pageChanged = 0;
 
@@ -49,19 +48,11 @@ class _TareaDosComoCrearUnaEncuestaPageState
   final bool muted = false;
   final bool isPlayerReady = false;
 
-  late FocusNode focusNode1;
-  late FocusNode focusNode2;
-  late FocusNode focusNode3;
-
   bool loading = false;
 
   @override
   void initState() {
     super.initState();
-
-    focusNode1 = FocusNode();
-    focusNode2 = FocusNode();
-    focusNode3 = FocusNode();
 
     youTubeController = YoutubePlayerController(
       initialVideoId: 'HVk3UYTKCr0',
@@ -96,19 +87,12 @@ class _TareaDosComoCrearUnaEncuestaPageState
     youTubeController.dispose();
     idController.dispose();
     seekToController.dispose();
-    focusNode1.dispose();
-    focusNode2.dispose();
-    focusNode3.dispose();
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final currentUser = getCurrentUser(context);
-    final textOne = textControllerOne.text;
-    final textTwo = textControllerTwo.text;
-    final textThree = textControllerThree.text;
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -139,19 +123,6 @@ class _TareaDosComoCrearUnaEncuestaPageState
           key: _formKey,
           child: PageView(
             onPageChanged: (index) {
-              if (index == 0) {
-                FocusScope.of(context).unfocus();
-              }
-              if (index == 1) {
-                focusNode2.requestFocus();
-              }
-              if (index == 2) {
-                focusNode1.requestFocus();
-              }
-              if (index == 3) {
-                focusNode3.requestFocus();
-              }
-
               setState(() {
                 pageChanged = index;
               });
@@ -163,23 +134,13 @@ class _TareaDosComoCrearUnaEncuestaPageState
                 listener: listener,
               ),
               QuestionComoCrearUnaEncuestaOne(
-                focusNode: focusNode1,
-                controller: textControllerOne,
+                controller: _controller,
               ),
               QuestionComoCrearUnaEncuestaDos(
-                focusNode: focusNode2,
-                controller: textControllerTwo,
+                controller: _controller,
               ),
               QuestionComoCrearUnaEncuestaTres(
-                focusNode: focusNode3,
-                controller: textControllerThree,
-              ),
-              RevisionQuestionsComoCrearUnaEncuesta(
-                controllerList: [
-                  textControllerOne,
-                  textControllerTwo,
-                  textControllerThree,
-                ],
+                controller: _controller,
               ),
             ],
           ),
@@ -221,7 +182,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                   Center(
                     child: SmoothPageIndicator(
                       controller: pageController,
-                      count: 5,
+                      count: 4,
                       effect: const WormEffect(
                         dotHeight: 10,
                         dotWidth: 10,
@@ -230,13 +191,13 @@ class _TareaDosComoCrearUnaEncuestaPageState
                       ),
                     ),
                   ),
-                  if (pageChanged == 4)
+                  if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           if (pageChanged == 1) {
                             youTubeController.addListener(listener);
@@ -245,33 +206,29 @@ class _TareaDosComoCrearUnaEncuestaPageState
                           }
                         });
                         deactivate();
-                        if (textControllerOne.text.isEmpty ||
-                            textControllerTwo.text.isEmpty ||
-                            textControllerThree.text.isEmpty) {
+                        if (recordsPathList.isEmpty ||
+                            recordsPathList.length < 3) {
                           showToast(
+                            '''
+¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
                             color: ThemeColors.red,
-                            'Vuelve y ingrese tuja respuesta correctamente',
+                            textColor: ThemeColors.white,
                           );
                         } else {
-                          final respostas = _tareaUnoController.makeAnswersList(
-                            textOne,
-                            textTwo,
-                            textThree,
-                          );
-                          setState(() {
-                            loading = true;
-                          });
-                          _tareaUnoController
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_laEncuesta_menu',
-                                ),
-                              );
+                          if (recordsPathList.isNotEmpty &&
+                              recordsPathList.length == 3) {
+                            setState(() {
+                              loading = true;
+                            });
+                            await _controller
+                                .sendAnswers(currentUser, recordsPathList)
+                                .then(
+                                  (value) => Navigator.pushNamed(
+                                    context,
+                                    '/pDos_laEncuesta_menu',
+                                  ),
+                                );
+                          }
                         }
                       },
                       child: const Text(

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
-import '../../../widgets/custom_text_form_field.dart';
+import '../../../widgets/custom_record_audio_button.dart';
+import 'tarea_dos_controller.dart';
 
 class QuestionComoCrearUnaEncuestaDos extends StatefulWidget {
-  final TextEditingController controller;
-  final FocusNode focusNode;
+  final TareaDosComoCrearUnaEncuestaController controller;
 
   const QuestionComoCrearUnaEncuestaDos({
     Key? key,
     required this.controller,
-    required this.focusNode,
   }) : super(key: key);
 
   @override
@@ -21,8 +20,7 @@ class QuestionComoCrearUnaEncuestaDos extends StatefulWidget {
 
 class _QuestionComoCrearUnaEncuestaDosState
     extends State<QuestionComoCrearUnaEncuestaDos> {
-  TextEditingController get controller => widget.controller;
-  FocusNode get focusNode => widget.focusNode;
+  TareaDosComoCrearUnaEncuestaController get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +37,12 @@ class _QuestionComoCrearUnaEncuestaDosState
           const SizedBox(
             height: 20,
           ),
-          CustomTextFormField(
-            focusNode: focusNode,
-            textInputAction: TextInputAction.none,
-            hint: 'Respuesta',
-            controller: controller,
-            keyboardType: TextInputType.text,
-            validatorVazio: 'Ingrese tuja respuesta correctamente',
-            validatorMenorqueNumero:
-                'Su respuesta debe tener al menos 3 caracteres',
+          CustomRecordAudioButton(
+            question: StringsLaEncuesta.questionTwoLaEncuestaTareaDos,
+            isAudioFinish: _controller.isAudioFinish,
+            namedRoute: '/record_and_play_la_encuesta_tarea_dos',
+            labelButton: 'Grabar la respuesta',
+            labelButtonFinished: 'Completo',
           ),
           const SizedBox(
             height: 20,

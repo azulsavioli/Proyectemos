@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/app/modules/proyecto_dos/la_encuesta/tarea_uno/tarea_uno_controller.dart';
+import 'package:proyectemos/app/modules/widgets/custom_record_audio_button.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
-import '../../../widgets/custom_text_form_field.dart';
 
 class QuestionQueEsUnaEncuestaTres extends StatefulWidget {
-  final TextEditingController textController;
-  final FocusNode focusNode;
+  final QueEsUnaEncuestaController controller;
 
   const QuestionQueEsUnaEncuestaTres({
+    required this.controller,
     super.key,
-    required this.textController,
-    required this.focusNode,
   });
 
   @override
@@ -22,8 +21,7 @@ class QuestionQueEsUnaEncuestaTres extends StatefulWidget {
 class _QuestionQueEsUnaEncuestaTresState
     extends State<QuestionQueEsUnaEncuestaTres>
     with AutomaticKeepAliveClientMixin {
-  TextEditingController get textController => widget.textController;
-  FocusNode get focusNode => widget.focusNode;
+  QueEsUnaEncuestaController get _controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +45,12 @@ class _QuestionQueEsUnaEncuestaTresState
               const SizedBox(
                 height: 20,
               ),
-              CustomTextFormField(
-                focusNode: focusNode,
-                textInputAction: TextInputAction.next,
-                hint: 'Respuesta',
-                controller: textController,
-                keyboardType: TextInputType.text,
-                validatorVazio: 'Ingrese tuja respuesta correctamente',
-                validatorMenorqueNumero:
-                    'Su respuesta debe tener al menos 3 caracteres',
+              CustomRecordAudioButton(
+                question: StringsLaEncuesta.questionThreeLaEncuestaTareaUno,
+                isAudioFinish: _controller.isAudioFinish,
+                namedRoute: '/record_and_play_la_encuesta_tarea_uno',
+                labelButton: 'Grabar la respuesta',
+                labelButtonFinished: 'Completo',
               ),
               const SizedBox(
                 height: 20,

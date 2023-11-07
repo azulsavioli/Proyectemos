@@ -40,6 +40,8 @@ class _QuestionQueEsUnaEncuestaDosState
             height: 15,
           ),
           CustomRadioButton(
+            firstChoise: 'Si',
+            secondChoise: 'No',
             onSelected: (value) {
               _controller.answer2 = value;
             },

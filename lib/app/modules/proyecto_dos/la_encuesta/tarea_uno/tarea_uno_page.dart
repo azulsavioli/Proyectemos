@@ -4,6 +4,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
+import '../../../../../providers/record_audio_provider_la_encuesta_tarea_uno.dart';
 import '../../../../../services/toast_services.dart';
 import 'question_dos_que_es_una_encuesta.dart';
 import 'question_one_que_es_una_encuesta.dart';
@@ -20,8 +21,9 @@ class TareaUnoQueEsUnaEncuesta extends StatefulWidget {
 
 class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
   final _controller = QueEsUnaEncuestaController();
-  final textControllerOne = TextEditingController();
-  late FocusNode focusNode1;
+  final isAudioFinish = RecordAudioLaEncuestaTareaUnoProviderImpl().isRecording;
+  List<String> recordsPathList =
+      RecordAudioLaEncuestaTareaUnoProviderImpl.recordingsPaths;
 
   bool loading = false;
 
@@ -29,19 +31,6 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
   final pageController = PageController();
 
   int pageChanged = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    focusNode1 = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    focusNode1.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,8 +67,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
             controller: _controller,
           ),
           QuestionQueEsUnaEncuestaTres(
-            focusNode: focusNode1,
-            textController: textControllerOne,
+            controller: _controller,
           ),
         ],
       ),
@@ -135,26 +123,31 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        if (textControllerOne.text.isEmpty) {
+                        if (recordsPathList.isEmpty ||
+                            _controller.answer1 == '' ||
+                            _controller.answer2 == '') {
                           showToast(
+                            '''
+¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
                             color: ThemeColors.red,
-                            'Vuelve y ingrese tujas respuestas correctamente',
+                            textColor: ThemeColors.white,
                           );
                         } else {
-                          setState(() {
-                            loading = true;
-                          });
-                          await _controller
-                              .sendAnswers(
-                                currentUser,
-                                textControllerOne.text,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_laEncuesta_menu',
-                                ),
-                              );
+                          if (recordsPathList.isNotEmpty &&
+                                  _controller.answer1 != '' ||
+                              _controller.answer2 != '') {
+                            setState(() {
+                              loading = true;
+                            });
+                            await _controller
+                                .sendAnswers(currentUser, recordsPathList)
+                                .then(
+                                  (value) => Navigator.pushNamed(
+                                    context,
+                                    '/pDos_laEncuesta_menu',
+                                  ),
+                                );
+                          }
                         }
                       },
                       child: const Text(
