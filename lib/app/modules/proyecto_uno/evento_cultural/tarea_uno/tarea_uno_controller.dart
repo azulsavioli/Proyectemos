@@ -36,7 +36,7 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
         await _repository.getStudentInfo(),
       );
 
-      final attachment = createAttachments(currentUser, recordsPathList);
+      final attachment = createAttachments(recordsPathList);
 
       await _repository.sendEmail(
         currentUser,
@@ -91,7 +91,6 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
   }
 
   List<FileAttachment> createAttachments(
-    GoogleSignInAccount? currentUser,
     List<String> recordsPathList,
   ) {
     final filePathList = setFiles();
