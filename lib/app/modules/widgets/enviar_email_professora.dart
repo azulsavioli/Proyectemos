@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/services/toast_services.dart';
 
 import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
@@ -23,21 +24,17 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
   final _emailController = TextEditingController();
   final _repository = ProyectemosRepository();
   late FocusNode focusNode;
+  bool isEmailSending = false;
 
   @override
   void initState() {
     super.initState();
-
-    setState(() {
-      focusNode = FocusNode();
-    });
+    focusNode = FocusNode();
   }
 
   @override
   void dispose() {
-    setState(() {
-      focusNode.dispose();
-    });
+    focusNode.dispose();
     super.dispose();
   }
 
@@ -59,7 +56,7 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
     return emails.first;
   }
 
-  Future<void> sendEmail(GoogleSignInAccount currentUser) async {
+  Future<void> sendEmail(GoogleSignInAccount? currentUser) async {
     final email = await getEmailTeacherFromFirebase();
     final studentInfo = await _repository.getUserInfo();
     final studentInformation = studentInfo.split('/');
@@ -80,14 +77,17 @@ ${_emailController.text}''';
     await emailSender.sendEmailToTeacher(
       currentUser,
       [],
-      [email.first.values.first],
+      [email],
       subject,
       text,
     );
+    showToast(Strings.emailEnviado);
   }
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = getCurrentUser(context);
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -143,20 +143,32 @@ ${_emailController.text}''';
                   ),
                 ),
                 onPressed: () {
-                  final currentUser = getCurrentUser(context);
-                  sendEmail(currentUser!);
-                  Navigator.pop(context);
+                  setState(() {
+                    isEmailSending = true;
+                  });
+                  sendEmail(currentUser).then(
+                    (value) => {
+                      setState(() {
+                        isEmailSending = false;
+                      }),
+                      Navigator.pop(context),
+                    },
+                  );
                 },
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text(
-                        'Enviar el email',
-                        style:
-                            TextStyle(fontSize: 20, color: ThemeColors.white),
-                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: isEmailSending
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              'Enviar el email',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: ThemeColors.white,
+                              ),
+                            ),
                     ),
                   ],
                 ),

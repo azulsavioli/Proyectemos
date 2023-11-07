@@ -25,24 +25,29 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
   void initState() {
     super.initState();
 
-    setState(() {
-      focusNode1 = FocusNode();
-      focusNode2 = FocusNode();
-    });
+    if (mounted) {
+      setState(() {
+        focusNode1 = FocusNode();
+        focusNode2 = FocusNode();
+      });
+    }
   }
 
   @override
   void dispose() {
-    setState(() {
-      focusNode1.dispose();
-      focusNode2.dispose();
-    });
+    if (mounted) {
+      setState(() {
+        focusNode1.dispose();
+        focusNode2.dispose();
+      });
+    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final _controller = TeacherController(context);
+    final currentUser = getCurrentUser(context);
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -86,7 +91,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
               height: 20,
             ),
             CustomTextFormField(
-              focusNode: focusNode1,
+              focusNode: focusNode2,
               textInputAction: TextInputAction.done,
               hint: 'Mensaje',
               controller: _descricaoController,
@@ -111,17 +116,17 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                   ),
                 ),
                 onPressed: () {
-                  final currentUser = getCurrentUser(context);
-
-                  _controller.sendEmail(
-                    currentUser!,
-                    _assuntoController.text,
-                    _descricaoController.text,
-                  );
-                  Navigator.pushNamed(
-                    context,
-                    '/pUno_evento_cultural_feedback',
-                  );
+                  if (mounted) {
+                    _controller.sendEmail(
+                      currentUser!,
+                      _assuntoController.text,
+                      _descricaoController.text,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      '/pUno_evento_cultural_feedback',
+                    );
+                  }
                 },
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,

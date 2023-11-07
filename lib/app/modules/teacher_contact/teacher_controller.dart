@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../commons/strings/strings.dart';
 import '../../../repository/repository_impl.dart';
+import '../../../services/toast_services.dart';
 
 class TeacherController {
   final BuildContext context;
@@ -27,6 +29,7 @@ class TeacherController {
       message,
       [],
     );
+    showToast(Strings.emailEnviado);
   }
 
   String createEmailMessage(

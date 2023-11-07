@@ -39,8 +39,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
       final data = await repository.getAnswers(doc);
       feedback.addAll(data);
     } on FirebaseException catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(e.toString())));
+      e.toString();
     }
     return feedback;
   }
