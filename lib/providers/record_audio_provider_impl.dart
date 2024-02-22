@@ -7,7 +7,7 @@ import 'audio_provider_interface.dart';
 
 class RecordAudioArtistasProviderImpl extends ChangeNotifier
     implements AudioProvider {
-  final Record _record = Record();
+  final AudioRecorder _record = AudioRecorder();
   String _afterRecordingFilePath = '';
   static List<String> recordingsPaths = [];
 
@@ -45,7 +45,7 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
       dirPath: voiceDirPath,
       fileName: 'audio_message',
     );
-    await _record.start(path: voiceFilePath);
+    await _record.start(const RecordConfig(), path: voiceFilePath);
     isRecording = true;
     notifyListeners();
     showToast('Comenzó la grabación');
