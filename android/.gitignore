@@ -1,7 +1,4 @@
-.fvm/flutter_sdk
-
 gradle-wrapper.jar
-.vscode/
 /.gradle
 /captures/
 /gradlew

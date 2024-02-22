@@ -1,6 +1,6 @@
-# proyectemos
+# proyectemos_ios
 
-¡Proyectemos! Um diálogo entre livros didáticos e aplicativo móvel nas aulas de língua espanhola. Proyectemos é um aplicativo educacional e seu conceito foi criado pela Mestranda Kadhiny Mendonça de Souza Policarpo durante sua dissertação e desenvolvido pela Cientista da Informação Maia de Oliveira, F.
+A new Flutter project.
 
 ## Getting Started
 
@@ -13,4 +13,4 @@ A few resources to get you started if this is your first Flutter project:
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference
+samples, guidance on mobile development, and a full API reference.

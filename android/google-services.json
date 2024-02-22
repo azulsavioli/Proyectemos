@@ -1,0 +1,81 @@
+{
+  "project_info": {
+    "project_number": "333978861746",
+    "project_id": "proyectemos-9924c",
+    "storage_bucket": "proyectemos-9924c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333978861746:android:b560e4a7de709b7b3a89ab",
+        "android_client_info": {
+          "package_name": "com.example.proyectemos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjb4N5ZPqB1pW1hMsZSraYN7WfvgFIk0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333978861746-22p22ba433e0327j3nc5dp3h4bkvhn5s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "333978861746-01kmpv9r31hstdmchqq23on0m5e0967n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.proyectemosIos"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333978861746:android:851952e29048f66a3a89ab",
+        "android_client_info": {
+          "package_name": "com.example.proyectemos_ios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333978861746-7um47m8ra76bhfjj3u52c77adh49ps24.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.proyectemos_ios",
+            "certificate_hash": "1a1e99251ace8e86a772b65887cd00ea04d3b594"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjb4N5ZPqB1pW1hMsZSraYN7WfvgFIk0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333978861746-22p22ba433e0327j3nc5dp3h4bkvhn5s.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "333978861746-01kmpv9r31hstdmchqq23on0m5e0967n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.proyectemosIos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,17 +23,22 @@ dependencies:
   dependency_validator: ^3.2.2
 
   #Firebase
-  firebase_core: ^2.14.0
+  # firebase_core: ^2.14.0
 
   # uuid: ^3.0.5
-  cloud_firestore: ^4.8.2
+  firebase_core: ^2.10.0
+  # cloud_firestore: ^4.10.0
+
+  # cloud_firestore: ^4.8.2
+  cloud_firestore: ^4.15.4
 
   jumping_dot: ^0.0.6
 
   #Authentication
   firebase_auth: ^4.6.3
-  google_sign_in: ^6.1.4
-
+  # google_sign_in: ^6.1.4
+  google_sign_in: ^6.2.1
+  
   #Google icon
   font_awesome_flutter: ^10.1.0
 
@@ -72,12 +77,16 @@ dependencies:
   permission_handler: ^11.0.0
 
   #Audio
-  record: ^4.4.4
+  # record: ^4.4.4
+  record: ^5.0.4
   simple_ripple_animation: ^0.0.3
   just_audio: ^0.9.29
   percent_indicator: ^4.2.2
-  fluttertoast: ^8.0.9
   audioplayers: ^5.1.0
+
+  #Toast 
+  # fluttertoast: ^8.0.9
+  fluttertoast: ^8.2.4
 
   #Data
   shared_preferences: ^2.0.15
@@ -95,8 +104,11 @@ dependencies:
   #Responsividade
   flutter_screenutil: ^5.7.0
 
+  #Firebase Storage
   firebase_storage: ^11.2.4
   # firebase_app_check: ^0.0.9+1
+  # firebase_storage: ^11.6.5
+  # firebase_app_check: ^0.2.1+13
   # mockito: ^5.4.0
 
 flutter_native_splash:
