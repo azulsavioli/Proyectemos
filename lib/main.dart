@@ -1,3 +1,4 @@
+// import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -22,6 +23,12 @@ bool? isStudentInfoSaved;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
@@ -31,14 +38,15 @@ Future<void> main() async {
   isOnboardingCompleted = preferences.getBool('onboarding');
   isStudentInfoSaved = preferences.getBool('studentInfoSaved');
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
   // await FirebaseAppCheck.instance.activate(
-  //   webRecaptchaSiteKey: 'recaptcha-v3-site-key',
-  //   androidDebugProvider: true,
+  //   webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+  //   androidProvider: AndroidProvider.debug,
+  //   appleProvider: AppleProvider.appAttest,
   // );
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
   await ScreenUtil.ensureScreenSize();
 
@@ -46,9 +54,9 @@ Future<void> main() async {
     (_) => runApp(
       MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => AuthService()),
+          ChangeNotifierProvider(create: (_) => AuthService()),
           ChangeNotifierProvider(
-            create: (context) => ProyectemosRepository(),
+            create: (_) => ProyectemosRepository(),
           ),
           ChangeNotifierProvider(
             create: (_) => RecordAudioArtistasProviderImpl(),
@@ -67,7 +75,7 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
         ],
-        child: const Proyectemos(),
+        child: Proyectemos(),
       ),
     ),
   );
