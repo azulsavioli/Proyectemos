@@ -40,7 +40,7 @@ class _QuestionLatinoamericaFiveState extends State<QuestionLatinoamericaFive> {
           ),
           CustomTextFormField(
             focusNode: focusNode,
-            textInputAction: TextInputAction.none,
+            textInputAction: TextInputAction.go,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,

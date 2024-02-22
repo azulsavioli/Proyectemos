@@ -118,6 +118,7 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
 
   Widget _buildCheckbox(String name, GoogleSignInAccount? currentUser) {
     return CheckboxListTile(
+      activeColor: ThemeColors.blue,
       title: Text(
         name,
         style: ThemeText.paragraph16GrayNormal,

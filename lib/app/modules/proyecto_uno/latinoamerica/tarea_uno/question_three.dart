@@ -41,7 +41,7 @@ class _QuestionLatinoamericaThreeState
           ),
           CustomTextFormField(
             focusNode: focusNode,
-            textInputAction: TextInputAction.none,
+            textInputAction: TextInputAction.go,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,

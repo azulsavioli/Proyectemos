@@ -23,11 +23,17 @@ class TareaUnoEventoCulturalPage extends StatefulWidget {
 class _TareaUnoEventoCulturalPageState extends State<TareaUnoEventoCulturalPage>
     with AutomaticKeepAliveClientMixin {
   bool buttonFileSelected = false;
-  Icon buttonFileIcon = const Icon(Icons.file_copy);
+  Icon buttonFileIcon = const Icon(
+    Icons.file_copy,
+    color: ThemeColors.white,
+  );
   Color buttonFileColor = ThemeColors.blue;
 
   bool buttonAudioSelected = false;
-  Icon buttonAudioIcon = const Icon(Icons.record_voice_over);
+  Icon buttonAudioIcon = const Icon(
+    Icons.record_voice_over,
+    color: ThemeColors.white,
+  );
   Color buttonAudioColor = ThemeColors.yellow;
 
   EventoCulturalTareaUnoController get _controller => widget.controller;
@@ -65,14 +71,20 @@ class _TareaUnoEventoCulturalPageState extends State<TareaUnoEventoCulturalPage>
                 if (file != null) {
                   setState(() {
                     buttonFileColor = ThemeColors.green;
-                    buttonFileIcon = const Icon(Icons.check);
+                    buttonFileIcon = const Icon(
+                      Icons.check,
+                      color: ThemeColors.white,
+                    );
                     buttonFileSelected = true;
                   });
                 }
               },
               label: const Text(
                 'Subir la propuesta escrita',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                  fontSize: 20,
+                  color: ThemeColors.white,
+                ),
               ),
             ),
           ),

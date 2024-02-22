@@ -65,14 +65,14 @@ class CreacionEncuestaController extends ChangeNotifier {
     return pickedFile;
   }
 
-  Map<String, List> setJson(String filePath) {
+  Map<String, String> setJson(List<dynamic> filePath) {
     final json = {
-      'resposta_1_file': [filePath[0]],
+      'resposta_1_file': filePath[0].toString(),
     };
     return json;
   }
 
-  Future<dynamic> makeFirebasePaths(GoogleSignInAccount? currentUser) async {
+  Future makeFirebasePaths(GoogleSignInAccount? currentUser) async {
     final listFile = setFiles();
     final firebasePathFile = await convertFileToFirebase(
       listFile,

@@ -14,7 +14,7 @@ import '../../../../../services/toast_services.dart';
 class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   bool loading = true;
-  final subject = 'Atividade - Artistas Latinoamericanos\n Tarea Uno';
+  final subject = 'Atividade - Artistas Hispanoamericanos\n Tarea Uno';
   final doc = 'uno/artistas-latinoamericanos/atividade_1/';
   final task = 'artistasTareaUnoCompleted';
 
@@ -145,7 +145,7 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
-Atividade Artistas Latinoamericanos 1ª etapa concluída!\nObs: Arquivo mp3.''';
+Atividade Artistas Hispanoamericanos 1ª etapa concluída!\nObs: Arquivo mp3.''';
     return text;
   }
 }

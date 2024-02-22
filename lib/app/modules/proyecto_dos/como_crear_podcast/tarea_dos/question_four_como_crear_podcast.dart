@@ -32,33 +32,25 @@ class _QuestionFourComoCrearPodcastState
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Text(
-                StringsComoCrearUnPodcast.questionFourTareaDosCrearUnPodcast,
-                style: ThemeText.paragraph14Gray,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              CustomRadioButton(
-                firstChoise: 'entrevista',
-                secondChoise: 'charla\nentre los miembros',
-                onSelected: (value) {
-                  _controller.estructuraPodcast = value;
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+          const SizedBox(
+            height: 30,
+          ),
+          Text(
+            StringsComoCrearUnPodcast.questionFourTareaDosCrearUnPodcast,
+            style: ThemeText.paragraph14Gray,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomRadioButton(
+            firstChoise: 'entrevista',
+            secondChoise: 'charla\nentre los miembros',
+            onSelected: (value) {
+              _controller.estructuraPodcast = value;
+            },
+          ),
+          const SizedBox(
+            height: 20,
           ),
         ],
       ),

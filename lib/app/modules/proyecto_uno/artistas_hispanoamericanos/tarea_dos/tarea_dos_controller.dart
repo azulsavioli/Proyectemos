@@ -63,7 +63,7 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
   void generateCountrysList() {
     const listCountrys = [
       'Argentina',
-      'Bolívia',
+      'Bolivia',
       'Chile',
       'Colômbia',
       'Costa Rica',
@@ -74,13 +74,13 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
       'Guatemala',
       'Honduras',
       'México',
-      'Nicarágua',
+      'Nicaragua',
       'Panamá',
-      'Paraguai',
+      'Paraguay',
       'Peru',
       'Porto Rico',
-      'Espanha',
-      'Uruguai',
+      'España',
+      'Uruguay',
       'Venezuela',
     ];
 
@@ -182,7 +182,7 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
     final text = '''
 Proyectemos\n
 ${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
-        Atividade Artistas Latinoamericanos 2ª etapa concluída!
+        Atividade Artistas Hispanoamericanos 2ª etapa concluída!
         \nPaís: ${randonCountrys[0]} - Artista: ${answerList[0].text}
         \nPaís: ${randonCountrys[1]} - Artista: ${answerList[1].text}
         \nPaís: ${randonCountrys[2]} - Artista: ${answerList[2].text}

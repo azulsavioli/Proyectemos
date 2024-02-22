@@ -65,7 +65,7 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
             Center(
               child: Text(
                 'Frida Kahlo',
-                style: ThemeText.h2title35BlueNormal,
+                style: ThemeText.h3title20Blue,
               ),
             ),
             const SizedBox(

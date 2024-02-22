@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -129,7 +128,7 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
                       title: Text(nomePodcast),
                       subtitle: Text(
                         '''
-\n${nomeEpisodioPodcast.capitalize()}\n
+\n${nomeEpisodioPodcast.toUpperCase()}\n
 ${grupo.substring(1, grupo.length - 1)}\n''',
                       ),
                     ),

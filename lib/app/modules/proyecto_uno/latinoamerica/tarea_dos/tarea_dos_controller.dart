@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -32,37 +32,49 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
   List<String> studentInformations = [];
   List<XFile> selectedImages = CustomStep.images;
 
+  LatinoamericaTareaDosController() {
+    initializeFirebase();
+  }
+
+  Future<void> initializeFirebase() async {
+    await Firebase.initializeApp();
+  }
+
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
     try {
-      final json = await makeJsonImages(answersList);
+      if (_repository.authService.userAuth != null) {
+        final json = await makeJsonImages(answersList, currentUser);
 
-      final message = createEmailMessage(
-        await _repository.getStudentInfo(),
-        answersList,
-      );
+        final message = createEmailMessage(
+          await _repository.getStudentInfo(),
+          answersList,
+        );
 
-      final attachment = setupAttachments(answersList);
+        final attachment = setupAttachments(answersList);
 
-      await _repository.sendEmail(
-        currentUser,
-        answersList,
-        subject,
-        message,
-        attachment,
-      );
-      await _repository.sendAnswersToFirebase(json, doc);
-      await _repository.saveClassroomImages(json);
-      await _repository.saveTaskCompleted(task);
+        await _repository.sendEmail(
+          currentUser,
+          answersList,
+          subject,
+          message,
+          attachment,
+        );
+        await _repository.sendAnswersToFirebase(json, doc);
+        await _repository.saveClassroomImages(json);
+        await _repository.saveTaskCompleted(task);
 
-      showToast(Strings.tareaConcluida);
+        showToast(Strings.tareaConcluida);
 
-      notifyListeners();
+        notifyListeners();
+      } else {
+        showToast('O usuário não está autenticado.');
+      }
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast('Ocorreu um erro no envio dos dados!');
     }
   }
 
@@ -110,37 +122,6 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
     return imgPaths;
   }
 
-  // Future convertImageToFirebase(
-  //   List<String> imgPaths,
-  // ) async {
-  //   final firebaseStorage = FirebaseStorage.instance;
-  //   final firebasePaths = [];
-  //   final email = _repository.authService.userAuth?.email;
-
-  //   var counter = 0;
-
-  //   try {
-  //     for (final img in imgPaths) {
-  //       if (imgPaths.isEmpty) return;
-  //       final file = File(img);
-  //       counter++;
-
-  //       final snapshot = await firebaseStorage
-  //           .ref()
-  //           .child('uno-latinoamerica-images/$email-img-$counter.jpeg')
-  //           .putFile(file)
-  //           .whenComplete(() => null);
-
-  //       final downloadUrl = await snapshot.ref.getDownloadURL();
-
-  //       firebasePaths.add(downloadUrl);
-  //     }
-  //     return firebasePaths;
-  //   } on PlatformException catch (e) {
-  //     return 'Failed to convert image: ${e.message}';
-  //   }
-  // }
-
   Map<String, Object> createJson(
     List<String> answersList,
     List<dynamic> imagesList,
@@ -170,20 +151,12 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
     return json;
   }
 
-  Future makeJsonImages(List<String> answersList) async {
+  Future makeJsonImages(List<String> answersList, currentUser) async {
     final list = setImages();
-    final email = _repository.authService.userAuth?.email;
-    final imagesList = await compute(convertImageToFirebase, [list, email]);
-    final json = createJsonForFirebase(answersList, imagesList as List<String>);
+    final imagesList = await convertImageToFirebase(list, currentUser);
+    final json = createJsonForFirebase(answersList, imagesList);
     return json;
   }
-
-  // Future makeJsonImages(List<String> answersList) async {
-  //   final list = setImages();
-  //   final imagesList = await convertImageToFirebase(list);
-  //   final json = createJsonForFirebase(answersList, imagesList);
-  //   return json;
-  // }
 
   String createEmailMessage(
     List<String> allStudentInfo,
@@ -224,9 +197,9 @@ Imagens em anexo!
   }
 }
 
-Future<List<String>> convertImageToFirebase(List<Object?> params) async {
-  final List<String> imgPaths = params[0] as List<String>;
-  final String? email = params[1] as String?;
+Future<List<String>> convertImageToFirebase(
+    List<Object?> params, currentUser) async {
+  final List<String> imgPaths = params as List<String>;
   final firebaseStorage = FirebaseStorage.instance;
   final firebasePaths = <String>[];
 
@@ -240,7 +213,8 @@ Future<List<String>> convertImageToFirebase(List<Object?> params) async {
 
       final snapshot = await firebaseStorage
           .ref()
-          .child('uno-latinoamerica-images/$email-img-$counter.jpeg')
+          .child(
+              'uno-latinoamerica-images/${currentUser.email}-img-$counter.jpeg')
           .putFile(file)
           .whenComplete(() => null);
 

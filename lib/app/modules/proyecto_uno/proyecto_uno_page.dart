@@ -4,7 +4,6 @@ import 'package:proyectemos/app/modules/widgets/card_button.dart';
 import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
 import '../../../services/uno_tasks_completed.dart';
-import '../widgets/drawer_menu.dart';
 
 class ProyectoUnoPage extends StatefulWidget {
   const ProyectoUnoPage({Key? key}) : super(key: key);
@@ -58,7 +57,6 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
             style: ThemeText.paragraph14WhiteBold,
           ),
         ),
-        endDrawer: DrawerMenuWidget(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(

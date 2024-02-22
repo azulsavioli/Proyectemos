@@ -28,7 +28,7 @@ class _QuestionGrabacionPodcastOneState
   List<TextEditingController> get controllerList => widget.controllerList;
   List<FocusNode> get focusNodeList => widget.focusNodeList;
   bool buttonFileSelected = false;
-  Icon buttonFileIcon = const Icon(Icons.file_copy);
+  Icon buttonFileIcon = const Icon(Icons.file_copy, color: ThemeColors.white);
   Color buttonFileColor = ThemeColors.blue;
 
   @override
@@ -132,14 +132,15 @@ class _QuestionGrabacionPodcastOneState
                   if (file != null) {
                     setState(() {
                       buttonFileColor = ThemeColors.green;
-                      buttonFileIcon = const Icon(Icons.check);
+                      buttonFileIcon =
+                          const Icon(Icons.check, color: ThemeColors.white);
                       buttonFileSelected = true;
                     });
                   }
                 },
                 label: const Text(
                   'Subir el archivo',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: ThemeColors.white),
                 ),
               ),
             ),

@@ -25,7 +25,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
   bool isButtonDisabled = false;
 
   bool buttonFileSelected = false;
-  Icon buttonFileIcon = const Icon(Icons.file_copy);
+  Icon buttonFileIcon = const Icon(
+    Icons.file_copy,
+    color: ThemeColors.white,
+  );
   Color buttonFileColor = ThemeColors.blue;
 
   @override
@@ -49,6 +52,9 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                 Expanded(
                   child: RadioListTile<OpcoesCompartilhamento>(
                     title: const Text('Todos'),
+                    fillColor: MaterialStateColor.resolveWith(
+                      (states) => ThemeColors.blue,
+                    ),
                     value: OpcoesCompartilhamento.todos,
                     groupValue: sendingType,
                     onChanged: (OpcoesCompartilhamento? value) {
@@ -61,6 +67,9 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                 Expanded(
                   child: RadioListTile<OpcoesCompartilhamento>(
                     title: const Text('Turma'),
+                    fillColor: MaterialStateColor.resolveWith(
+                      (states) => ThemeColors.blue,
+                    ),
                     value: OpcoesCompartilhamento.turma,
                     groupValue: sendingType,
                     onChanged: (OpcoesCompartilhamento? value) {
@@ -96,7 +105,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                 if (file != null) {
                   setState(() {
                     buttonFileColor = ThemeColors.green;
-                    buttonFileIcon = const Icon(Icons.check);
+                    buttonFileIcon = const Icon(
+                      Icons.check,
+                      color: ThemeColors.white,
+                    );
                     buttonFileSelected = true;
                   });
                 }

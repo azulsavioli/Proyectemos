@@ -3,6 +3,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UnoTasksCompletedService {
   static const latinoamericaCompleted = true;
   static const artistasCompleted = true;
+  static const eventoCulturalCompleted = true;
+  static const divulgationCompleted = true;
 
   static Future<List<bool>> getUnoTaskCompletedInfo() async {
     final latinoamericaList = await getUnoLatinoamericaTaskCompletedInfo();
