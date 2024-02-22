@@ -43,6 +43,9 @@ class CardButton extends StatelessWidget {
           ),
         ),
         style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           foregroundColor: shadowColor,
           backgroundColor: Colors.white,
           elevation: 1,

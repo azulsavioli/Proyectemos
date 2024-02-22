@@ -63,8 +63,14 @@ class CustomStep extends StatefulWidget {
 class _CustomStepState extends State<CustomStep> {
   bool buttonFileSelected = false;
   bool buttonCameraSelected = false;
-  Icon buttonFileIcon = const Icon(Icons.image_outlined);
-  Icon buttonCameraIcon = const Icon(Icons.camera_alt_outlined);
+  Icon buttonFileIcon = const Icon(
+    Icons.image_outlined,
+    color: ThemeColors.white,
+  );
+  Icon buttonCameraIcon = const Icon(
+    Icons.camera_alt_outlined,
+    color: ThemeColors.white,
+  );
   Color buttonFileColor = ThemeColors.red;
   Color buttonCameraColor = ThemeColors.yellow;
   final _controller = StepController();
@@ -128,43 +134,10 @@ class _CustomStepState extends State<CustomStep> {
                             MaterialStateProperty.all(buttonFileColor),
                       ),
                       onPressed: () async {
-                        await selectImageFromGallery();
-                      }
-
-                      // onPressed: () async {
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isFileLoading = true;
-                      //     });
-                      //   }
-
-                      //   if (mounted) {
-                      //     final image = await _controller.pickImage(
-                      //       CustomStep.images,
-                      //       ImageSource.gallery,
-                      //     );
-                      //     if (mounted) {
-                      //       setState(() {
-                      //         isFileLoading = true;
-                      //       });
-                      //     }
-
-                      //     if (image == null) {
-                      //       _controller.validate();
-                      //     } else if (image != null) {
-                      //       if (mounted) {
-                      //         setState(() {
-                      //           isFileLoading = false;
-                      //           buttonFileColor = ThemeColors.green;
-                      //           buttonFileIcon = const Icon(Icons.check);
-                      //           buttonFileSelected = true;
-                      //           isFileSelected = true;
-                      //         });
-                      //       }
-                      //     }
-                      //   }
-                      // },
-                      ,
+                        setState(() {
+                          selectImageFromGallery();
+                        });
+                      },
                       icon: isFileLoading
                           ? const SizedBox(
                               width: 20,
@@ -175,7 +148,10 @@ class _CustomStepState extends State<CustomStep> {
                               ),
                             )
                           : buttonFileIcon,
-                      label: const Text('Galería'),
+                      label: const Text(
+                        'Galería',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 const SizedBox(
@@ -191,41 +167,10 @@ class _CustomStepState extends State<CustomStep> {
                             MaterialStateProperty.all(buttonCameraColor),
                       ),
                       onPressed: () async {
-                        await selectImageFromCamera();
+                        setState(() {
+                          selectImageFromCamera();
+                        });
                       },
-                      // onPressed: () async {
-                      //   if (mounted) {
-                      //     setState(() {
-                      //       isCameraLoading = true;
-                      //     });
-                      //   }
-                      //   if (mounted) {
-                      //     final image = await _controller.pickImage(
-                      //       CustomStep.images,
-                      //       ImageSource.camera,
-                      //     );
-
-                      //     if (mounted) {
-                      //       setState(() {
-                      //         isCameraLoading = true;
-                      //       });
-                      //     }
-
-                      //     if (image == null) {
-                      //       _controller.validate();
-                      //     } else if (image != null) {
-                      //       if (mounted) {
-                      //         setState(() {
-                      //           isCameraLoading = false;
-                      //           buttonCameraColor = ThemeColors.green;
-                      //           buttonCameraIcon = const Icon(Icons.check);
-                      //           buttonCameraSelected = true;
-                      //           isCameraSelected = true;
-                      //         });
-                      //       }
-                      //     }
-                      //   }
-                      // },
                       icon: isCameraLoading
                           ? const SizedBox(
                               width: 20,
@@ -236,7 +181,8 @@ class _CustomStepState extends State<CustomStep> {
                               ),
                             )
                           : buttonCameraIcon,
-                      label: const Text('Cámara'),
+                      label: const Text('Cámara',
+                          style: TextStyle(color: Colors.white)),
                     ),
                   ),
               ],
@@ -251,7 +197,7 @@ class _CustomStepState extends State<CustomStep> {
             ),
             CustomTextFormField(
               focusNode: focusNode,
-              textInputAction: TextInputAction.none,
+              textInputAction: TextInputAction.next,
               hint: 'Respuesta',
               controller: widget.controller,
               keyboardType: TextInputType.text,
@@ -285,7 +231,10 @@ class _CustomStepState extends State<CustomStep> {
         setState(() {
           isFileLoading = false;
           buttonFileColor = ThemeColors.green;
-          buttonFileIcon = const Icon(Icons.check);
+          buttonFileIcon = const Icon(
+            Icons.check,
+            color: ThemeColors.white,
+          );
           buttonFileSelected = true;
           isFileSelected = true;
         });
@@ -314,7 +263,10 @@ class _CustomStepState extends State<CustomStep> {
         setState(() {
           isCameraLoading = false;
           buttonCameraColor = ThemeColors.green;
-          buttonCameraIcon = const Icon(Icons.check);
+          buttonCameraIcon = const Icon(
+            Icons.check,
+            color: ThemeColors.white,
+          );
           buttonCameraSelected = true;
           isFileSelected = true;
         });

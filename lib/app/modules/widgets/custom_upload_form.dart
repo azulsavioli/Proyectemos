@@ -23,7 +23,10 @@ class CustomUploadForm extends StatefulWidget {
 class _CustomUploadFormState extends State<CustomUploadForm> {
   bool buttonFileSelected = false;
   bool isButtonDisabled = false;
-  Icon buttonFileIcon = const Icon(Icons.file_copy);
+  Icon buttonFileIcon = const Icon(
+    Icons.file_copy,
+    color: ThemeColors.white,
+  );
   Color buttonFileColor = ThemeColors.blue;
 
   late FocusNode focusNode;
@@ -52,7 +55,10 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
         setState(() {
           pickedFile = fileSelected.files.first;
           buttonFileColor = ThemeColors.green;
-          buttonFileIcon = const Icon(Icons.check);
+          buttonFileIcon = const Icon(
+            Icons.check,
+            color: ThemeColors.white,
+          );
           buttonFileSelected = true;
         });
       }
@@ -74,7 +80,7 @@ class _CustomUploadFormState extends State<CustomUploadForm> {
         ),
         CustomTextFormField(
           focusNode: focusNode,
-          textInputAction: TextInputAction.none,
+          textInputAction: TextInputAction.go,
           hint: 'Nombre del artista',
           controller: widget.controller,
           keyboardType: TextInputType.text,

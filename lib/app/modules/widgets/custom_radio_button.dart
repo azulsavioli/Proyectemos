@@ -23,13 +23,16 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: RadioListTile(
               activeColor: ThemeColors.yellow,
+              fillColor: MaterialStateColor.resolveWith(
+                (states) => ThemeColors.blue,
+              ),
               title: Text(widget.firstChoise),
               value: widget.firstChoise,
               groupValue: answer,
@@ -43,6 +46,9 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           ),
           Expanded(
             child: RadioListTile(
+              fillColor: MaterialStateColor.resolveWith(
+                (states) => ThemeColors.blue,
+              ),
               activeColor: ThemeColors.yellow,
               title: Text(widget.secondChoise),
               value: widget.secondChoise,
