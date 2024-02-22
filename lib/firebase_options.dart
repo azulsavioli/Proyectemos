@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDjb4N5ZPqB1pW1hMsZSraYN7WfvgFIk0U',
-    appId: '1:333978861746:android:b560e4a7de709b7b3a89ab',
+    appId: '1:333978861746:android:851952e29048f66a3a89ab',
     messagingSenderId: '333978861746',
     projectId: 'proyectemos-9924c',
     storageBucket: 'proyectemos-9924c.appspot.com',
@@ -59,14 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCIgd5AC6MeUlcTJ9Ephj1iBJPGnfb-hQ4',
-    appId: '1:333978861746:ios:11b277bd9914f52f3a89ab',
+    appId: '1:333978861746:ios:8d37ce798e2e4bd43a89ab',
     messagingSenderId: '333978861746',
     projectId: 'proyectemos-9924c',
     storageBucket: 'proyectemos-9924c.appspot.com',
-    androidClientId:
-        '333978861746-u37519fam3uaqu9gukmatg8adf0utlej.apps.googleusercontent.com',
-    iosClientId:
-        '333978861746-28s4hghi0m8sbgfafdjt4tc5rue1eoff.apps.googleusercontent.com',
-    iosBundleId: 'com.example.proyectemos',
+    iosClientId: '333978861746-01kmpv9r31hstdmchqq23on0m5e0967n.apps.googleusercontent.com',
+    iosBundleId: 'com.example.proyectemosIos',
   );
 }

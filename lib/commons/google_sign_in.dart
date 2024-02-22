@@ -1,10 +1,22 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final auth = FirebaseAuth.instance;
-  final googleSignIn = GoogleSignIn(scopes: ['https://mail.google.com/']);
+  final GoogleSignIn googleSignIn = Platform.isAndroid
+      ? GoogleSignIn(
+          scopes: ['https://mail.google.com/'],
+        )
+      : GoogleSignIn(
+          scopes: ['email', 'https://mail.google.com/'],
+          hostedDomain: "",
+          serverClientId: "",
+          clientId:
+              '333978861746-08k5kg8ul68fars53d3n96fkhs03abe8.apps.googleusercontent.com',
+        );
 
   late GoogleSignInAccount? _user;
 

@@ -116,14 +116,14 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ]
                           : [
-                              const FaIcon(
-                                FontAwesomeIcons.google,
-                              ),
+                              const FaIcon(FontAwesomeIcons.google,
+                                  size: 20, color: Colors.white),
                               Padding(
                                 padding: const EdgeInsets.all(8),
                                 child: Text(
                                   Strings.iniciaSessao,
                                   style: TextStyle(
+                                    color: Colors.white,
                                     fontSize: ScreenUtil().setSp(14),
                                   ),
                                 ),
@@ -145,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 40,
               ),
             ],
           ),
