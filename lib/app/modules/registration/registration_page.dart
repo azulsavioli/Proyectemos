@@ -257,7 +257,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     'Confirmar los datos',
                     style: ThemeText.paragraph16WhiteBold,
                   ),
-                  icon: const Icon(Icons.check),
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ],

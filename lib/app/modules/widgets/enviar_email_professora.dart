@@ -119,7 +119,7 @@ ${_emailController.text}''';
             ),
             CustomTextFormField(
               focusNode: focusNode,
-              textInputAction: TextInputAction.none,
+              textInputAction: TextInputAction.go,
               hint: 'Respuesta',
               controller: _emailController,
               keyboardType: TextInputType.text,
