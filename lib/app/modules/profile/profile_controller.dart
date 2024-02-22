@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../../../services/uno_tasks_completed.dart';
 
 class ProfileController {
@@ -34,5 +36,9 @@ class ProfileController {
 
   int getAllTasks() {
     return unoTasks + dosTasks + tresTasks;
+  }
+
+  Future<void> logout() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

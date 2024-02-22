@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
-// import 'package:proyectemos/repository/repository_impl.dart';
 
 import '../widgets/card_button.dart';
 
@@ -16,7 +15,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final _controller = ProfileController();
   final user = FirebaseAuth.instance.currentUser!;
-  // final _repository = RepositoryImpl();
 
   @override
   void initState() {
@@ -42,12 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
           centerTitle: true,
-          iconTheme: const IconThemeData(color: ThemeColors.white),
           title: Text(
             'Perfil',
             style: ThemeText.paragraph16WhiteBold,
@@ -177,10 +170,65 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(
                 height: 8,
               ),
+              logoutCard(context, _controller),
+              const SizedBox(
+                height: 8,
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget logoutCard(
+  BuildContext context,
+  ProfileController _controller,
+) {
+  final width = MediaQuery.of(context).size.width * .9;
+  final height = MediaQuery.of(context).size.width * .2;
+  return SizedBox(
+    height: height,
+    width: width,
+    child: ElevatedButton.icon(
+      icon: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: CircleAvatar(
+          radius: 25,
+          backgroundColor: ThemeColors.red,
+          child: Icon(
+            Icons.logout,
+            size: 25,
+            color: ThemeColors.white,
+          ),
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          // Definindo a forma retangular
+          borderRadius: BorderRadius.circular(10), // Raio de borda desejado
+        ),
+        foregroundColor: ThemeColors.red,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+        textStyle: ThemeText.paragraph14Gray,
+      ),
+      onPressed: () {
+        _controller.logout();
+      },
+      label: Row(
+        children: [
+          const SizedBox(
+            width: 15,
+          ),
+          Text(
+            "Salir",
+            style: ThemeText.paragraph14Gray,
+          ),
+        ],
+      ),
+    ),
+  );
 }
