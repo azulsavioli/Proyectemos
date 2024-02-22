@@ -13,7 +13,7 @@ abstract class StringsLaEncuesta {
   static const String questionTwoLaEncuestaTareaUno =
       '¿Ya has contestado a alguna encuesta?';
   static const String questionThreeLaEncuestaTareaUno =
-      '¿Qué tipo de encuestas encuentras en tu cotidiano?';
+      '¿Qué tipo de encuestas encuentras en tu día a día?';
   static const String descriptionLaEncuestaTareaDos =
       'Mira el vídeo sobre cómo crear una encuesta y contesta las preguntas.';
   static const String questionOneLaEncuestaTareaDos =

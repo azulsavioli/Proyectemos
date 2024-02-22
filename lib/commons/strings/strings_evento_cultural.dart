@@ -20,7 +20,7 @@ Para eso es importante que tengan en cuenta algunos de los seguientes puntos:
 
   static const String descriptionThreeEventocultural = '''
 Después que decidan sobre estos puntos se lo presenten a la profesora.\n
-Deben enviar la propuesta del evento de manera escrita(imágen, slide o texto) y oral (audio).\n
+Deben enviar la propuesta del evento de manera escrita(imagen, slide o texto) y oral (audio).\n
 Después, la profesora les dará la devolución si el evento estará apto para ser compartido con los compañeros. 
 ''';
 

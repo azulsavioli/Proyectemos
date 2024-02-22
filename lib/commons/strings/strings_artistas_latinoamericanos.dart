@@ -9,7 +9,7 @@ abstract class StringsArtistasLationamerica {
   static const String qOneArtistasLatinPageOne =
       '''¿Ya conocias a Frida Khalo o su trabajo? ¿Sabes más informaciones sobre ella?''';
   static const String qTwoArtistasLatinPageOne =
-      '¿Cúal de las imágenes te llamó más atención? ¿Por que?';
+      '¿Cúal de las imágenes te llamó más atención? ¿Por qué?';
   static const String qThreeArtistasLatinPageOne =
       '''¿Conoces a otros artistas hispánoamericanos? Pueden ser pintores, cantantes, músicos, escritores, etc... ¿Qué sabes sobre ellos?''';
 
