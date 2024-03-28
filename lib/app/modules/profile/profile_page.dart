@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
 
+import '../../../repository/repository_impl.dart';
 import '../widgets/card_button.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -14,17 +15,22 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final _controller = ProfileController();
+  final _repository = RepositoryImpl();
   final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
-    setState(() {
-      _controller
-        ..getUnoTaskCompleted()
-        ..getPercentage();
-    });
-
     super.initState();
+    _initializeData();
+  }
+
+  Future<void> _initializeData() async {
+    await _controller.getUnoTaskCompleted();
+    await _controller.getDosTaskCompleted();
+    setState(() {
+      // Atualize o estado após obter os dados
+      _controller.getPercentage();
+    });
   }
 
   @override
@@ -45,27 +51,32 @@ class _ProfilePageState extends State<ProfilePage> {
             'Perfil',
             style: ThemeText.paragraph16WhiteBold,
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
+            onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+          ),
         ),
-        // floatingActionButton: FloatingActionButton(
-        //   child: const Icon(Icons.delete),
-        //   onPressed: () {
-        //     _repository
-        //       ..resetTaskCompleted('artistasTareaDosCompleted')
-        //       ..resetTaskCompleted('artistasTareaUnoCompleted')
-        //       ..resetTaskCompleted('latinoamericaTareaDosCompleted')
-        //       ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
-        //       ..resetTaskCompleted('eventoTareaUnoCompleted')
-        //       ..resetTaskCompleted('divulgationCompleted')
-        //       ..resetTaskCompleted('conocesPodcastCompleted')
-        //       ..resetTaskCompleted('comoCrearPodcastTareaUnoCompleted')
-        //       ..resetTaskCompleted('comoCrearPodcastTareaDosCompleted')
-        //       ..resetTaskCompleted('laEncuestaTareaUnoCompleted')
-        //       ..resetTaskCompleted('laEncuestaTareaDosCompleted')
-        //       ..resetTaskCompleted('creacionEncuestaCompleted')
-        //       ..resetTaskCompleted('grabacionPodcastTareaUnoCompleted')
-        //       ..resetTaskCompleted('grabacionPodcastTareaDosCompleted');
-        //   },
-        // ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.delete),
+          onPressed: () {
+            _repository
+              ..resetTaskCompleted('artistasTareaDosCompleted')
+              ..resetTaskCompleted('artistasTareaUnoCompleted')
+              ..resetTaskCompleted('latinoamericaTareaDosCompleted')
+              ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
+              ..resetTaskCompleted('eventoTareaUnoCompleted')
+              ..resetTaskCompleted('divulgationCompleted')
+              ..resetTaskCompleted('conocesPodcastCompleted')
+              ..resetTaskCompleted('comoCrearPodcastTareaUnoCompleted')
+              ..resetTaskCompleted('comoCrearPodcastTareaDosCompleted')
+              ..resetTaskCompleted('laEncuestaTareaUnoCompleted')
+              ..resetTaskCompleted('laEncuestaTareaDosCompleted')
+              ..resetTaskCompleted('creacionEncuestaCompleted')
+              ..resetTaskCompleted('grabacionPodcastTareaUnoCompleted')
+              ..resetTaskCompleted('grabacionPodcastTareaDosCompleted')
+              ..resetTaskCompleted('laSociedadTareaCompleted');
+          },
+        ),
         body: Center(
           child: Column(
             children: [

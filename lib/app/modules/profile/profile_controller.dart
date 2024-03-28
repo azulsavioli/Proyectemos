@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:proyectemos/services/dos_tasks_completed.dart';
 
 import '../../../services/uno_tasks_completed.dart';
 
@@ -28,10 +29,37 @@ class ProfileController {
     return unoTasks;
   }
 
+  Future<int> getDosTaskCompleted() async {
+    final resultado = await DosTasksCompletedService.getDosTaskCompletedInfo();
+
+    if (resultado[0] == true) {
+      dosTasks = 2;
+    }
+    if (resultado[1] == true) {
+      dosTasks += 2;
+    }
+    if (resultado[2] == true) {
+      dosTasks += 1;
+    }
+    if (resultado[3] == true) {
+      dosTasks += 1;
+    }
+
+    return dosTasks;
+  }
+
+  // Future<void> getPercentage() async {
+  //   final unoTasks = await getUnoTaskCompleted();
+  //   final dosTasks = await getDosTaskCompleted();
+
+  //   percentage = unoTasks + dosTasks / allTasks * 100;
+  // }
+
   Future<void> getPercentage() async {
     final unoTasks = await getUnoTaskCompleted();
+    final dosTasks = await getDosTaskCompleted();
 
-    percentage = unoTasks / allTasks * 100;
+    percentage = (unoTasks + dosTasks) / allTasks * 100;
   }
 
   int getAllTasks() {
