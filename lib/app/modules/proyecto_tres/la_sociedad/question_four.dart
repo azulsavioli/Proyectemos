@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/la_sociedade_controller.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../../commons/styles.dart';
-import '../../../../commons/strings/strings.dart';
 import '../../../../commons/strings/strings_la_sociedad.dart';
 import '../../widgets/custom_record_audio_button.dart';
 
@@ -21,11 +18,14 @@ class QuestionLaSociedadTareaFour extends StatefulWidget {
       _QuestionLaSociedadTareaFourState();
 }
 
-class _QuestionLaSociedadTareaFourState extends State<QuestionLaSociedadTareaFour> with AutomaticKeepAliveClientMixin {
+class _QuestionLaSociedadTareaFourState
+    extends State<QuestionLaSociedadTareaFour>
+    with AutomaticKeepAliveClientMixin {
   LaSociedadController get controller => widget.controller;
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -57,5 +57,3 @@ class _QuestionLaSociedadTareaFourState extends State<QuestionLaSociedadTareaFou
   @override
   bool get wantKeepAlive => true;
 }
-
-
