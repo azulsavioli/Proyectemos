@@ -41,8 +41,6 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
   int pageChanged = 0;
 
   late YoutubePlayerController youTubeController;
-  late TextEditingController idController;
-  late TextEditingController seekToController;
 
   late PlayerState playerState;
   late YoutubeMetaData videoMetaData;
@@ -75,8 +73,6 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
         controlsVisibleAtStart: true,
       ),
     )..addListener(listener);
-    idController = TextEditingController();
-    seekToController = TextEditingController();
     videoMetaData = const YoutubeMetaData();
     playerState = PlayerState.buffering;
   }
@@ -99,8 +95,6 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
   void dispose() {
     pageController.dispose();
     youTubeController.dispose();
-    idController.dispose();
-    seekToController.dispose();
     focusNode1.dispose();
     focusNode2.dispose();
     focusNode3.dispose();
