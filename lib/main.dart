@@ -9,6 +9,7 @@ import 'package:proyectemos/providers/play_audio_provider.dart';
 import 'package:proyectemos/providers/record_audio_provider_artistas_impl.dart';
 import 'package:proyectemos/providers/record_audio_provider_conoces_podcast_impl.dart';
 import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl.dart';
+import 'package:proyectemos/providers/record_audio_provider_la_sociedad_impl.dart';
 import 'package:proyectemos/repository/proyectemos_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,7 @@ import 'app/proyectemos_app.dart';
 import 'commons/firebase_options.dart';
 import 'providers/record_audio_provider_la_encuesta_tarea_dos.dart';
 import 'providers/record_audio_provider_la_encuesta_tarea_uno.dart';
+import 'providers/record_audio_provider_tu_alrededor_impl.dart';
 import 'services/auth_services.dart';
 
 bool? isOnboardingCompleted;
@@ -72,6 +74,12 @@ Future<void> main() async {
           ),
           ChangeNotifierProvider(
             create: (_) => RecordAudioLaEncuestaTareaDosProviderImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioLaSociedadProviderImpl(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => RecordAudioTuAlrededorProviderImpl(),
           ),
           ChangeNotifierProvider(create: (_) => PlayAudioProvider()),
         ],
