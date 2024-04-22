@@ -47,6 +47,31 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
     super.dispose();
   }
 
+  List<ChewieController> initVideoControllers() {
+    videoPlayerControllers = [];
+
+    for (final video in videosList) {
+      try {
+        videoPlayerController = VideoPlayerController.networkUrl(
+          Uri.parse(video),
+        );
+
+        videoPlayerController.initialize().then((_) {
+          setState(() {});
+          chewieController = ChewieController(
+            videoPlayerController: videoPlayerController,
+          );
+          videoPlayerControllers.add(chewieController);
+        }).catchError((error) {
+          print("Error initializing video player: $error");
+        });
+      } catch (error) {
+        print("Error creating video player: $error");
+      }
+    }
+    return videoPlayerControllers;
+  }
+
   Future<void> startFeed() async {
     await getFeedTask();
     await getVideos().then((_) => {makeVideoList(), initVideoControllers()});
@@ -98,26 +123,26 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
     return videosList;
   }
 
-  List<ChewieController> initVideoControllers() {
-    videoPlayerControllers = [];
+  // List<ChewieController> initVideoControllers() {
+  //   videoPlayerControllers = [];
 
-    for (final video in videosList) {
-      try {
-        videoPlayerController = VideoPlayerController.networkUrl(
-          Uri.parse(video),
-        )..initialize().then((value) => setState(() {}));
+  //   for (final video in videosList) {
+  //     try {
+  //       videoPlayerController = VideoPlayerController.networkUrl(
+  //         Uri.parse(video),
+  //       )..initialize().then((value) => setState(() {}));
 
-        chewieController = ChewieController(
-          videoPlayerController: videoPlayerController,
-        );
-      } catch (error) {
-        error.toString();
-      }
+  //       chewieController = ChewieController(
+  //         videoPlayerController: videoPlayerController,
+  //       );
+  //     } catch (error) {
+  //       error.toString();
+  //     }
 
-      videoPlayerControllers.add(chewieController);
-    }
-    return videoPlayerControllers;
-  }
+  //     videoPlayerControllers.add(chewieController);
+  //   }
+  //   return videoPlayerControllers;
+  // }
 
   @override
   Widget build(BuildContext context) {

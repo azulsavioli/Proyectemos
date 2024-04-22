@@ -17,7 +17,7 @@ class DivulgacaoController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   bool loading = true;
   final subject = 'Atividade - Divulgacao - Video do Evento Cultural';
-  final doc = 'uno/artistas-latinoamericanos/atividade_1/';
+  final doc = 'uno/divulgacion/atividade_1/';
   final task = 'divulgationCompleted';
 
   OpcoesCompartilhamento? sendingType = OpcoesCompartilhamento.todos;
@@ -37,7 +37,7 @@ class DivulgacaoController extends ChangeNotifier {
 
     final json = {
       'aluno': currentUser?.displayName,
-      'resposta_1': firebasePaths[0],
+      'video_dilvulgacao': firebasePaths[0],
     };
     return json;
   }

@@ -20,7 +20,6 @@ enum OpcoesCompartilhamento { turma, todos }
 class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
     with AutomaticKeepAliveClientMixin {
   DivulgacaoController get _controller => widget.controller;
-  OpcoesCompartilhamento? sendingType = OpcoesCompartilhamento.todos;
 
   bool isButtonDisabled = false;
 
@@ -56,10 +55,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                       (states) => ThemeColors.blue,
                     ),
                     value: OpcoesCompartilhamento.todos,
-                    groupValue: sendingType,
+                    groupValue: _controller.sendingType,
                     onChanged: (OpcoesCompartilhamento? value) {
                       setState(() {
-                        sendingType = value;
+                        _controller.sendingType = value;
                       });
                     },
                   ),
@@ -71,10 +70,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                       (states) => ThemeColors.blue,
                     ),
                     value: OpcoesCompartilhamento.turma,
-                    groupValue: sendingType,
+                    groupValue: _controller.sendingType,
                     onChanged: (OpcoesCompartilhamento? value) {
                       setState(() {
-                        sendingType = value;
+                        _controller.sendingType = value;
                       });
                     },
                   ),
