@@ -147,89 +147,6 @@ class ProyectemosRepository extends ChangeNotifier {
     return studentsList;
   }
 
-  // Future<List<String>?>? getStudents() async {
-  //   final studentsList = [];
-  //   sharedPreferences = await SharedPreferences.getInstance();
-  //   studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
-  //   studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
-
-  //   final schoolId = await getSchoolId(studentSchoolInfo);
-  //   final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
-
-  //   if (schoolId.isEmpty || classroomId.isEmpty) {
-  //     return;
-  //   }
-
-  //   final DocumentReference classRef = db
-  //       .collection('escolas')
-  //       .doc(schoolId)
-  //       .collection('turmas')
-  //       .doc(classroomId);
-
-  //   try {
-  //     await classRef.get().then((DocumentSnapshot docSnapshot) {
-  //       if (docSnapshot.exists) {
-  //         final data = docSnapshot.data() as Map<String, dynamic>?;
-
-  //         if (data != null) {
-  //           for (final key in data.keys) {
-  //             if (key.startsWith('nome_aluno')) {
-  //               studentsList.add({'key': key, 'value': data[key]});
-  //             }
-  //           }
-  //         }
-  //       }
-  //     });
-  //   } on FirebaseException catch (e) {
-  //     e.toString();
-  //   }
-  //   notifyListeners();
-  //   return studentsList;
-  // }
-
-  // Future<List<String>> getStudentsNamesList() {
-  //   return getStudentsNames(
-  //     studentSchoolInfo,
-  //     studentClassRoomInfo,
-  //   );
-  // }
-
-  // Future<List<String>> getStudentsNames(
-  //   String schoolId,
-  //   String classNameParams,
-  // ) async {
-  //   final classRoomRef = FirebaseFirestore.instance
-  //       .collection('escolas')
-  //       .doc(schoolId)
-  //       .collection('turmas');
-
-  //   List<String> names = [];
-
-  //   try {
-  //     final querySnapshot = await classRoomRef.get();
-
-  //     print('querySnapshot from Firebase: $querySnapshot');
-
-  //     for (final doc in querySnapshot.docs) {
-  //       final className = doc.data();
-  //       print('Data from Firebase: $className');
-  //       if (className == null) continue;
-  //       final data = className;
-  //       names.addAll(
-  //         (data as Map<String, dynamic>)
-  //             .entries
-  //             .where((entry) => entry.key.startsWith('nome_aluno_'))
-  //             .map((entry) => entry.value.toString())
-  //             .toList(),
-  //       );
-  //     }
-  //   } catch (error) {
-  //     print("Error in getStudentsName: ${error.toString()}");
-  //   }
-
-  //   return names;
-  // }
-
   Future<void> saveClassroomStudents<T>(
     Map<String, T> classroomStudents,
   ) async {
@@ -414,6 +331,38 @@ class ProyectemosRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future saveMovimientoSocialeTurma(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('movimiento_sociale_turma')
+        .doc(authService.userAuth?.uid);
+
+    try {
+      await studentTaskRef.set(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
+    notifyListeners();
+  }
+
+  Stream<List<Map<String, dynamic>>> getMovimientoSocialeTurmaStream() {
+    return Stream.fromFuture(_getMovimientoTurma());
+  }
+
   Stream<List<Map<String, dynamic>>> getPodcastTurmaStream() {
     return Stream.fromFuture(_getPodcastTurma());
   }
@@ -437,6 +386,38 @@ class ProyectemosRepository extends ChangeNotifier {
         .collection('turmas')
         .doc(classroomId)
         .collection('podcast_turma');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data()! as Map<String, dynamic>);
+        }
+      });
+    } catch (error) {
+      print(error);
+    }
+    return studentsImages;
+  }
+
+  Future<List<Map<String, dynamic>>> _getMovimientoTurma() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentsImages = <Map<String, dynamic>>[];
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return studentsImages;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection("movimiento_sociale_turma");
 
     try {
       await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
@@ -526,7 +507,7 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(classroomId)
         .collection('videos_turma')
         .doc(authService.userAuth?.uid)
-        .collection('videos');
+        .collection('videos_divulgacion');
 
     try {
       await studentTaskRef.add(answer);
@@ -556,7 +537,73 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(classroomId)
         .collection('videos_turma')
         .doc(authService.userAuth?.uid)
-        .collection('videos');
+        .collection('videos_divulgacion');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data());
+        }
+      });
+    } catch (error) {
+      error.toString();
+    }
+    notifyListeners();
+
+    return studentsImages.cast<Map<String, dynamic>>();
+  }
+
+  Future saveVideosMovimientosSocialesTurma(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('videos_turma')
+        .doc(authService.userAuth?.uid)
+        .collection('videos_movimientos_sociales');
+
+    try {
+      await studentTaskRef.add(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
+    notifyListeners();
+  }
+
+  Future<List<Map<String, dynamic>>?>
+      getVideosMovimientosSocialesTurma() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentsImages = [];
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return null;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('videos_turma')
+        .doc(authService.userAuth?.uid)
+        .collection('videos_movimientos_sociales');
 
     try {
       await studentTaskRef.get().then((QuerySnapshot querySnapshot) {

@@ -4,6 +4,7 @@ abstract class Strings {
   static const String appVersion = 'v1.0.0';
   static const String author = 'Maia de Oliveira, F.';
   static const String email = 'violet.labs.contato@gmail.com';
+  static const String enviarEmailProfesora = 'Feedback';
 
 // Proyectos UNO Page
 
@@ -110,13 +111,21 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
 
   //Proyectos TRES Page
 
-  static const String titleCreaTuMovimiento = "Crea tu movimiento";
   static const String titleLaSociedad = "La sociedad";
   static const String titleLaSociedadFeedback = "Feedback La sociedad";
+
+  static const String movimientoSociale = "Movimientos sociales";
+  static const String movimientoSocialeFeedback =
+      "Feedback Movimientos sociales";
   static const String laSociedadGrabacionImage =
       "https://www.unifor.br/documents/20143/573164/coletivo-negrada-unifor-800.jpg/93abeaf3-74d5-41c9-ead9-4cb508c79951?t=1679579818218";
 
   static const String titleTuAlrededor = "Tu Alrededor";
+  static const String titleTuAlrededorFeedback = "Feedback Tu Alrededor";
   static const String tuAlrededorGrabacionImage =
       "https://redsocial.rededuca.net/sites/default/files/styles/panopoly_image_original/public/foto_1.png";
+
+  static const String titleCreaTuMovimiento = "Crea tu movimiento";
+  static const String titleCreaTuMovimientoFeedback =
+      "Feedback Crea tu movimiento";
 }

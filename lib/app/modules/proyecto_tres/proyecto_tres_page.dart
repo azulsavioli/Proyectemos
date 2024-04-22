@@ -100,7 +100,9 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   text: 'Movimientos\nSociales',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pTres_movimientosSociales_menu',
+                  namedRoute: movimientosSocialesCompleted
+                      ? '/pTres_movimientosSociales_tarea_menu'
+                      : '/pTres_movimientosSociales',
                   backgroundColor: movimientosSocialesCompleted
                       ? ThemeColors.green
                       : ThemeColors.blue,
@@ -115,10 +117,14 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                 ),
                 CardButton(
                   iconSize: 25,
-                  text: 'Tu Alrededor',
+                  text: tuAlrededorCompleted
+                      ? 'Feedback\nTu Alrededor'
+                      : 'Tu Alrededor',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pTres_tuAlrededor',
+                  namedRoute: tuAlrededorCompleted
+                      ? '/pTres_tuAlrededor_feedback'
+                      : '/pTres_tuAlrededor',
                   backgroundColor: tuAlrededorCompleted
                       ? ThemeColors.green
                       : ThemeColors.red,
@@ -132,29 +138,10 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                 ),
                 CardButton(
                   iconSize: 25,
-                  text: 'Las redes sociales\ny el activismo',
-                  cardWidth: width,
-                  cardHeight: height,
-                  namedRoute: '/pTres_lasRedesSocialesYElActivismo',
-                  backgroundColor: lasRedesSocialesYElActivismoCompleted
-                      ? ThemeColors.green
-                      : ThemeColors.yellow,
-                  icon: lasRedesSocialesYElActivismoCompleted
-                      ? Icons.check
-                      : Icons.group_add,
-                  shadowColor: lasRedesSocialesYElActivismoCompleted
-                      ? ThemeColors.green
-                      : ThemeColors.yellow,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CardButton(
-                  iconSize: 25,
                   text: 'Crea tu movimiento',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: '/pTres_creacionDeSuMovimentoCompleted_menu',
+                  namedRoute: '/pTres_creacionDeSuMovimento_menu',
                   backgroundColor: creacionDeSuMovimentoCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
