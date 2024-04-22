@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
+import 'package:proyectemos/services/tres_tasks_completed.dart';
 
 import '../../../services/uno_tasks_completed.dart';
 
@@ -7,7 +8,7 @@ class ProfileController {
   int unoTasks = 0;
   int dosTasks = 0;
   int tresTasks = 0;
-  int allTasks = 29;
+  int allTasks = 17;
   double percentage = 0;
 
   Future<int> getUnoTaskCompleted() async {
@@ -48,18 +49,32 @@ class ProfileController {
     return dosTasks;
   }
 
-  // Future<void> getPercentage() async {
-  //   final unoTasks = await getUnoTaskCompleted();
-  //   final dosTasks = await getDosTaskCompleted();
+  Future<int> getTresTaskCompleted() async {
+    final resultado =
+        await TresTasksCompletedService.getTresTaskCompletedInfo();
 
-  //   percentage = unoTasks + dosTasks / allTasks * 100;
-  // }
+    if (resultado[0] == true) {
+      tresTasks = 1;
+    }
+    if (resultado[1] == true) {
+      tresTasks += 1;
+    }
+    if (resultado[2] == true) {
+      tresTasks += 1;
+    }
+    if (resultado[3] == true) {
+      tresTasks += 2;
+    }
+
+    return tresTasks;
+  }
 
   Future<void> getPercentage() async {
     final unoTasks = await getUnoTaskCompleted();
     final dosTasks = await getDosTaskCompleted();
+    final tresTasks = await getTresTaskCompleted();
 
-    percentage = (unoTasks + dosTasks) / allTasks * 100;
+    percentage = (unoTasks + dosTasks + tresTasks) / allTasks * 100;
   }
 
   int getAllTasks() {

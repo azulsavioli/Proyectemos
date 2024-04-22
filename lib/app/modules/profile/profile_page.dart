@@ -27,8 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _initializeData() async {
     await _controller.getUnoTaskCompleted();
     await _controller.getDosTaskCompleted();
+    await _controller.getTresTaskCompleted();
     setState(() {
-      // Atualize o estado após obter os dados
       _controller.getPercentage();
     });
   }
@@ -74,7 +74,11 @@ class _ProfilePageState extends State<ProfilePage> {
               ..resetTaskCompleted('creacionEncuestaCompleted')
               ..resetTaskCompleted('grabacionPodcastTareaUnoCompleted')
               ..resetTaskCompleted('grabacionPodcastTareaDosCompleted')
-              ..resetTaskCompleted('laSociedadTareaCompleted');
+              ..resetTaskCompleted('laSociedadTareaCompleted')
+              ..resetTaskCompleted('tuAlrededorCompleted')
+              ..resetTaskCompleted('creaTuMovimientoTareaUnoCompleted')
+              ..resetTaskCompleted('creaTuMovimientoTareaDosCompleted')
+              ..resetTaskCompleted('movimientosSocialesCompleted');
           },
         ),
         body: Center(

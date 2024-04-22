@@ -82,7 +82,7 @@ dependencies:
   simple_ripple_animation: ^0.0.3
   just_audio: ^0.9.29
   percent_indicator: ^4.2.2
-  audioplayers: ^5.1.0
+  audioplayers: ^5.2.1
 
   #Toast 
   # fluttertoast: ^8.0.9
