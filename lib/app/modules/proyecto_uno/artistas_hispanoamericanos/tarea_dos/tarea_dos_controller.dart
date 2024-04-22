@@ -56,8 +56,6 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
     }
   }
 
-  bool loading = false;
-
   List randonCountrys = [];
 
   void generateCountrysList() {

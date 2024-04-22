@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/services/toast_services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -6,7 +5,6 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../../../commons/strings/strings_grabacion_podcast.dart';
 import '../../../../../commons/styles.dart';
-import '../../../../../services/storage_service.dart';
 import '../../../../../utils/get_user.dart';
 import 'intro_dos_tarea_grabacion_podcast.dart';
 import 'intro_one_tarea_grabacion_podcast.dart';
@@ -24,8 +22,6 @@ class TareaDosGrabacionPodcastPage extends StatefulWidget {
 
 class _TareaDosGrabacionPodcastPageState
     extends State<TareaDosGrabacionPodcastPage> {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final StorageService storageService = StorageService();
   final _controller = TareaDosGrabacionPodcastController();
 
   final _formKey = GlobalKey<FormState>();

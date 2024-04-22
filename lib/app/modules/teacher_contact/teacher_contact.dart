@@ -122,10 +122,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                       _assuntoController.text,
                       _descricaoController.text,
                     );
-                    Navigator.pushNamed(
-                      context,
-                      '/pUno_evento_cultural_feedback',
-                    );
+                    Navigator.pop(context);
                   }
                 },
                 child: const Row(

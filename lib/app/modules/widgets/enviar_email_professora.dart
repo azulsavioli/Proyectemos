@@ -100,7 +100,7 @@ ${_emailController.text}''';
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titlePropuestadeEventoUno,
+          Strings.enviarEmailProfesora,
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
