@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/registration/registration_controller.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
@@ -68,17 +69,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     AsyncSnapshot<List<String>> snapshot,
                   ) {
                     if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                          child: CircularProgressIndicator(
+                        color: ThemeColors.blue,
+                      ));
                     }
 
                     final schoolOptions = [
                       'Selecione sua escuela!',
                       ...snapshot.data!,
                     ];
-
-                    return DropdownButtonFormField<String>(
+                    return DropdownButtonFormField2<String>(
+                      isExpanded: true,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.blue),
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
@@ -87,9 +96,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: Text('Elige tu escuela'),
                       ),
                       value: (dropdownValor1.isEmpty) ? null : dropdownValor1,
-                      iconSize: 42,
-                      iconEnabledColor: ThemeColors.yellow,
-                      isExpanded: true,
+                      iconStyleData: IconStyleData(
+                        iconSize: 42,
+                        iconEnabledColor: ThemeColors.yellow,
+                      ),
                       onChanged: (option) {
                         if (option == 'Selecione sua escuela!') {
                           showToast(
@@ -104,8 +114,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           });
                         }
                       },
-                      items: schoolOptions
-                          .map<DropdownMenuItem<String>>((String value) {
+                      items: schoolOptions.map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -131,7 +140,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ) {
                       if (!snapshot.hasData || snapshot.data!.isEmpty) {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: ThemeColors.blue,
+                          ),
                         );
                       }
 
@@ -139,10 +150,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         'Selecione sua clase!',
                         ...snapshot.data!,
                       ];
-
-                      return DropdownButtonFormField<String>(
+                      return DropdownButtonFormField2<String>(
+                        isExpanded: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
                             borderRadius: BorderRadius.circular(25),
                           ),
                         ),
@@ -150,10 +166,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           padding: EdgeInsets.only(left: 12),
                           child: Text('Elige tu grado'),
                         ),
-                        value: (dropdownValor2.isEmpty) ? null : dropdownValor2,
-                        iconSize: 42,
-                        iconEnabledColor: ThemeColors.yellow,
-                        isExpanded: true,
+                        value:
+                            dropdownValor2.isNotEmpty ? dropdownValor2 : null,
+                        iconStyleData: IconStyleData(
+                          iconSize: 42,
+                          iconEnabledColor: ThemeColors.yellow,
+                        ),
                         onChanged: (option) {
                           if (option == 'Selecione sua clase!') {
                             showToast(
@@ -167,8 +185,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             });
                           }
                         },
-                        items: classOptions
-                            .map<DropdownMenuItem<String>>((String value) {
+                        items: classOptions.map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(value),
@@ -185,6 +202,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 TextFormField(
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(20),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue),
                       borderRadius: BorderRadius.all(
                         Radius.circular(20),
                       ),
