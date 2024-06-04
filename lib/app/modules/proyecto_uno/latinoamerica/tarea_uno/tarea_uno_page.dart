@@ -28,7 +28,7 @@ class TareaUnoLatinoamericaPage extends StatefulWidget {
 class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
   final StorageService storageService = StorageService();
-  final _tareaUnoController = TareaUnoController();
+  final _tareaUnoController = LatinoamericaTareaUnoController();
 
   final _formKey = GlobalKey<FormState>();
   final pageController = PageController();
@@ -254,7 +254,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         setState(() {
@@ -285,17 +285,20 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           setState(() {
                             loading = true;
                           });
-                          _tareaUnoController
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) {
+                              if (mounted) {
+                                _tareaUnoController.sendAnswers(
+                                  currentUser,
+                                  respostas,
+                                );
+                                Navigator.pushNamed(
                                   context,
                                   '/pUno_latinoamerica_menu',
-                                ),
-                              );
+                                );
+                              }
+                            },
+                          );
                         }
                       },
                       child: const Text(

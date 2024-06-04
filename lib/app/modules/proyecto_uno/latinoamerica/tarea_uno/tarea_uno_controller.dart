@@ -7,7 +7,7 @@ import '../../../../../commons/strings/strings_latinoamerica.dart';
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
 
-class TareaUnoController extends ChangeNotifier {
+class LatinoamericaTareaUnoController extends ChangeNotifier {
   final _repository = RepositoryImpl();
   final subject = 'Atividade - Latinoamerica\n Tarea Uno';
   final doc = 'uno/latinoamerica/atividade_1/';
@@ -17,6 +17,7 @@ class TareaUnoController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
+    await _repository.isTaskLoading(task, true);
     try {
       final json = _repository.createJson(
         answersList,
@@ -36,8 +37,9 @@ class TareaUnoController extends ChangeNotifier {
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
 
+      showToast(Strings.tareaEnviada);
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();

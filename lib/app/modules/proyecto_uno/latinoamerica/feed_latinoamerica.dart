@@ -19,7 +19,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
 
   @override
   void initState() {
-    _imagesStream = _repository.getImagesTurmaStream();
+    _imagesStream = _repository.getImagesTurmaLatinoamericaStream();
     super.initState();
   }
 
@@ -52,7 +52,9 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
           final students = snapshot.data ?? [];
@@ -78,7 +80,9 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
         },
@@ -95,6 +99,8 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
       for (var j = 0; j < 5; j++) {
         cards.add(
           Card(
+            color: ThemeColors.white,
+            elevation: 3,
             child: Column(
               children: [
                 ListTile(

@@ -44,6 +44,7 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
+    await _repository.isTaskLoading(task, true);
     try {
       if (_repository.authService.userAuth != null) {
         final json = await makeJsonImages(answersList, currentUser);
@@ -63,11 +64,11 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
           attachment,
         );
         await _repository.sendAnswersToFirebase(json, doc);
-        await _repository.saveClassroomImages(json);
+        await _repository.saveClassroomImagesLatinoamerica(json);
         await _repository.saveTaskCompleted(task);
+        await _repository.isTaskLoading(task, false);
 
-        showToast(Strings.tareaConcluida);
-
+        showToast(Strings.tareaEnviada);
         notifyListeners();
       } else {
         showToast('O usuário não está autenticado.');

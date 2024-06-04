@@ -17,11 +17,33 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
   bool timerEnded = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
 
   @override
   void initState() {
     super.initState();
-    getTaskCompleted();
+    setState(() {
+      isTaskOneLoading();
+      isTaskDosLoading();
+      getTaskCompleted();
+    });
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+        "latinoamericaTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading = await UnoTasksCompletedService.isLoadind(
+        "latinoamericaTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
+    });
   }
 
   Future<void> getTaskCompleted() async {
@@ -36,9 +58,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
     if (tareaUno && tareaDos) {
       await Future.delayed(
         const Duration(seconds: 3),
-        () => setState(
-          () => timerEnded = true,
-        ),
+        () => setState(() => timerEnded = true),
       );
     }
   }
@@ -72,43 +92,69 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno ? 'Feedback 300 kilos' : '300 kilos',
+                  text: isLoadingTareaUno
+                      ? 'Cargando 300 kilos'
+                      : tareaUno
+                          ? 'Feedback 300 kilos'
+                          : '300 kilos',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pUno_latinoamerica_feedback_tarea_uno'
-                      : '/pUno_latinoamerica_tarea_uno',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaUno ? Icons.check : Icons.music_note_sharp,
-                  shadowColor: tareaUno ? ThemeColors.green : ThemeColors.red,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pUno_latinoamerica_feedback_tarea_uno'
+                          : '/pUno_latinoamerica_tarea_uno',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.red,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.music_note_sharp,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
-                      ? 'Feedback\nTu Latinoamérica'
-                      : 'Tu Latinoamérica',
+                  text: isLoadingTareaDos
+                      ? 'Cargando\nTu Latinoamérica'
+                      : tareaDos
+                          ? 'Feedback\nTu Latinoamérica'
+                          : 'Tu Latinoamérica',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pUno_latinoamerica_feedback_tarea_dos'
-                      : '/pUno_latinoamerica_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaDos ? Icons.check : Icons.image,
-                  shadowColor: tareaDos ? ThemeColors.green : ThemeColors.red,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pUno_latinoamerica_feedback_tarea_dos'
+                          : '/pUno_latinoamerica_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.red,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.image,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (tareaUno && tareaDos && timerEnded)
                   CardButton(
                     iconSize: 30,
@@ -122,6 +168,9 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                   )
                 else if (tareaUno && tareaDos)
                   Card(
+                    shadowColor: ThemeColors.grayLight,
+                    elevation: 3,
+                    color: Colors.white,
                     child: SizedBox(
                       height: height,
                       width: width,
@@ -132,9 +181,7 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                       ),
                     ),
                   ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),
