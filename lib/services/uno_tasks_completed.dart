@@ -74,7 +74,7 @@ class UnoTasksCompletedService {
   static Future<bool> getUnoDivulgationCompletedInfo() async {
     final sharedPreferences = await SharedPreferences.getInstance();
     final divulgation =
-        sharedPreferences.getBool('divulgationCompleted') ?? false;
+        sharedPreferences.getBool('divulgationTareaUnoCompleted') ?? false;
 
     return divulgation;
   }
@@ -85,5 +85,10 @@ class UnoTasksCompletedService {
     final feedTodos = sharedPreferences.getBool('feedTodos') ?? false;
 
     return [feedTurma, feedTodos];
+  }
+
+  static Future<bool> isLoadind(task) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('isLoadingTask-$task') ?? false;
   }
 }
