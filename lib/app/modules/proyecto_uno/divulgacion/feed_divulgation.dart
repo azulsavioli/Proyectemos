@@ -118,7 +118,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
   List<String> makeVideoList() {
     videosList = [];
     for (final video in students) {
-      videosList.add(video['resposta_1']);
+      videosList.add(video['video_divulgacao']);
     }
     return videosList;
   }
@@ -173,7 +173,9 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
           }
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
           final students = snapshot.data!;
@@ -211,6 +213,8 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
     while (i < listStudents.length) {
       cards.add(
         Card(
+          elevation: 3,
+          color: Colors.white,
           child: Column(
             children: [
               Padding(

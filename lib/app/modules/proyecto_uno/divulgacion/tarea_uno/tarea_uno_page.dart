@@ -107,7 +107,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         final currentUser = getCurrentUser(context);
@@ -121,16 +121,15 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           setState(() {
                             loading = true;
                           });
-                          await _controller
-                              .sendAnswers(
-                                currentUser,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/proyecto_uno',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pUno_divulgacao_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                          );
                         }
                       },
                       child: const Text(

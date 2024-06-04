@@ -13,9 +13,9 @@ class FeedbackTareaDivulgacion extends StatefulWidget {
 
 class _FeedbackTareaStateDivulgacion extends State<FeedbackTareaDivulgacion> {
   final String firebaseDoc = 'uno/feedback/divulgacion/tarea/feedback';
-  final String pageTitle = Strings.titleArtistasHispanoamericanosUno;
-  final String tareaTitle = Strings.feedbackTareaUno;
-  final String taskCompleted = 'artistasTareaUnoReceivedFeedbackCompleted';
+  final String pageTitle = Strings.titleDivulgacionUno;
+  final String tareaTitle = Strings.titleDivulgacionUnoFeedback;
+  final String taskCompleted = 'divulgacionTareaUnoReceivedFeedbackCompleted';
 
   @override
   Widget build(BuildContext context) {

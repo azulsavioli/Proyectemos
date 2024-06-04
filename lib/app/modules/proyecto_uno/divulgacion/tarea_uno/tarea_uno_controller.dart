@@ -18,7 +18,7 @@ class DivulgacaoController extends ChangeNotifier {
   bool loading = true;
   final subject = 'Atividade - Divulgacao - Video do Evento Cultural';
   final doc = 'uno/divulgacion/atividade_1/';
-  final task = 'divulgationCompleted';
+  final task = 'divulgationTareaUnoCompleted';
 
   OpcoesCompartilhamento? sendingType = OpcoesCompartilhamento.todos;
 
@@ -37,7 +37,7 @@ class DivulgacaoController extends ChangeNotifier {
 
     final json = {
       'aluno': currentUser?.displayName,
-      'video_dilvulgacao': firebasePaths[0],
+      'video_divulgacao': firebasePaths[0],
     };
     return json;
   }
@@ -82,6 +82,8 @@ class DivulgacaoController extends ChangeNotifier {
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(currentUser);
 
@@ -107,7 +109,9 @@ class DivulgacaoController extends ChangeNotifier {
       } else {
         await _repository.saveClassroomVideo(json);
       }
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {

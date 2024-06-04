@@ -51,7 +51,7 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                 Expanded(
                   child: RadioListTile<OpcoesCompartilhamento>(
                     title: const Text('Todos'),
-                    fillColor: MaterialStateColor.resolveWith(
+                    fillColor: WidgetStateProperty.resolveWith(
                       (states) => ThemeColors.blue,
                     ),
                     value: OpcoesCompartilhamento.todos,
@@ -66,7 +66,7 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                 Expanded(
                   child: RadioListTile<OpcoesCompartilhamento>(
                     title: const Text('Turma'),
-                    fillColor: MaterialStateColor.resolveWith(
+                    fillColor: WidgetStateProperty.resolveWith(
                       (states) => ThemeColors.blue,
                     ),
                     value: OpcoesCompartilhamento.turma,
@@ -89,10 +89,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(
                   buttonFileSelected ? ThemeColors.green : ThemeColors.blue,
                 ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
