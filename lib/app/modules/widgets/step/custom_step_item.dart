@@ -7,21 +7,15 @@ import 'step_controller.dart';
 
 class CustomStepInheritedWidget extends InheritedWidget {
   final bool buttonFileSelected;
-  final bool buttonCameraSelected;
   final Icon buttonFileIcon;
-  final Icon buttonCameraIcon;
   final Color buttonFileColor;
-  final Color buttonCameraColor;
 
   const CustomStepInheritedWidget({
     Key? key,
     required Widget child,
     required this.buttonFileSelected,
-    required this.buttonCameraSelected,
     required this.buttonFileIcon,
-    required this.buttonCameraIcon,
     required this.buttonFileColor,
-    required this.buttonCameraColor,
   }) : super(key: key, child: child);
 
   static CustomStepInheritedWidget? of(BuildContext context) {
@@ -32,11 +26,8 @@ class CustomStepInheritedWidget extends InheritedWidget {
   @override
   bool updateShouldNotify(CustomStepInheritedWidget oldWidget) {
     return buttonFileSelected != oldWidget.buttonFileSelected ||
-        buttonCameraSelected != oldWidget.buttonCameraSelected ||
         buttonFileIcon != oldWidget.buttonFileIcon ||
-        buttonCameraIcon != oldWidget.buttonCameraIcon ||
-        buttonFileColor != oldWidget.buttonFileColor ||
-        buttonCameraColor != oldWidget.buttonCameraColor;
+        buttonFileColor != oldWidget.buttonFileColor;
   }
 }
 
@@ -67,18 +58,12 @@ class _CustomStepState extends State<CustomStep> {
     Icons.image_outlined,
     color: ThemeColors.white,
   );
-  Icon buttonCameraIcon = const Icon(
-    Icons.camera_alt_outlined,
-    color: ThemeColors.white,
-  );
+
   Color buttonFileColor = ThemeColors.red;
-  Color buttonCameraColor = ThemeColors.yellow;
   final _controller = StepController();
   late FocusNode focusNode;
   bool isFileLoading = false;
-  bool isCameraLoading = false;
   bool isFileSelected = false;
-  bool isCameraSelected = false;
 
   @override
   void initState() {
@@ -104,11 +89,8 @@ class _CustomStepState extends State<CustomStep> {
   Widget build(BuildContext context) {
     return CustomStepInheritedWidget(
       buttonFileSelected: buttonFileSelected,
-      buttonCameraSelected: buttonCameraSelected,
       buttonFileIcon: buttonFileIcon,
-      buttonCameraIcon: buttonCameraIcon,
       buttonFileColor: buttonFileColor,
-      buttonCameraColor: buttonCameraColor,
       child: Container(
         alignment: Alignment.centerLeft,
         child: Column(
@@ -124,67 +106,35 @@ class _CustomStepState extends State<CustomStep> {
             ),
             Row(
               children: <Widget>[
-                if (isCameraSelected)
-                  const SizedBox()
-                else
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(buttonFileColor),
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          selectImageFromGallery();
-                        });
-                      },
-                      icon: isFileLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            )
-                          : buttonFileIcon,
-                      label: const Text(
-                        'Galería',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                Expanded(
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(buttonFileColor),
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        selectImageFromGallery();
+                      });
+                    },
+                    icon: isFileLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.white),
+                            ),
+                          )
+                        : buttonFileIcon,
+                    label: const Text(
+                      'Galería',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
+                ),
                 const SizedBox(
                   width: 5,
                 ),
-                if (isFileSelected)
-                  const SizedBox()
-                else
-                  Expanded(
-                    child: ElevatedButton.icon(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(buttonCameraColor),
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          selectImageFromCamera();
-                        });
-                      },
-                      icon: isCameraLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
-                              ),
-                            )
-                          : buttonCameraIcon,
-                      label: const Text('Cámara',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ),
               ],
             ),
             const Divider(),
@@ -241,38 +191,6 @@ class _CustomStepState extends State<CustomStep> {
       } else {
         setState(() {
           isFileLoading = false;
-        });
-      }
-    }
-  }
-
-  Future<void> selectImageFromCamera() async {
-    if (mounted) {
-      setState(() {
-        isCameraLoading = true;
-      });
-    }
-
-    final image = await _controller.pickImage(
-      CustomStep.images,
-      ImageSource.camera,
-    );
-
-    if (mounted) {
-      if (image != null) {
-        setState(() {
-          isCameraLoading = false;
-          buttonCameraColor = ThemeColors.green;
-          buttonCameraIcon = const Icon(
-            Icons.check,
-            color: ThemeColors.white,
-          );
-          buttonCameraSelected = true;
-          isFileSelected = true;
-        });
-      } else {
-        setState(() {
-          isCameraLoading = false;
         });
       }
     }

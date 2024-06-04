@@ -6,7 +6,7 @@ class CardButton extends StatelessWidget {
   final String text;
   final double cardWidth;
   final double cardHeight;
-  final String namedRoute;
+  final String? namedRoute;
   final Color backgroundColor;
   final IconData icon;
   final Color shadowColor;
@@ -48,12 +48,15 @@ class CardButton extends StatelessWidget {
           ),
           foregroundColor: shadowColor,
           backgroundColor: Colors.white,
-          elevation: 1,
+          elevation: 3,
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
           textStyle: ThemeText.paragraph14Gray,
         ),
         onPressed: () {
-          Navigator.of(context).pushNamed(namedRoute);
+          if (namedRoute == null)
+            return;
+          else
+            Navigator.of(context).pushNamed(namedRoute!);
         },
         label: Row(
           children: [

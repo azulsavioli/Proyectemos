@@ -31,6 +31,8 @@ class CardProyecto extends StatelessWidget {
         Navigator.of(context).pushNamed(namedRoute);
       },
       child: Card(
+        elevation: 3,
+        color: Colors.white,
         child: SizedBox(
           width: MediaQuery.of(context).size.width * .9,
           height: MediaQuery.of(context).size.height * .23,
@@ -68,18 +70,27 @@ class CardProyecto extends StatelessWidget {
                             style: descriptionColor,
                           ),
                         ),
+                      ],
+                    ),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 160,
+                        ),
                         if (icon != null)
                           CircleAvatar(
-                            radius: 25,
+                            radius: 15,
                             backgroundColor: backgroundColor,
                             child: Icon(
                               icon!,
-                              size: 30,
+                              size: 20,
                               color: ThemeColors.white,
                             ),
                           ),
                       ],
-                    ),
+                    )
                   ],
                 ),
               ],

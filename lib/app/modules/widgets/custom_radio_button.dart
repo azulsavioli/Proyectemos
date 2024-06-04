@@ -30,7 +30,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           Expanded(
             child: RadioListTile(
               activeColor: ThemeColors.yellow,
-              fillColor: MaterialStateColor.resolveWith(
+              fillColor: WidgetStateProperty.resolveWith(
                 (states) => ThemeColors.blue,
               ),
               title: Text(widget.firstChoise),
@@ -46,7 +46,7 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
           ),
           Expanded(
             child: RadioListTile(
-              fillColor: MaterialStateColor.resolveWith(
+              fillColor: WidgetStateProperty.resolveWith(
                 (states) => ThemeColors.blue,
               ),
               activeColor: ThemeColors.yellow,

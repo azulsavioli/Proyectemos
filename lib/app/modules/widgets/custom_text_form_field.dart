@@ -52,6 +52,7 @@ class CustomTextFormField extends StatelessWidget {
         ),
       ),
       keyboardType: keyboardType,
+      cursorColor: Colors.grey,
       validator: (resposta) {
         {
           if (resposta!.isEmpty) {
