@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class ThemeText {
@@ -212,6 +212,14 @@ abstract class ThemeText {
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
     fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle h3title20BlueBold = TextStyle(
+    fontSize: ScreenUtil().setSp(20),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.blue,
+    fontWeight: FontWeight.bold,
   );
 
   static TextStyle h3title20yellowNormal = TextStyle(
