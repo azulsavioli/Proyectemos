@@ -48,7 +48,7 @@ dependencies:
   # get: ^4.6.5
   
   #Video
-  youtube_player_flutter: ^8.1.1
+  youtube_player_flutter: ^9.0.1
   appinio_video_player: ^1.2.2
   video_player: ^2.7.0
   chewie: ^1.7.0
@@ -64,12 +64,12 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2 
 
   #Splash
-  flutter_native_splash: ^2.2.7
+  flutter_native_splash: ^2.4.0
 
   #Launcher icon
   flutter_launcher_icons: ^0.13.1 
 
-  file_picker: ^5.2.5  
+  file_picker: ^8.0.0+1  
   
   carousel_slider: ^4.2.1
 
@@ -78,11 +78,12 @@ dependencies:
 
   #Audio
   # record: ^4.4.4
-  record: ^5.0.4
+  record: ^5.1.0
   simple_ripple_animation: ^0.0.3
   just_audio: ^0.9.29
+
   percent_indicator: ^4.2.2
-  audioplayers: ^5.2.1
+  audioplayers: ^6.0.0
 
   #Toast 
   # fluttertoast: ^8.0.9
@@ -92,7 +93,7 @@ dependencies:
   shared_preferences: ^2.0.15
 
   #Internacional
-  intl: ^0.18.1
+  intl: ^0.19.0
 
   #Email
   mailer: ^6.0.1
@@ -101,26 +102,37 @@ dependencies:
   #Card
   card_swiper: ^3.0.1
 
+  #Dropdown
+  dropdown_button2: ^2.3.9
+
   #Responsividade
   flutter_screenutil: ^5.7.0
 
   #Firebase Storage
   firebase_storage: ^11.2.4
-  # firebase_app_check: ^0.0.9+1
+  firebase_app_check: ^0.2.2+6
   # firebase_storage: ^11.6.5
   # firebase_app_check: ^0.2.1+13
   # mockito: ^5.4.0
 
+# flutter_native_splash:
+#   image: assets/images/splash.png
+#   color: "#ffffff" #white color
+#   android: true
+#   android_12:
+#     color: "#ffffff"
+
 flutter_native_splash:
-  image: assets/images/splash_logo.png
-  color: "#ffffff" #white color
-  android: true
-  ios: true
+  color: "#ffffff"
+  image: assets/images/splash.png
+
+  android_12:
+    image: assets/images/splash.png
+    color: "#ffffff" 
+    icon_background_color: "#111111" 
 
 flutter_icons:
-  image_path: "assets/images/logo.png"
-  ios: true
-  remove_alpha_ios: true
+  image_path: "assets/images/splash.png"
   android: "launcher_icon"
   adaptative_icon_background: "#ffffff"
   adaptative_icon_foreground: "assets/images/icon-android.png"
@@ -132,7 +144,7 @@ dev_dependencies:
     sdk: flutter
   mockito:
   build_runner:
-  lints: ^2.0.1
+  lints: ^3.0.0
   
   #Lint
   flutterando_analysis: ^0.0.2
@@ -143,7 +155,7 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/audios/proyecto2.mp3
+    - assets/audios/
 
   fonts:
     - family: Poppins
