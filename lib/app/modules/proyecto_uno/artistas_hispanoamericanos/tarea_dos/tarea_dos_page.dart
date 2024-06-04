@@ -167,7 +167,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         if (_formKey.currentState!.validate() &&
@@ -179,17 +179,22 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           setState(() {
                             loading = true;
                           });
-                          _controller.sendAnswers(currentUser, [
-                            answerUnoController,
-                            answerDosController,
-                            answerTresController,
-                            answerQuatroController,
-                            answerCincoController,
-                          ]).then(
-                            (value) => Navigator.pushNamed(
-                              context,
-                              '/pUno_artistas_menu',
-                            ),
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) {
+                              if (mounted) {
+                                _controller.sendAnswers(currentUser, [
+                                  answerUnoController,
+                                  answerDosController,
+                                  answerTresController,
+                                  answerQuatroController,
+                                  answerCincoController,
+                                ]);
+                                Navigator.pushNamed(
+                                  context,
+                                  '/pUno_artistas_menu',
+                                );
+                              }
+                            },
                           );
                         } else {
                           showToast(

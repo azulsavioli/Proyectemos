@@ -16,10 +16,14 @@ class PUnoArtistasMenu extends StatefulWidget {
 class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
+    isTaskDosLoading();
     getTaskCompleted();
   }
 
@@ -30,6 +34,22 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
     setState(() {
       tareaUno = resultado[0];
       tareaDos = resultado[1];
+    });
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading =
+        await UnoTasksCompletedService.isLoadind("artistasTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading =
+        await UnoTasksCompletedService.isLoadind("artistasTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
     });
   }
 
@@ -67,34 +87,66 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno ? 'Feedback Frida Kahlo' : 'Frida Kahlo',
+                  text: isLoadingTareaUno
+                      ? 'Cargando Frida Kahlo'
+                      : tareaUno
+                          ? 'Feedback Frida Kahlo'
+                          : 'Frida Kahlo',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pUno_artistas_feedback_tarea_uno'
-                      : '/pUno_artistas_frida',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.blue,
-                  icon: tareaUno ? Icons.check : Icons.record_voice_over,
-                  shadowColor: tareaUno ? ThemeColors.green : ThemeColors.blue,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pUno_artistas_feedback_tarea_uno'
+                          : '/pUno_artistas_frida',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.record_voice_over,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
-                      ? 'Feedback\nSelección de archivos'
-                      : 'Selección de archivos',
+                  text: isLoadingTareaDos
+                      ? 'Cargando\nSelección de archivos'
+                      : tareaDos
+                          ? 'Feedback\nSelección de archivos'
+                          : 'Selección de archivos',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pUno_artistas_feedback_tarea_dos'
-                      : '/pUno_artistas_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.blue,
-                  icon: tareaDos ? Icons.check : Icons.file_copy,
-                  shadowColor: tareaDos ? ThemeColors.green : ThemeColors.blue,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pUno_artistas_feedback_tarea_dos'
+                          : '/pUno_artistas_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.file_copy,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
                 ),
                 const SizedBox(
                   height: 20,

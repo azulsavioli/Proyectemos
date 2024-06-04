@@ -26,6 +26,8 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<TextEditingController> answersList,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(answersList);
 
@@ -44,10 +46,11 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
         attachment,
       );
       await _repository.sendAnswersToFirebase(json, doc);
-      await _repository.saveClassroomImages(json);
+      await _repository.saveClassroomImagesArtistas(json);
       await _repository.saveTaskCompleted(task);
+      await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaConcluida);
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {

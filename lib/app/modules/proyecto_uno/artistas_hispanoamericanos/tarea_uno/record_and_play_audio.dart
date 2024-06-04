@@ -168,7 +168,7 @@ class _RecordAndPlayScreenState extends State<RecordAndPlayScreen> {
       height: 100,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: ThemeColors.green,
+        color: recordProvider.isRecording ? ThemeColors.red : ThemeColors.green,
         borderRadius: BorderRadius.circular(100),
       ),
       child: Icon(
