@@ -31,7 +31,7 @@ class _IntroTareaUnoEventoCulturalPageState
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(
-            height: 20,
+            height: 40,
           ),
         ],
       ),

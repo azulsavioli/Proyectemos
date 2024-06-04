@@ -6,19 +6,21 @@ import '../../../../services/uno_tasks_completed.dart';
 import '../../widgets/card_button.dart';
 import '../../widgets/drawer_menu.dart';
 
-class EventoCulturalMenu extends StatefulWidget {
-  const EventoCulturalMenu({super.key});
+class PUnoEventoCulturalMenu extends StatefulWidget {
+  const PUnoEventoCulturalMenu({super.key});
 
   @override
-  State<EventoCulturalMenu> createState() => _EventoCulturalMenuState();
+  State<PUnoEventoCulturalMenu> createState() => _PUnoEventoCulturalMenuState();
 }
 
-class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
+class _PUnoEventoCulturalMenuState extends State<PUnoEventoCulturalMenu> {
   bool tareaUno = false;
+  bool isLoadingTarea = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
     getTaskCompleted();
   }
 
@@ -28,6 +30,14 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
 
     setState(() {
       tareaUno = resultado;
+    });
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading =
+        await UnoTasksCompletedService.isLoadind("artistasTareaUnoCompleted");
+    setState(() {
+      isLoadingTarea = isTaskOneLoading;
     });
   }
 
@@ -65,19 +75,33 @@ class _EventoCulturalMenuState extends State<EventoCulturalMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno
-                      ? 'Feedback\nCreación de un evento'
-                      : 'Creación de un evento',
+                  text: isLoadingTarea
+                      ? 'Cargando\nCrear Evento Cultural'
+                      : tareaUno
+                          ? 'Feedback\nCrear Evento Cultural'
+                          : 'Crear Evento Cultural',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pUno_evento_cultural_feedback'
-                      : '/pUno_criacao_evento_page',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaUno ? Icons.check : Icons.group_add,
-                  shadowColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTarea
+                      ? null
+                      : tareaUno
+                          ? '/pUno_evento_cultural_feedback'
+                          : '/pUno_criacao_evento_page',
+                  backgroundColor: isLoadingTarea
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
+                  icon: isLoadingTarea
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.record_voice_over,
+                  shadowColor: isLoadingTarea
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.blue,
                 ),
                 const SizedBox(
                   height: 20,

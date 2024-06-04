@@ -49,9 +49,8 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
               height: 60,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(ThemeColors.yellow),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  backgroundColor: WidgetStateProperty.all(ThemeColors.yellow),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -87,9 +86,8 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
               height: 60,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(ThemeColors.yellow),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  backgroundColor: WidgetStateProperty.all(ThemeColors.yellow),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),

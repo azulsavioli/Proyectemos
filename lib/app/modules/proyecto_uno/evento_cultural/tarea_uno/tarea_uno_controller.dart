@@ -30,6 +30,8 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeFirebasePaths(currentUser);
       final message = createEmailMessage(
@@ -48,8 +50,9 @@ class EventoCulturalTareaUnoController extends ChangeNotifier {
 
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
 
+      showToast(Strings.tareaEnviada);
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();

@@ -115,7 +115,7 @@ class _PUnoEventoCulturalTareaPageState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         final currentUser = getCurrentUser(context);
@@ -132,19 +132,21 @@ class _PUnoEventoCulturalTareaPageState
                           setState(() {
                             loading = true;
                           });
-
                           if (_controller.recordsPathList.isNotEmpty &&
                               _controller.recordsPathList.length == 1) {
-                            _controller
-                                .sendAnswers(
-                                  currentUser,
-                                )
-                                .then(
-                                  (value) => Navigator.pushNamed(
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) {
+                                if (mounted) {
+                                  Navigator.pushNamed(
                                     context,
                                     '/pUno_evento_cultural_menu',
-                                  ),
-                                );
+                                  );
+                                  _controller.sendAnswers(
+                                    currentUser,
+                                  );
+                                }
+                              },
+                            );
                           }
                         }
                       },
