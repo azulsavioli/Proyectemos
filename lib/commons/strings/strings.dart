@@ -16,7 +16,7 @@ abstract class Strings {
   static const String proyectoUno = 'assets/images/proyecto_uno.png';
   static const String proyectoDos = 'assets/images/proyecto_dos.png';
   static const String proyectoTres = 'assets/images/proyecto_tres.png';
-  static const String loginImage = 'assets/images/login_img.png';
+  static const String loginImage = 'assets/images/loginpage.png';
 
   //Strings
   static const String title = '¡Proyectos!';
@@ -25,24 +25,23 @@ abstract class Strings {
   static const String titleCardTres = 'Proyecto TRES';
 
   //Feedbacks
-  static const String tareaConcluida = 'Tarea concluída com sucesso!';
+  static const String tareaEnviada = 'Tarea enviada com sucesso!';
   static const String emailEnviado = 'Email enviado com sucesso!';
 
   //Login
   static const String bemvindos = '!Bienvenidos a Proyectemos!';
   static const String descricaoAppLogin =
       '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
-  static const String iniciaSessao = 'Inicia sesión con tu cuenta de Google';
+  static const String iniciaSessao = 'Inicia sesión con Google';
   static const String capesDescription = '''
 O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''';
 
   //Latinoamerica
   static const String titleLatinoamericaUno = 'Latinoamérica';
   static const String titleLatinoamericaUnoFeed = 'Latinoamérica Feed';
-  static const String titleLatinoamericaUnoFeedback = 'Latinoamérica Feedback';
-  static const String feedbackTareaUno = 'Feedback Latinoamerica\nTarea uno';
-  static const String feedbackTareaDos = 'Feedback Latinoamerica\nTarea dos';
-  static const String feedbackTareaTres = 'Feedback Latinoamerica\nTarea tres';
+  static const String titleLatinoamericaUnoFeedback = 'Latinoamérica';
+  static const String feedbackTareaUno = 'Feedback 300 kilos';
+  static const String feedbackTareaDos = 'Feedback Tu Latinoamerica';
 
   static const String title300kilos = '300 kilos';
   static const String titleTuLatinoamerica = 'Tu Latinoamerica';
@@ -66,6 +65,7 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
   //Divulgacion
   static const String titleDivulgacionUno = 'Divulgación';
   static const String titleDivulgacionUnoFeed = 'Divulgación Feed';
+  static const String titleDivulgacionUnoFeedback = 'Feedback Divulgación';
 
 // Proyectos DOS Page
 
