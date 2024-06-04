@@ -1,12 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:proyectemos/app/modules/widgets/drawer_menu.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
 import '../../../services/uno_tasks_completed.dart';
-import '../profile/profile_page.dart';
 import '../widgets/card_proyects.dart';
 
 class ProyectosPage extends StatefulWidget {
@@ -17,60 +15,6 @@ class ProyectosPage extends StatefulWidget {
 }
 
 class _ProyectosPageState extends State<ProyectosPage> {
-  int _selectedIndex = 0;
-
-  List<Widget> _widgetOptions = <Widget>[
-    _buildBody(),
-    ProfilePage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Platform.isAndroid
-                  ? Icon(Icons.home)
-                  : Icon(CupertinoIcons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Platform.isAndroid
-                  ? Icon(Icons.person)
-                  : Icon(CupertinoIcons.person),
-              label: 'Perfil',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
-          onTap: _onItemTapped,
-        ),
-      ),
-    );
-  }
-}
-
-Widget _buildBody() {
-  return HomeScreen();
-}
-
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   bool latinoamericaCompleted = false;
   bool artistasCompleted = false;
   bool eventoCulturalCompleted = false;
@@ -136,67 +80,72 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Row(
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: ThemeColors.gray,
+          ),
+          backgroundColor: ThemeColors.white,
+          centerTitle: true,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset(
+              'assets/images/logo.png',
+              height: 10,
+              width: 10,
+            ),
+          ),
+          title: Text(
+            Strings.title,
+            style: ThemeText.h3title20BlueBold,
+          ),
+        ),
+        backgroundColor: ThemeColors.white,
+        endDrawer: DrawerMenuWidget(),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 24),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  height: 40,
-                  width: 40,
-                  scale: 1,
+                CardProyecto(
+                  image: Strings.imageUno,
+                  title: Strings.titleCardUno,
+                  titleColor: ThemeText.h3title20Red,
+                  description: Strings.descriptionCardUno,
+                  descriptionColor: ThemeText.paragraph14Gray,
+                  backgroundColor: ThemeColors.red,
+                  namedRoute: '/proyecto_uno',
+                  icon: isUnoCompleted ? Icons.check : null,
                 ),
-                Text(
-                  Strings.title,
-                  style: ThemeText.paragraph16BlueBold,
+                SizedBox(height: 20),
+                CardProyecto(
+                  image: Strings.imageDos,
+                  title: Strings.titleCardDos,
+                  titleColor: ThemeText.h3title20Blue,
+                  description: Strings.descriptionCardDos,
+                  descriptionColor: ThemeText.paragraph14Gray,
+                  backgroundColor: ThemeColors.blue,
+                  namedRoute: '/proyecto_dos',
+                  icon: isDosCompleted ? Icons.check : null,
                 ),
-                const SizedBox(
-                  width: 40,
+                SizedBox(height: 20),
+                CardProyecto(
+                  image: Strings.imageTres,
+                  title: Strings.titleCardTres,
+                  titleColor: ThemeText.h3title20yellow,
+                  description: Strings.descriptionCardDos,
+                  descriptionColor: ThemeText.paragraph14Gray,
+                  backgroundColor: ThemeColors.yellow,
+                  namedRoute: '/proyecto_tres',
+                  icon: isTresCompleted ? Icons.check : null,
                 ),
               ],
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CardProyecto(
-                image: Strings.imageUno,
-                title: Strings.titleCardUno,
-                titleColor: ThemeText.h3title20Red,
-                description: Strings.descriptionCardUno,
-                descriptionColor: ThemeText.paragraph14Gray,
-                backgroundColor: ThemeColors.red,
-                namedRoute: '/proyecto_uno',
-                icon: isUnoCompleted ? Icons.check : null,
-              ),
-              CardProyecto(
-                image: Strings.imageDos,
-                title: Strings.titleCardDos,
-                titleColor: ThemeText.h3title20Blue,
-                description: Strings.descriptionCardDos,
-                descriptionColor: ThemeText.paragraph14Gray,
-                backgroundColor: ThemeColors.blue,
-                namedRoute: '/proyecto_dos',
-                icon: isDosCompleted ? Icons.check : null,
-              ),
-              CardProyecto(
-                image: Strings.imageTres,
-                title: Strings.titleCardTres,
-                titleColor: ThemeText.h3title20yellow,
-                description: Strings.descriptionCardDos,
-                descriptionColor: ThemeText.paragraph14Gray,
-                backgroundColor: ThemeColors.yellow,
-                namedRoute: '/proyecto_tres',
-                icon: isTresCompleted ? Icons.check : null,
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }

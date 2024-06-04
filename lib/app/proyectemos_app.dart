@@ -12,7 +12,6 @@ import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
 import 'package:proyectemos/app/modules/profile/profile_page.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/creacion_encuesta/creacion_encuesta_feedback.dart';
-import 'package:proyectemos/app/modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 import 'package:proyectemos/commons/auth_check.dart';
 
 import '../app/modules/home/proyectos_page.dart';
@@ -78,6 +77,8 @@ import 'modules/proyecto_tres/la_sociedad/record_and_play_audio_la_sociedad.dart
 import 'modules/proyecto_tres/las_redes_sociales_y_el_activismo/las_redes_sociales_y_el_activismo.dart';
 import 'modules/proyecto_tres/movimientos_sociales/tarea_uno/movimientos_sociales_tarea_uno.dart';
 import 'modules/proyecto_tres/tu_alrededor/tu_alrededor.dart';
+import 'modules/proyecto_uno/divulgacion/divulgacion_menu.dart';
+import 'modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 
 final routes = {
   '/': (context) => const AuthCheck(),
@@ -112,12 +113,13 @@ final routes = {
       const FeedbackTareaUnoArtistas(),
   '/pUno_artistas_feedback_tarea_dos': (context) =>
       const FeedbackTareaDosArtistas(),
-  '/pUno_evento_cultural_menu': (context) => const EventoCulturalMenu(),
+  '/pUno_evento_cultural_menu': (context) => const PUnoEventoCulturalMenu(),
   '/pUno_criacao_evento_page': (context) => const PUnoEventoCulturalTareaPage(),
   '/pUno_evento_cultural_feedback': (context) =>
       const FeedbackTareaEventoCultural(),
   '/record_and_play_propuesta': (context) =>
       const RecordAndPlayPropuestaScreen(),
+  '/pUno_divulgacao_menu': (context) => const PUnoDivulgacionMenu(),
   '/pUno_divulgacao_page': (context) => const TareaDivulgacaoPage(),
   '/pUno_divulgacao_feedback': (context) => const FeedbackTareaDivulgacion(),
   '/pUno_feed_divulgacao': (context) => const FeedDivulgationPage(),

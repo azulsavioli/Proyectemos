@@ -127,9 +127,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   text: 'Divulgación',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: divulgationCompleted
-                      ? '/pUno_feed_divulgacao'
-                      : '/pUno_divulgacao_page',
+                  namedRoute: '/pUno_divulgacao_menu',
                   backgroundColor: divulgationCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
