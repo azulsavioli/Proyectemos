@@ -36,19 +36,33 @@ class RecordAudioProviderEventoCulturalImpl extends ChangeNotifier
 
   @override
   Future<void> recordVoice() async {
-    final isPermitted = (await PermissionManagement.recordingPermission()) &&
-        (await PermissionManagement.storagePermission());
-    if (!isPermitted) return;
-    if (!(await _record.hasPermission())) return;
-    final voiceDirPath = await StorageManagement.getAudioDir;
-    final voiceFilePath = StorageManagement.createRecordAudioPath(
-      dirPath: voiceDirPath,
-      fileName: 'audio_message',
-    );
-    await _record.start(const RecordConfig(), path: voiceFilePath);
-    isRecording = true;
-    notifyListeners();
-    showToast('Comenzó la grabación');
+    try {
+      final isPermitted = await _checkPermissions();
+      if (!isPermitted) {
+        showToast('Permissões de gravação não concedidas.');
+        return;
+      }
+
+      final voiceDirPath = await StorageManagement.getAudioDir;
+      final voiceFilePath = StorageManagement.createRecordAudioPath(
+        dirPath: voiceDirPath,
+        fileName: 'audio_message',
+      );
+
+      await _record.start(const RecordConfig(), path: voiceFilePath);
+      isRecording = true;
+      notifyListeners();
+      showToast('Comenzó la grabación');
+    } catch (e) {
+      print('Erro ao gravar áudio: $e');
+      showToast('Erro ao iniciar a gravação de áudio.');
+    }
+  }
+
+  Future<bool> _checkPermissions() async {
+    final recordingPermission =
+        await PermissionManagement.recordingPermission();
+    return recordingPermission;
   }
 
   @override
