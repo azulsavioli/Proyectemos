@@ -29,6 +29,15 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   }
 
   @override
+  Future<void> isTaskLoading(T taskName, bool bool) async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(
+      "isLoadingTask-$taskName",
+      bool,
+    );
+  }
+
+  @override
   Future<void> saveTaskCompleted(T taskName) async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setBool(
@@ -56,10 +65,20 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   }
 
   @override
-  Future<void> saveClassroomImages(Map<T, T> json) async {
+  Future<void> saveClassroomImagesLatinoamerica(Map<T, T> json) async {
     final convertedJson = _convertMapToStringDynamic(json);
     try {
-      await _repository.saveImagesTurma(convertedJson);
+      await _repository.saveImagesTurmaLatinoamerica(convertedJson);
+    } on FirebaseException catch (e) {
+      e.toString();
+    }
+  }
+
+  @override
+  Future<void> saveClassroomImagesArtistas(Map<T, T> json) async {
+    final convertedJson = _convertMapToStringDynamic(json);
+    try {
+      await _repository.saveImagesTurmaArtistas(convertedJson);
     } on FirebaseException catch (e) {
       e.toString();
     }

@@ -239,7 +239,7 @@ class ProyectemosRepository extends ChangeNotifier {
     return tasksAnswers;
   }
 
-  Future saveImagesTurma(answer) async {
+  Future saveImagesTurmaLatinoamerica(answer) async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
     studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
@@ -256,7 +256,7 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('imagens_turma')
+        .collection('imagens_turma_latinoamerica')
         .doc(authService.userAuth?.uid);
 
     try {
@@ -267,11 +267,11 @@ class ProyectemosRepository extends ChangeNotifier {
     notifyListeners();
   }
 
-  Stream<List<Map<String, dynamic>>> getImagesTurmaStream() {
-    return Stream.fromFuture(_getImagesTurma());
+  Stream<List<Map<String, dynamic>>> getImagesTurmaLatinoamericaStream() {
+    return Stream.fromFuture(_getImagesTurmaLatinoamerica());
   }
 
-  Future<List<Map<String, dynamic>>> _getImagesTurma() async {
+  Future<List<Map<String, dynamic>>> _getImagesTurmaLatinoamerica() async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
     studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
@@ -289,7 +289,71 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('imagens_turma');
+        .collection('imagens_turma_latinoamerica');
+
+    try {
+      await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
+        for (final doc in querySnapshot.docs) {
+          studentsImages.add(doc.data()! as Map<String, dynamic>);
+        }
+      });
+    } catch (error) {
+      print(error);
+    }
+    return studentsImages;
+  }
+
+  Future saveImagesTurmaArtistas(answer) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('imagens_turma_artistas')
+        .doc(authService.userAuth?.uid);
+
+    try {
+      await studentTaskRef.set(answer);
+    } on Exception catch (e) {
+      e.toString();
+    }
+    notifyListeners();
+  }
+
+  Stream<List<Map<String, dynamic>>> getImagesTurmaArtistasStream() {
+    return Stream.fromFuture(_getImagesTurmaArtistas());
+  }
+
+  Future<List<Map<String, dynamic>>> _getImagesTurmaArtistas() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentsImages = <Map<String, dynamic>>[];
+
+    final schoolId = await getSchoolId(studentSchoolInfo);
+    final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+
+    if (schoolId.isEmpty || classroomId.isEmpty) {
+      return studentsImages;
+    }
+
+    final studentTaskRef = db
+        .collection('escolas')
+        .doc(schoolId)
+        .collection('turmas')
+        .doc(classroomId)
+        .collection('imagens_turma_artistas');
 
     try {
       await studentTaskRef.get().then((QuerySnapshot querySnapshot) {
@@ -447,7 +511,6 @@ class ProyectemosRepository extends ChangeNotifier {
         .collection('escolas')
         .doc(schoolId)
         .collection('videos_publicos_evento_cultural');
-
     try {
       await studentTaskRef.add(answer);
     } on Exception catch (e) {

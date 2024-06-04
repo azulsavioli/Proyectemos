@@ -5,6 +5,7 @@ abstract class Repository<T, U, V> {
   Map<T, T> createJson(
     List<T> answersList,
   );
+  Future<void> isTaskLoading(T taskName, bool bool);
   Future<void> getStudentInfo();
   Future<void> sendAnswersToFirebase(Map<T, T> json, T doc);
   Future<void> saveTaskCompleted(T taskName);
@@ -19,7 +20,8 @@ abstract class Repository<T, U, V> {
   Future<String> getSchoolId(String schoolNameParams);
   Future<List<String>>? getClassRoomInfo(String schoolName);
   Future<List<String>?> getClassroomStudentNames();
-  Future<void> saveClassroomImages(Map<T, T> json);
+  Future<void> saveClassroomImagesLatinoamerica(Map<T, T> json);
+  Future<void> saveClassroomImagesArtistas(Map<T, T> json);
   Future<void> savePublicVideo(Map<T, T> json);
   Future<void> saveClassroomVideo(Map<T, T> json);
   Future<void> saveClassroomStudents(Map<T, T> json);
