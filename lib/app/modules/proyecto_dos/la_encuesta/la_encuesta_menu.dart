@@ -17,10 +17,14 @@ class PDosLaEncuestaMenu extends StatefulWidget {
 class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
+    isTaskDosLoading();
     getTaskCompleted();
   }
 
@@ -31,6 +35,22 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
     setState(() {
       tareaUno = resultado[0];
       tareaDos = resultado[1];
+    });
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading =
+        await DosTasksCompletedService.isLoadind("laEncuestaTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading =
+        await DosTasksCompletedService.isLoadind("laEncuestaTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
     });
   }
 
@@ -68,37 +88,69 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno
-                      ? StringsLaEncuesta.titleFeedbackTareaUnoQueEsUnaEncuesta
-                      : StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
+                  text: isLoadingTareaUno
+                      ? StringsLaEncuesta.titleTareaUnoQueEsUnaEncuestaLoading
+                      : tareaUno
+                          ? StringsLaEncuesta
+                              .titleFeedbackTareaUnoQueEsUnaEncuesta
+                          : StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pDos_que_es_una_encuesta_feedback_tarea_uno'
-                      : '/pDos_que_es_una_encuesta_tarea_uno',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaUno ? Icons.check : Icons.music_note_sharp,
-                  shadowColor: tareaUno ? ThemeColors.green : ThemeColors.red,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pDos_que_es_una_encuesta_feedback_tarea_uno'
+                          : '/pDos_que_es_una_encuesta_tarea_uno',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.red,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.music_note_sharp,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.red,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
+                  text: isLoadingTareaDos
                       ? StringsLaEncuesta
-                          .titleFeedbackTareaDosComoCrearUnaEncuesta
-                      : StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
+                          .titleTareaDosComoCrearUnaEncuestaLoading
+                      : tareaDos
+                          ? StringsLaEncuesta
+                              .titleFeedbackTareaDosComoCrearUnaEncuesta
+                          : StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pDos_crear_una_encuesta_feedback_tarea_dos'
-                      : '/pDos_crear_una_encuesta_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.red,
-                  icon: tareaDos ? Icons.check : Icons.image,
-                  shadowColor: tareaDos ? ThemeColors.green : ThemeColors.red,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pDos_crear_una_encuesta_feedback_tarea_dos'
+                          : '/pDos_crear_una_encuesta_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.red,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.image,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.red,
                 ),
                 const SizedBox(
                   height: 20,

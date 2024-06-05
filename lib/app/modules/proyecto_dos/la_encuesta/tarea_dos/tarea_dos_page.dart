@@ -195,7 +195,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         setState(() {
@@ -220,14 +220,20 @@ class _TareaDosComoCrearUnaEncuestaPageState
                             setState(() {
                               loading = true;
                             });
-                            await _controller
-                                .sendAnswers(currentUser, recordsPathList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) {
+                                if (mounted) {
+                                  _controller.sendAnswers(
+                                    currentUser,
+                                    recordsPathList,
+                                  );
+                                  Navigator.pushNamed(
                                     context,
                                     '/pDos_laEncuesta_menu',
-                                  ),
-                                );
+                                  );
+                                }
+                              },
+                            );
                           }
                         }
                       },

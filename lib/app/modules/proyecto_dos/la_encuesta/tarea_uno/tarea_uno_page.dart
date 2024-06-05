@@ -120,7 +120,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         if (recordsPathList.isEmpty ||
@@ -139,14 +139,14 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             setState(() {
                               loading = true;
                             });
-                            await _controller
-                                .sendAnswers(currentUser, recordsPathList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
-                                    context,
-                                    '/pDos_laEncuesta_menu',
-                                  ),
-                                );
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) => Navigator.pushNamed(
+                                context,
+                                '/pDos_laEncuesta_menu',
+                              ),
+                            );
+                            _controller.sendAnswers(
+                                currentUser, recordsPathList);
                           }
                         }
                       },

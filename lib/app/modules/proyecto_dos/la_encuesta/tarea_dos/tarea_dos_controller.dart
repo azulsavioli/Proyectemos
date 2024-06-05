@@ -26,6 +26,8 @@ class TareaDosComoCrearUnaEncuestaController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> recordsPathList,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(currentUser);
       final message = createEmailMessage(
@@ -44,7 +46,9 @@ class TareaDosComoCrearUnaEncuestaController extends ChangeNotifier {
 
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {
