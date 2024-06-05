@@ -37,6 +37,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   late FocusNode focusNode4;
   late FocusNode focusNode5;
   late FocusNode focusNode6;
+  late bool isAllFilesFilleds;
   bool loading = false;
 
   final pageController = PageController();
@@ -52,6 +53,28 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
     focusNode4 = FocusNode();
     focusNode5 = FocusNode();
     focusNode6 = FocusNode();
+    isAllFilesFilleds = false;
+    _setupListeners();
+  }
+
+  void _setupListeners() {
+    textControllerOne.addListener(_updateIsAllFilesFilleds);
+    textControllerTwo.addListener(_updateIsAllFilesFilleds);
+    textControllerThree.addListener(_updateIsAllFilesFilleds);
+    textControllerFour.addListener(_updateIsAllFilesFilleds);
+    textControllerFive.addListener(_updateIsAllFilesFilleds);
+    textControllerSix.addListener(_updateIsAllFilesFilleds);
+  }
+
+  void _updateIsAllFilesFilleds() {
+    setState(() {
+      isAllFilesFilleds = textControllerOne.text.isNotEmpty &&
+          textControllerTwo.text.isNotEmpty &&
+          textControllerThree.text.isNotEmpty &&
+          textControllerFour.text.isNotEmpty &&
+          textControllerFive.text.isNotEmpty &&
+          textControllerSix.text.isNotEmpty;
+    });
   }
 
   @override
@@ -68,6 +91,13 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   @override
   Widget build(BuildContext context) {
     final currentUser = getCurrentUser(context);
+
+    final isAllFilesFilleds = textControllerOne.text.isNotEmpty &&
+        textControllerTwo.text.isNotEmpty &&
+        textControllerThree.text.isNotEmpty &&
+        textControllerFour.text.isNotEmpty &&
+        textControllerFive.text.isNotEmpty &&
+        textControllerSix.text.isNotEmpty;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -162,8 +192,10 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                   if (pageChanged == 1)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                            isAllFilesFilleds
+                                ? ThemeColors.blue
+                                : Colors.transparent),
                       ),
                       onPressed: () async {
                         if (textControllerOne.text.isEmpty ||
@@ -188,24 +220,23 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                           setState(() {
                             loading = true;
                           });
-                          await _controller
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_comoCrearPodcast_menu',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pDos_comoCrearPodcast_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                            respostas,
+                          );
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         'Enviar',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.white,
+                          color: isAllFilesFilleds ? Colors.white : Colors.grey,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

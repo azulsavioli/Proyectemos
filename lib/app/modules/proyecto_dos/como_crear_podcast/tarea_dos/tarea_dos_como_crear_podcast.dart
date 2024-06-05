@@ -185,7 +185,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         if (textControllerOne.text.isEmpty ||
@@ -207,17 +207,16 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                           setState(() {
                             loading = true;
                           });
-                          await _controller
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_comoCrearPodcast_menu',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pDos_comoCrearPodcast_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                            respostas,
+                          );
                         }
                       },
                       child: const Text(

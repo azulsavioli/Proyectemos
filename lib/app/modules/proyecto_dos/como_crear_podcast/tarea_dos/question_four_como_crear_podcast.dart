@@ -44,7 +44,7 @@ class _QuestionFourComoCrearPodcastState
           ),
           CustomRadioButton(
             firstChoise: 'entrevista',
-            secondChoise: 'charla\nentre los miembros',
+            secondChoise: 'charla entre los miembros',
             onSelected: (value) {
               _controller.estructuraPodcast = value;
             },

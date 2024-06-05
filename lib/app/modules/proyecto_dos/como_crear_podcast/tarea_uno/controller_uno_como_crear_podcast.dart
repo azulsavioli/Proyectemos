@@ -17,6 +17,8 @@ class ControllerEscucharPodcast extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = _repository.createJson(
         answersList,
@@ -36,7 +38,9 @@ class ControllerEscucharPodcast extends ChangeNotifier {
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {

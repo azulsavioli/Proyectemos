@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_como_crear_un_podcast.dart';
 
 import '../../../../../commons/styles.dart';
-import '../../../widgets/custom_audio_player.dart';
+import '../../../widgets/player.dart';
 
 class IntroTareaUnoComoCrearPodcastPage extends StatefulWidget {
   const IntroTareaUnoComoCrearPodcastPage({
@@ -17,14 +17,33 @@ class IntroTareaUnoComoCrearPodcastPage extends StatefulWidget {
 
 class _IntroTareaUnoComoCrearPodcastPageState
     extends State<IntroTareaUnoComoCrearPodcastPage> {
-  final player = AudioPlayer();
+  late AudioPlayer player = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+    player.setReleaseMode(ReleaseMode.stop);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await player
+          .setSource(AssetSource('audios/proyecto2.mp3', mimeType: 'mp3'));
+      await player.resume();
+    });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
@@ -34,9 +53,7 @@ class _IntroTareaUnoComoCrearPodcastPageState
           const SizedBox(
             height: 20,
           ),
-          const CustomAudioPlayer(
-            audioPath: 'assets/audios/proyecto2.mp3',
-          ),
+          PlayerWidget(player: player),
           const SizedBox(
             height: 40,
           ),

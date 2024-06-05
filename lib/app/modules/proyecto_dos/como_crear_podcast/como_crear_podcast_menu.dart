@@ -17,10 +17,14 @@ class PDosComoCrearPodcastMenu extends StatefulWidget {
 class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
+    isTaskDosLoading();
     getTaskCompleted();
   }
 
@@ -31,6 +35,22 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
     setState(() {
       tareaUno = resultado[0];
       tareaDos = resultado[1];
+    });
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading = await DosTasksCompletedService.isLoadind(
+        "comoCrearPodcastTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading = await DosTasksCompletedService.isLoadind(
+        "comoCrearPodcastTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
     });
   }
 
@@ -68,38 +88,66 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno
-                      ? 'Feedback Escuchar Podcast'
-                      : 'Escuchar el podcast',
+                  text: isLoadingTareaUno
+                      ? 'Cargando\nEscuchar el Podcast'
+                      : tareaUno
+                          ? 'Feedback\nEscuchar el Podcast'
+                          : 'Escuchar el podcast',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pDos_escuchar_podcast_feedback_tarea_uno'
-                      : '/pDos_escuchar_podcast_tarea_uno',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaUno ? Icons.check : Icons.music_note_sharp,
-                  shadowColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pDos_escuchar_podcast_feedback_tarea_uno'
+                          : '/pDos_escuchar_podcast_tarea_uno',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.music_note_sharp,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
-                      ? 'Feedback\nCrear un Podcast'
-                      : 'Crear un Podcast',
+                  text: isLoadingTareaDos
+                      ? 'Cargando\nCrear un Podcast'
+                      : tareaDos
+                          ? 'Feedback\nCrear un Podcast'
+                          : 'Crear un Podcast',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pDos_crear_un_podcast_feedback_tarea_dos'
-                      : '/pDos_crear_un_podcast_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaDos ? Icons.check : Icons.image,
-                  shadowColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pDos_crear_un_podcast_feedback_tarea_dos'
+                          : '/pDos_crear_un_podcast_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.image,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
