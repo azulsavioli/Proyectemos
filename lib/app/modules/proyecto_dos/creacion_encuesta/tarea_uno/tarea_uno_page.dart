@@ -112,7 +112,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         final currentUser = getCurrentUser(context);
@@ -130,17 +130,15 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                           setState(() {
                             loading = true;
                           });
-
-                          _controller
-                              .sendAnswers(
-                                currentUser,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/proyecto_dos',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pDos_creacionEncuesta_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                          );
                         }
                       },
                       child: const Text(
