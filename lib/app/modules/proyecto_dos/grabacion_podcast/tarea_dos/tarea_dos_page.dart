@@ -212,7 +212,7 @@ class _TareaDosGrabacionPodcastPageState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         setState(() {
@@ -240,17 +240,16 @@ class _TareaDosGrabacionPodcastPageState
                           setState(() {
                             loading = true;
                           });
-                          _controller
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_grabacionPodcast_menu',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pDos_grabacionPodcast_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                            respostas,
+                          );
                         }
                       },
                       child: const Text(

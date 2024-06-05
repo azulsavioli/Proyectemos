@@ -53,7 +53,9 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
           final students = snapshot.data ?? [];
@@ -110,6 +112,8 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
           Padding(
             padding: const EdgeInsets.all(12),
             child: Card(
+              elevation: 3,
+              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
@@ -133,11 +137,20 @@ ${grupo.substring(1, grupo.length - 1)}\n''',
                       ),
                     ),
                     ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ThemeColors.blue,
+                      ),
                       onPressed: () => launchUrlPodcast(
                         podcastLink,
                       ),
-                      icon: const Icon(Icons.link),
-                      label: const Text('Ir para o podcast'),
+                      icon: const Icon(
+                        Icons.link,
+                        color: Colors.white,
+                      ),
+                      label: const Text(
+                        'Ir para o podcast',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),

@@ -117,10 +117,10 @@ class _QuestionGrabacionPodcastOneState
               width: MediaQuery.of(context).size.width,
               child: ElevatedButton.icon(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
+                  backgroundColor: WidgetStateProperty.all(
                     buttonFileSelected ? ThemeColors.green : ThemeColors.blue,
                   ),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),

@@ -113,7 +113,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         final currentUser = getCurrentUser(context);
@@ -131,17 +131,15 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                           setState(() {
                             loading = true;
                           });
-
-                          _controller
-                              .sendAnswers(
-                                currentUser,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/proyecto_dos',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pDos_grabacionPodcast_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                          );
                         }
                       },
                       child: const Text(

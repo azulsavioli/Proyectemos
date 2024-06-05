@@ -17,11 +17,15 @@ class PDosGrabacionPodcastMenu extends StatefulWidget {
 class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
   bool timerEnded = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
+    isTaskDosLoading();
     getTaskCompleted();
   }
 
@@ -42,6 +46,22 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
         ),
       );
     }
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading = await DosTasksCompletedService.isLoadind(
+        "grabacionPodcastTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading = await DosTasksCompletedService.isLoadind(
+        "grabacionPodcastTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
+    });
   }
 
   @override
@@ -78,38 +98,66 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno
-                      ? 'Feedback\nGuión de grabación'
-                      : 'Guión de grabación',
+                  text: isLoadingTareaUno
+                      ? 'Cargando\nGuión de grabación'
+                      : tareaUno
+                          ? 'Feedback\nGuión de grabación'
+                          : 'Guión de grabación',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pDos_grabacion_podcast_feedback_tarea_uno'
-                      : '/pDos_grabacion_podcast_tarea_uno',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaUno ? Icons.check : Icons.style,
-                  shadowColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pDos_grabacion_podcast_feedback_tarea_uno'
+                          : '/pDos_grabacion_podcast_tarea_uno',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.style,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
-                      ? 'Feedback\nGrabar el podcast'
-                      : 'Grabar el podcast',
+                  text: isLoadingTareaDos
+                      ? 'Cargando\nGrabar el podcast'
+                      : tareaDos
+                          ? 'Feedback\nGrabar el podcast'
+                          : 'Grabar el podcast',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pDos_grabacion_podcast_feedback_tarea_dos'
-                      : '/pDos_grabacion_podcast_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaDos ? Icons.check : Icons.mic_external_on,
-                  shadowColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pDos_grabacion_podcast_feedback_tarea_dos'
+                          : '/pDos_grabacion_podcast_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.mic_external_on,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
@@ -127,6 +175,8 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
                   )
                 else if (tareaUno && tareaDos)
                   Card(
+                    color: Colors.white,
+                    elevation: 3,
                     child: SizedBox(
                       height: height,
                       width: width,

@@ -26,6 +26,8 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> poscastInfos,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(poscastInfos, currentUser);
 
@@ -44,7 +46,9 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomPodcast(json);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {
