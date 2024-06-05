@@ -120,7 +120,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         final currentUser = getCurrentUser(context);
@@ -143,14 +143,20 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                             setState(() {
                               loading = true;
                             });
-                            await _controller
-                                .sendAnswers(currentUser, recordsPathList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) {
+                                if (mounted) {
+                                  _controller.sendAnswers(
+                                    currentUser,
+                                    recordsPathList,
+                                  );
+                                  Navigator.pushNamed(
                                     context,
-                                    '/proyecto_dos',
-                                  ),
-                                );
+                                    '/pDos_conocesPodcast_menu',
+                                  );
+                                }
+                              },
+                            );
                           }
                         }
                       },
