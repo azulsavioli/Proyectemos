@@ -24,42 +24,38 @@ class _CustomRadioButtonState extends State<CustomRadioButton> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8),
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: RadioListTile(
-              activeColor: ThemeColors.yellow,
-              fillColor: WidgetStateProperty.resolveWith(
-                (states) => ThemeColors.blue,
-              ),
-              title: Text(widget.firstChoise),
-              value: widget.firstChoise,
-              groupValue: answer,
-              onChanged: (value) {
-                setState(() {
-                  answer = value.toString();
-                  widget.onSelected(answer!);
-                });
-              },
+          RadioListTile(
+            activeColor: ThemeColors.yellow,
+            fillColor: WidgetStateProperty.resolveWith(
+              (states) => ThemeColors.blue,
             ),
+            title: Text(widget.firstChoise),
+            value: widget.firstChoise,
+            groupValue: answer,
+            onChanged: (value) {
+              setState(() {
+                answer = value.toString();
+                widget.onSelected(answer!);
+              });
+            },
           ),
-          Expanded(
-            child: RadioListTile(
-              fillColor: WidgetStateProperty.resolveWith(
-                (states) => ThemeColors.blue,
-              ),
-              activeColor: ThemeColors.yellow,
-              title: Text(widget.secondChoise),
-              value: widget.secondChoise,
-              groupValue: answer,
-              onChanged: (value) {
-                setState(() {
-                  answer = value.toString();
-                  widget.onSelected(answer!);
-                });
-              },
+          RadioListTile(
+            fillColor: WidgetStateProperty.resolveWith(
+              (states) => ThemeColors.blue,
             ),
+            activeColor: ThemeColors.yellow,
+            title: Text(widget.secondChoise),
+            value: widget.secondChoise,
+            groupValue: answer,
+            onChanged: (value) {
+              setState(() {
+                answer = value.toString();
+                widget.onSelected(answer!);
+              });
+            },
           ),
         ],
       ),

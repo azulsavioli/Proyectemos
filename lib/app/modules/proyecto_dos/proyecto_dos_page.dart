@@ -82,9 +82,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                       : Strings.titleConocesPodcast,
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: conocesPodcastCompleted
-                      ? '/pDos_conocesPodcast_feedback'
-                      : '/pDos_conocesPodcast',
+                  namedRoute: '/pDos_conocesPodcast_menu',
                   backgroundColor: conocesPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.red,
@@ -134,9 +132,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   text: 'Creación de la encuesta',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: creacionEncuestaCompleted
-                      ? '/pDos_creacionEncuesta_feedback'
-                      : '/pDos_creacionEncuesta',
+                  namedRoute: '/pDos_creacionEncuesta_menu',
                   backgroundColor: creacionEncuestaCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,

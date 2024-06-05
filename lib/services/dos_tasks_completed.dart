@@ -162,4 +162,9 @@ class DosTasksCompletedService {
       grabacionPodcastTareaDosCompleted,
     );
   }
+
+  static Future<bool> isLoadind(task) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('isLoadingTask-$task') ?? false;
+  }
 }
