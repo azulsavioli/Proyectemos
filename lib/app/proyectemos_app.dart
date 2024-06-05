@@ -41,6 +41,8 @@ import '../app/modules/proyecto_tres/proyecto_tres_page.dart';
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/artistas_menu.dart';
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_dos.dart';
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_uno.dart';
+import 'modules/proyecto_dos/creacion_encuesta/creacion_encuesta_menu.dart';
+import 'modules/proyecto_dos/el_podcast/el_podcast_menu.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/feed/crea_tu_movimiento_feed.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_feedback.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_feedback_menu.dart';
@@ -128,6 +130,7 @@ final routes = {
 //projeto dos
 
   '/proyecto_dos': (context) => const ProyectoDosPage(),
+  '/pDos_conocesPodcast_menu': (context) => const PDosConocesPodcastMenu(),
   '/pDos_conocesPodcast': (context) => const PDosConocesPodcast(),
   '/pDos_conocesPodcast_feedback': (context) =>
       const FeedbackTareaConocesPodcast(),
@@ -155,6 +158,7 @@ final routes = {
       const FeedbackTareaDosLaEncuesta(),
   '/record_and_play_la_encuesta_tarea_dos': (context) =>
       const RecordAndPlayLaEncuestaTareaDosScreen(),
+  '/pDos_creacionEncuesta_menu': (context) => const PDosCreacionEncuestaMenu(),
   '/pDos_creacionEncuesta': (context) => const PDosCreacionEncuesta(),
   '/pDos_creacionEncuesta_feedback': (context) =>
       const FeedbackTareaCreacionEncuesta(),
