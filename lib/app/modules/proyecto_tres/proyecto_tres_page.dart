@@ -34,8 +34,7 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
       laSociedadCompleted = resultado[0];
       movimientosSocialesCompleted = resultado[1];
       tuAlrededorCompleted = resultado[2];
-      lasRedesSocialesYElActivismoCompleted = resultado[3];
-      creacionDeSuMovimentoCompleted = resultado[4];
+      creacionDeSuMovimentoCompleted = resultado[3];
     });
   }
 
@@ -78,14 +77,10 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: laSociedadCompleted
-                      ? 'Feedback La Sociedad'
-                      : 'La Sociedad',
+                  text: 'La Sociedad',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: laSociedadCompleted
-                      ? '/pTres_laSociedad_feedback_tarea_uno'
-                      : '/pTres_laSociedad',
+                  namedRoute: '/pTres_laSociedad_menu',
                   backgroundColor:
                       laSociedadCompleted ? ThemeColors.green : ThemeColors.red,
                   icon: laSociedadCompleted ? Icons.check : Icons.person,
@@ -100,9 +95,7 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   text: 'Movimientos\nSociales',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: movimientosSocialesCompleted
-                      ? '/pTres_movimientosSociales_tarea_menu'
-                      : '/pTres_movimientosSociales',
+                  namedRoute: '/pTres_movimientosSociales_menu',
                   backgroundColor: movimientosSocialesCompleted
                       ? ThemeColors.green
                       : ThemeColors.blue,
@@ -117,14 +110,10 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                 ),
                 CardButton(
                   iconSize: 25,
-                  text: tuAlrededorCompleted
-                      ? 'Feedback\nTu Alrededor'
-                      : 'Tu Alrededor',
+                  text: 'Tu Alrededor',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tuAlrededorCompleted
-                      ? '/pTres_tuAlrededor_feedback'
-                      : '/pTres_tuAlrededor',
+                  namedRoute: '/pTres_tuAlrededor_menu',
                   backgroundColor: tuAlrededorCompleted
                       ? ThemeColors.green
                       : ThemeColors.red,

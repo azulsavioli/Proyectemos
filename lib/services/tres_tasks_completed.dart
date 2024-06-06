@@ -10,8 +10,6 @@ class TresTasksCompletedService {
     final movimientosSocialesCompleted =
         await getTresMovimientosSocialesCompletedInfo();
     final tuAlrededorCompleted = await getTresTuAlrededorCompletedInfo();
-    // final lasRedesSocialesYElActivismoCompleted =
-    //     await getTresLasRedesSocialesYElActivismoCompletedInfo();
     final creacionDeSuMovimentoCompleted =
         await getTresCreacionDeSuMovimentoCompletedInfo();
 
@@ -22,7 +20,6 @@ class TresTasksCompletedService {
       laSociedadCompleted,
       movimientosSocialesCompleted,
       tuAlrededorCompleted,
-      lasRedesSocialesYElActivismoCompleted,
       creacionTasksCompleted,
     ];
   }
@@ -61,5 +58,10 @@ class TresTasksCompletedService {
     final creaTuMovimientoTareaDos =
         sharedPreferences.getBool('creaTuMovimientoTareaDosCompleted') ?? false;
     return [creaTuMovimientoTareaUno, creaTuMovimientoTareaDos];
+  }
+
+  static Future<bool> isLoadind(task) async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('isLoadingTask-$task') ?? false;
   }
 }

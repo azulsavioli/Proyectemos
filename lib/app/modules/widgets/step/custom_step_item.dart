@@ -121,6 +121,7 @@ class _CustomStepState extends State<CustomStep> {
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
+                              color: ThemeColors.blue,
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             ),

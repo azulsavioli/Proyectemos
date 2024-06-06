@@ -160,7 +160,9 @@ ${_emailController.text}''';
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: isEmailSending
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressIndicator(
+                              color: ThemeColors.blue,
+                            )
                           : const Text(
                               'Enviar el email',
                               style: TextStyle(

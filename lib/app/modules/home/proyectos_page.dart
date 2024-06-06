@@ -3,6 +3,7 @@ import 'package:proyectemos/app/modules/widgets/drawer_menu.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
+import 'package:proyectemos/services/tres_tasks_completed.dart';
 
 import '../../../services/uno_tasks_completed.dart';
 import '../widgets/card_proyects.dart';
@@ -19,15 +20,21 @@ class _ProyectosPageState extends State<ProyectosPage> {
   bool artistasCompleted = false;
   bool eventoCulturalCompleted = false;
   bool divulgationCompleted = false;
+
   bool conocesPodcast = false;
   bool comoCrearPodcast = false;
   bool laEncuesta = false;
   bool creacionEncuesta = false;
   bool grabacionPodcast = false;
 
+  bool laSociedad = false;
+  bool movimientosSociales = false;
+  bool tuAlrededor = false;
+  bool creaTuMovimiento = false;
+
   late bool isUnoCompleted;
   late bool isDosCompleted;
-  bool isTresCompleted = false;
+  late bool isTresCompleted;
 
   @override
   void initState() {
@@ -44,6 +51,9 @@ class _ProyectosPageState extends State<ProyectosPage> {
           laEncuesta &&
           creacionEncuesta &&
           grabacionPodcast;
+
+      isTresCompleted =
+          laSociedad && movimientosSociales && tuAlrededor && creaTuMovimiento;
     });
   }
 
@@ -52,6 +62,8 @@ class _ProyectosPageState extends State<ProyectosPage> {
         await UnoTasksCompletedService.getUnoTaskCompletedInfo();
     final resultadoDos =
         await DosTasksCompletedService.getDosTaskCompletedInfo();
+    final resultadoTres =
+        await TresTasksCompletedService.getTresTaskCompletedInfo();
 
     setState(() {
       latinoamericaCompleted = resultadoUno[0];
@@ -65,6 +77,11 @@ class _ProyectosPageState extends State<ProyectosPage> {
       creacionEncuesta = resultadoDos[3];
       grabacionPodcast = resultadoDos[4];
 
+      laSociedad = resultadoTres[0];
+      movimientosSociales = resultadoTres[1];
+      tuAlrededor = resultadoTres[2];
+      creaTuMovimiento = resultadoTres[3];
+
       isUnoCompleted = latinoamericaCompleted &&
           artistasCompleted &&
           eventoCulturalCompleted &&
@@ -75,6 +92,9 @@ class _ProyectosPageState extends State<ProyectosPage> {
           laEncuesta &&
           creacionEncuesta &&
           grabacionPodcast;
+
+      isTresCompleted =
+          laSociedad && movimientosSociales && tuAlrededor && creaTuMovimiento;
     });
   }
 

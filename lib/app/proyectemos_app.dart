@@ -43,14 +43,15 @@ import '../app/modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/feedback/feedback_tarea_uno.dart';
 import 'modules/proyecto_dos/creacion_encuesta/creacion_encuesta_menu.dart';
 import 'modules/proyecto_dos/el_podcast/el_podcast_menu.dart';
-import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/feed/crea_tu_movimiento_feed.dart';
+import 'modules/proyecto_tres/crea_tu_movimiento/crea_tu_movimiento_feed.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_feedback.dart';
-import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_feedback_menu.dart';
-import 'modules/proyecto_tres/movimientos_sociales/feedback/feed_movimientos_sociales.dart';
-import 'modules/proyecto_tres/movimientos_sociales/feedback/feedback_tarea_uno.dart';
-import 'modules/proyecto_tres/movimientos_sociales/feedback/movimientos_sociales_feedback_menu.dart';
-import 'modules/proyecto_tres/tu_alrededor/feedback_tu_alrededor.dart';
-import 'modules/proyecto_tres/tu_alrededor/record_and_play_audio_tu_alrededor.dart';
+import 'modules/proyecto_tres/la_sociedad/la_sociedad_menu.dart';
+import 'modules/proyecto_tres/movimientos_sociales/feed_movimientos_sociales.dart';
+import 'modules/proyecto_tres/movimientos_sociales/feedback_tarea_uno.dart';
+import 'modules/proyecto_tres/movimientos_sociales/movimientos_sociales_menu.dart';
+import 'modules/proyecto_tres/tu_alrededor/tarea_uno/feedback_tu_alrededor.dart';
+import 'modules/proyecto_tres/tu_alrededor/tarea_uno/record_and_play_audio_tu_alrededor.dart';
+import 'modules/proyecto_tres/tu_alrededor/tu_alrededor_menu.dart';
 import 'modules/proyecto_uno/artistas_hispanoamericanos/tarea_uno/record_and_play_audio.dart';
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/tarea_dos/tarea_dos_page.dart';
 import '../app/modules/proyecto_uno/artistas_hispanoamericanos/tarea_uno/tarea_uno_page.dart';
@@ -73,12 +74,11 @@ import '../app/modules/widgets/enviar_email_professora.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/crea_tu_movimiento_menu.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_uno/crea_tu_movimiento_tarea_uno.dart';
 import 'modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_tarea_dos.dart';
-import 'modules/proyecto_tres/la_sociedad/feedback_tarea_uno.dart';
-import 'modules/proyecto_tres/la_sociedad/la_sociedade.dart';
-import 'modules/proyecto_tres/la_sociedad/record_and_play_audio_la_sociedad.dart';
-import 'modules/proyecto_tres/las_redes_sociales_y_el_activismo/las_redes_sociales_y_el_activismo.dart';
+import 'modules/proyecto_tres/la_sociedad/tarea_uno/feedback_tarea_uno.dart';
+import 'modules/proyecto_tres/la_sociedad/tarea_uno/la_sociedade.dart';
+import 'modules/proyecto_tres/la_sociedad/tarea_uno/record_and_play_audio_la_sociedad.dart';
 import 'modules/proyecto_tres/movimientos_sociales/tarea_uno/movimientos_sociales_tarea_uno.dart';
-import 'modules/proyecto_tres/tu_alrededor/tu_alrededor.dart';
+import 'modules/proyecto_tres/tu_alrededor/tarea_uno/tu_alrededor.dart';
 import 'modules/proyecto_uno/divulgacion/divulgacion_menu.dart';
 import 'modules/proyecto_uno/evento_cultural/evento_cultural_menu.dart';
 
@@ -175,37 +175,33 @@ final routes = {
 
 //projeto tres
   '/proyecto_tres': (context) => const ProyectoTresPage(),
+
   '/pTres_laSociedad': (context) => const LaSociedadPage(),
-  '/pTres_laSociedad_feedback_tarea_uno': (context) =>
-      const FeedbackTareaLaSociedad(),
+  '/pTres_laSociedad_feedback': (context) => const FeedbackTareaLaSociedad(),
+  '/pTres_laSociedad_menu': (context) => const PTresLaSociedadtMenu(),
   '/record_and_play_la_sociedad': (context) => const RecordAndPlayLaSociedad(),
 
   '/pTres_movimientosSociales': (context) =>
       const MovimientosSocialesTareaUno(),
-
-  '/pTres_movimientosSociales_tarea_menu': (context) =>
-      const FeedbackMenuMovimientosSociales(),
-
+  '/pTres_movimientosSociales_menu': (context) =>
+      PTresMovimientosSocialestMenu(),
   '/pTres_movimientosSociales_feed': (context) =>
       const FeedMovimientosSocialesPage(),
-
   '/pTres_movimientosSociales_feedback': (context) =>
       const FeedbackMovimientosSociales(),
 
   '/pTres_tuAlrededor': (context) => const TuAlrededor(),
+  '/pTres_tuAlrededor_menu': (context) => const PTresTuAlrededorMenu(),
   '/pTres_tuAlrededor_feedback': (context) => const FeedbackTuAlrededor(),
   '/record_and_play_tu_alrededor': (context) =>
       const RecordAndPlayTuAlrededor(),
-  '/pTres_lasRedesSocialesYElActivismo': (context) =>
-      const LasRedesSocialesYElActivismo(),
+
   '/pTres_creacionDeSuMovimento_menu': (context) =>
       const CreacionDeSuMovimentoMenu(),
   '/pTres_creacionDeSuMovimento_tarea_uno': (context) =>
       const CreacionDeSuMovimentoTareaUno(),
   '/pTres_creacionDeSuMovimento_tarea_dos': (context) =>
       const CreacionDeSuMovimentoTareaDos(),
-  '/pTres_feedback_creacionDeSuMovimento_tarea_dos_menu': (context) =>
-      const FeedbackCreacionDeSuMovimentoMenu(),
   '/pTres_feedback_creacionDeSuMovimento_tarea_uno': (context) =>
       const FeedbackCreaTuMovimientoTareaUno(),
   '/pTres_feedback_creacionDeSuMovimento_tarea_dos': (context) =>
