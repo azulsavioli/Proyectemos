@@ -7,11 +7,11 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 
-import '../../../../commons/strings/strings.dart';
-import '../../../../providers/record_audio_provider_la_sociedad_impl.dart';
-import '../../../../repository/repository_impl.dart';
-import '../../../../services/storage_service.dart';
-import '../../../../services/toast_services.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../providers/record_audio_provider_la_sociedad_impl.dart';
+import '../../../../../repository/repository_impl.dart';
+import '../../../../../services/storage_service.dart';
+import '../../../../../services/toast_services.dart';
 
 class LaSociedadController extends ChangeNotifier {
   final subject = 'Atividade - La Sociedad\n';
@@ -27,8 +27,8 @@ class LaSociedadController extends ChangeNotifier {
       RecordAudioLaSociedadProviderImpl.recordingsPaths;
 
   List<FileAttachment> createAudioAttachments(
-      List<String> recordsPathList,
-      ) {
+    List<String> recordsPathList,
+  ) {
     final firstAudio = File(recordsPathList[0]);
     final secondAudio = File(recordsPathList[1]);
     final thirdAudio = File(recordsPathList[2]);
@@ -77,9 +77,9 @@ class LaSociedadController extends ChangeNotifier {
   }
 
   Future convertAudioToFirebase(
-      List<String> audioPaths,
-      GoogleSignInAccount? currentUser,
-      ) async {
+    List<String> audioPaths,
+    GoogleSignInAccount? currentUser,
+  ) async {
     final firebaseStorage = FirebaseStorage.instance;
     final firebasePaths = [];
     final email = currentUser?.email;
@@ -95,8 +95,8 @@ class LaSociedadController extends ChangeNotifier {
         final snapshot = await firebaseStorage
             .ref()
             .child(
-          'tres-la-sociedad-audios/$email-audio-$counter.mp3',
-        )
+              'tres-la-sociedad-audios/$email-audio-$counter.mp3',
+            )
             .putFile(file)
             .whenComplete(() => null);
 
@@ -111,9 +111,11 @@ class LaSociedadController extends ChangeNotifier {
   }
 
   sendAnswers(
-      GoogleSignInAccount? currentUser,
-      List<String> answersList,
-      )  async {
+    GoogleSignInAccount? currentUser,
+    List<String> answersList,
+  ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(currentUser);
 
@@ -133,7 +135,9 @@ class LaSociedadController extends ChangeNotifier {
 
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {
@@ -144,8 +148,8 @@ class LaSociedadController extends ChangeNotifier {
   }
 
   String createEmailMessage(
-      List<String> allStudentInfo,
-      ) {
+    List<String> allStudentInfo,
+  ) {
     final text = '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n

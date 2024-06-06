@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_la_sociedad.dart';
 
-import '../../../../../commons/styles.dart';
+import '../../../../../../commons/styles.dart';
 
 class IntroLaSociedadPage extends StatefulWidget {
   const IntroLaSociedadPage({

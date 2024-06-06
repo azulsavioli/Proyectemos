@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/la_sociedade_controller.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/la_sociedade_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../../../commons/styles.dart';
-import '../../../../commons/strings/strings_la_sociedad.dart';
-import '../../widgets/custom_record_audio_button.dart';
+import '../../../../../../../commons/styles.dart';
+import '../../../../../commons/strings/strings_la_sociedad.dart';
+import '../../../widgets/custom_record_audio_button.dart';
 
 class QuestionLaSociedadTareaThree extends StatefulWidget {
   final YoutubePlayerController youtubeController;

@@ -8,8 +8,8 @@ import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/providers/record_audio_provider_la_sociedad_impl.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
-import '../../../../../commons/strings/strings.dart';
-import '../../../../../providers/play_audio_provider.dart';
+import '../../../../../../commons/strings/strings.dart';
+import '../../../../../../providers/play_audio_provider.dart';
 
 class RecordAndPlayLaSociedad extends StatefulWidget {
   const RecordAndPlayLaSociedad({Key? key}) : super(key: key);

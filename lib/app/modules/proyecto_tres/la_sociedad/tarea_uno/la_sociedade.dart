@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/question_four.dart';
-import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/question_one.dart';
-import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/question_three.dart';
-import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/question_two.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_four.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_one.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_three.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_two.dart';
 import 'package:proyectemos/providers/record_audio_provider_la_sociedad_impl.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../commons/strings/strings.dart';
-import '../../../../commons/styles.dart';
-import '../../../../services/storage_service.dart';
-import '../../../../services/toast_services.dart';
-import '../../../../utils/get_user.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/styles.dart';
+import '../../../../../services/storage_service.dart';
+import '../../../../../services/toast_services.dart';
+import '../../../../../utils/get_user.dart';
 import 'intro_la_sociedad.dart';
 import 'la_sociedade_controller.dart';
 
@@ -260,7 +260,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         onPageChanged(pageChanged);
@@ -280,12 +280,20 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                             setState(() {
                               loading = true;
                             });
-                            await _laSociedadController.sendAnswers(
-                                currentUser, recordsPathList);
-                            showToast(Strings.tareaConcluida);
-                            Navigator.pushNamed(
-                              context,
-                              '/proyecto_tres',
+
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) {
+                                if (mounted) {
+                                  _laSociedadController.sendAnswers(
+                                    currentUser,
+                                    recordsPathList,
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/pTres_laSociedad_menu',
+                                  );
+                                }
+                              },
                             );
                           }
                         }

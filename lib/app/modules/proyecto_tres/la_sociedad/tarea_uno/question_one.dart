@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/la_sociedade_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import '../../../../../../commons/styles.dart';
-import '../../../../commons/strings/strings_la_sociedad.dart';
-import '../../widgets/custom_record_audio_button.dart';
-import 'la_sociedade_controller.dart';
+import '../../../../../../../commons/styles.dart';
+import '../../../../../commons/strings/strings_la_sociedad.dart';
+import '../../../widgets/custom_record_audio_button.dart';
 
-class QuestionLaSociedadTareaTwo extends StatefulWidget {
+class QuestionLaSociedadTareaUno extends StatefulWidget {
   final YoutubePlayerController youtubeController;
   final LaSociedadController controller;
   final Function() listener;
 
-  const QuestionLaSociedadTareaTwo({
+  const QuestionLaSociedadTareaUno({
     Key? key,
     required this.youtubeController,
     required this.controller,
@@ -19,21 +19,20 @@ class QuestionLaSociedadTareaTwo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<QuestionLaSociedadTareaTwo> createState() =>
-      _QuestionLaSociedadTareaTwoState();
+  State<QuestionLaSociedadTareaUno> createState() =>
+      _QuestionLaSociedadTareaUnoState();
 }
 
-class _QuestionLaSociedadTareaTwoState extends State<QuestionLaSociedadTareaTwo>
+class _QuestionLaSociedadTareaUnoState extends State<QuestionLaSociedadTareaUno>
     with AutomaticKeepAliveClientMixin {
   YoutubePlayerController get youtubeController => widget.youtubeController;
-
   LaSociedadController get controller => widget.controller;
-
   Function() get listener => widget.listener;
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
@@ -45,7 +44,7 @@ class _QuestionLaSociedadTareaTwoState extends State<QuestionLaSociedadTareaTwo>
           ),
           YoutubePlayer(
             thumbnail: const Text(
-                'https://i.ytimg.com/vi/VcCkzlP_33Q/maxresdefault.jpg'),
+                'https://i.ytimg.com/vi/lcjK1P3kuGo/maxresdefault.jpg'),
             controller: youtubeController,
             showVideoProgressIndicator: true,
             progressIndicatorColor: ThemeColors.yellow,
@@ -77,9 +76,6 @@ class _QuestionLaSociedadTareaTwoState extends State<QuestionLaSociedadTareaTwo>
                 width: 5,
               ),
             ],
-          ),
-          const SizedBox(
-            height: 25,
           ),
           const SizedBox(
             height: 25,
