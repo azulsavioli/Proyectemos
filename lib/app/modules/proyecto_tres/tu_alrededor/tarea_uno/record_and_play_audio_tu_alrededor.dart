@@ -7,9 +7,9 @@ import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:simple_ripple_animation/simple_ripple_animation.dart';
 
-import '../../../../../commons/strings/strings.dart';
-import '../../../../../providers/play_audio_provider.dart';
-import '../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
+import '../../../../../../commons/strings/strings.dart';
+import '../../../../../../providers/play_audio_provider.dart';
+import '../../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
 
 class RecordAndPlayTuAlrededor extends StatefulWidget {
   const RecordAndPlayTuAlrededor({Key? key}) : super(key: key);

@@ -7,9 +7,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 
-import '../../../../../commons/strings/strings.dart';
-import '../../../../../services/toast_services.dart';
-import '../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
+import '../../../../../../commons/strings/strings.dart';
+import '../../../../../../services/toast_services.dart';
+import '../../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
 
 class TuAlrededorController extends ChangeNotifier {
   final _repository = RepositoryImpl();
@@ -32,6 +32,8 @@ class TuAlrededorController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(currentUser);
 
@@ -51,7 +53,9 @@ class TuAlrededorController extends ChangeNotifier {
 
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {

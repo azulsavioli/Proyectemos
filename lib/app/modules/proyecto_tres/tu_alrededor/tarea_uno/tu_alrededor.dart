@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../commons/strings/strings.dart';
-import '../../../../commons/styles.dart';
-import '../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
-import '../../../../services/toast_services.dart';
-import '../../../../utils/get_user.dart';
+import '../../../../../commons/strings/strings.dart';
+import '../../../../../commons/styles.dart';
+import '../../../../../providers/record_audio_provider_tu_alrededor_impl.dart';
+import '../../../../../services/toast_services.dart';
+import '../../../../../utils/get_user.dart';
 import 'question_tu_alrededor_five.dart';
 import 'question_tu_alrededor_four.dart';
 import 'question_tu_alrededor_one.dart';
@@ -101,7 +101,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         final currentUser = getCurrentUser(context);
@@ -121,14 +121,16 @@ class _TuAlrededorState extends State<TuAlrededor> {
                             setState(() {
                               loading = true;
                             });
-                            await _controller
-                                .sendAnswers(currentUser, recordsPathList)
-                                .then(
-                                  (value) => Navigator.pushNamed(
-                                    context,
-                                    '/proyecto_tres',
-                                  ),
-                                );
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) => Navigator.pushNamed(
+                                context,
+                                '/pTres_tuAlrededor_menu',
+                              ),
+                            );
+                            _controller.sendAnswers(
+                              currentUser,
+                              recordsPathList,
+                            );
                           }
                         }
                       },

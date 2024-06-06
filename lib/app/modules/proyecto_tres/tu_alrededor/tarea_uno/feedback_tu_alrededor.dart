@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../commons/strings/strings.dart';
-import '../../widgets/feedback_page.dart';
+import '../../../../../../commons/strings/strings.dart';
+import '../../../widgets/feedback_page.dart';
 
 class FeedbackTuAlrededor extends StatefulWidget {
   const FeedbackTuAlrededor({super.key});

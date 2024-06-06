@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_tu_alrededor.dart';
 
-import '../../../../../commons/styles.dart';
-import '../../widgets/custom_record_audio_button.dart';
+import '../../../../../../commons/styles.dart';
+import '../../../widgets/custom_record_audio_button.dart';
 import 'tu_alrededor_controller.dart';
 
-class QuestionTuAlrededorOne extends StatefulWidget {
+class QuestionTuAlrededorSeven extends StatefulWidget {
   final TuAlrededorController controller;
 
-  const QuestionTuAlrededorOne({
+  const QuestionTuAlrededorSeven({
     Key? key,
     required this.controller,
   }) : super(key: key);
 
   @override
-  State<QuestionTuAlrededorOne> createState() => _QuestionTuAlrededorOneState();
+  State<QuestionTuAlrededorSeven> createState() =>
+      _QuestionTuAlrededorSevenState();
 }
 
-class _QuestionTuAlrededorOneState extends State<QuestionTuAlrededorOne>
+class _QuestionTuAlrededorSevenState extends State<QuestionTuAlrededorSeven>
     with AutomaticKeepAliveClientMixin {
   TuAlrededorController get controller => widget.controller;
 
@@ -32,11 +33,11 @@ class _QuestionTuAlrededorOneState extends State<QuestionTuAlrededorOne>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            StringsTuAlrededor.qUnoTuAlrededor,
+            StringsTuAlrededor.qSieteTuAlrededor,
             style: ThemeText.paragraph16GrayNormal,
           ),
           CustomRecordAudioButton(
-            question: StringsTuAlrededor.qUnoTuAlrededor,
+            question: StringsTuAlrededor.qSieteTuAlrededor,
             isAudioFinish: controller.isAudioFinish,
             namedRoute: '/record_and_play_tu_alrededor',
             labelButton: 'Grabar la respuesta',
