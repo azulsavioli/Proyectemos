@@ -80,7 +80,10 @@ class _IntroDosCreaTuMovimientoTareaUnoState
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Padding(
                     padding: EdgeInsets.only(top: 250),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: Center(
+                        child: CircularProgressIndicator(
+                      color: ThemeColors.blue,
+                    )),
                   );
                 } else if (snapshot.hasError) {
                   return Text('Erro: ${snapshot.error}');

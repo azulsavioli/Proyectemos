@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../../../commons/strings/strings.dart';
-import '../../../../../../commons/styles.dart';
-import '../../../../../../repository/proyectemos_repository.dart';
-import '../../../../widgets/drawer_menu.dart';
+import '../../../../commons/strings/strings.dart';
+import '../../../../commons/styles.dart';
+import '../../../../repository/proyectemos_repository.dart';
+import '../../widgets/drawer_menu.dart';
 
 class FeedCreaTuMovimientoTareaDosPage extends StatefulWidget {
   const FeedCreaTuMovimientoTareaDosPage({super.key});
@@ -56,7 +56,9 @@ class _FeedCreaTuMovimientoTareaDosPageState
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
           final students = snapshot.data ?? [];
@@ -82,7 +84,9 @@ class _FeedCreaTuMovimientoTareaDosPageState
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
         },
@@ -108,14 +112,15 @@ class _FeedCreaTuMovimientoTareaDosPageState
           Padding(
             padding: const EdgeInsets.all(12),
             child: Card(
-              color: ThemeColors.white,
+              elevation: 3,
+              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
                     ListTile(
                       leading: CircleAvatar(
-                        radius: 20,
+                        radius: 32,
                         backgroundColor: ThemeColors.yellow,
                         child: Icon(
                           Icons.group_add,
@@ -126,32 +131,23 @@ class _FeedCreaTuMovimientoTareaDosPageState
                       title: Text(nomeMovimiento),
                       subtitle: Text(
                         '''
-${grupo.substring(1, grupo.length - 1)}\n''',
+\n${grupo.substring(1, grupo.length - 1)}\n''',
                       ),
                     ),
                     ElevatedButton.icon(
-                      style: ButtonStyle(
-                        elevation: MaterialStateProperty.all(3),
-                        backgroundColor: MaterialStateProperty.all(
-                          ThemeColors.white,
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ThemeColors.blue,
                       ),
                       onPressed: () => launchUrlMovimientoSoliale(
                         movimientosLink,
                       ),
                       icon: const Icon(
                         Icons.link,
-                        color: ThemeColors.yellow,
+                        color: Colors.white,
                       ),
-                      label: Text(
+                      label: const Text(
                         'Ir para o podcast',
-                        style: ThemeText.paragraph14Gray,
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ],

@@ -17,10 +17,15 @@ class CreacionDeSuMovimentoMenu extends StatefulWidget {
 class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
   bool tareaUno = false;
   bool tareaDos = false;
+  bool isLoadingTareaUno = false;
+  bool isLoadingTareaDos = false;
+  bool timerEnded = false;
 
   @override
   void initState() {
     super.initState();
+    isTaskOneLoading();
+    isTaskDosLoading();
     getTask();
   }
 
@@ -31,6 +36,31 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
     setState(() {
       tareaUno = resultado[0];
       tareaDos = resultado[1];
+    });
+
+    if (tareaUno && tareaDos) {
+      await Future.delayed(
+        const Duration(seconds: 3),
+        () => setState(
+          () => timerEnded = true,
+        ),
+      );
+    }
+  }
+
+  Future<void> isTaskOneLoading() async {
+    final isTaskOneLoading = await TresTasksCompletedService.isLoadind(
+        "creaTuMovimientoTareaUnoCompleted");
+    setState(() {
+      isLoadingTareaUno = isTaskOneLoading;
+    });
+  }
+
+  Future<void> isTaskDosLoading() async {
+    final isTaskTwoLoading = await TresTasksCompletedService.isLoadind(
+        "creaTuMovimientoTareaDosCompleted");
+    setState(() {
+      isLoadingTareaDos = isTaskTwoLoading;
     });
   }
 
@@ -68,39 +98,95 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaUno
-                      ? 'Feedback\nNuestro movimiento social'
-                      : 'Nuestro movimiento social',
+                  text: isLoadingTareaUno
+                      ? 'Cargando\nNuestro movimiento social'
+                      : tareaUno
+                          ? 'Feedback\nNuestro movimiento social'
+                          : 'Nuestro movimiento social',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaUno
-                      ? '/pTres_feedback_creacionDeSuMovimento_tarea_uno'
-                      : '/pTres_creacionDeSuMovimento_tarea_uno',
-                  backgroundColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaUno ? Icons.check : Icons.music_note_sharp,
-                  shadowColor:
-                      tareaUno ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaUno
+                      ? null
+                      : tareaUno
+                          ? '/pTres_feedback_creacionDeSuMovimento_tarea_uno'
+                          : '/pTres_creacionDeSuMovimento_tarea_uno',
+                  backgroundColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaUno
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaUno
+                          ? Icons.check
+                          : Icons.movie_filter_sharp,
+                  shadowColor: isLoadingTareaUno
+                      ? ThemeColors.grayLight
+                      : tareaUno
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CardButton(
                   iconSize: 30,
-                  text: tareaDos
-                      ? 'Feedback\nLa red social del movimento'
-                      : 'La red social del movimento',
+                  text: isLoadingTareaDos
+                      ? 'Cargando\nLa red social del movimento'
+                      : tareaDos
+                          ? 'Feedback\nLa red social del movimento'
+                          : 'La red social del movimento',
                   cardWidth: width,
                   cardHeight: height,
-                  namedRoute: tareaDos
-                      ? '/pTres_feedback_creacionDeSuMovimento_tarea_dos_menu'
-                      : '/pTres_creacionDeSuMovimento_tarea_dos',
-                  backgroundColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
-                  icon: tareaDos ? Icons.check : Icons.image,
-                  shadowColor:
-                      tareaDos ? ThemeColors.green : ThemeColors.yellow,
+                  namedRoute: isLoadingTareaDos
+                      ? null
+                      : tareaDos
+                          ? '/pTres_feedback_creacionDeSuMovimento_tarea_dos'
+                          : '/pTres_creacionDeSuMovimento_tarea_dos',
+                  backgroundColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
+                  icon: isLoadingTareaDos
+                      ? Icons.hourglass_bottom_outlined
+                      : tareaDos
+                          ? Icons.check
+                          : Icons.accessibility_new_outlined,
+                  shadowColor: isLoadingTareaDos
+                      ? ThemeColors.grayLight
+                      : tareaDos
+                          ? ThemeColors.green
+                          : ThemeColors.yellow,
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                if (tareaUno && tareaDos && timerEnded)
+                  CardButton(
+                    iconSize: 30,
+                    text: 'Feed de Podcasts',
+                    cardWidth: width,
+                    cardHeight: height,
+                    namedRoute: '/pTres_feed_creacionDeSuMovimento_tarea_dos',
+                    backgroundColor: ThemeColors.green,
+                    icon: Icons.link,
+                    shadowColor: ThemeColors.green,
+                  )
+                else if (tareaUno && tareaDos)
+                  Card(
+                    color: Colors.white,
+                    elevation: 3,
+                    child: SizedBox(
+                      height: height,
+                      width: width,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: ThemeColors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
                 const SizedBox(
                   height: 20,
                 ),

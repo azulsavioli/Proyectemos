@@ -162,7 +162,7 @@ class _CreacionDeSuMovimentoTareaDosState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         if (textController1.text.isEmpty ||
@@ -180,17 +180,16 @@ class _CreacionDeSuMovimentoTareaDosState
                           setState(() {
                             loading = true;
                           });
-                          _controller
-                              .sendAnswers(
-                                currentUser,
-                                respostas,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pTres_creacionDeSuMovimento_menu',
-                                ),
-                              );
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) => Navigator.pushNamed(
+                              context,
+                              '/pTres_creacionDeSuMovimento_menu',
+                            ),
+                          );
+                          _controller.sendAnswers(
+                            currentUser,
+                            respostas,
+                          );
                         }
                       },
                       child: const Text(

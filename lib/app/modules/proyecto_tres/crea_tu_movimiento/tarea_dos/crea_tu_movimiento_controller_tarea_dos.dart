@@ -18,6 +18,8 @@ class CreacionDeSuMovimentoTareaDosController extends ChangeNotifier {
     GoogleSignInAccount? currentUser,
     List<String> movimientoInfo,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(movimientoInfo, currentUser);
 
@@ -36,7 +38,9 @@ class CreacionDeSuMovimentoTareaDosController extends ChangeNotifier {
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomMovimientoSociale(json);
       await _repository.saveTaskCompleted(task);
-      showToast(Strings.tareaConcluida);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {
