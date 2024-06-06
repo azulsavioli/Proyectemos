@@ -93,6 +93,8 @@ class MovimientosSocialesController extends ChangeNotifier {
   Future<void> sendAnswers(
     GoogleSignInAccount? currentUser,
   ) async {
+    await _repository.isTaskLoading(task, true);
+
     try {
       final json = await makeJson(currentUser);
 
@@ -113,8 +115,9 @@ class MovimientosSocialesController extends ChangeNotifier {
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
       await _repository.saveClassroomMovimientosSocialesVideo(json);
+      await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaConcluida);
+      showToast(Strings.tareaEnviada);
 
       notifyListeners();
     } on FirebaseException catch (e) {

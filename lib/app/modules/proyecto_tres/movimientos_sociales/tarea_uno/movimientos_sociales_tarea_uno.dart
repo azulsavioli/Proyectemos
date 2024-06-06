@@ -138,7 +138,7 @@ class _MovimientosSocialesTareaUnoState
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(ThemeColors.blue),
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () {
                         if (_controller.studentGroup.length <= 0 ||
@@ -152,16 +152,19 @@ class _MovimientosSocialesTareaUnoState
                           setState(() {
                             loading = true;
                           });
-                          _controller
-                              .sendAnswers(
-                                currentUser,
-                              )
-                              .then(
-                                (value) => Navigator.pushNamed(
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) {
+                              if (mounted) {
+                                _controller.sendAnswers(
+                                  currentUser,
+                                );
+                                Navigator.pushNamed(
                                   context,
-                                  '/proyecto_tres',
-                                ),
-                              );
+                                  '/pTres_movimientosSociales_menu',
+                                );
+                              }
+                            },
+                          );
                         }
                       },
                       child: const Text(

@@ -8,9 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
 import 'package:proyectemos/services/tres_tasks_completed.dart';
 
-import '../../../../../commons/styles.dart';
-import '../../../../../repository/proyectemos_repository.dart';
-import '../../../widgets/drawer_menu.dart';
+import '../../../../commons/styles.dart';
+import '../../../../repository/proyectemos_repository.dart';
+import '../../widgets/drawer_menu.dart';
 
 class FeedMovimientosSocialesPage extends StatefulWidget {
   const FeedMovimientosSocialesPage({Key? key}) : super(key: key);
@@ -140,7 +140,9 @@ class _FeedMovimientosSocialesPageState
           }
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
           final students = snapshot.data!;

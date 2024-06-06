@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
 
 import '../../../../../commons/styles.dart';
-import '../../../widgets/custom_audio_player.dart';
+import '../../../widgets/player.dart';
 
 class IntroUnoMovimientosSocialesPage extends StatefulWidget {
   const IntroUnoMovimientosSocialesPage({
@@ -17,33 +17,54 @@ class IntroUnoMovimientosSocialesPage extends StatefulWidget {
 
 class _IntroUnoMovimientosSocialesPageState
     extends State<IntroUnoMovimientosSocialesPage> {
-  final player = AudioPlayer();
+  late AudioPlayer player = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+
+    player = AudioPlayer();
+
+    player.setReleaseMode(ReleaseMode.stop);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await player.setSource(AssetSource('audios/proyecto3.mp3'));
+      await player.resume();
+    });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            StringsMovimientosSociales.descriptionUno,
-            style: ThemeText.paragraph16GrayNormal,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const CustomAudioPlayer(
-            audioPath: 'assets/audios/proyecto2',
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-        ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Text(
+              StringsMovimientosSociales.descriptionUno,
+              style: ThemeText.paragraph16GrayNormal,
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            PlayerWidget(player: player),
+            const SizedBox(
+              height: 40,
+            ),
+          ],
+        ),
       ),
     );
   }
