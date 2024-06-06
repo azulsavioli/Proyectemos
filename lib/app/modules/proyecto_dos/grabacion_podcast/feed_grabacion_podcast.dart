@@ -81,7 +81,9 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: ThemeColors.blue,
+              ),
             );
           }
         },
@@ -124,7 +126,6 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
                         backgroundColor: ThemeColors.yellow,
                         child: Image.network(
                           logoPodcast,
-                          // fit: BoxFit.cover,
                           height: 300,
                           width: 300,
                         ),

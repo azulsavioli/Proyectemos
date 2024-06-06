@@ -170,7 +170,7 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
                     cardHeight: height,
                     namedRoute: '/pDos_grabacion_podcast_feed',
                     backgroundColor: ThemeColors.green,
-                    icon: Icons.image,
+                    icon: Icons.podcasts,
                     shadowColor: ThemeColors.green,
                   )
                 else if (tareaUno && tareaDos)
