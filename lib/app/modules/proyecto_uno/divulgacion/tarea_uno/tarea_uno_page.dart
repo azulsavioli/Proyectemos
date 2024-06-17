@@ -27,12 +27,21 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
+    return SafeArea(
+        child: Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+        toolbarHeight: isMobile ? 60 : 110,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios,
+                color: ThemeColors.white, size: isMobile ? 20 : 50),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(
@@ -161,6 +170,6 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                 ],
               ),
             ),
-    );
+    ));
   }
 }

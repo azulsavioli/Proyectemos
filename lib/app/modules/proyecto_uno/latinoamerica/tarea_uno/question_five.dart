@@ -25,22 +25,25 @@ class _QuestionLatinoamericaFiveState extends State<QuestionLatinoamericaFive> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             StringsLationamerica.qFiveLatin,
-            style: ThemeText.paragraph16GrayNormal,
+            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 20 : 30,
           ),
           CustomTextFormField(
             focusNode: focusNode,
-            textInputAction: TextInputAction.go,
+            textInputAction: TextInputAction.next,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,
@@ -48,8 +51,8 @@ class _QuestionLatinoamericaFiveState extends State<QuestionLatinoamericaFive> {
             validatorMenorqueNumero:
                 'Su respuesta debe tener al menos 3 caracteres',
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 20 : 60,
           ),
         ],
       ),

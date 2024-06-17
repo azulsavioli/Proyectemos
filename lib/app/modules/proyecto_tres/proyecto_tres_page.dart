@@ -41,7 +41,10 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -76,9 +79,9 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   ),
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'La Sociedad',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_laSociedad_menu',
                   backgroundColor:
@@ -91,9 +94,9 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'Movimientos\nSociales',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_movimientosSociales_menu',
                   backgroundColor: movimientosSocialesCompleted
@@ -109,9 +112,9 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'Tu Alrededor',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_tuAlrededor_menu',
                   backgroundColor: tuAlrededorCompleted
@@ -126,9 +129,9 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Crea tu movimiento',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_creacionDeSuMovimento_menu',
                   backgroundColor: creacionDeSuMovimentoCompleted

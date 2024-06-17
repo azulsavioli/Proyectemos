@@ -22,98 +22,116 @@ class _RevisionQuestionsLatinoamericaState
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               '¡Revisa tus respuestas y presiona el botón enviar!',
-              style: ThemeText.h3title20BlueNormal,
+              style: ThemeText.paragraph16BlueNormal,
             ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               StringsLationamerica.qOneLatin,
-              style: ThemeText.paragraph16GrayNormal,
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
             if (controllerList[0].text.isNotEmpty)
               Text(
                 controllerList[0].text,
-                style: ThemeText.paragraph12BlueBold,
+                style: ThemeText.paragraph12Blue,
               )
             else
               Text(
                 'Vuelve y ingrese tuja respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               StringsLationamerica.qTwoLatinTwo,
-              style: ThemeText.paragraph16GrayNormal,
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
             if (controllerList[1].text.isNotEmpty)
               Text(
                 controllerList[1].text,
-                style: ThemeText.paragraph12BlueBold,
+                style: ThemeText.paragraph12Blue,
               )
             else
               Text(
                 'Vuelve y ingrese tuja respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               StringsLationamerica.qThreeLatin,
-              style: ThemeText.paragraph16GrayNormal,
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
             if (controllerList[2].text.isNotEmpty)
               Text(
                 controllerList[2].text,
-                style: ThemeText.paragraph12BlueBold,
+                style: ThemeText.paragraph12Blue,
               )
             else
               Text(
                 'Vuelve y ingrese tuja respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               StringsLationamerica.qFourLatin,
-              style: ThemeText.paragraph16GrayNormal,
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
             if (controllerList[3].text.isNotEmpty)
               Text(
                 controllerList[3].text,
-                style: ThemeText.paragraph12BlueBold,
+                style: ThemeText.paragraph12Blue,
               )
             else
               Text(
                 'Vuelve y ingrese tuja respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Text(
               StringsLationamerica.qFiveLatin,
-              style: ThemeText.paragraph16GrayNormal,
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
             if (controllerList[4].text.isNotEmpty)
               Text(
                 controllerList[4].text,
-                style: ThemeText.paragraph12BlueBold,
+                style: ThemeText.paragraph12Blue,
               )
             else
               Text(

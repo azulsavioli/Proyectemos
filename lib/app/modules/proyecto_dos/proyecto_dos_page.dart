@@ -41,7 +41,10 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -76,11 +79,11 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   ),
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize:isMobile ? 30 : 50,
                   text: conocesPodcastCompleted
                       ? Strings.titlefeedbackConocesPodcast
                       : Strings.titleConocesPodcast,
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_conocesPodcast_menu',
                   backgroundColor: conocesPodcastCompleted
@@ -95,9 +98,9 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Cómo crear un podcast',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_comoCrearPodcast_menu',
                   backgroundColor: comoCrearPodcastCompleted
@@ -113,9 +116,9 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'La encuesta',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_laEncuesta_menu',
                   backgroundColor:
@@ -128,9 +131,9 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Creación de la encuesta',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_creacionEncuesta_menu',
                   backgroundColor: creacionEncuestaCompleted
@@ -146,9 +149,9 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Grabación del podcast',
-                  cardWidth: width,
+                  cardWidth:  isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_grabacionPodcast_menu',
                   backgroundColor: grabacionPodcastCompleted

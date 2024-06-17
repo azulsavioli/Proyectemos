@@ -32,16 +32,10 @@ class CustomStepInheritedWidget extends InheritedWidget {
 }
 
 class CustomStep extends StatefulWidget {
-  final String title;
-  final int currentStep;
-  final int stepIndex;
   final TextEditingController controller;
 
   const CustomStep({
     Key? key,
-    required this.title,
-    required this.currentStep,
-    required this.stepIndex,
     required this.controller,
   }) : super(key: key);
 
@@ -57,7 +51,7 @@ class _CustomStepState extends State<CustomStep> {
   Icon buttonFileIcon = const Icon(
     Icons.image_outlined,
     color: ThemeColors.white,
-  );
+    );
 
   Color buttonFileColor = ThemeColors.red;
   final _controller = StepController();
@@ -87,6 +81,9 @@ class _CustomStepState extends State<CustomStep> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return CustomStepInheritedWidget(
       buttonFileSelected: buttonFileSelected,
       buttonFileIcon: buttonFileIcon,
@@ -97,19 +94,21 @@ class _CustomStepState extends State<CustomStep> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             Text(
               'Seleciona una imagen de su camara o de su arquivo',
-              style: ThemeText.paragraph14Gray,
+                style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph12Gray,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             Row(
               children: <Widget>[
                 Expanded(
                   child: ElevatedButton.icon(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(buttonFileColor),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(100, isMobile ? 50 : 80),
+                      backgroundColor: ThemeColors.red,
                     ),
                     onPressed: () async {
                       setState(() {
@@ -117,9 +116,9 @@ class _CustomStepState extends State<CustomStep> {
                       });
                     },
                     icon: isFileLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
+                        ?  SizedBox(
+                            width: isMobile ? 20 : 50,
+                            height: isMobile ? 20 : 50,
                             child: CircularProgressIndicator(
                               color: ThemeColors.blue,
                               valueColor:
@@ -127,24 +126,33 @@ class _CustomStepState extends State<CustomStep> {
                             ),
                           )
                         : buttonFileIcon,
-                    label: const Text(
+                    label:  Text(
                       'Galería',
-                      style: TextStyle(color: Colors.white),
+                      style: isMobile ? TextStyle(color:ThemeColors.white) :
+                      TextStyle(
+                          color: ThemeColors.white,
+                          fontSize: 26,
+                          fontWeight: FontWeight.normal),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 5,
+                SizedBox(
+                  height: isMobile ? 20 : 30,
                 ),
               ],
             ),
-            const Divider(),
-            Text(
-              'Cual la descripción de esa imagen',
-              style: ThemeText.paragraph14Gray,
+            SizedBox(
+              height: isMobile ? 10 : 20,
             ),
-            const SizedBox(
-              height: 10,
+            const Divider(),
+            SizedBox(
+              height: isMobile ? 10 : 20,
+            ),            Text(
+              'Cual la descripción de esa imagen',
+              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph12Gray,
+            ),
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             CustomTextFormField(
               focusNode: focusNode,
@@ -156,8 +164,8 @@ class _CustomStepState extends State<CustomStep> {
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
-            const SizedBox(
-              height: 10,
+            SizedBox(
+              height: isMobile ? 30 : 30,
             ),
           ],
         ),

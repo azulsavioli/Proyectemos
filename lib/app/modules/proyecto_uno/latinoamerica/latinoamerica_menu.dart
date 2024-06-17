@@ -66,15 +66,33 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeColors.white,
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ),
+          ],
+          toolbarHeight: isMobile ? 60 : 110,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios,
+                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+            ),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -87,20 +105,20 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando 300 kilos'
                       : tareaUno
                           ? 'Feedback 300 kilos'
                           : '300 kilos',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
@@ -125,13 +143,13 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 ),
                 const SizedBox(height: 20),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nTu Latinoamérica'
                       : tareaDos
                           ? 'Feedback\nTu Latinoamérica'
                           : 'Tu Latinoamérica',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
@@ -157,9 +175,9 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                 const SizedBox(height: 20),
                 if (tareaUno && tareaDos && timerEnded)
                   CardButton(
-                    iconSize: 30,
+                    iconSize: isMobile ? 30 : 50,
                     text: 'Feed de imágenes\nLatinoamérica',
-                    cardWidth: width,
+                    cardWidth: isMobile ? width : widthTablet,
                     cardHeight: height,
                     namedRoute: '/pUno_latinoamerica_feed',
                     backgroundColor: ThemeColors.green,

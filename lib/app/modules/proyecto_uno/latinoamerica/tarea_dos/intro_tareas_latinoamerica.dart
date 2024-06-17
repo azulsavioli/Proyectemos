@@ -17,18 +17,21 @@ class _IntroTareaUnoLatinoamericaPageState
     extends State<IntroTareaUnoLatinoamericaPage> {
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 20 : 30,
           ),
           Text(
             StringsLationamerica.titleQOnePageDosLatin,
-            style: ThemeText.paragraph16GrayNormal,
+            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
           ),
         ],
       ),

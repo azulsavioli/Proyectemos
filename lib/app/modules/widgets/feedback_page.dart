@@ -52,78 +52,97 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ThemeColors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
-        title: Text(
-          widget.pageTitle,
-          style: ThemeText.paragraph14WhiteBold,
-        ),
-      ),
-      endDrawer: DrawerMenuWidget(),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(16, 30, 16, 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.tareaTitle,
-              style: ThemeText.paragraph16BlueBold,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              feedback,
-              style: ThemeText.paragraph14Gray,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(ThemeColors.yellow),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                  ),
-                ),
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/pUno_send_email_prof',
-                    arguments: widget.tareaTitle,
-                  );
+                  Scaffold.of(context).openEndDrawer();
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(
-                        'Contacto con la profesora',
-                        style: TextStyle(
-                          fontSize: ScreenUtil().setSp(16),
-                          color: ThemeColors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ],
+          toolbarHeight: isMobile ? 60 : 90,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios,
+                  color: ThemeColors.white, size: isMobile ? 20 : 40),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Color.fromRGBO(250, 251, 250, 1),
+          ),
+          title: Text(
+            widget.pageTitle,
+            style: ThemeText.paragraph14WhiteBold,
+          ),
+        ),
+        endDrawer: DrawerMenuWidget(),
+        body: Padding(
+          padding: isMobile? EdgeInsets.fromLTRB(16, 30, 16, 16) : EdgeInsets.fromLTRB(30, 60, 30, 30),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.tareaTitle,
+                style: isMobile
+                    ? ThemeText.paragraph16BlueNormal
+                    : ThemeText.paragraph14Blue,
+              ),
+              SizedBox(
+                height: isMobile ? 20 : 40,
+              ),
+              Text(
+                feedback,
+                style: isMobile
+                    ? ThemeText.paragraph14Gray
+                    : ThemeText.paragraph12Gray,
+              ),
+              SizedBox(
+                height: isMobile ? 20 : 40,
+              ),
+              SizedBox(
+                height:  isMobile ? 60 : 100,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size(100, isMobile ? 50 : 120),
+                      backgroundColor: ThemeColors.yellow),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/pUno_send_email_prof',
+                      arguments: widget.tareaTitle,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'Contacto con la profesora',
+                          style: TextStyle(
+                            fontSize: ScreenUtil().setSp(16),
+                            color: ThemeColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

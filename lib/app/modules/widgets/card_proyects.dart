@@ -26,6 +26,13 @@ class CardProyecto extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+    return isMobile ? buildPhoneLayout(context) : buildTabletLayout(context);
+
+}
+
+  Widget buildPhoneLayout(BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(namedRoute);
@@ -73,7 +80,6 @@ class CardProyecto extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      // mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         SizedBox(
@@ -86,6 +92,81 @@ class CardProyecto extends StatelessWidget {
                             child: Icon(
                               icon!,
                               size: 20,
+                              color: ThemeColors.white,
+                            ),
+                          ),
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildTabletLayout(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(namedRoute);
+      },
+      child: Card(
+        elevation: 3,
+        color: Colors.white,
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * .98,
+          height: MediaQuery.of(context).size.height * .28,
+          child: Center(
+            child: Row(
+              children: [
+                Image.asset(
+                  image,
+                  height: 200,
+                  width: 200,
+                ),
+                SizedBox(
+                  width: 24,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: titleColor,
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: [
+                        SizedBox(
+                          width: 350,
+                          child: Text(
+                            description,
+                            style: descriptionColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          width: 350,
+                        ),
+                        if (icon != null)
+                          CircleAvatar(
+                            radius: 15,
+                            backgroundColor: backgroundColor,
+                            child: Icon(
+                              icon!,
+                              size: 60,
                               color: ThemeColors.white,
                             ),
                           ),

@@ -100,9 +100,20 @@ class _ProyectosPageState extends State<ProyectosPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
+              onPressed: () {
+                Scaffold.of(context).openEndDrawer();
+              },
+            ),
+          ],
+          toolbarHeight: isMobile ? 60 : 110,
           iconTheme: const IconThemeData(
             color: ThemeColors.gray,
           ),
@@ -118,7 +129,9 @@ class _ProyectosPageState extends State<ProyectosPage> {
           ),
           title: Text(
             Strings.title,
-            style: ThemeText.h3title20BlueBold,
+            style: isMobile
+                ? ThemeText.h3title20BlueBold
+                : ThemeText.paragraph16BlueBold,
           ),
         ),
         backgroundColor: ThemeColors.white,
@@ -126,7 +139,9 @@ class _ProyectosPageState extends State<ProyectosPage> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 24),
+            padding: isMobile
+                ? const EdgeInsets.symmetric(horizontal: 18, vertical: 24)
+                : const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

@@ -28,14 +28,17 @@ class _QuestionLatinoamericaTareaDosState
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
     super.build(context);
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 40.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Form(
@@ -51,12 +54,13 @@ class _QuestionLatinoamericaTareaDosState
                     _controller.answerTresController,
                     _controller.answerQuatroController,
                     _controller.answerCincoController,
+                    isMobile,
                   ),
                   onStepContinue: () {
                     if (_controller.currentStep < 5 - 1) {
                       if (mounted) {
                         setState(() => _controller.currentStep++);
-                        widget.onUpdate(); // Chamando o onUpdate
+                        widget.onUpdate();
                       }
                     }
                   },
@@ -64,7 +68,7 @@ class _QuestionLatinoamericaTareaDosState
                     if (mounted) {
                       setState(() {
                         _controller.currentStep = step;
-                        widget.onUpdate(); // Chamando o onUpdate
+                        widget.onUpdate();
                       });
                     }
                   },
@@ -72,7 +76,7 @@ class _QuestionLatinoamericaTareaDosState
                     if (_controller.currentStep > 0) {
                       if (mounted) {
                         setState(() => _controller.currentStep--);
-                        widget.onUpdate(); // Chamando o onUpdate
+                        widget.onUpdate();
                       }
                     }
                     if (_controller.currentStep == 0) {
@@ -87,16 +91,23 @@ class _QuestionLatinoamericaTareaDosState
                             _controller.isLastStep != _controller.currentStep)
                           Expanded(
                             child: ElevatedButton(
-                              style: ButtonStyle(),
+                              style: ElevatedButton.styleFrom(
+                                elevation: 1,
+                                minimumSize: Size(100, isMobile ? 50 : 80),
+                              ),
                               onPressed: details.onStepCancel != null
                                   ? () {
                                       details.onStepCancel!();
-                                      widget.onUpdate(); // Chamando o onUpdate
+                                      widget.onUpdate();
                                     }
                                   : null,
-                              child: const Text(
+                              child:  Text(
                                 'Volver',
-                                style: TextStyle(color: ThemeColors.blue),
+                                style: isMobile ? TextStyle(color:ThemeColors.blue) :
+                                TextStyle(
+                                    color: ThemeColors.blue,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ),
                           ),
@@ -106,39 +117,52 @@ class _QuestionLatinoamericaTareaDosState
                         if (_controller.isLastStep == _controller.currentStep)
                           Expanded(
                             child: ElevatedButton(
-                              style: ButtonStyle(),
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100, isMobile ? 50 : 80),
+                              ),
                               onPressed: details.onStepCancel != null
                                   ? () {
                                       details.onStepCancel!();
-                                      widget.onUpdate(); // Chamando o onUpdate
+                                      widget.onUpdate();
                                     }
                                   : null,
-                              child: const Text(
+                              child:  Text(
                                 'Volver',
-                                style: TextStyle(color: ThemeColors.blue),
+                                style: isMobile ? TextStyle(color:ThemeColors.blue) :
+                                TextStyle(
+                                    color: ThemeColors.blue,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ),
                           )
                         else
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: details.onStepContinue != null
-                                  ? () {
-                                      details.onStepContinue!();
-                                      widget.onUpdate();
-                                    }
-                                  : null,
-                              child: const Text('Continuar',
-                                  style: TextStyle(color: ThemeColors.blue)),
-                            ),
-                          ),
-                        if (_controller.isLastStep == _controller.currentStep)
-                          SizedBox(
-                            width: 5,
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(100, isMobile ? 50 : 80),
+                                  backgroundColor: ThemeColors.blue,
+                                ),
+                                onPressed: details.onStepContinue != null
+                                    ? () {
+                                        details.onStepContinue!();
+                                        widget.onUpdate();
+                                      }
+                                    : null,
+                                child: Text('Continuar',
+                                    style: isMobile ? TextStyle(color:ThemeColors.white) :
+                                  TextStyle(
+                                    color: ThemeColors.white,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.normal),
+                                )),
                           ),
                         if (_controller.isLastStep == _controller.currentStep)
                           Expanded(
                             child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100, isMobile ? 50 : 80),
+                              ),
                               onPressed: () {
                                 if (_controller.currentStep < 5 - 1) {
                                   if (mounted) {
@@ -151,7 +175,11 @@ class _QuestionLatinoamericaTareaDosState
                               },
                               child: Text(
                                 'Concluir',
-                                style: TextStyle(color: ThemeColors.blue),
+                                style: isMobile ? TextStyle(color:ThemeColors.blue) :
+                                TextStyle(
+                                    color: ThemeColors.blue,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.normal),
                               ),
                             ),
                           ),

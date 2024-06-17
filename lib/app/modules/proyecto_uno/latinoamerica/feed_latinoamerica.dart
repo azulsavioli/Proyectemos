@@ -25,12 +25,27 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
+            onPressed: () {
+              Scaffold.of(context).openEndDrawer();
+            },
+          ),
+        ],
+        toolbarHeight: isMobile ? 60 : 110,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios,
+                color: ThemeColors.white, size: isMobile ? 20 : 50),            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(

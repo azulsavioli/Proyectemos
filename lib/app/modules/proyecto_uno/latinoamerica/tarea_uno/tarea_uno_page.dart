@@ -105,6 +105,8 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
     final currentUser = getCurrentUser(context);
     final textOne = textControllerOne.text;
     final textTwo = textControllerTwo.text;
@@ -116,13 +118,18 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pop();
-            });
-          },
+        toolbarHeight: isMobile ? 60 : 90,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 8.0),
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios,
+                color: ThemeColors.white, size: isMobile ? 20 : 40),
+            onPressed: () {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.of(context).pop();
+              });
+            },
+          ),
         ),
         centerTitle: true,
         iconTheme: const IconThemeData(
@@ -205,142 +212,145 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
           ),
         ),
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,
             )
           : Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 7,
-                      effect: const WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        activeDotColor: Colors.blueAccent,
-                        dotColor: Colors.black26,
+            color:  Colors.transparent,
+            padding: EdgeInsets.symmetric(horizontal: 8),
+            height: isMobile ? 60 : 90,
+            width: MediaQuery.of(context).size.width * .8,
+            child: Row(
+                mainAxisSize : MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (pageChanged == 0)
+                  const SizedBox(
+                    width: 65,
+                  )
+                else
+                  TextButton(
+                    onPressed: () {
+                      pageController.previousPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child: Text(
+                      'Volver',
+                      style: TextStyle(
+                        fontSize: isMobile ? 18 : 28,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  if (pageChanged == 6)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          if (pageChanged == 1) {
-                            youTubeController.addListener(listener);
-                          } else {
-                            youTubeController.removeListener(listener);
-                          }
-                        });
-                        deactivate();
-                        if (textControllerOne.text.isEmpty ||
-                            textControllerTwo.text.isEmpty ||
-                            textControllerThree.text.isEmpty ||
-                            textControllerFour.text.isEmpty ||
-                            textControllerFive.text.isEmpty) {
-                          showToast(
-                            color: ThemeColors.red,
-                            'Vuelve y ingrese tuja respuesta correctamente',
-                          );
+                Center(
+                  child: SmoothPageIndicator(
+                    controller: pageController,
+                    count: 7,
+                    effect:  WormEffect(
+                      dotHeight:  isMobile ? 10 : 18,
+                      dotWidth: isMobile ? 10 : 18,
+                      activeDotColor: ThemeColors.blue,
+                      dotColor: Colors.black26,
+                    ),
+                  ),
+                ),
+                if (pageChanged == 6)
+                  TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        if (pageChanged == 1) {
+                          youTubeController.addListener(listener);
                         } else {
-                          final respostas = _tareaUnoController.makeAnswersList(
-                            textOne,
-                            textTwo,
-                            textThree,
-                            textFour,
-                            textFive,
-                          );
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) {
-                              if (mounted) {
-                                _tareaUnoController.sendAnswers(
-                                  currentUser,
-                                  respostas,
-                                );
-                                Navigator.pushNamed(
-                                  context,
-                                  '/pUno_latinoamerica_menu',
-                                );
-                              }
-                            },
-                          );
+                          youTubeController.removeListener(listener);
                         }
-                      },
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          if (pageChanged == 1) {
-                            youTubeController.addListener(listener);
-                          } else {
-                            youTubeController.removeListener(listener);
-                          }
-                        });
-                        if (pageChanged == 6) {
-                          deactivate();
-                        }
-
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
+                      });
+                      deactivate();
+                      if (textControllerOne.text.isEmpty ||
+                          textControllerTwo.text.isEmpty ||
+                          textControllerThree.text.isEmpty ||
+                          textControllerFour.text.isEmpty ||
+                          textControllerFive.text.isEmpty) {
+                        showToast(
+                          color: ThemeColors.red,
+                          'Vuelve y ingrese tuja respuesta correctamente',
                         );
-                      },
-                      child: const Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      } else {
+                        final respostas =
+                            _tareaUnoController.makeAnswersList(
+                          textOne,
+                          textTwo,
+                          textThree,
+                          textFour,
+                          textFive,
+                        );
+                        setState(() {
+                          loading = true;
+                        });
+                        Future.delayed(Duration(milliseconds: 2000)).then(
+                          (value) {
+                            if (mounted) {
+                              _tareaUnoController.sendAnswers(
+                                currentUser,
+                                respostas,
+                              );
+                              Navigator.pushNamed(
+                                context,
+                                '/pUno_latinoamerica_menu',
+                              );
+                            }
+                          },
+                        );
+                      }
+                    },
+                    child:  Text(
+                      'Enviar',
+                      style: TextStyle(
+                        fontSize:  isMobile ? 18 : 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                ],
-              ),
+                  )
+                else
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        if (pageChanged == 1) {
+                          youTubeController.addListener(listener);
+                        } else {
+                          youTubeController.removeListener(listener);
+                        }
+                      });
+                      if (pageChanged == 6) {
+                        deactivate();
+                      }
+
+                      pageController.nextPage(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    child:  Text(
+                      'Próximo',
+                      style: TextStyle(
+                        fontSize:  isMobile ? 18 : 28,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+              ],
             ),
+          ),
     );
   }
 }

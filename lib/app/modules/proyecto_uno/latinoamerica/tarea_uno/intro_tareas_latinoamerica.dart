@@ -27,31 +27,34 @@ class _IntroTareaLatinoamericaPageState
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     super.build(context);
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             StringsLationamerica.titleQOnePageOneLatin,
-            style: ThemeText.paragraph16GrayNormal,
+            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 20 : 30,
           ),
           Text(
             StringsLationamerica.qOneLatin,
-            style: ThemeText.paragraph16GrayNormal,
+            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
           ),
-          const SizedBox(
-            height: 15,
+           SizedBox(
+            height: isMobile ? 20 : 60,
           ),
           CustomTextFormField(
             focusNode: focusNode,
-            textInputAction: TextInputAction.go,
+            textInputAction: TextInputAction.next,
             hint: 'Respuesta',
             controller: controller,
             keyboardType: TextInputType.text,

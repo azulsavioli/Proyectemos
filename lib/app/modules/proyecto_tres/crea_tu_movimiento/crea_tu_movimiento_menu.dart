@@ -66,8 +66,11 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width * .99;
+    final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -88,7 +91,7 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,13 +100,13 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando\nNuestro movimiento social'
                       : tareaUno
                           ? 'Feedback\nNuestro movimiento social'
                           : 'Nuestro movimiento social',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
@@ -130,13 +133,13 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nLa red social del movimento'
                       : tareaDos
                           ? 'Feedback\nLa red social del movimento'
                           : 'La red social del movimento',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
@@ -164,9 +167,9 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                 ),
                 if (tareaUno && tareaDos && timerEnded)
                   CardButton(
-                    iconSize: 30,
+                    iconSize: isMobile ? 30 : 50,
                     text: 'Feed de Podcasts',
-                    cardWidth: width,
+                    cardWidth: isMobile ? width : widthTablet,
                     cardHeight: height,
                     namedRoute: '/pTres_feed_creacionDeSuMovimento_tarea_dos',
                     backgroundColor: ThemeColors.green,
@@ -179,7 +182,7 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                     elevation: 3,
                     child: SizedBox(
                       height: height,
-                      width: width,
+                      width: isMobile ? width : widthTablet,
                       child: const Center(
                         child: CircularProgressIndicator(
                           color: ThemeColors.blue,

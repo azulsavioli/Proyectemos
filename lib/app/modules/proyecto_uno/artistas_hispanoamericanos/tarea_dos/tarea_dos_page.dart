@@ -58,181 +58,190 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
   @override
   Widget build(BuildContext context) {
     final currentUser = getCurrentUser(context);
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
-    return Scaffold(
-      backgroundColor: ThemeColors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pop();
-            });
-          },
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
-        title: Text(
-          Strings.titleArtistasHispanoamericanosDos,
-          style: ThemeText.paragraph16WhiteBold,
-        ),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Form(
-          key: _formKey,
-          child: PageView(
-            onPageChanged: (index) {
-              setState(() {
-                pageChanged = index;
-              });
-            },
-            controller: pageController,
-            children: [
-              const IntroTareaDosArtistasHispanoamericanosPage(),
-              QuestionArtistashispanoamericanosOne(
-                controller: _controller,
-                textController: answerUnoController,
-              ),
-              QuestionArtistashispanoamericanosDos(
-                controller: _controller,
-                textController: answerDosController,
-              ),
-              QuestionArtistashispanoamericanosTres(
-                controller: _controller,
-                textController: answerTresController,
-              ),
-              QuestionArtistashispanoamericanosFour(
-                controller: _controller,
-                textController: answerQuatroController,
-              ),
-              QuestionArtistashispanoamericanosFive(
-                controller: _controller,
-                textController: answerCincoController,
-              ),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          toolbarHeight: isMobile ? 60 : 110,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios,
+                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              onPressed: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pop();
+                });
+              },
+            ),
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Color.fromRGBO(250, 251, 250, 1),
+          ),
+          title: Text(
+            Strings.titleArtistasHispanoamericanosDos,
+            style: ThemeText.paragraph16WhiteBold,
           ),
         ),
-      ),
-      bottomSheet: loading
-          ? const LinearProgressIndicator(
-              minHeight: 20,
-              color: ThemeColors.blue,
-            )
-          : Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 6,
-                      effect: const WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        activeDotColor: Colors.blueAccent,
-                        dotColor: Colors.black26,
-                      ),
-                    ),
-                  ),
-                  if (pageChanged == 5)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate() &&
-                            answerUnoController.text.isNotEmpty &&
-                            answerDosController.text.isNotEmpty &&
-                            answerTresController.text.isNotEmpty &&
-                            answerQuatroController.text.isNotEmpty &&
-                            answerCincoController.text.isNotEmpty) {
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) {
-                              if (mounted) {
-                                _controller.sendAnswers(currentUser, [
-                                  answerUnoController,
-                                  answerDosController,
-                                  answerTresController,
-                                  answerQuatroController,
-                                  answerCincoController,
-                                ]);
-                                Navigator.pushNamed(
-                                  context,
-                                  '/pUno_artistas_menu',
-                                );
-                              }
-                            },
-                          );
-                        } else {
-                          showToast(
-                            '''Selecciona todos los archivos y escriba sus descripciones''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
-                          );
-                        }
-                      },
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: PageView(
+              onPageChanged: (index) {
+                setState(() {
+                  pageChanged = index;
+                });
+              },
+              controller: pageController,
+              children: [
+                const IntroTareaDosArtistasHispanoamericanosPage(),
+                QuestionArtistashispanoamericanosOne(
+                  controller: _controller,
+                  textController: answerUnoController,
+                ),
+                QuestionArtistashispanoamericanosDos(
+                  controller: _controller,
+                  textController: answerDosController,
+                ),
+                QuestionArtistashispanoamericanosTres(
+                  controller: _controller,
+                  textController: answerTresController,
+                ),
+                QuestionArtistashispanoamericanosFour(
+                  controller: _controller,
+                  textController: answerQuatroController,
+                ),
+                QuestionArtistashispanoamericanosFive(
+                  controller: _controller,
+                  textController: answerCincoController,
+                ),
+              ],
             ),
+          ),
+        ),
+        bottomSheet: loading
+            ? const LinearProgressIndicator(
+                minHeight: 20,
+                color: ThemeColors.blue,
+              )
+            : Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (pageChanged == 0)
+                      const SizedBox(
+                        width: 65,
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: const Text(
+                          'Volver',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 6,
+                        effect: const WormEffect(
+                          dotHeight: 10,
+                          dotWidth: 10,
+                          activeDotColor: Colors.blueAccent,
+                          dotColor: Colors.black26,
+                        ),
+                      ),
+                    ),
+                    if (pageChanged == 5)
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        ),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate() &&
+                              answerUnoController.text.isNotEmpty &&
+                              answerDosController.text.isNotEmpty &&
+                              answerTresController.text.isNotEmpty &&
+                              answerQuatroController.text.isNotEmpty &&
+                              answerCincoController.text.isNotEmpty) {
+                            setState(() {
+                              loading = true;
+                            });
+                            Future.delayed(Duration(milliseconds: 2000)).then(
+                              (value) {
+                                if (mounted) {
+                                  _controller.sendAnswers(currentUser, [
+                                    answerUnoController,
+                                    answerDosController,
+                                    answerTresController,
+                                    answerQuatroController,
+                                    answerCincoController,
+                                  ]);
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/pUno_artistas_menu',
+                                  );
+                                }
+                              },
+                            );
+                          } else {
+                            showToast(
+                              '''Selecciona todos los archivos y escriba sus descripciones''',
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
+                            );
+                          }
+                        },
+                        child: const Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: const Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 }

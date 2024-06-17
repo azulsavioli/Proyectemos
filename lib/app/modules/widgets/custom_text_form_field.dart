@@ -24,7 +24,11 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return TextFormField(
+      style: isMobile ? ThemeText.paragraph14Gray : ThemeText.paragraph12Gray,
       focusNode: focusNode,
       textInputAction: textInputAction,
       autofocus: true,
@@ -50,6 +54,12 @@ class CustomTextFormField extends StatelessWidget {
             style: ThemeText.paragraph16GrayLight,
           ),
         ),
+        contentPadding: EdgeInsets.symmetric(
+          vertical: isMobile ? 20.0 : 40.0,
+          horizontal: 16.0,
+        ),
+
+
       ),
       keyboardType: keyboardType,
       cursorColor: Colors.grey,

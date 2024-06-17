@@ -57,7 +57,10 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -78,7 +81,7 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -87,13 +90,13 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando\nEscuchar el Podcast'
                       : tareaUno
                           ? 'Feedback\nEscuchar el Podcast'
                           : 'Escuchar el podcast',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
@@ -120,13 +123,13 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nCrear un Podcast'
                       : tareaDos
                           ? 'Feedback\nCrear un Podcast'
                           : 'Crear un Podcast',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null

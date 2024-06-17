@@ -45,7 +45,10 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -66,7 +69,7 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -75,13 +78,13 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nLa Sociedad'
                       : tareaUno
                           ? 'Feedback La Sociedad'
                           : 'La Sociedad',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null

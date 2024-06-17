@@ -58,155 +58,166 @@ class _PUnoLatinoamericaTareaDosPageState
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
     final currentUser = getCurrentUser(context);
 
-    return Scaffold(
-      backgroundColor: ThemeColors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
-        title: Text(
-          Strings.titleTuLatinoamerica,
-          style: ThemeText.paragraph14WhiteBold,
-        ),
-      ),
-      body: PageView(
-        onPageChanged: (index) {
-          setState(() {
-            pageChanged = index;
-          });
-        },
-        controller: pageController,
-        children: [
-          const IntroTareaUnoLatinoamericaPage(),
-          QuestionLatinoamericaTareaDos(
-            controller: _controller,
-            onUpdate: updateCanSubmit,
-          ),
-        ],
-      ),
-      bottomSheet: loading
-          ? const LinearProgressIndicator(
-              minHeight: 20,
-              color: ThemeColors.blue,
-            )
-          : Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 2,
-                      effect: const WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        activeDotColor: Colors.blueAccent,
-                        dotColor: Colors.black26,
-                      ),
-                    ),
-                  ),
-                  if (pageChanged == 1 &&
-                      _controller.selectedImages.length == 5)
-                    ElevatedButton(
-                      onPressed: canSubmit
-                          ? () async {
-                              updateCanSubmit();
-                              setState(() {
-                                loading = true;
-                              });
-                              final answerList = _controller.makeAnswersList(
-                                _controller.answerUnoController.text,
-                                _controller.answerDosController.text,
-                                _controller.answerTresController.text,
-                                _controller.answerQuatroController.text,
-                                _controller.answerCincoController.text,
-                              );
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    _controller.sendAnswers(
-                                      currentUser,
-                                      answerList,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pUno_latinoamerica_menu',
-                                    );
-                                  }
-                                },
-                              );
-                            }
-                          : () {
-                              updateCanSubmit();
-                              showToast(
-                                color: ThemeColors.red,
-                                'Vuelve y ingrese tus respuestas correctamente',
-                              );
-                            },
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                            canSubmit ? ThemeColors.blue : Colors.grey),
-                      ),
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          toolbarHeight: isMobile ? 60 : 90,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios,
+                  color: ThemeColors.white, size: isMobile ? 20 : 40),
+              onPressed: () => Navigator.of(context).pop(),
             ),
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Color.fromRGBO(250, 251, 250, 1),
+          ),
+          title: Text(
+            Strings.titleTuLatinoamerica,
+            style: ThemeText.paragraph14WhiteBold,
+          ),
+        ),
+        body: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              pageChanged = index;
+            });
+          },
+          controller: pageController,
+          children: [
+            const IntroTareaUnoLatinoamericaPage(),
+            QuestionLatinoamericaTareaDos(
+              controller: _controller,
+              onUpdate: updateCanSubmit,
+            ),
+          ],
+        ),
+        bottomNavigationBar: loading
+            ? const LinearProgressIndicator(
+                minHeight: 20,
+                color: ThemeColors.blue,
+              )
+            : Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: isMobile ? 60 : 90,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (pageChanged == 0)
+                      const SizedBox(
+                        width: 65,
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Volver',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 2,
+                        effect: WormEffect(
+                          dotHeight: isMobile ? 10 : 18,
+                          dotWidth: isMobile ? 10 : 18,
+                          activeDotColor: Colors.blueAccent,
+                          dotColor: Colors.black26,
+                        ),
+                      ),
+                    ),
+                    if (pageChanged == 1 &&
+                        _controller.selectedImages.length == 5)
+                      ElevatedButton(
+                        onPressed: canSubmit
+                            ? () async {
+                                updateCanSubmit();
+                                setState(() {
+                                  loading = true;
+                                });
+                                final answerList = _controller.makeAnswersList(
+                                  _controller.answerUnoController.text,
+                                  _controller.answerDosController.text,
+                                  _controller.answerTresController.text,
+                                  _controller.answerQuatroController.text,
+                                  _controller.answerCincoController.text,
+                                );
+                                Future.delayed(Duration(milliseconds: 2000))
+                                    .then(
+                                  (value) {
+                                    if (mounted) {
+                                      _controller.sendAnswers(
+                                        currentUser,
+                                        answerList,
+                                      );
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/pUno_latinoamerica_menu',
+                                      );
+                                    }
+                                  },
+                                );
+                              }
+                            : () {
+                                updateCanSubmit();
+                                showToast(
+                                  color: ThemeColors.red,
+                                  'Vuelve y ingrese tus respuestas correctamente',
+                                );
+                              },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                              canSubmit ? ThemeColors.blue : Colors.grey),
+                        ),
+                        child: Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+      ),
     );
   }
 }

@@ -46,7 +46,10 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
@@ -67,7 +70,7 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -76,13 +79,13 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 25 : 45,
                   text: isLoadingTarea
                       ? 'Cargando\nCreacion de la encuesta'
                       : tareaUno
-                          ? 'Feedback\nCreacion de la encuest'
-                          : 'Creacion de la encuest',
-                  cardWidth: width,
+                          ? 'Feedback\nCreacion de la encuesta'
+                          : 'Creacion de la encuesta',
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null

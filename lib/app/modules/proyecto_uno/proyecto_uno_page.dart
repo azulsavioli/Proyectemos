@@ -39,15 +39,33 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
+    final widthTablet = MediaQuery.of(context).size.width * .95;
     final height = MediaQuery.of(context).size.width * .4;
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: ThemeColors.white,
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu, size: isMobile ? 20 : 40),
+                onPressed: () {
+                  Scaffold.of(context).openEndDrawer();
+                },
+              ),
+            ),
+          ],
+          toolbarHeight: isMobile ? 60 : 110,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios,
+                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+            ),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -74,9 +92,9 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   ),
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'Latinoamérica',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pUno_latinoamerica_menu',
                   backgroundColor: latinoamericaCompleted
@@ -91,9 +109,9 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 30,
+                  iconSize: isMobile ? 30 : 50,
                   text: 'Artistas\nhispanoamericanos',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pUno_artistas_menu',
                   backgroundColor:
@@ -106,9 +124,9 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Evento Cultural',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pUno_evento_cultural_menu',
                   backgroundColor: eventoCulturalCompleted
@@ -123,9 +141,9 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                   height: 20,
                 ),
                 CardButton(
-                  iconSize: 25,
+                  iconSize: isMobile ? 25 : 45,
                   text: 'Divulgación',
-                  cardWidth: width,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pUno_divulgacao_menu',
                   backgroundColor: divulgationCompleted
