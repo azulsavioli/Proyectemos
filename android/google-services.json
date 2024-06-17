@@ -7,48 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:333978861746:android:b560e4a7de709b7b3a89ab",
+        "mobilesdk_app_id": "1:333978861746:android:33c720f8fff784a03a89ab",
         "android_client_info": {
-          "package_name": "com.example.proyectemos"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDjb4N5ZPqB1pW1hMsZSraYN7WfvgFIk0U"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "333978861746-22p22ba433e0327j3nc5dp3h4bkvhn5s.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "333978861746-01kmpv9r31hstdmchqq23on0m5e0967n.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.proyectemosIos"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:333978861746:android:851952e29048f66a3a89ab",
-        "android_client_info": {
-          "package_name": "com.example.proyectemos_ios"
+          "package_name": "com.moobaalabs.proyectemos"
         }
       },
       "oauth_client": [
         {
-          "client_id": "333978861746-7um47m8ra76bhfjj3u52c77adh49ps24.apps.googleusercontent.com",
+          "client_id": "333978861746-cjiq5fup90hgae2qp6i9u7qioko5c50u.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.proyectemos_ios",
+            "package_name": "com.moobaalabs.proyectemos",
             "certificate_hash": "1a1e99251ace8e86a772b65887cd00ea04d3b594"
           }
         }
