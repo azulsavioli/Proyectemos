@@ -20,6 +20,14 @@
             "package_name": "com.moobaalabs.proyectemos",
             "certificate_hash": "1a1e99251ace8e86a772b65887cd00ea04d3b594"
           }
+        },
+        {
+          "client_id": "333978861746-kflu3vnu235br3i555hn8ep13umvoenc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moobaalabs.proyectemos",
+            "certificate_hash": "7c6552460f4c1378270eb5d025f076da129cac31"
+          }
         }
       ],
       "api_key": [
@@ -33,13 +41,6 @@
             {
               "client_id": "333978861746-22p22ba433e0327j3nc5dp3h4bkvhn5s.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "333978861746-01kmpv9r31hstdmchqq23on0m5e0967n.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.proyectemosIos"
-              }
             }
           ]
         }
