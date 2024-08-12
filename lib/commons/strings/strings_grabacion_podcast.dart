@@ -6,7 +6,7 @@ abstract class StringsGrabacionPodcast {
   static const String feedbackTitleTareaDosGrabacionPodcast =
       'Feedback\nGrabar el podcast';
   static const String descriptionUnoTareaUnoGrabacionPodcast =
-      '''Ahora manos a la obra para crear de hecho el podcast.\nSelecciona tu equipo''';
+      '''Ahora manos a la obra para crear de hecho el podcast.\nSelecciona los integrantes de tu equipo''';
   static const String descriptionTwoTareaUnoGrabacionPodcast = '''
 Como hemos visto en las actividades anteriores es necesario un guión de grabación para que tengan una base, para que el podcast pueda tener un camino preestablecido para que no se olviden de temáticas importantes para el episodio.
 ¡Ahora es el momento de crearlo!

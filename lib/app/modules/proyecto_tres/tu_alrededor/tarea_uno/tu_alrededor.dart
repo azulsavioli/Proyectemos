@@ -52,7 +52,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

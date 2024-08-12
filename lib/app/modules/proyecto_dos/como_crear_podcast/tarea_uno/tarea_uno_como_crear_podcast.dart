@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/question_como_crear_podcast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -9,7 +10,16 @@ import '../../../../../services/storage_service.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
 import 'controller_uno_como_crear_podcast.dart';
-import 'intro_tarea_one_como_crear_podcast.dart';
+import 'final_intro_como_crear_podcast_page_dos.dart';
+import 'final_intro_como_crear_podcast_page_uno.dart';
+import 'intro_como_crear_podcast_page_cinco_accessible.dart';
+import 'intro_como_crear_podcast_page_cuatro_accessible.dart';
+import 'intro_como_crear_podcast_page_dos_accessible.dart';
+import 'intro_como_crear_podcast_page_one.dart';
+import 'intro_como_crear_podcast_page_one_accessible.dart';
+import 'intro_como_crear_podcast_page_seis_accessible.dart';
+import 'intro_como_crear_podcast_page_siete_accessible.dart';
+import 'intro_como_crear_podcast_page_tres_accessible.dart';
 
 class TareaUnoEscucharPodcast extends StatefulWidget {
   const TareaUnoEscucharPodcast({super.key});
@@ -39,6 +49,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   late FocusNode focusNode6;
   late bool isAllFilesFilleds;
   bool loading = false;
+  bool isAccessible = false;
 
   final pageController = PageController();
 
@@ -47,6 +58,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   @override
   void initState() {
     super.initState();
+    getIsAcessible();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
@@ -74,6 +86,16 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
           textControllerFour.text.isNotEmpty &&
           textControllerFive.text.isNotEmpty &&
           textControllerSix.text.isNotEmpty;
+    });
+  }
+
+  Future<void> getIsAcessible() async {
+    final preferences = await SharedPreferences.getInstance();
+    final isAccessibleOn = preferences.getBool("isAccessible");
+    setState(() {
+      if (isAccessibleOn != null) {
+        isAccessible = isAccessibleOn;
+      }
     });
   }
 
@@ -111,40 +133,69 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
           color: Color.fromRGBO(250, 251, 250, 1),
         ),
         title: Text(
-          Strings.titleEscucharPodcast,
+          Strings.titleElContenidoDelPodcast,
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),
       body: PageView(
-        onPageChanged: (index) {
-          setState(() {
-            pageChanged = index;
-          });
-        },
-        controller: pageController,
-        children: [
-          const IntroTareaUnoComoCrearPodcastPage(),
-          QuestionComoCrearPodcast(
-            focusNodeList: [
-              focusNode1,
-              focusNode2,
-              focusNode3,
-              focusNode4,
-              focusNode5,
-              focusNode6,
-            ],
-            textControllerList: [
-              textControllerOne,
-              textControllerTwo,
-              textControllerThree,
-              textControllerFour,
-              textControllerFive,
-              textControllerSix,
-            ],
-          ),
-        ],
-      ),
-      bottomSheet: loading
+          onPageChanged: (index) {
+            setState(() {
+              pageChanged = index;
+            });
+          },
+          controller: pageController,
+          children: isAccessible
+              ? [
+                  const IntroTareaComoCrearPodcastPageUnoAccessible(),
+                  const IntroTareaComoCrearPodcastPageDosAccessible(),
+                  const IntroTareaComoCrearPodcastPageTresAccessible(),
+                  const IntroTareaComoCrearPodcastPageCuatroAccessible(),
+                  const IntroTareaComoCrearPodcastPageCincoAccessible(),
+                  const IntroTareaComoCrearPodcastPageSeisAccessible(),
+                  const IntroTareaComoCrearPodcastPageSieteAccessible(),
+                  const FinalIntroTareaComoCrearPodcastPageUnoAccessible(),
+                  const FinalIntroTareaComoCrearPodcastPageDosAccessible(),
+                  QuestionComoCrearPodcast(
+                    focusNodeList: [
+                      focusNode1,
+                      focusNode2,
+                      focusNode3,
+                      focusNode4,
+                      focusNode5,
+                      focusNode6,
+                    ],
+                    textControllerList: [
+                      textControllerOne,
+                      textControllerTwo,
+                      textControllerThree,
+                      textControllerFour,
+                      textControllerFive,
+                      textControllerSix,
+                    ],
+                  ),
+                ]
+              : [
+                  const IntroTareaComoCrearPodcastPageUno(),
+                  QuestionComoCrearPodcast(
+                    focusNodeList: [
+                      focusNode1,
+                      focusNode2,
+                      focusNode3,
+                      focusNode4,
+                      focusNode5,
+                      focusNode6,
+                    ],
+                    textControllerList: [
+                      textControllerOne,
+                      textControllerTwo,
+                      textControllerThree,
+                      textControllerFour,
+                      textControllerFive,
+                      textControllerSix,
+                    ],
+                  ),
+                ]),
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,
@@ -180,7 +231,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                   Center(
                     child: SmoothPageIndicator(
                       controller: pageController,
-                      count: 2,
+                      count: isAccessible ? 10 : 2,
                       effect: const WormEffect(
                         dotHeight: 10,
                         dotWidth: 10,

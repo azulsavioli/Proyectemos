@@ -95,7 +95,7 @@ class _TareaArtistasLatinoamericanosPageState
                 )
               ],
             )),
-        bottomSheet: loading
+        bottomNavigationBar: loading
             ? const LinearProgressIndicator(
                 minHeight: 20,
                 color: ThemeColors.blue,
@@ -103,8 +103,9 @@ class _TareaArtistasLatinoamericanosPageState
             : Container(
                 color: Colors.transparent,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                height: 60,
+                height: isMobile ? 60 : 90,
                 child: Row(
+                  mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (pageChanged == 0)
@@ -119,10 +120,10 @@ class _TareaArtistasLatinoamericanosPageState
                             curve: Curves.easeInOut,
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           'Volver',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 18 : 28,
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),
@@ -132,10 +133,10 @@ class _TareaArtistasLatinoamericanosPageState
                       child: SmoothPageIndicator(
                         controller: pageController,
                         count: 4,
-                        effect: const WormEffect(
-                          dotHeight: 10,
-                          dotWidth: 10,
-                          activeDotColor: Colors.blueAccent,
+                        effect: WormEffect(
+                          dotHeight: isMobile ? 10 : 18,
+                          dotWidth: isMobile ? 10 : 18,
+                          activeDotColor: ThemeColors.blue,
                           dotColor: Colors.black26,
                         ),
                       ),
@@ -165,22 +166,26 @@ class _TareaArtistasLatinoamericanosPageState
                                 loading = true;
                               });
                               Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pUno_artistas_menu',
-                                ),
-                              );
-                              _controller.sendAnswers(
-                                currentUser,
-                                recordsPathList,
+                                (value) {
+                                  if (mounted) {
+                                    _controller.sendAnswers(
+                                      currentUser,
+                                      recordsPathList,
+                                    );
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/pUno_artistas_menu',
+                                    );
+                                  }
+                                },
                               );
                             }
                           }
                         },
-                        child: const Text(
+                        child: Text(
                           'Enviar',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 18 : 28,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
@@ -194,10 +199,10 @@ class _TareaArtistasLatinoamericanosPageState
                             curve: Curves.easeInOut,
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           'Próximo',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: isMobile ? 18 : 28,
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
                           ),

@@ -36,7 +36,9 @@ class _QuestionLatinoamericaFiveState extends State<QuestionLatinoamericaFive> {
         children: [
           Text(
             StringsLationamerica.qFiveLatin,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
           SizedBox(
             height: isMobile ? 20 : 30,

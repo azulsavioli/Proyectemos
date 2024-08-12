@@ -30,13 +30,15 @@ class _QuestionLatinoamericaFourState extends State<QuestionLatinoamericaFour> {
 
     return Padding(
       padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
-    child: Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             StringsLationamerica.qFourLatin,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
           SizedBox(
             height: isMobile ? 20 : 30,

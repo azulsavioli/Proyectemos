@@ -126,7 +126,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
             ),
           ),
         ),
-        bottomSheet: loading
+        bottomNavigationBar: loading
             ? const LinearProgressIndicator(
                 minHeight: 20,
                 color: ThemeColors.blue,

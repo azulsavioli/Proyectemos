@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/google_sign_in.dart';
 import '../../../repository/repository_impl.dart';
 import '../../../services/auth_services.dart';
 import '../widgets/card_button.dart';
+import '../widgets/custom_radio_button.dart';
+import '../widgets/custom_switch.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -55,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final width = MediaQuery.of(context).size.width * .9;
     final height = MediaQuery.of(context).size.width * .2;
     var tasksCompleted = 0;
-    final _repository = RepositoryImpl();
+    // final _repository = RepositoryImpl();
 
     setState(() {
       tasksCompleted = _controller.getAllTasks();
@@ -74,31 +77,31 @@ class _ProfilePageState extends State<ProfilePage> {
             onPressed: () => Navigator.pushNamed(context, '/proyectos'),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.delete),
-          onPressed: () {
-            _repository
-              // ..resetTaskCompleted('artistasTareaDosCompleted')
-              // ..resetTaskCompleted('artistasTareaUnoCompleted')
-              // ..resetTaskCompleted('latinoamericaTareaDosCompleted')
-              // ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
-              // ..resetTaskCompleted('eventoTareaUnoCompleted')
-              // ..resetTaskCompleted('divulgationCompleted')
-              // ..resetTaskCompleted('conocesPodcastCompleted')
-              // ..resetTaskCompleted('comoCrearPodcastTareaUnoCompleted')
-              // ..resetTaskCompleted('comoCrearPodcastTareaDosCompleted')
-              // ..resetTaskCompleted('laEncuestaTareaUnoCompleted')
-              // ..resetTaskCompleted('laEncuestaTareaDosCompleted')
-              // ..resetTaskCompleted('creacionEncuestaCompleted')
-              // ..resetTaskCompleted('grabacionPodcastTareaUnoCompleted')
-              // ..resetTaskCompleted('grabacionPodcastTareaDosCompleted')
-              // ..resetTaskCompleted('laSociedadTareaCompleted')
-              // ..resetTaskCompleted('movimientosSocialesCompleted')
-              // ..resetTaskCompleted('tuAlrededorCompleted')
-              ..resetTaskCompleted('creaTuMovimientoTareaUnoCompleted')
-              ..resetTaskCompleted('creaTuMovimientoTareaDosCompleted');
-          },
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   child: const Icon(Icons.delete),
+        //   onPressed: () {
+        //     _repository
+        //       // ..resetTaskCompleted('artistasTareaDosCompleted')
+        //       // ..resetTaskCompleted('artistasTareaUnoCompleted')
+        //       // ..resetTaskCompleted('latinoamericaTareaDosCompleted')
+        //       // ..resetTaskCompleted('latinoamericaTareaUnoCompleted')
+        //       // ..resetTaskCompleted('eventoTareaUnoCompleted')
+        //       // ..resetTaskCompleted('divulgationCompleted')
+        //       // ..resetTaskCompleted('conocesPodcastCompleted')
+        //       // ..resetTaskCompleted('comoCrearPodcastTareaUnoCompleted')
+        //       // ..resetTaskCompleted('comoCrearPodcastTareaDosCompleted')
+        //       // ..resetTaskCompleted('laEncuestaTareaUnoCompleted')
+        //       // ..resetTaskCompleted('laEncuestaTareaDosCompleted')
+        //       // ..resetTaskCompleted('creacionEncuestaCompleted')
+        //       // ..resetTaskCompleted('grabacionPodcastTareaUnoCompleted')
+        //       // ..resetTaskCompleted('grabacionPodcastTareaDosCompleted')
+        //       // ..resetTaskCompleted('laSociedadTareaCompleted')
+        //       // ..resetTaskCompleted('movimientosSocialesCompleted')
+        //       // ..resetTaskCompleted('tuAlrededorCompleted')
+        //       ..resetTaskCompleted('creaTuMovimientoTareaUnoCompleted')
+        //       ..resetTaskCompleted('creaTuMovimientoTareaDosCompleted');
+        //   },
+        // ),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
@@ -264,7 +267,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 const SizedBox(
                   height: 8,
                 ),
+                acessibilityCard(context),
+                const SizedBox(
+                  height: 8,
+                ),
                 logoutCard(context, _controller),
+                const SizedBox(
+                  height: 8,
+                ),
                 const SizedBox(
                   height: 8,
                 ),
@@ -275,6 +285,75 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+}
+
+Widget acessibilityCard(
+  BuildContext context,
+) {
+  final width = MediaQuery.of(context).size.width * .9;
+  final height = MediaQuery.of(context).size.width * .2;
+  return SizedBox(
+    height: height,
+    width: width,
+    child: ElevatedButton.icon(
+      icon: Padding(
+        padding: const EdgeInsets.only(left: 8),
+        child: CircleAvatar(
+          radius: 25,
+          backgroundColor: ThemeColors.yellow,
+          child: Icon(
+            Icons.settings_accessibility_sharp,
+            size: 25,
+            color: ThemeColors.white,
+          ),
+        ),
+      ),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10), // Raio de borda desejado
+        ),
+        foregroundColor: ThemeColors.yellow,
+        backgroundColor: Colors.white,
+        elevation: 3,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+        textStyle: ThemeText.paragraph14Gray,
+      ),
+      onPressed: () {},
+      label: Row(
+        children: [
+          const SizedBox(
+            width: 15,
+          ),
+          Text(
+            "Accesibilidad",
+            style: ThemeText.paragraph14Gray,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            "off",
+            style: TextStyle(
+              color: ThemeColors.gray,
+            ),
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          CustomSwitch(),
+          const SizedBox(
+            width: 5,
+          ),
+          Text(
+            "on",
+            style: TextStyle(
+              color: ThemeColors.gray,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 Widget logoutCard(

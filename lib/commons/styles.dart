@@ -142,8 +142,8 @@ abstract class ThemeText {
   );
 
   //H3
-  static TextStyle h3title20White = TextStyle(
-    fontSize: ScreenUtil().setSp(20),
+  static TextStyle  h3title30White = TextStyle(
+    fontSize: ScreenUtil().setSp(30),
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,
@@ -247,6 +247,14 @@ abstract class ThemeText {
     fontWeight: FontWeight.bold,
   );
 
+  static TextStyle paragraph16BlueNormal = TextStyle(
+    fontSize: ScreenUtil().setSp(16),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.blue,
+    fontWeight: FontWeight.normal,
+  );
+
   static TextStyle paragraph16WhiteBold = TextStyle(
     fontSize: ScreenUtil().setSp(16),
     letterSpacing: 1,
@@ -292,7 +300,7 @@ abstract class ThemeText {
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.blue,
-    fontWeight: FontWeight.bold,
+    fontWeight: FontWeight.normal,
   );
 
 //Paragraph 14
@@ -371,6 +379,30 @@ abstract class ThemeText {
 
   static TextStyle paragraph12WhiteBold = TextStyle(
     fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.white,
+    fontWeight: FontWeight.bold,
+  );
+
+  static TextStyle paragraph12Gray = TextStyle(
+    fontSize: ScreenUtil().setSp(12),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.gray,
+    fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle paragraph8WhiteNormal = TextStyle(
+    fontSize: ScreenUtil().setSp(8),
+    letterSpacing: 1,
+    fontFamily: 'Poppins',
+    color: ThemeColors.white,
+    fontWeight: FontWeight.normal,
+  );
+
+  static TextStyle paragraph6WhiteBold = TextStyle(
+    fontSize: ScreenUtil().setSp(6),
     letterSpacing: 1,
     fontFamily: 'Poppins',
     color: ThemeColors.white,

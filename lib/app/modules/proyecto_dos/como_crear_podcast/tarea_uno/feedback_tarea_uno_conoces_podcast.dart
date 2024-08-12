@@ -15,7 +15,7 @@ class _FeedbackTareaUnoStateComoCrearPodcast
     extends State<FeedbackTareaUnoComoCrearPodcast> {
   final String firebaseDoc =
       'dos/feedback/como_crear_un_podcast/tarea_uno/feedback';
-  final String pageTitle = Strings.titleEscucharPodcast;
+  final String pageTitle = Strings.titleElContenidoDelPodcast;
   final String tareaTitle = Strings.titleFeedbackEscucharPodcast;
   final String taskCompleted = 'comoCrearPodcastTareaUnoCompleted';
 

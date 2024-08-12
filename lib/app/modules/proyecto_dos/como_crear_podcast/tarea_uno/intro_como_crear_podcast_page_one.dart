@@ -5,18 +5,18 @@ import 'package:proyectemos/commons/strings/strings_como_crear_un_podcast.dart';
 import '../../../../../commons/styles.dart';
 import '../../../widgets/player.dart';
 
-class IntroTareaUnoComoCrearPodcastPage extends StatefulWidget {
-  const IntroTareaUnoComoCrearPodcastPage({
+class IntroTareaComoCrearPodcastPageUno extends StatefulWidget {
+  const IntroTareaComoCrearPodcastPageUno({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<IntroTareaUnoComoCrearPodcastPage> createState() =>
-      _IntroTareaUnoComoCrearPodcastPageState();
+  State<IntroTareaComoCrearPodcastPageUno> createState() =>
+      _IntroTareaComoCrearPodcastPageUnoState();
 }
 
-class _IntroTareaUnoComoCrearPodcastPageState
-    extends State<IntroTareaUnoComoCrearPodcastPage> {
+class _IntroTareaComoCrearPodcastPageUnoState
+    extends State<IntroTareaComoCrearPodcastPageUno> {
   late AudioPlayer player = AudioPlayer();
 
   @override
@@ -47,7 +47,7 @@ class _IntroTareaUnoComoCrearPodcastPageState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            StringsComoCrearUnPodcast.questionTareaUnoEscucharPodcast,
+            StringsComoCrearUnPodcast.introTareaUnoEscucharPodcast,
             style: ThemeText.paragraph16GrayNormal,
           ),
           const SizedBox(

@@ -40,16 +40,20 @@ class _IntroTareaLatinoamericaPageState
         children: [
           Text(
             StringsLationamerica.titleQOnePageOneLatin,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
           SizedBox(
             height: isMobile ? 20 : 30,
           ),
           Text(
             StringsLationamerica.qOneLatin,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
-           SizedBox(
+          SizedBox(
             height: isMobile ? 20 : 60,
           ),
           CustomTextFormField(

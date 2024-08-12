@@ -14,7 +14,7 @@ abstract class StringsLationamerica {
       '''¿De qué crees qua va a hablar la canción?''';
   static const String qThreeLatin = '¿Cuál es el eje central de la canción?';
   static const String qFourLatin =
-      '¿Cómo el vídeo representó la canción ¿Qué te llamó más la atención?';
+      '¿Cómo el vídeo representó la canción?\n¿Qué te llamó más la atención?';
   static const String qFiveLatin =
       '¿Reconociste algunas de las imágenes? ¿Qué eran?';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/utils/get_user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
@@ -29,8 +30,27 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
 
   final formKey = GlobalKey<FormState>();
   final pageController = PageController();
+  final focusNode = FocusNode();
+  final textEditingController = TextEditingController();
+  bool isAccessible = false;
 
   int pageChanged = 0;
+
+  @override
+  initState() {
+    super.initState();
+    getIsAcessible();
+  }
+
+  Future<void> getIsAcessible() async {
+    final preferences = await SharedPreferences.getInstance();
+    final isAccessibleOn = preferences.getBool("isAccessible");
+    setState(() {
+      if (isAccessibleOn != null) {
+        isAccessible = isAccessibleOn;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,11 +87,13 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
             controller: _controller,
           ),
           QuestionQueEsUnaEncuestaTres(
+            focusNode: focusNode,
+            textController: textEditingController,
             controller: _controller,
           ),
         ],
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,
@@ -123,30 +145,61 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        if (recordsPathList.isEmpty ||
-                            _controller.answer1 == '' ||
-                            _controller.answer2 == '') {
-                          showToast(
-                            '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
-                          );
-                        } else {
-                          if (recordsPathList.isNotEmpty &&
-                                  _controller.answer1 != '' ||
-                              _controller.answer2 != '') {
+                        if (isAccessible) {
+                          if (textEditingController.text.isNotEmpty &&
+                              _controller.answer1.isNotEmpty &&
+                              _controller.answer2.isNotEmpty) {
                             setState(() {
                               loading = true;
                             });
                             Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) => Navigator.pushNamed(
-                                context,
-                                '/pDos_laEncuesta_menu',
-                              ),
+                              (value) {
+                                if (mounted) {
+                                  _controller.sendAnswersText(
+                                    currentUser,
+                                    textEditingController.text,
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/pDos_laEncuesta_menu',
+                                  );
+                                }
+                              },
                             );
-                            _controller.sendAnswers(
-                                currentUser, recordsPathList);
+                          } else {
+                            showToast(
+                              '''
+¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
+                            );
+                          }
+                        } else {
+                          if (recordsPathList.isEmpty ||
+                              _controller.answer1 == '' ||
+                              _controller.answer2 == '') {
+                            showToast(
+                              '''
+¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
+                            );
+                          } else {
+                            if (recordsPathList.isNotEmpty &&
+                                    _controller.answer1 != '' ||
+                                _controller.answer2 != '') {
+                              setState(() {
+                                loading = true;
+                              });
+                              Future.delayed(Duration(milliseconds: 2000)).then(
+                                (value) => Navigator.pushNamed(
+                                  context,
+                                  '/pDos_laEncuesta_menu',
+                                ),
+                              );
+                              _controller.sendAnswersAudio(
+                                  currentUser, recordsPathList);
+                            }
                           }
                         }
                       },

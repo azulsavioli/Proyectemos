@@ -53,29 +53,30 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.all(24),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 20,
-            ),
             Center(
               child: Text(
                 'Frida Kahlo',
                 style: ThemeText.h3title20Blue,
               ),
             ),
-            const SizedBox(
-              height: 15,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
             if (loading)
-              const SizedBox(
-                height: 400,
+              SizedBox(
+                height: isMobile ? 400 : 500,
                 child: Center(
                   child: CircularProgressIndicator(
+                    strokeWidth: 6,
                     color: ThemeColors.yellow,
                   ),
                 ),
@@ -85,12 +86,17 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
                 imgList: imgList,
                 imgNameList: imgNameList,
               ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: isMobile ? 20 : 30,
             ),
-            Text(
-              StringsArtistasLationamerica.titleQOnePageOneArtistasLatin,
-              style: ThemeText.paragraph14Gray,
+            Padding(
+              padding: isMobile
+                  ? EdgeInsets.symmetric(horizontal: 12)
+                  : EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                StringsArtistasLationamerica.titleQOnePageOneArtistasLatin,
+                style: ThemeText.paragraph14Gray,
+              ),
             ),
           ],
         ),

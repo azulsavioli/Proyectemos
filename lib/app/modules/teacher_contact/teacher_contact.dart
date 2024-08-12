@@ -220,6 +220,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                     ),
                     const SizedBox(height: 20),
                     CustomTextFormField(
+                      maxLines: 6,
                       focusNode: focusNode2,
                       textInputAction: TextInputAction.done,
                       hint: 'Mensaje',
@@ -229,7 +230,6 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                       validatorMenorqueNumero:
                           'Su respuesta debe tener al menos 10 caracteres',
                     ),
-                    const SizedBox(height: 20),
                   ],
                 ),
               ),

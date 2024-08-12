@@ -24,16 +24,53 @@ class QueEsUnaEncuestaController extends ChangeNotifier {
 
   String answer1 = '';
   String answer2 = '';
+  String answer3 = '';
 
-  Future<void> sendAnswers(
+  Future<void> sendAnswersText(
+    GoogleSignInAccount? currentUser,
+    String answer3,
+  ) async {
+    await _repository.isTaskLoading(task, true);
+    try {
+      final answerList = makeAnswerListText(answer1, answer2, answer3);
+
+      final json = _repository.createJson(
+        answerList,
+      );
+
+      final message = createEmailMessageTextAnswer(
+        await _repository.getStudentInfo(),
+        answerList,
+      );
+
+      await _repository.sendEmail(
+        currentUser,
+        answerList,
+        subject,
+        message,
+        [],
+      );
+      await _repository.sendAnswersToFirebase(json, doc);
+      await _repository.saveTaskCompleted(task);
+      await _repository.isTaskLoading(task, false);
+
+      showToast(Strings.tareaEnviada);
+      notifyListeners();
+    } on FirebaseException catch (e) {
+      e.toString();
+      showToast('Ocurrio un erro no envio dos datos!');
+    }
+  }
+
+  Future<void> sendAnswersAudio(
     GoogleSignInAccount? currentUser,
     List<String> recordsPathList,
   ) async {
     await _repository.isTaskLoading(task, true);
 
     try {
-      final json = await makeJson(currentUser);
-      final answerList = makeAnswerList();
+      final json = await makeJsonAudio(currentUser);
+      final answerList = makeAnswerList(answer1, answer2);
       final message = createEmailMessage(
         await _repository.getStudentInfo(),
       );
@@ -61,14 +98,14 @@ class QueEsUnaEncuestaController extends ChangeNotifier {
     }
   }
 
-  Future<dynamic> makeJson(GoogleSignInAccount? currentUser) async {
+  Future<dynamic> makeJsonAudio(GoogleSignInAccount? currentUser) async {
     final list = RecordAudioLaEncuestaTareaUnoProviderImpl.recordingsPaths;
     final firebasePaths = await convertAudioToFirebase(list, currentUser);
-    final json = setJson(firebasePaths);
+    final json = setJsonAudio(firebasePaths);
     return json;
   }
 
-  Map<String, dynamic> setJson(List<dynamic> audioList) {
+  Map<String, dynamic> setJsonAudio(List<dynamic> audioList) {
     final json = {
       'resposta_1': answer1,
       'resposta_2': answer2,
@@ -77,8 +114,12 @@ class QueEsUnaEncuestaController extends ChangeNotifier {
     return json;
   }
 
-  List<String> makeAnswerList() {
+  List<String> makeAnswerList(answer1, answer2) {
     return [answer1, answer2];
+  }
+
+  List<String> makeAnswerListText(answer1, answer2, answer3) {
+    return [answer1, answer2, answer3];
   }
 
   List<FileAttachment> createAudioAttachments(
@@ -141,6 +182,23 @@ Respostas:\n
 ${StringsLaEncuesta.questionOneLaEncuestaTareaUno}: $answer1\n
 ${StringsLaEncuesta.questionTwoLaEncuestaTareaUno}: $answer2\n 
 ${StringsLaEncuesta.questionThreeLaEncuestaTareaUno}:  Resposta no primeiro audio\n 
+
+Atividade Que es una encuesta concluída!''';
+    return text;
+  }
+
+  String createEmailMessageTextAnswer(
+    List<String> allStudentInfo,
+    List<String> answersList,
+  ) {
+    final text = '''
+Proyectemos\n
+Aluno: ${allStudentInfo[0]}\n
+Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
+Respostas:\n
+${StringsLaEncuesta.questionOneLaEncuestaTareaUno}: $answer1\n
+${StringsLaEncuesta.questionTwoLaEncuestaTareaUno}: $answer2\n 
+${StringsLaEncuesta.questionThreeLaEncuestaTareaUno}: $answer3\n 
 
 Atividade Que es una encuesta concluída!''';
     return text;

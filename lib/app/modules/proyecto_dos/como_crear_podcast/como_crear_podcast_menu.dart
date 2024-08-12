@@ -92,10 +92,10 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
-                      ? 'Cargando\nEscuchar el Podcast'
+                      ? 'Cargando\nEl contenido del podcast'
                       : tareaUno
-                          ? 'Feedback\nEscuchar el Podcast'
-                          : 'Escuchar el podcast',
+                          ? 'Feedback\nEl contenido del podcast'
+                          : 'El contenido del podcast',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno

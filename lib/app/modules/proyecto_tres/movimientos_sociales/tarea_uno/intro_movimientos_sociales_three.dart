@@ -66,14 +66,17 @@ class _IntroTresMovimientosSocialesPageState
                   ),
                   title: Text(StringsMovimientosSociales.topicFour),
                 ),
+                ListTile(
+                  leading: Icon(
+                    Icons.subtitles_outlined,
+                    color: ThemeColors.blue,
+                  ),
+                  title: Text(StringsMovimientosSociales.topicFive),
+                ),
               ],
             ),
             const SizedBox(
               height: 20,
-            ),
-            Text(
-              StringsMovimientosSociales.descriptionDos,
-              style: ThemeText.paragraph16GrayNormal,
             ),
           ],
         ),

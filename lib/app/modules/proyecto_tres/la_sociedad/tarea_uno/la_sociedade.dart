@@ -208,7 +208,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
           ],
         ),
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

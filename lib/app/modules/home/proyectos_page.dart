@@ -105,14 +105,6 @@ class _ProyectosPageState extends State<ProyectosPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-              icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
-              onPressed: () {
-                Scaffold.of(context).openEndDrawer();
-              },
-            ),
-          ],
           toolbarHeight: isMobile ? 60 : 110,
           iconTheme: const IconThemeData(
             color: ThemeColors.gray,
@@ -171,7 +163,7 @@ class _ProyectosPageState extends State<ProyectosPage> {
                   image: Strings.imageTres,
                   title: Strings.titleCardTres,
                   titleColor: ThemeText.h3title20yellow,
-                  description: Strings.descriptionCardDos,
+                  description: Strings.descriptionCardTres,
                   descriptionColor: ThemeText.paragraph14Gray,
                   backgroundColor: ThemeColors.yellow,
                   namedRoute: '/proyecto_tres',

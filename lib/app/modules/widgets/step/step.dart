@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../commons/styles.dart';
 import 'custom_step_item.dart';
 
 List<Step> steps(
@@ -8,54 +9,55 @@ List<Step> steps(
   TextEditingController controllerTres,
   TextEditingController controllerQuatro,
   TextEditingController controllerCinco,
+  bool isMobile,
 ) {
   return [
     Step(
-      title: const Text('Imagen 1'),
+      title: Text('Primera imagen',
+          style: isMobile
+              ? ThemeText.paragraph16GrayNormal
+              : ThemeText.paragraph14Gray),
       content: CustomStep(
-        title: 'Primera imagen',
-        stepIndex: 1,
-        currentStep: 1,
         controller: controllerUno,
       ),
       isActive: true,
     ),
     Step(
-      title: const Text('Imagen 2'),
+      title: Text('Segunda imagen',
+          style: isMobile
+              ? ThemeText.paragraph16GrayNormal
+              : ThemeText.paragraph14Gray),
       content: CustomStep(
-        title: 'Segunda imagen',
-        stepIndex: 2,
-        currentStep: 2,
         controller: controllerDos,
       ),
       isActive: true,
     ),
     Step(
-      title: const Text('Imagen 3'),
+      title: Text('Tercera imagen',
+          style: isMobile
+              ? ThemeText.paragraph16GrayNormal
+              : ThemeText.paragraph14Gray),
       content: CustomStep(
-        title: 'Tercera imagen',
-        stepIndex: 3,
-        currentStep: 3,
         controller: controllerTres,
       ),
       isActive: true,
     ),
     Step(
-      title: const Text('Imagen 4'),
+      title: Text('Cuarta imagen',
+          style: isMobile
+              ? ThemeText.paragraph16GrayNormal
+              : ThemeText.paragraph14Gray),
       content: CustomStep(
-        title: 'Cuarta imagen',
-        stepIndex: 4,
-        currentStep: 4,
         controller: controllerQuatro,
       ),
       isActive: true,
     ),
     Step(
-      title: const Text('Imagen 5'),
+      title: Text('Quinta imagen',
+          style: isMobile
+              ? ThemeText.paragraph16GrayNormal
+              : ThemeText.paragraph14Gray),
       content: CustomStep(
-        title: 'Quinta imagen',
-        stepIndex: 5,
-        currentStep: 5,
         controller: controllerCinco,
       ),
       isActive: true,

@@ -8,6 +8,6 @@ abstract class StringsMovimientosSociales {
   static const String topicTwo = 'La causa del movimento';
   static const String topicThree = 'Cómo ha surgido';
   static const String topicFour = '¿Qué movilizaciones hacen?';
-  static const String descriptionTres =
+  static const String topicFive =
       '¡OJO! El video también tendrá que ser subtitulado en portugués.';
 }

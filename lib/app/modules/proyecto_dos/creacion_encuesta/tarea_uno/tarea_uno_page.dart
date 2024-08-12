@@ -63,7 +63,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
           ),
         ],
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

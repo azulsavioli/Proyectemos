@@ -64,7 +64,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
           ),
         ],
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

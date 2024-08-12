@@ -21,6 +21,18 @@ class QuestionConocesPodcastDos extends StatefulWidget {
 class _QuestionConocesPodcastDosState extends State<QuestionConocesPodcastDos>
     with AutomaticKeepAliveClientMixin {
   ConocesPodcastController get _controller => widget.controller;
+  bool isAccessibleOn = false;
+
+  @override
+  initState() {
+    super.initState();
+    _controller.getIsAcessible();
+    if (_controller.isAccessible != null) {
+      setState(() {
+        this.isAccessibleOn = _controller.isAccessible!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +43,16 @@ class _QuestionConocesPodcastDosState extends State<QuestionConocesPodcastDos>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            StringsConocesPodcast.questionDosConocesPodcast,
-            style: ThemeText.paragraph16GrayNormal,
-          ),
+          if (isAccessibleOn)
+            Text(
+              StringsConocesPodcast.questionDosConocesPodcastAccessible,
+              style: ThemeText.paragraph16GrayNormal,
+            )
+          else
+            Text(
+              StringsConocesPodcast.questionDosConocesPodcast,
+              style: ThemeText.paragraph16GrayNormal,
+            ),
           const SizedBox(
             height: 15,
           ),

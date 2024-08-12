@@ -21,6 +21,7 @@ class QuestionLatinoamericaOne extends StatefulWidget {
 
 class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
   TextEditingController get controller => widget.controller;
+
   FocusNode get focusNode => widget.focusNode;
 
   @override
@@ -29,23 +30,27 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
     final bool isMobile = shortestSide < 600;
 
     return Padding(
-      padding:  isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
+      padding: isMobile ? EdgeInsets.all(24) : EdgeInsets.all(34),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             StringsLationamerica.qTwoLatinOne,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
-           SizedBox(
+          SizedBox(
             height: isMobile ? 20 : 30,
           ),
           Text(
             StringsLationamerica.qTwoLatinTwo,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
-           SizedBox(
+          SizedBox(
             height: isMobile ? 20 : 60,
           ),
           CustomTextFormField(
@@ -58,8 +63,8 @@ class _QuestionLatinoamericaOneState extends State<QuestionLatinoamericaOne> {
             validatorMenorqueNumero:
                 'Su respuesta debe tener al menos 3 caracteres',
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: isMobile ? 20 : 30,
           ),
         ],
       ),

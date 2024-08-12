@@ -28,6 +28,10 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
 
   final formKey = GlobalKey<FormState>();
   final pageController = PageController();
+  final focusNode1 = FocusNode();
+  final textEditingController1 = TextEditingController();
+  final focusNode2 = FocusNode();
+  final textEditingController2 = TextEditingController();
 
   int pageChanged = 0;
 
@@ -64,14 +68,18 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
             controller: _controller,
           ),
           QuestionConocesPodcastTres(
+            focusNode: focusNode1,
+            textController: textEditingController1,
             controller: _controller,
           ),
           QuestionConocesPodcastQuatro(
+            focusNode: focusNode2,
+            textController: textEditingController2,
             controller: _controller,
           ),
         ],
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,
@@ -125,38 +133,81 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                       onPressed: () async {
                         final currentUser = getCurrentUser(context);
 
-                        if (recordsPathList.isEmpty ||
-                            recordsPathList.length < 2 &&
-                                _controller.answer1 == '' ||
-                            _controller.answer2 == '') {
-                          showToast(
-                            '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
-                          );
-                        } else {
-                          if (recordsPathList.isNotEmpty &&
-                                  recordsPathList.length == 2 &&
-                                  _controller.answer1 != '' ||
-                              _controller.answer2 != '') {
-                            setState(() {
-                              loading = true;
-                            });
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) {
-                                if (mounted) {
-                                  _controller.sendAnswers(
-                                    currentUser,
-                                    recordsPathList,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/pDos_conocesPodcast_menu',
-                                  );
-                                }
-                              },
+                        if (_controller.isAccessible!) {
+                          if (textEditingController1.text.isEmpty ||
+                              textEditingController2.text.isEmpty &&
+                                  _controller.answer1 == '' ||
+                              _controller.answer2 == '') {
+                            showToast(
+                              '''
+¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
                             );
+                          } else {
+                            if (textEditingController1.text.isNotEmpty &&
+                                    textEditingController2.text.isNotEmpty &&
+                                    _controller.answer1 != '' ||
+                                _controller.answer2 != '') {
+                              setState(() {
+                                loading = true;
+                              });
+                              Future.delayed(Duration(milliseconds: 2000)).then(
+                                (value) {
+                                  if (mounted) {
+                                    final respostas =
+                                        _controller.makeAnswerList(
+                                      textEditingController1.text,
+                                      textEditingController2.text,
+                                    );
+
+                                    _controller.sendAnswersText(
+                                      currentUser,
+                                      respostas,
+                                    );
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/pDos_conocesPodcast_menu',
+                                    );
+                                  }
+                                },
+                              );
+                            }
+                          }
+                        } else {
+                          if (recordsPathList.isEmpty ||
+                              recordsPathList.length < 2 &&
+                                  _controller.answer1 == '' ||
+                              _controller.answer2 == '') {
+                            showToast(
+                              '''
+¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en enviar!''',
+                              color: ThemeColors.red,
+                              textColor: ThemeColors.white,
+                            );
+                          } else {
+                            if (recordsPathList.isNotEmpty &&
+                                    recordsPathList.length == 2 &&
+                                    _controller.answer1 != '' ||
+                                _controller.answer2 != '') {
+                              setState(() {
+                                loading = true;
+                              });
+                              Future.delayed(Duration(milliseconds: 2000)).then(
+                                (value) {
+                                  if (mounted) {
+                                    _controller.sendAnswersAudio(
+                                      currentUser,
+                                      recordsPathList,
+                                    );
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/pDos_conocesPodcast_menu',
+                                    );
+                                  }
+                                },
+                              );
+                            }
                           }
                         }
                       },

@@ -18,6 +18,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double shortestSide = MediaQuery.of(context).size.shortestSide;
+    final bool isMobile = shortestSide < 600;
+
     return SafeArea(
       child: Scaffold(
         body: Stack(
@@ -51,15 +54,25 @@ class _LoginPageState extends State<LoginPage> {
                       Center(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 50, bottom: 10),
-                          child: SizedBox(
-                            height: 300,
-                            width: 300,
-                            child: Image.asset(
-                              Strings.loginImage,
-                              height: 60,
-                              width: 60,
-                            ),
-                          ),
+                          child: isMobile
+                              ? SizedBox(
+                                  height: 300,
+                                  width: 300,
+                                  child: Image.asset(
+                                    Strings.loginImage,
+                                    height: 60,
+                                    width: 60,
+                                  ),
+                                )
+                              : SizedBox(
+                                  height: 500,
+                                  width: 500,
+                                  child: Image.asset(
+                                    Strings.loginImage,
+                                    height: 80,
+                                    width: 80,
+                                  ),
+                                ),
                         ),
                       ),
                       Padding(
@@ -67,18 +80,27 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              height: isMobile ? 20 : 40,
+                            ),
                             Text(
                               Strings.bemvindos,
-                              style: ThemeText.h2title35White,
-                              textAlign: TextAlign.center,
+                              style: isMobile
+                                  ? ThemeText.h2title35White
+                                  : ThemeText.h3title30White,
                             ),
-                            const SizedBox(
-                              height: 20,
+                            SizedBox(
+                              height: isMobile ? 20 : 80,
                             ),
                             Text(
                               Strings.descricaoAppLogin,
-                              style: ThemeText.paragraph16White,
+                              style: isMobile
+                                  ? ThemeText.paragraph16White
+                                  : ThemeText.paragraph12White,
                               textAlign: TextAlign.left,
+                            ),
+                            SizedBox(
+                              height: isMobile ? 20 : 50,
                             ),
                           ],
                         ),
@@ -133,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                                           Strings.iniciaSessao,
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: ScreenUtil().setSp(14),
+                                            fontSize: ScreenUtil().setSp(12),
                                           ),
                                         ),
                                       ),
@@ -146,7 +168,9 @@ class _LoginPageState extends State<LoginPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: Text(
                           Strings.capesDescription,
-                          style: ThemeText.paragraph12White,
+                          style: isMobile
+                              ? ThemeText.paragraph12White
+                              : ThemeText.paragraph8WhiteNormal,
                           textAlign: TextAlign.left,
                         ),
                       ),

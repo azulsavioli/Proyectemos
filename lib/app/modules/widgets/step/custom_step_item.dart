@@ -51,7 +51,7 @@ class _CustomStepState extends State<CustomStep> {
   Icon buttonFileIcon = const Icon(
     Icons.image_outlined,
     color: ThemeColors.white,
-    );
+  );
 
   Color buttonFileColor = ThemeColors.red;
   final _controller = StepController();
@@ -94,10 +94,11 @@ class _CustomStepState extends State<CustomStep> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             Text(
               'Seleciona una imagen de su camara o de su arquivo',
-                style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph12Gray,
+              style: isMobile
+                  ? ThemeText.paragraph16GrayNormal
+                  : ThemeText.paragraph12Gray,
             ),
             SizedBox(
               height: isMobile ? 20 : 30,
@@ -116,7 +117,7 @@ class _CustomStepState extends State<CustomStep> {
                       });
                     },
                     icon: isFileLoading
-                        ?  SizedBox(
+                        ? SizedBox(
                             width: isMobile ? 20 : 50,
                             height: isMobile ? 20 : 50,
                             child: CircularProgressIndicator(
@@ -126,13 +127,14 @@ class _CustomStepState extends State<CustomStep> {
                             ),
                           )
                         : buttonFileIcon,
-                    label:  Text(
+                    label: Text(
                       'Galería',
-                      style: isMobile ? TextStyle(color:ThemeColors.white) :
-                      TextStyle(
-                          color: ThemeColors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.normal),
+                      style: isMobile
+                          ? TextStyle(color: ThemeColors.white)
+                          : TextStyle(
+                              color: ThemeColors.white,
+                              fontSize: 26,
+                              fontWeight: FontWeight.normal),
                     ),
                   ),
                 ),
@@ -147,9 +149,12 @@ class _CustomStepState extends State<CustomStep> {
             const Divider(),
             SizedBox(
               height: isMobile ? 10 : 20,
-            ),            Text(
+            ),
+            Text(
               'Cual la descripción de esa imagen',
-              style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph12Gray,
+              style: isMobile
+                  ? ThemeText.paragraph16GrayNormal
+                  : ThemeText.paragraph12Gray,
             ),
             SizedBox(
               height: isMobile ? 20 : 30,

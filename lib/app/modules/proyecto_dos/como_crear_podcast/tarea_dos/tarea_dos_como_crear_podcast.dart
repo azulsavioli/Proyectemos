@@ -136,7 +136,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
           ],
         ),
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

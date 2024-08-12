@@ -102,10 +102,10 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
-                      ? 'Cargando\nNuestro movimiento social'
+                      ? 'Cargando\nNuestro movimiento\nsocial'
                       : tareaUno
-                          ? 'Feedback\nNuestro movimiento social'
-                          : 'Nuestro movimiento social',
+                          ? 'Feedback\nNuestro movimiento\nsocial'
+                          : 'Nuestro movimiento\nsocial',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
@@ -135,10 +135,10 @@ class _CreacionDeSuMovimentoMenuState extends State<CreacionDeSuMovimentoMenu> {
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
-                      ? 'Cargando\nLa red social del movimento'
+                      ? 'Cargando\nLa red social del\nmovimento'
                       : tareaDos
-                          ? 'Feedback\nLa red social del movimento'
-                          : 'La red social del movimento',
+                          ? 'Feedback\nLa red social del\nmovimento'
+                          : 'La red social del\nmovimento',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos

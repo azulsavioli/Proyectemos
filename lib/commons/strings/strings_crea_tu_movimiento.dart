@@ -1,7 +1,8 @@
 abstract class StringsCreaTuMovimiento {
   //Tarea uno
   static const String title = 'Crea tu movimiento';
-  static const String eligirGrupo = 'Elige el grupo:';
+  static const String eligirGrupo =
+      '''Ahora manos a la obra para crear un movimiento social para tu escuela.\nSelecciona los integrantes de tu equipo''';
 
   static const String titleTareaUno = 'Nuestro movimiento social';
   static const String descriptionUnoTareaUno =

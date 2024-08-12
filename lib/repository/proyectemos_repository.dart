@@ -80,60 +80,130 @@ class ProyectemosRepository extends ChangeNotifier {
     return classRoomId;
   }
 
-  Future<String> getStudentListId(String schoolId, String classroomId) async {
+  // Future<String> getStudentListId(String schoolId, String classroomId) async {
+  //   final studentsRef = FirebaseFirestore.instance
+  //       .collection('escolas')
+  //       .doc(schoolId)
+  //       .collection('turmas')
+  //       .doc(classroomId)
+  //       .collection('$studentClassRoomInfo');
+
+  //   var lastStudentId = '';
+
+  //   try {
+  //     await studentsRef.get().then((QuerySnapshot querySnapshot) {
+  //       if (querySnapshot.docs.isNotEmpty) {
+  //         lastStudentId = querySnapshot.docs.last.id;
+  //       }
+  //     });
+  //   } catch (error) {
+  //     print(error.toString());
+  //   }
+
+  //   return lastStudentId;
+  // }
+
+  Future<List<String>> getStudentListIds(
+      String schoolId, String classroomId) async {
     final studentsRef = FirebaseFirestore.instance
         .collection('escolas')
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('lista_alunos');
+        .collection('$studentClassRoomInfo');
 
-    var lastStudentId = '';
+    List<String> studentIds = [];
 
     try {
       await studentsRef.get().then((QuerySnapshot querySnapshot) {
-        if (querySnapshot.docs.isNotEmpty) {
-          lastStudentId =
-              querySnapshot.docs.last.id; // Pega o ID do último documento
+        for (var doc in querySnapshot.docs) {
+          studentIds.add(doc.id);
         }
       });
     } catch (error) {
       print(error.toString());
     }
 
-    return lastStudentId;
+    return studentIds;
   }
+
+  // Future<List<String>> getStudents() async {
+  //   List<String> studentsList = [];
+  //   sharedPreferences = await SharedPreferences.getInstance();
+  //   studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+  //   studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+
+  //   final schoolId = await getSchoolId(studentSchoolInfo);
+  //   final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
+  //   final studentListIds = await getStudentListIds(schoolId, classroomId);
+  //   if (schoolId.isEmpty || classroomId.isEmpty) {
+  //     return studentsList;
+  //   }
+
+  //   final DocumentReference classRef = db
+  //       .collection('escolas')
+  //       .doc(schoolId)
+  //       .collection('turmas')
+  //       .doc(classroomId)
+  //       .collection("$studentClassRoomInfo")
+  //       .doc(studentListIds);
+
+  //   try {
+  //     await classRef.get().then((DocumentSnapshot docSnapshot) {
+  //       if (docSnapshot.exists) {
+  //         final data = docSnapshot.data() as Map<String, dynamic>?;
+
+  //         if (data != null) {
+  //           for (final key in data.keys) {
+  //             if (key.startsWith('nome_aluno')) {
+  //               studentsList.add(data[key]);
+  //             }
+  //           }
+  //         }
+  //       }
+  //     });
+  //   } on FirebaseException catch (e) {
+  //     print(e.toString());
+  //     // Here you can handle the error. Maybe return an empty list or show a message.
+  //   }
+  //   notifyListeners();
+  //   return studentsList;
+  // }
 
   Future<List<String>> getStudents() async {
     List<String> studentsList = [];
-    sharedPreferences = await SharedPreferences.getInstance();
-    studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
-    studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
+    final sharedPreferences = await SharedPreferences.getInstance();
+    final studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
+    final studentClassRoomInfo =
+        sharedPreferences.getString('studentClassRoomInfo')!;
 
     final schoolId = await getSchoolId(studentSchoolInfo);
     final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
-    final studentListId = await getStudentListId(schoolId, classroomId);
+
     if (schoolId.isEmpty || classroomId.isEmpty) {
       return studentsList;
     }
 
-    final DocumentReference classRef = db
+    final studentClassroomRef = db
         .collection('escolas')
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('lista_alunos')
-        .doc(studentListId);
+        .collection("$studentClassRoomInfo");
 
     try {
-      await classRef.get().then((DocumentSnapshot docSnapshot) {
-        if (docSnapshot.exists) {
-          final data = docSnapshot.data() as Map<String, dynamic>?;
-
+      await studentClassroomRef.get().then((QuerySnapshot querySnapshot) {
+        for (var doc in querySnapshot.docs) {
+          final data = doc.data() as Map<String, dynamic>?;
           if (data != null) {
+            // Itera sobre cada chave no documento
             for (final key in data.keys) {
+              // Verifica se a chave começa com 'nome_aluno'
               if (key.startsWith('nome_aluno')) {
-                studentsList.add(data[key]);
+                final studentName = data[key] as String?;
+                if (studentName != null) {
+                  studentsList.add(studentName);
+                }
               }
             }
           }
@@ -141,8 +211,8 @@ class ProyectemosRepository extends ChangeNotifier {
       });
     } on FirebaseException catch (e) {
       print(e.toString());
-      // Here you can handle the error. Maybe return an empty list or show a message.
     }
+
     notifyListeners();
     return studentsList;
   }
@@ -166,9 +236,11 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('lista_alunos');
+        .collection("$studentClassRoomInfo");
     try {
-      await studentClassroomRef.doc().set(classroomStudents);
+      await studentClassroomRef
+          .doc(authService.userAuth?.uid)
+          .set(classroomStudents);
     } on Exception catch (e) {
       e.toString();
     }

@@ -37,9 +37,11 @@ class _QuestionLatinoamericaThreeState
         children: [
           Text(
             StringsLationamerica.qThreeLatin,
-            style: isMobile ? ThemeText.paragraph16GrayNormal : ThemeText.paragraph14Gray,
+            style: isMobile
+                ? ThemeText.paragraph16GrayNormal
+                : ThemeText.paragraph14Gray,
           ),
-           SizedBox(
+          SizedBox(
             height: isMobile ? 20 : 30,
           ),
           CustomTextFormField(
@@ -52,7 +54,7 @@ class _QuestionLatinoamericaThreeState
             validatorMenorqueNumero:
                 'Su respuesta debe tener al menos 3 caracteres',
           ),
-           SizedBox(
+          SizedBox(
             height: isMobile ? 20 : 60,
           ),
         ],

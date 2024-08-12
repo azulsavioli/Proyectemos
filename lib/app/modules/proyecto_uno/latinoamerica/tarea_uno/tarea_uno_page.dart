@@ -218,139 +218,138 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
               color: ThemeColors.blue,
             )
           : Container(
-            color:  Colors.transparent,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            height: isMobile ? 60 : 90,
-            width: MediaQuery.of(context).size.width * .8,
-            child: Row(
-                mainAxisSize : MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (pageChanged == 0)
-                  const SizedBox(
-                    width: 65,
-                  )
-                else
-                  TextButton(
-                    onPressed: () {
-                      pageController.previousPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    child: Text(
-                      'Volver',
-                      style: TextStyle(
-                        fontSize: isMobile ? 18 : 28,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+              color: Colors.transparent,
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              height: isMobile ? 60 : 90,
+              width: MediaQuery.of(context).size.width * .8,
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (pageChanged == 0)
+                    const SizedBox(
+                      width: 65,
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        pageController.previousPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: Text(
+                        'Volver',
+                        style: TextStyle(
+                          fontSize: isMobile ? 18 : 28,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  Center(
+                    child: SmoothPageIndicator(
+                      controller: pageController,
+                      count: 7,
+                      effect: WormEffect(
+                        dotHeight: isMobile ? 10 : 18,
+                        dotWidth: isMobile ? 10 : 18,
+                        activeDotColor: ThemeColors.blue,
+                        dotColor: Colors.black26,
                       ),
                     ),
                   ),
-                Center(
-                  child: SmoothPageIndicator(
-                    controller: pageController,
-                    count: 7,
-                    effect:  WormEffect(
-                      dotHeight:  isMobile ? 10 : 18,
-                      dotWidth: isMobile ? 10 : 18,
-                      activeDotColor: ThemeColors.blue,
-                      dotColor: Colors.black26,
-                    ),
-                  ),
-                ),
-                if (pageChanged == 6)
-                  TextButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all<Color>(
-                          ThemeColors.blue),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        if (pageChanged == 1) {
-                          youTubeController.addListener(listener);
-                        } else {
-                          youTubeController.removeListener(listener);
-                        }
-                      });
-                      deactivate();
-                      if (textControllerOne.text.isEmpty ||
-                          textControllerTwo.text.isEmpty ||
-                          textControllerThree.text.isEmpty ||
-                          textControllerFour.text.isEmpty ||
-                          textControllerFive.text.isEmpty) {
-                        showToast(
-                          color: ThemeColors.red,
-                          'Vuelve y ingrese tuja respuesta correctamente',
-                        );
-                      } else {
-                        final respostas =
-                            _tareaUnoController.makeAnswersList(
-                          textOne,
-                          textTwo,
-                          textThree,
-                          textFour,
-                          textFive,
-                        );
+                  if (pageChanged == 6)
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                      ),
+                      onPressed: () {
                         setState(() {
-                          loading = true;
+                          if (pageChanged == 1) {
+                            youTubeController.addListener(listener);
+                          } else {
+                            youTubeController.removeListener(listener);
+                          }
                         });
-                        Future.delayed(Duration(milliseconds: 2000)).then(
-                          (value) {
-                            if (mounted) {
-                              _tareaUnoController.sendAnswers(
-                                currentUser,
-                                respostas,
-                              );
-                              Navigator.pushNamed(
-                                context,
-                                '/pUno_latinoamerica_menu',
-                              );
-                            }
-                          },
-                        );
-                      }
-                    },
-                    child:  Text(
-                      'Enviar',
-                      style: TextStyle(
-                        fontSize:  isMobile ? 18 : 28,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-                else
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        if (pageChanged == 1) {
-                          youTubeController.addListener(listener);
-                        } else {
-                          youTubeController.removeListener(listener);
-                        }
-                      });
-                      if (pageChanged == 6) {
                         deactivate();
-                      }
+                        if (textControllerOne.text.isEmpty ||
+                            textControllerTwo.text.isEmpty ||
+                            textControllerThree.text.isEmpty ||
+                            textControllerFour.text.isEmpty ||
+                            textControllerFive.text.isEmpty) {
+                          showToast(
+                            color: ThemeColors.red,
+                            'Vuelve y ingrese tuja respuesta correctamente',
+                          );
+                        } else {
+                          final respostas = _tareaUnoController.makeAnswersList(
+                            textOne,
+                            textTwo,
+                            textThree,
+                            textFour,
+                            textFive,
+                          );
+                          setState(() {
+                            loading = true;
+                          });
+                          Future.delayed(Duration(milliseconds: 2000)).then(
+                            (value) {
+                              if (mounted) {
+                                _tareaUnoController.sendAnswers(
+                                  currentUser,
+                                  respostas,
+                                );
+                                Navigator.pushNamed(
+                                  context,
+                                  '/pUno_latinoamerica_menu',
+                                );
+                              }
+                            },
+                          );
+                        }
+                      },
+                      child: Text(
+                        'Enviar',
+                        style: TextStyle(
+                          fontSize: isMobile ? 18 : 28,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  else
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          if (pageChanged == 1) {
+                            youTubeController.addListener(listener);
+                          } else {
+                            youTubeController.removeListener(listener);
+                          }
+                        });
+                        if (pageChanged == 6) {
+                          deactivate();
+                        }
 
-                      pageController.nextPage(
-                        duration: const Duration(milliseconds: 400),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    child:  Text(
-                      'Próximo',
-                      style: TextStyle(
-                        fontSize:  isMobile ? 18 : 28,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
+                        pageController.nextPage(
+                          duration: const Duration(milliseconds: 400),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: Text(
+                        'Próximo',
+                        style: TextStyle(
+                          fontSize: isMobile ? 18 : 28,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
-          ),
     );
   }
 }

@@ -75,7 +75,7 @@ class _PUnoEventoCulturalTareaPageState
             ),
           ],
         ),
-        bottomSheet: loading
+        bottomNavigationBar: loading
             ? const LinearProgressIndicator(
                 minHeight: 20,
                 color: ThemeColors.blue,

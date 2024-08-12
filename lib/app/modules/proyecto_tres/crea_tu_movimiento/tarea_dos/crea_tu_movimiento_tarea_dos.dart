@@ -113,7 +113,7 @@ class _CreacionDeSuMovimentoTareaDosState
           ),
         ),
       ),
-      bottomSheet: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,

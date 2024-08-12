@@ -56,7 +56,7 @@ class _IntroTareaDosCreacionEncuestaPageState
                 title: Text(StringsCreacionEncuesta.topicThree),
               ),
               SizedBox(
-                height: 40,
+                height: 60,
               ),
             ],
           ),

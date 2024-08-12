@@ -29,7 +29,7 @@ abstract class Strings {
   static const String emailEnviado = 'Email enviado com sucesso!';
 
   //Login
-  static const String bemvindos = '!Bienvenidos a Proyectemos!';
+  static const String bemvindos = '¡Bienvenidos a Proyectemos!';
   static const String descricaoAppLogin =
       '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
   static const String iniciaSessao = 'Inicia sesión con Google';
@@ -76,7 +76,7 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
       'https://c0.wallpaperflare.com/preview/876/415/643/mic-podcast-microphone-broadcasting.jpg';
 
   // Como crear podcast
-  static const String titleEscucharPodcast = 'Escuchar podcast';
+  static const String titleElContenidoDelPodcast = 'El contenido del podcast';
   static const String titleFeedbackEscucharPodcast =
       'Feedback\nEscuchar podcast';
   static const String titleCrearUnPodcast = 'Crear un podcast';
@@ -104,10 +104,10 @@ O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento
   static const String titleTutorialesPage = 'Tutoriales';
 
   static const String descriptionCardUno =
-      'Creación y divulgación de un evento cultural.';
-  static const String descriptionCardDos = 'Elaboración de un podcast.';
+      'Creación y divulgación de un evento cultural';
+  static const String descriptionCardDos = 'Elaboración de un podcast';
   static const String descriptionCardTres =
-      'Creación de una campaña social en las redes sociales.';
+      'Elaboración de un perfil para un movimiento social';
 
   //Proyectos TRES Page
 

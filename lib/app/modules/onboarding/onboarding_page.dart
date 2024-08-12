@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             PageThree(),
           ],
         ),
-        bottomSheet: Container(
+        bottomNavigationBar: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 8),
           height: 60,

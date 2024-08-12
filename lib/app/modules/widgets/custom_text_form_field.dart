@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final String validatorMenorqueNumero;
   final FocusNode focusNode;
   final TextInputAction textInputAction;
+  final int? maxLines;
 
   const CustomTextFormField({
     Key? key,
@@ -20,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
     required this.validatorMenorqueNumero,
     required this.focusNode,
     required this.textInputAction,
+    this.maxLines,
   }) : super(key: key);
 
   @override
@@ -27,53 +29,53 @@ class CustomTextFormField extends StatelessWidget {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     final bool isMobile = shortestSide < 600;
 
-    return TextFormField(
-      style: isMobile ? ThemeText.paragraph14Gray : ThemeText.paragraph12Gray,
-      focusNode: focusNode,
-      textInputAction: textInputAction,
-      autofocus: true,
-      maxLines: null,
-      controller: controller,
-      decoration: InputDecoration(
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
+    return Container(
+      child: TextFormField(
+        style: isMobile ? ThemeText.paragraph14Gray : ThemeText.paragraph12Gray,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
+        autofocus: true,
+        maxLines: maxLines,
+        controller: controller,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+            borderSide: BorderSide(
+              color: Colors.grey,
+            ),
           ),
-          borderSide: BorderSide(
-            color: Colors.grey,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+            borderSide: BorderSide(color: ThemeColors.blue),
+          ),
+          label: Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              hint,
+              style: ThemeText.paragraph16GrayLight,
+            ),
+          ),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: isMobile ? 20.0 : 40.0,
+            horizontal: 16.0,
           ),
         ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-          borderSide: BorderSide(color: ThemeColors.blue),
-        ),
-        label: Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            hint,
-            style: ThemeText.paragraph16GrayLight,
-          ),
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          vertical: isMobile ? 20.0 : 40.0,
-          horizontal: 16.0,
-        ),
-
-
+        keyboardType: keyboardType,
+        cursorColor: Colors.grey,
+        validator: (resposta) {
+          {
+            if (resposta!.isEmpty) {
+              return validatorVazio;
+            }
+            if (resposta.length < 3) {
+              return validatorMenorqueNumero;
+            }
+            return null;
+          }
+        },
       ),
-      keyboardType: keyboardType,
-      cursorColor: Colors.grey,
-      validator: (resposta) {
-        {
-          if (resposta!.isEmpty) {
-            return validatorVazio;
-          }
-          if (resposta.length < 3) {
-            return validatorMenorqueNumero;
-          }
-          return null;
-        }
-      },
     );
   }
 }
