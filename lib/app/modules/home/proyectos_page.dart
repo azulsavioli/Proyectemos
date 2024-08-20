@@ -101,11 +101,11 @@ class _ProyectosPageState extends State<ProyectosPage> {
   @override
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isMobile = shortestSide < 600;
+    final bool isMobile = shortestSide < 450;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: isMobile ? 60 : 110,
+          toolbarHeight: isMobile ? 60 : 80,
           iconTheme: const IconThemeData(
             color: ThemeColors.gray,
           ),
@@ -133,16 +133,17 @@ class _ProyectosPageState extends State<ProyectosPage> {
           child: Padding(
             padding: isMobile
                 ? const EdgeInsets.symmetric(horizontal: 18, vertical: 24)
-                : const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+                : const EdgeInsets.symmetric(horizontal: 12, vertical: 18),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                SizedBox(height: 20),
                 CardProyecto(
                   image: Strings.imageUno,
                   title: Strings.titleCardUno,
                   titleColor: ThemeText.h3title20Red,
                   description: Strings.descriptionCardUno,
-                  descriptionColor: ThemeText.paragraph14Gray,
+                  descriptionColor: ThemeText.paragraph12Gray,
                   backgroundColor: ThemeColors.red,
                   namedRoute: '/proyecto_uno',
                   icon: isUnoCompleted ? Icons.check : null,
@@ -153,7 +154,7 @@ class _ProyectosPageState extends State<ProyectosPage> {
                   title: Strings.titleCardDos,
                   titleColor: ThemeText.h3title20Blue,
                   description: Strings.descriptionCardDos,
-                  descriptionColor: ThemeText.paragraph14Gray,
+                  descriptionColor: ThemeText.paragraph12Gray,
                   backgroundColor: ThemeColors.blue,
                   namedRoute: '/proyecto_dos',
                   icon: isDosCompleted ? Icons.check : null,
@@ -164,7 +165,7 @@ class _ProyectosPageState extends State<ProyectosPage> {
                   title: Strings.titleCardTres,
                   titleColor: ThemeText.h3title20yellow,
                   description: Strings.descriptionCardTres,
-                  descriptionColor: ThemeText.paragraph14Gray,
+                  descriptionColor: ThemeText.paragraph12Gray,
                   backgroundColor: ThemeColors.yellow,
                   namedRoute: '/proyecto_tres',
                   icon: isTresCompleted ? Icons.check : null,

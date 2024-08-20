@@ -5,7 +5,7 @@ abstract class StringsArtistasLationamerica {
 
   //Questions Page tarea uno
   static const String titleQOnePageOneArtistasLatin =
-      '''Estas imágenes son obras de la artista mexicana Frida Khalo, una de las pintoras latinoamericanas más reconocida. A seguir, vas a contestar unas preguntas sobre la autora y sobre tus conocimientos e informaciones acerca de artistas hispánicos. Las respuestas serán en formato de audio.''';
+      '''Estas imágenes son obras de la artista mexicana Frida Khalo, una de las pintoras latinoamericanas más reconocida. A seguir, vas a contestar unas preguntas sobre la autora y sobre tus conocimientos e informaciones acerca de artistas hispánicos.''';
   static const String qOneArtistasLatinPageOne =
       '''¿Ya conocias a Frida Khalo o su trabajo? ¿Sabes más informaciones sobre ella?''';
   static const String qTwoArtistasLatinPageOne =

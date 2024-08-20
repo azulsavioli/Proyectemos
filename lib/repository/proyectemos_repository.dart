@@ -773,7 +773,7 @@ class ProyectemosRepository extends ChangeNotifier {
         .doc(schoolId)
         .collection('turmas')
         .doc(classroomId)
-        .collection('professore');
+        .collection('professores');
 
     try {
       await teacherInfoRef.get().then((QuerySnapshot querySnapshot) {

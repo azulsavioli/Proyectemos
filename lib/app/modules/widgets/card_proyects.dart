@@ -27,10 +27,9 @@ class CardProyecto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
-    final bool isMobile = shortestSide < 600;
+    final bool isMobile = shortestSide < 450;
     return isMobile ? buildPhoneLayout(context) : buildTabletLayout(context);
-
-}
+  }
 
   Widget buildPhoneLayout(BuildContext context) {
     return GestureDetector(
@@ -117,14 +116,14 @@ class CardProyecto extends StatelessWidget {
         color: Colors.white,
         child: SizedBox(
           width: MediaQuery.of(context).size.width * .98,
-          height: MediaQuery.of(context).size.height * .28,
+          height: MediaQuery.of(context).size.height * .24,
           child: Center(
             child: Row(
               children: [
                 Image.asset(
                   image,
-                  height: 200,
-                  width: 200,
+                  height: 150,
+                  width: 150,
                 ),
                 SizedBox(
                   width: 24,
@@ -146,7 +145,7 @@ class CardProyecto extends StatelessWidget {
                       textBaseline: TextBaseline.alphabetic,
                       children: [
                         SizedBox(
-                          width: 350,
+                          width: 250,
                           child: Text(
                             description,
                             style: descriptionColor,
@@ -158,7 +157,7 @@ class CardProyecto extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         SizedBox(
-                          width: 350,
+                          width: 250,
                         ),
                         if (icon != null)
                           CircleAvatar(
@@ -167,7 +166,7 @@ class CardProyecto extends StatelessWidget {
                             child: Icon(
                               icon!,
                               size: 60,
-                              color: ThemeColors.white,
+                              color: const Color.fromARGB(255, 157, 187, 157),
                             ),
                           ),
                       ],

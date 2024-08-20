@@ -38,10 +38,10 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
   }
 
   final imgList = [
-    'https://citaliarestauro.com/wp-content/uploads/2021/07/Imagem1.jpg',
-    'https://cdn.culturagenial.com/imagens/coluna-partida-cke.gif',
-    'https://cdn.culturagenial.com/imagens/o-veado-ferido-cke.jpg',
-    'https://fridakahlo.site/wp-content/uploads/2022/02/1945-completa-hope2.jpg',
+    'https://firebasestorage.googleapis.com/v0/b/proyectemos-9924c.appspot.com/o/Frida%20Kahlo%2FImagem1.jpg?alt=media&token=18fc7cff-a57d-499a-ae2d-ae0acc3aefc0',
+    'https://firebasestorage.googleapis.com/v0/b/proyectemos-9924c.appspot.com/o/Frida%20Kahlo%2Fcoluna-partida-cke.gif?alt=media&token=900cf070-6780-40c1-b1e2-4ae5a7b7b60d',
+    'https://firebasestorage.googleapis.com/v0/b/proyectemos-9924c.appspot.com/o/Frida%20Kahlo%2Fo-veado-ferido-cke.webp?alt=media&token=a1b44015-c55b-434b-ad36-28732724bccf',
+    'https://firebasestorage.googleapis.com/v0/b/proyectemos-9924c.appspot.com/o/Frida%20Kahlo%2Fsem_esperanci_a_1945_c.webp?alt=media&token=b4d33dd0-98d1-45db-8d02-184a9e78c969',
   ];
 
   final imgNameList = [
@@ -57,7 +57,7 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
     final bool isMobile = shortestSide < 600;
 
     return Padding(
-      padding: EdgeInsets.all(24),
+      padding: EdgeInsets.all(10),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,7 +73,7 @@ class _IntroTareaUnoArtistasHispanoamericanosPageState
             ),
             if (loading)
               SizedBox(
-                height: isMobile ? 400 : 500,
+                height: isMobile ? 300 : 500,
                 child: Center(
                   child: CircularProgressIndicator(
                     strokeWidth: 6,

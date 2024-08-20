@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
@@ -166,7 +168,7 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
       await emailSender.sendEmailToTeacher(
         currentUser,
         attachment,
-        [email[0]],
+        [email[0], email[1], email[2]],
         subject,
         message,
       );
