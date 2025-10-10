@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
@@ -23,6 +24,7 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
   List<PlatformFile> listFiles = CustomUploadForm.listFiles;
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<TextEditingController> answersList,
   ) async {
@@ -50,12 +52,22 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 

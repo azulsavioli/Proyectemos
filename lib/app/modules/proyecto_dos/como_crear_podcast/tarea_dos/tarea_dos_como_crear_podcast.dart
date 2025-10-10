@@ -194,8 +194,10 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             textControllerFour.text.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tuja respuesta correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList(
@@ -214,6 +216,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

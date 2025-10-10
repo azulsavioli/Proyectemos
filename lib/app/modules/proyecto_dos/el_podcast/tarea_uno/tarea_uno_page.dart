@@ -139,10 +139,11 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                                   _controller.answer1 == '' ||
                               _controller.answer2 == '') {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (textEditingController1.text.isNotEmpty &&
@@ -162,6 +163,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                                     );
 
                                     _controller.sendAnswersText(
+                                      context,
                                       currentUser,
                                       respostas,
                                     );
@@ -180,10 +182,11 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                                   _controller.answer1 == '' ||
                               _controller.answer2 == '') {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (recordsPathList.isNotEmpty &&
@@ -197,6 +200,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                                 (value) {
                                   if (mounted) {
                                     _controller.sendAnswersAudio(
+                                      context,
                                       currentUser,
                                       recordsPathList,
                                     );

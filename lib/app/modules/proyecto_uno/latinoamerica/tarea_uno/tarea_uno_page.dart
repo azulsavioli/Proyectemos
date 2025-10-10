@@ -280,8 +280,10 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                             textControllerFour.text.isEmpty ||
                             textControllerFive.text.isEmpty) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tuja respuesta correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _tareaUnoController.makeAnswersList(
@@ -298,6 +300,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                             (value) {
                               if (mounted) {
                                 _tareaUnoController.sendAnswers(
+                                  context,
                                   currentUser,
                                   respostas,
                                 );

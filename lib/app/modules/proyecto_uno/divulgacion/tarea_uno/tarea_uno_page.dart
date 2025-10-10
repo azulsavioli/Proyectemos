@@ -67,7 +67,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
           ),
         ],
       ),
-          bottomNavigationBar: loading
+      bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
               color: ThemeColors.blue,
@@ -123,8 +123,10 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
 
                         if (_controller.pickedFile == null) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tujas respuestas correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           setState(() {
@@ -137,6 +139,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                           );
                         }

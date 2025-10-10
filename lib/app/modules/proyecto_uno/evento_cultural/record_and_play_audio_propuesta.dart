@@ -146,7 +146,7 @@ class _RecordAndPlayPropuestaScreenState
 
     if (recordProvider.isRecording) {
       return InkWell(
-        onTap: () async => recordProviderWithoutListener.stopRecording(),
+        onTap: () async => recordProviderWithoutListener.stopRecording(context),
         child: RippleAnimation(
           repeat: true,
           color: ThemeColors.green,
@@ -158,7 +158,7 @@ class _RecordAndPlayPropuestaScreenState
     }
 
     return InkWell(
-      onTap: () async => recordProviderWithoutListener.recordVoice(),
+      onTap: () async => recordProviderWithoutListener.recordVoice(context),
       child: _commonIconSection(),
     );
   }
@@ -273,7 +273,7 @@ class _RecordAndPlayPropuestaScreenState
     );
 
     return InkWell(
-      onTap: () => {recordProvider.saveRecording(), Navigator.pop(context)},
+      onTap: () => {recordProvider.saveRecording(context), Navigator.pop(context)},
       child: Center(
         child: Container(
           width: 140,

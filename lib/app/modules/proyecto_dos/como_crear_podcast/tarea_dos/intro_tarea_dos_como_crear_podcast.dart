@@ -130,16 +130,20 @@ class _IntroTareaDosComoCrearPodcastPageState
       onChanged: (bool? value) {
         if (name == currentUser?.displayName && value == false) {
           showToast(
+            context,
             'No puedes deseleccionar tu propio nombre.',
-            color: ThemeColors.yellow,
+            ThemeColors.yellow,
+            ThemeColors.white,
           );
           return;
         }
 
         if (value == true && countSelectedNames() >= 3) {
           showToast(
+            context,
             '¡Selecione un mínimo 2 y máximo 3 alumnos!',
-            color: ThemeColors.yellow,
+            ThemeColors.yellow,
+            ThemeColors.white,
           );
           return;
         }

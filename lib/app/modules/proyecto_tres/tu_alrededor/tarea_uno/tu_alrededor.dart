@@ -109,11 +109,12 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         if (recordsPathList.isEmpty ||
                             recordsPathList.length < 7) {
                           showToast(
+                            context,
                             '''
 ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!
 ''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           if (recordsPathList.isNotEmpty &&
@@ -128,6 +129,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                               ),
                             );
                             _controller.sendAnswers(
+                              context,
                               currentUser,
                               recordsPathList,
                             );

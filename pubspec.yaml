@@ -5,7 +5,7 @@ description: A new Flutter project.
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1.0.13
+version: 1.0.0+1.0.21
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -38,21 +38,21 @@ dependencies:
   firebase_auth: ^4.6.3
   # google_sign_in: ^6.1.4
   google_sign_in: ^6.2.1
-  
+
   #Google icon
   font_awesome_flutter: ^10.1.0
 
-  #State management 
-  provider: 
+  #State management
+  provider:
   path_provider: ^2.0.11
   # get: ^4.6.5
-  
+
   #Video
   youtube_player_flutter: ^9.0.1
   appinio_video_player: ^1.2.2
   video_player: ^2.7.0
   chewie: ^1.7.0
-  
+
   #url
   url_launcher: ^6.1.14
 
@@ -61,34 +61,35 @@ dependencies:
   image: ^4.0.17
 
   #Smooth page indicator
-  smooth_page_indicator: ^1.0.0+2 
+  smooth_page_indicator: ^1.0.0+2
 
   #Splash
   flutter_native_splash: ^2.4.0
 
   #Launcher icon
-  flutter_launcher_icons: ^0.13.1 
+  flutter_launcher_icons: ^0.13.1
 
-  file_picker: ^8.0.0+1  
-  
-  carousel_slider: ^4.2.1
+  file_picker: ^8.0.0+1
+
+  carousel_slider: ^5.0.0
 
   #Permissions
   permission_handler: ^11.0.0
 
   #Audio
-  # record: ^4.4.4
-  record: ^5.1.0
+  record: ^4.4.4
+#  record: ^5.1.0
   simple_ripple_animation: ^0.0.3
   just_audio: ^0.9.29
 
   percent_indicator: ^4.2.2
   audioplayers: ^6.0.0
 
-  #Toast 
+  #Toast
   # fluttertoast: ^8.0.9
-  fluttertoast: ^8.2.4
+  # fluttertoast: ^8.2.8
 
+  toast: ^0.3.0
   #Data
   shared_preferences: ^2.0.15
 
@@ -128,8 +129,8 @@ flutter_native_splash:
 
   android_12:
     image: assets/images/splash.png
-    color: "#ffffff" 
-    icon_background_color: "#111111" 
+    color: "#ffffff"
+    icon_background_color: "#111111"
 
 flutter_icons:
   image_path: "assets/images/splash.png"
@@ -145,7 +146,7 @@ dev_dependencies:
   mockito:
   build_runner:
   lints: ^3.0.0
-  
+
   #Lint
   flutterando_analysis: ^0.0.2
 

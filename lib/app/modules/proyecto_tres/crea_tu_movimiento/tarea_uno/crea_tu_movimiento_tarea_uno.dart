@@ -211,8 +211,10 @@ class _CreacionDeSuMovimentoTareaUnoState
                             textController5.text.isEmpty ||
                             _controller.studentGroup.length <= 0) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             '''Vuelve y ingrese tuja respuesta correctamente y sus compañeros''',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList([
@@ -232,6 +234,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

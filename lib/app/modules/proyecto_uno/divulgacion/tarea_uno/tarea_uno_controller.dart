@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -80,6 +81,7 @@ class DivulgacaoController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
   ) async {
     await _repository.isTaskLoading(task, true);
@@ -111,12 +113,22 @@ class DivulgacaoController extends ChangeNotifier {
       }
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 

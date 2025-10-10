@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:proyectemos/commons/strings/strings_conoces_podcast.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +29,7 @@ class ConocesPodcastController extends ChangeNotifier {
   String answer2 = '';
 
   Future<void> sendAnswersText(
+      BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -53,15 +55,26 @@ class ConocesPodcastController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 
   Future<void> sendAnswersAudio(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> recordsPathList,
   ) async {
@@ -88,12 +101,22 @@ class ConocesPodcastController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     recordsPathList.clear();
   }

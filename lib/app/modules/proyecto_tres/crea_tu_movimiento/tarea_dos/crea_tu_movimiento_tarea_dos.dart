@@ -169,8 +169,10 @@ class _CreacionDeSuMovimentoTareaDosState
                             textController2.text.isEmpty ||
                             _controller.studentGroup.length <= 0) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             '''Vuelve y ingrese tuja respuesta correctamente y sus compañeros''',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList([
@@ -187,6 +189,7 @@ class _CreacionDeSuMovimentoTareaDosState
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

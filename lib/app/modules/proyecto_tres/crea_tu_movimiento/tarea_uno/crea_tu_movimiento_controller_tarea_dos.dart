@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:proyectemos/commons/strings/strings_crea_tu_movimiento.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
@@ -15,6 +16,7 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
   List studentGroup = [];
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> movimientoInfo,
   ) async {
@@ -40,12 +42,22 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     studentGroup = [];
   }

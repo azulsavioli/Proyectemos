@@ -81,7 +81,12 @@ ${_emailController.text}''';
       subject,
       text,
     );
-    showToast(Strings.emailEnviado);
+    showToast(
+      context,
+      Strings.emailEnviado,
+      ThemeColors.green,
+      ThemeColors.white,
+    );
   }
 
   @override

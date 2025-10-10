@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
@@ -41,6 +42,7 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -68,14 +70,29 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
         await _repository.saveTaskCompleted(task);
         await _repository.isTaskLoading(task, false);
 
-        showToast(Strings.tareaEnviada);
+        showToast(
+          context,
+          Strings.tareaEnviada,
+          ThemeColors.green,
+          ThemeColors.white,
+        );
         notifyListeners();
       } else {
-        showToast('O usuário não está autenticado.');
+        showToast(
+          context,
+          'O usuário não está autenticado.',
+          ThemeColors.yellow,
+          ThemeColors.white,
+        );
       }
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocorreu um erro no envio dos dados!');
+      showToast(
+        context,
+        'Ocorreu um erro no envio dos dados!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 

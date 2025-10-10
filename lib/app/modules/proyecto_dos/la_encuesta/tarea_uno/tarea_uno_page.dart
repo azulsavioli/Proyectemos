@@ -64,9 +64,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
           style: ThemeText.paragraph14WhiteBold,
@@ -80,12 +78,8 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
         },
         controller: pageController,
         children: [
-          QuestionQueEsUnaEncuestaOne(
-            controller: _controller,
-          ),
-          QuestionQueEsUnaEncuestaDos(
-            controller: _controller,
-          ),
+          QuestionQueEsUnaEncuestaOne(controller: _controller),
+          QuestionQueEsUnaEncuestaDos(controller: _controller),
           QuestionQueEsUnaEncuestaTres(
             focusNode: focusNode,
             textController: textEditingController,
@@ -106,9 +100,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -141,8 +133,9 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         if (isAccessible) {
@@ -152,26 +145,28 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             setState(() {
                               loading = true;
                             });
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) {
-                                if (mounted) {
-                                  _controller.sendAnswersText(
-                                    currentUser,
-                                    textEditingController.text,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/pDos_laEncuesta_menu',
-                                  );
-                                }
-                              },
-                            );
+                            Future.delayed(Duration(milliseconds: 2000)).then((
+                              value,
+                            ) {
+                              if (mounted) {
+                                _controller.sendAnswersText(
+                                  context,
+                                  currentUser,
+                                  textEditingController.text,
+                                );
+                                Navigator.pushNamed(
+                                  context,
+                                  '/pDos_laEncuesta_menu',
+                                );
+                              }
+                            });
                           } else {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           }
                         } else {
@@ -179,10 +174,11 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                               _controller.answer1 == '' ||
                               _controller.answer2 == '') {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (recordsPathList.isNotEmpty &&
@@ -198,7 +194,10 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                                 ),
                               );
                               _controller.sendAnswersAudio(
-                                  currentUser, recordsPathList);
+                                context,
+                                currentUser,
+                                recordsPathList,
+                              );
                             }
                           }
                         }

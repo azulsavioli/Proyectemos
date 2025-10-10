@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/google_sign_in.dart';
 import '../../../repository/repository_impl.dart';
 import '../../../services/auth_services.dart';
 import '../widgets/card_button.dart';
-import '../widgets/custom_radio_button.dart';
 import '../widgets/custom_switch.dart';
 
 class ProfilePage extends StatefulWidget {

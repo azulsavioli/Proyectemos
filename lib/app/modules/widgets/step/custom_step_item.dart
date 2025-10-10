@@ -113,7 +113,7 @@ class _CustomStepState extends State<CustomStep> {
                     ),
                     onPressed: () async {
                       setState(() {
-                        selectImageFromGallery();
+                        selectImageFromGallery(context);
                       });
                     },
                     icon: isFileLoading
@@ -178,7 +178,7 @@ class _CustomStepState extends State<CustomStep> {
     );
   }
 
-  Future<void> selectImageFromGallery() async {
+  Future<void> selectImageFromGallery(BuildContext context) async {
     if (mounted) {
       setState(() {
         isFileLoading = true;
@@ -186,6 +186,7 @@ class _CustomStepState extends State<CustomStep> {
     }
 
     final image = await _controller.pickImage(
+      context,
       CustomStep.images,
       ImageSource.gallery,
     );

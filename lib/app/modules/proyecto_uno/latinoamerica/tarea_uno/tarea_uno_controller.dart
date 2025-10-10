@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/strings/strings_latinoamerica.dart';
@@ -14,6 +15,7 @@ class LatinoamericaTareaUnoController extends ChangeNotifier {
   final task = 'latinoamericaTareaUnoCompleted';
 
   Future<void> sendAnswers(
+      context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -39,11 +41,21 @@ class LatinoamericaTareaUnoController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 

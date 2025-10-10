@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/strings/strings_la_encuesta.dart';
@@ -23,6 +24,7 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
   PlatformFile? pickedFile;
 
   Future<void> sendAnswers(
+     context,
     GoogleSignInAccount? currentUser,
     List<String> poscastInfos,
   ) async {
@@ -48,12 +50,22 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     studentGroup = [];
   }

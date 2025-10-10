@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../commons/strings/strings.dart';
 import '../../../repository/repository_impl.dart';
@@ -29,7 +30,12 @@ class TeacherController {
       message,
       [],
     );
-    showToast(Strings.emailEnviado);
+    showToast(
+      context,
+      Strings.emailEnviado,
+      ThemeColors.green,
+      ThemeColors.white,
+    );
   }
 
   String createEmailMessage(

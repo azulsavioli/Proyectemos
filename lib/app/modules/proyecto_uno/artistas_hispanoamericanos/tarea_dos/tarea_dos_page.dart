@@ -190,7 +190,9 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                             Future.delayed(Duration(milliseconds: 2000)).then(
                               (value) {
                                 if (mounted) {
-                                  _controller.sendAnswers(currentUser, [
+                                  _controller.sendAnswers(
+                                      context,
+                                      currentUser, [
                                     answerUnoController,
                                     answerDosController,
                                     answerTresController,
@@ -206,9 +208,10 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                             );
                           } else {
                             showToast(
+                              context,
                               '''Selecciona todos los archivos y escriba sus descripciones''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           }
                         },

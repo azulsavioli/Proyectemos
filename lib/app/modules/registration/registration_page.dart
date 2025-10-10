@@ -103,8 +103,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       onChanged: (option) {
                         if (option == 'Selecione sua escuela!') {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Por favor, selecione uma escola válida',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           setState(() {
@@ -175,8 +177,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         onChanged: (option) {
                           if (option == 'Selecione sua clase!') {
                             showToast(
-                              color: ThemeColors.red,
+                              context,
                               'Por favor, selecione uma clase válida',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             setState(() {
@@ -272,8 +276,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     else
                       {
                         showToast(
-                          color: ThemeColors.red,
+                          context,
                           'Seleciona sus datos correctamente',
+                          ThemeColors.red,
+                          ThemeColors.white,
                         ),
                       },
                   },

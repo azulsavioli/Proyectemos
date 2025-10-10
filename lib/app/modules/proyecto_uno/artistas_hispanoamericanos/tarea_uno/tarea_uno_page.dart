@@ -153,11 +153,12 @@ class _TareaArtistasLatinoamericanosPageState
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 3) {
                             showToast(
+                              context,
                               '''
       ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!
       ''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (recordsPathList.isNotEmpty &&
@@ -169,6 +170,7 @@ class _TareaArtistasLatinoamericanosPageState
                                 (value) {
                                   if (mounted) {
                                     _controller.sendAnswers(
+                                      context,
                                       currentUser,
                                       recordsPathList,
                                     );

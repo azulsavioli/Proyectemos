@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../repository/repository_impl.dart';
 import '../../../../../services/toast_services.dart';
@@ -14,6 +15,7 @@ class ControllerEscucharPodcast extends ChangeNotifier {
   final task = 'comoCrearPodcastTareaUnoCompleted';
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -40,12 +42,22 @@ class ControllerEscucharPodcast extends ChangeNotifier {
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.green,
+        ThemeColors.white,
+      );
     }
   }
 

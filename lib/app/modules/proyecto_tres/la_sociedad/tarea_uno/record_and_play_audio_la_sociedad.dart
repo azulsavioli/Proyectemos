@@ -148,7 +148,7 @@ class _RecordAndPlayLaSociedadState extends State<RecordAndPlayLaSociedad> {
 
     if (recordProvider.isRecording) {
       return InkWell(
-        onTap: () async => recordProviderWithoutListener.stopRecording(),
+        onTap: () async => recordProviderWithoutListener.stopRecording(context),
         child: RippleAnimation(
           repeat: true,
           color: ThemeColors.green,
@@ -160,7 +160,7 @@ class _RecordAndPlayLaSociedadState extends State<RecordAndPlayLaSociedad> {
     }
 
     return InkWell(
-      onTap: () async => recordProviderWithoutListener.recordVoice(),
+      onTap: () async => recordProviderWithoutListener.recordVoice(context),
       child: _commonIconSection(),
     );
   }
@@ -275,7 +275,7 @@ class _RecordAndPlayLaSociedadState extends State<RecordAndPlayLaSociedad> {
     );
 
     return InkWell(
-      onTap: () => {recordProvider.saveRecording(), Navigator.pop(context)},
+      onTap: () => {recordProvider.saveRecording(context), Navigator.pop(context)},
       child: Center(
         child: Container(
           width: 140,

@@ -269,10 +269,11 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         if (recordsPathList.isEmpty ||
                             recordsPathList.length < 4) {
                           showToast(
+                            context,
                             '''
 ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           if (recordsPathList.isNotEmpty &&
@@ -285,6 +286,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                               (value) {
                                 if (mounted) {
                                   _laSociedadController.sendAnswers(
+                                    context,
                                     currentUser,
                                     recordsPathList,
                                   );

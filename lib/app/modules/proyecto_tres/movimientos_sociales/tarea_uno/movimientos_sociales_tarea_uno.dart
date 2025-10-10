@@ -144,9 +144,10 @@ class _MovimientosSocialesTareaUnoState
                         if (_controller.studentGroup.length <= 0 ||
                             _controller.pickedFile == null) {
                           showToast(
+                            context,
                             '''Selecciona el video correctamente y sus compañeros''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           setState(() {
@@ -156,6 +157,7 @@ class _MovimientosSocialesTareaUnoState
                             (value) {
                               if (mounted) {
                                 _controller.sendAnswers(
+                                  context,
                                   currentUser,
                                 );
                                 Navigator.pushNamed(

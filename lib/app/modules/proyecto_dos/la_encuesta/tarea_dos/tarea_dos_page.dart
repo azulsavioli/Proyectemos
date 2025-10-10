@@ -119,9 +119,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
           style: ThemeText.paragraph14WhiteBold,
@@ -177,9 +175,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -212,8 +208,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         setState(() {
@@ -230,10 +227,11 @@ class _TareaDosComoCrearUnaEncuestaPageState
                               textEditingController2.text.isEmpty ||
                               textEditingController3.text.isEmpty) {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (textEditingController1.text.isNotEmpty &&
@@ -242,35 +240,38 @@ class _TareaDosComoCrearUnaEncuestaPageState
                               setState(() {
                                 loading = true;
                               });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    final respostas =
-                                        _controller.makeAnswerList(
-                                      textEditingController1.text,
-                                      textEditingController2.text,
-                                      textEditingController3.text,
-                                    );
+                              Future.delayed(
+                                Duration(milliseconds: 2000),
+                              ).then((value) {
+                                if (mounted) {
+                                  final respostas = _controller.makeAnswerList(
+                                    textEditingController1.text,
+                                    textEditingController2.text,
+                                    textEditingController3.text,
+                                  );
 
-                                    _controller.sendAnswersText(
-                                        currentUser, respostas);
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pDos_laEncuesta_menu',
-                                    );
-                                  }
-                                },
-                              );
+                                  _controller.sendAnswersText(
+                                    context,
+                                    currentUser,
+                                    respostas,
+                                  );
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/pDos_laEncuesta_menu',
+                                  );
+                                }
+                              });
                             }
                           }
                         } else {
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 3) {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             if (recordsPathList.isNotEmpty &&
@@ -282,6 +283,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                                 (value) {
                                   if (mounted) {
                                     _controller.sendAnswersAudio(
+                                      context,
                                       currentUser,
                                       recordsPathList,
                                     );

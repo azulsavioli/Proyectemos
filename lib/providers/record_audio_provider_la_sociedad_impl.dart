@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/permission_management.dart';
 import '../services/storage_management.dart';
 import 'package:record/record.dart';
@@ -37,11 +38,16 @@ class RecordAudioLaSociedadProviderImpl extends ChangeNotifier
   }
 
   @override
-  Future<void> recordVoice() async {
+  Future<void> recordVoice(context) async {
     try {
       final isPermitted = await _checkPermissions();
       if (!isPermitted) {
-        showToast('Permissões de gravação não concedidas.');
+        showToast(
+          context,
+          'Permissões de gravação não concedidas.',
+          ThemeColors.red,
+          ThemeColors.white,
+        );
         return;
       }
 
@@ -54,10 +60,20 @@ class RecordAudioLaSociedadProviderImpl extends ChangeNotifier
       await _record.start(const RecordConfig(), path: voiceFilePath);
       isRecording = true;
       notifyListeners();
-      showToast('Comenzó la grabación');
+      showToast(
+        context,
+        'Comenzó la grabación',
+        ThemeColors.green,
+        ThemeColors.white,
+      );
     } catch (e) {
       print('Erro ao gravar áudio: $e');
-      showToast('Erro ao iniciar a gravação de áudio.');
+      showToast(
+        context,
+        'Erro ao iniciar a gravação de áudio.',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 
@@ -68,12 +84,17 @@ class RecordAudioLaSociedadProviderImpl extends ChangeNotifier
   }
 
   @override
-  Future<void> stopRecording() async {
+  Future<void> stopRecording(context) async {
     String? audioFilePath;
 
     if (await _record.isRecording()) {
       audioFilePath = await _record.stop();
-      showToast('Grabación detenida');
+      showToast(
+        context,
+        'Grabación detenida',
+        ThemeColors.green,
+        ThemeColors.white,
+      );
     }
     isRecording = false;
     _afterRecordingFilePath = audioFilePath ?? '';
@@ -88,10 +109,15 @@ class RecordAudioLaSociedadProviderImpl extends ChangeNotifier
   }
 
   @override
-  void saveRecording() {
+  void saveRecording(context) {
     recordingsPaths.add(_afterRecordingFilePath);
     clearOldData();
-    showToast('Grabación guardada');
+    showToast(
+      context,
+      'Grabación guardada',
+      ThemeColors.green,
+      ThemeColors.white,
+    );
     notifyListeners();
   }
 }

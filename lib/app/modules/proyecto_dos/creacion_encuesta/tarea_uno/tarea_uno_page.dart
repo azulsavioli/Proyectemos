@@ -120,11 +120,12 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                             _controller.files.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
+                            context,
                             '''
 ¡No se puede enviar la respuesta! Selecione o archivo y haz clic en enviar!
 ''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           setState(() {
@@ -137,6 +138,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                           );
                         }

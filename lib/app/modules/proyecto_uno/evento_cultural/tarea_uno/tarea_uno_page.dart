@@ -131,11 +131,12 @@ class _PUnoEventoCulturalTareaPageState
 
                           if (_controller.recordsPathList.isEmpty) {
                             showToast(
+                              context,
                               '''
       ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!
       ''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
                             setState(() {
@@ -151,6 +152,7 @@ class _PUnoEventoCulturalTareaPageState
                                       '/pUno_evento_cultural_menu',
                                     );
                                     _controller.sendAnswers(
+                                      context,
                                       currentUser,
                                     );
                                   }

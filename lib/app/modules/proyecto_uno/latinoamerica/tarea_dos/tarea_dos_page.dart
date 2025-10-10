@@ -166,6 +166,7 @@ class _PUnoLatinoamericaTareaDosPageState
                                   (value) {
                                     if (mounted) {
                                       _controller.sendAnswers(
+                                        context,
                                         currentUser,
                                         answerList,
                                       );
@@ -180,8 +181,10 @@ class _PUnoLatinoamericaTareaDosPageState
                             : () {
                                 updateCanSubmit();
                                 showToast(
-                                  color: ThemeColors.red,
+                                  context,
                                   'Vuelve y ingrese tus respuestas correctamente',
+                                  ThemeColors.red,
+                                  ThemeColors.white,
                                 );
                               },
                         style: ButtonStyle(
