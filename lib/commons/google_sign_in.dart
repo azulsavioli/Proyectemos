@@ -1,22 +1,24 @@
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart'
+    show TargetPlatform, defaultTargetPlatform, kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
   final auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = Platform.isAndroid
+  final GoogleSignIn googleSignIn = kIsWeb
       ? GoogleSignIn(
-          scopes: ['https://mail.google.com/'],
-        )
-      : GoogleSignIn(
           scopes: ['email', 'https://mail.google.com/'],
-          hostedDomain: "",
-          serverClientId: "",
-          clientId:
-              '333978861746-08k5kg8ul68fars53d3n96fkhs03abe8.apps.googleusercontent.com',
-        );
+        )
+      : (defaultTargetPlatform == TargetPlatform.android)
+          ? GoogleSignIn(
+              scopes: ['https://mail.google.com/'],
+            )
+          : GoogleSignIn(
+              scopes: ['email', 'https://mail.google.com/'],
+              clientId:
+                  '333978861746-p88q9nentd8ogn0q30e9qv24rjlouno5.apps.googleusercontent.com',
+            );
 
   late GoogleSignInAccount? _user;
 
@@ -24,6 +26,13 @@ class GoogleSignInProvider extends ChangeNotifier {
 
   Future googleLogin() async {
     try {
+      if (kIsWeb) {
+        final googleProvider = GoogleAuthProvider();
+        await auth.signInWithPopup(googleProvider);
+        notifyListeners();
+        return;
+      }
+
       final googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) return;
