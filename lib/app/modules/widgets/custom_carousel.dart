@@ -157,13 +157,13 @@ class CustomCarousel extends StatelessWidget {
                     ),
                     padding: isMobile
                         ? EdgeInsets.symmetric(
-                      vertical: 10,
-                      horizontal: 20,
-                    )
+                            vertical: 10,
+                            horizontal: 20,
+                          )
                         : EdgeInsets.symmetric(
-                      vertical: 20,
-                      horizontal: 40,
-                    ),
+                            vertical: 20,
+                            horizontal: 40,
+                          ),
                     child: Text(
                       imgNameList[imgList.indexOf(item)],
                       style: TextStyle(

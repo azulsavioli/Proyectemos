@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../commons/google_sign_in.dart';
 import '../../../repository/repository_impl.dart';
 import '../../../services/auth_services.dart';
 import '../widgets/card_button.dart';
-import '../widgets/custom_radio_button.dart';
 import '../widgets/custom_switch.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -40,9 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
     await _controller.getDosTaskCompleted();
     await _controller.getTresTaskCompleted();
     await _controller
-        .getPercentage(); // Espera a conclusão da obtenção da porcentagem
+        .getPercentage();
     setState(() {
-      // Atualiza o estado com a nova porcentagem
       percentage = _controller.percentage;
     });
   }
@@ -391,15 +388,17 @@ Widget logoutCard(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
         textStyle: ThemeText.paragraph14Gray,
       ),
-      onPressed: () {
-        final provider =
-            Provider.of<GoogleSignInProvider>(context, listen: false);
-        if (provider.googleSignIn.currentUser != null) {
-          provider.googleLogout();
+      onPressed: () async {
+        final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+
+        if (provider.user != null) {
+          await provider.signOut();
+          await authService.logout();
         } else {
-          authService.logout();
+          await authService.logout();
         }
       },
+
       label: Row(
         children: [
           const SizedBox(

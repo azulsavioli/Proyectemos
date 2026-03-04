@@ -754,18 +754,18 @@ class ProyectemosRepository extends ChangeNotifier {
     return studentsImages.cast<Map<String, dynamic>>();
   }
 
-  Future getTeacherEmail() async {
+  Future<List<String>> getTeacherEmail() async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
     studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
-    final teacherInfo = [];
-    final teacherEmailList = [];
+
+    final List<String> teacherEmailList = [];
 
     final schoolId = await getSchoolId(studentSchoolInfo);
     final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
 
     if (schoolId.isEmpty || classroomId.isEmpty) {
-      return null;
+      return [];
     }
 
     final teacherInfoRef = db
@@ -776,20 +776,21 @@ class ProyectemosRepository extends ChangeNotifier {
         .collection('professores');
 
     try {
-      await teacherInfoRef.get().then((QuerySnapshot querySnapshot) {
-        for (final doc in querySnapshot.docs) {
-          teacherInfo.add(doc.data());
-        }
-        for (var i = 0; i < teacherInfo.length; i++) {
-          teacherEmailList.add(teacherInfo[i]['teacherEmail']);
-        }
-      });
-    } catch (error) {
-      error.toString();
-    }
-    notifyListeners();
+      final querySnapshot = await teacherInfoRef.get();
 
-    return teacherEmailList;
+      for (final doc in querySnapshot.docs) {
+        final data = doc.data() as Map<String, dynamic>;
+        final email = data['teacherEmail'] as String?;
+        if (email != null && email.isNotEmpty) {
+          teacherEmailList.add(email.trim());
+        }
+      }
+
+      return teacherEmailList;
+    } catch (error) {
+      print('Erro ao buscar emails: $error');
+      return [];
+    }
   }
 
   Future<String> getUserInfo() async {

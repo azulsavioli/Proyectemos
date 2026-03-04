@@ -104,8 +104,6 @@ class _TareaDosComoCrearUnaEncuestaPageState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
@@ -119,9 +117,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
           style: ThemeText.paragraph14WhiteBold,
@@ -177,9 +173,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -212,8 +206,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         setState(() {
@@ -223,77 +216,86 @@ class _TareaDosComoCrearUnaEncuestaPageState
                             youTubeController.removeListener(listener);
                           }
                         });
+
                         deactivate();
+
+                        final currentUser = await getCurrentUser(context); // <-- await
+
                         if (_controller.isAccessible!) {
                           if (!_formKey.currentState!.validate() ||
                               textEditingController1.text.isEmpty ||
                               textEditingController2.text.isEmpty ||
                               textEditingController3.text.isEmpty) {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
-                          } else {
-                            if (textEditingController1.text.isNotEmpty &&
-                                textEditingController2.text.isNotEmpty &&
-                                textEditingController3.text.isNotEmpty) {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    final respostas =
-                                        _controller.makeAnswerList(
-                                      textEditingController1.text,
-                                      textEditingController2.text,
-                                      textEditingController3.text,
-                                    );
-
-                                    _controller.sendAnswersText(
-                                        currentUser, respostas);
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pDos_laEncuesta_menu',
-                                    );
-                                  }
-                                },
-                              );
-                            }
+                            return;
                           }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          final respostas = _controller.makeAnswerList(
+                            textEditingController1.text,
+                            textEditingController2.text,
+                            textEditingController3.text,
+                          );
+
+                          await _controller.sendAnswersText(
+                            context,
+                            currentUser,
+                            respostas,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pDos_laEncuesta_menu');
+
+                          setState(() {
+                            loading = false;
+                          });
                         } else {
-                          if (recordsPathList.isEmpty ||
-                              recordsPathList.length < 3) {
+                          if (recordsPathList.isEmpty || recordsPathList.length < 3) {
                             showToast(
+                              context,
                               '''
 ¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
-                          } else {
-                            if (recordsPathList.isNotEmpty &&
-                                recordsPathList.length == 3) {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    _controller.sendAnswersAudio(
-                                      currentUser,
-                                      recordsPathList,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pDos_laEncuesta_menu',
-                                    );
-                                  }
-                                },
-                              );
-                            }
+                            return;
                           }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          await _controller.sendAnswersAudio(
+                            context,
+                            currentUser,
+                            recordsPathList,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pDos_laEncuesta_menu');
+
+                          setState(() {
+                            loading = false;
+                          });
                         }
                       },
                       child: const Text(

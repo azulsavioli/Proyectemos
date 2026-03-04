@@ -53,7 +53,6 @@ class _CreacionDeSuMovimentoTareaDosState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
@@ -164,13 +163,15 @@ class _CreacionDeSuMovimentoTareaDosState
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (textController1.text.isEmpty ||
                             textController2.text.isEmpty ||
                             _controller.studentGroup.length <= 0) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             '''Vuelve y ingrese tuja respuesta correctamente y sus compañeros''',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList([
@@ -186,7 +187,9 @@ class _CreacionDeSuMovimentoTareaDosState
                               '/pTres_creacionDeSuMovimento_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

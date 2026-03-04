@@ -6,17 +6,32 @@ import 'package:proyectemos/repository/repository_impl.dart';
 import '../../../commons/styles.dart';
 import '../../../services/toast_services.dart';
 import '../../../utils/get_user.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegistrationPage extends StatefulWidget {
-  const RegistrationPage({
-    Key? key,
-  }) : super(key: key);
+  const RegistrationPage({Key? key}) : super(key: key);
 
   @override
   State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  GoogleSignInAccount? _currentUser;
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final user = await getCurrentUser(context);
+    setState(() {
+      _currentUser = user;
+    });
+  }
+
   final formKey = GlobalKey<FormState>();
   final _repository = RepositoryImpl();
   final _controller = RegistrationController();
@@ -30,7 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
+    final currentUser = _currentUser;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -57,76 +72,78 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(
-                height: 60,
-              ),
+              const SizedBox(height: 60),
               SizedBox(
                 height: 70,
                 child: FutureBuilder<List<String>>(
                   future: _repository.getSchoolsInfo(),
-                  builder: (
-                    BuildContext context,
-                    AsyncSnapshot<List<String>> snapshot,
-                  ) {
-                    if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(
-                          child: CircularProgressIndicator(
-                        color: ThemeColors.blue,
-                      ));
-                    }
-
-                    final schoolOptions = [
-                      'Selecione sua escuela!',
-                      ...snapshot.data!,
-                    ];
-                    return DropdownButtonFormField2<String>(
-                      isExpanded: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.blue),
-                          borderRadius: BorderRadius.circular(25),
-                        ),
-                      ),
-                      hint: const Padding(
-                        padding: EdgeInsets.only(left: 12),
-                        child: Text('Elige tu escuela'),
-                      ),
-                      value: (dropdownValor1.isEmpty) ? null : dropdownValor1,
-                      iconStyleData: IconStyleData(
-                        iconSize: 42,
-                        iconEnabledColor: ThemeColors.yellow,
-                      ),
-                      onChanged: (option) {
-                        if (option == 'Selecione sua escuela!') {
-                          showToast(
-                            color: ThemeColors.red,
-                            'Por favor, selecione uma escola válida',
+                  builder:
+                      (
+                        BuildContext context,
+                        AsyncSnapshot<List<String>> snapshot,
+                      ) {
+                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: ThemeColors.blue,
+                            ),
                           );
-                        } else {
-                          setState(() {
-                            dropdownValor1 = option!;
-                            dropdownValor2 = '';
-                            schoolChoosed = true;
-                          });
                         }
-                      },
-                      items: schoolOptions.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
+
+                        final schoolOptions = [
+                          'Selecione sua escuela!',
+                          ...snapshot.data!,
+                        ];
+                        return DropdownButtonFormField2<String>(
+                          isExpanded: true,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blue),
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          ),
+                          hint: const Padding(
+                            padding: EdgeInsets.only(left: 12),
+                            child: Text('Elige tu escuela'),
+                          ),
+                          value: (dropdownValor1.isEmpty)
+                              ? null
+                              : dropdownValor1,
+                          iconStyleData: IconStyleData(
+                            iconSize: 42,
+                            iconEnabledColor: ThemeColors.yellow,
+                          ),
+                          onChanged: (option) {
+                            if (option == 'Selecione sua escuela!') {
+                              showToast(
+                                context,
+                                'Por favor, selecione uma escola válida',
+                                ThemeColors.red,
+                                ThemeColors.white,
+                              );
+                            } else {
+                              setState(() {
+                                dropdownValor1 = option!;
+                                dropdownValor2 = '';
+                                schoolChoosed = true;
+                              });
+                            }
+                          },
+                          items: schoolOptions.map((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
-                    );
-                  },
+                      },
                 ),
               ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               if (!schoolChoosed)
                 const SizedBox()
               else
@@ -134,84 +151,82 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   height: 70,
                   child: FutureBuilder<List<String>>(
                     future: _repository.getClassRoomInfo(dropdownValor1),
-                    builder: (
-                      BuildContext context,
-                      AsyncSnapshot<List<String>> snapshot,
-                    ) {
-                      if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: ThemeColors.blue,
-                          ),
-                        );
-                      }
-
-                      final classOptions = [
-                        'Selecione sua clase!',
-                        ...snapshot.data!,
-                      ];
-                      return DropdownButtonFormField2<String>(
-                        isExpanded: true,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        hint: const Padding(
-                          padding: EdgeInsets.only(left: 12),
-                          child: Text('Elige tu grado'),
-                        ),
-                        value:
-                            dropdownValor2.isNotEmpty ? dropdownValor2 : null,
-                        iconStyleData: IconStyleData(
-                          iconSize: 42,
-                          iconEnabledColor: ThemeColors.yellow,
-                        ),
-                        onChanged: (option) {
-                          if (option == 'Selecione sua clase!') {
-                            showToast(
-                              color: ThemeColors.red,
-                              'Por favor, selecione uma clase válida',
+                    builder:
+                        (
+                          BuildContext context,
+                          AsyncSnapshot<List<String>> snapshot,
+                        ) {
+                          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: ThemeColors.blue,
+                              ),
                             );
-                          } else {
-                            setState(() {
-                              classRoomChoosed = true;
-                              dropdownValor2 = option!;
-                            });
                           }
-                        },
-                        items: classOptions.map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
+
+                          final classOptions = [
+                            'Selecione sua clase!',
+                            ...snapshot.data!,
+                          ];
+                          return DropdownButtonFormField2<String>(
+                            isExpanded: true,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.blue),
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                            ),
+                            hint: const Padding(
+                              padding: EdgeInsets.only(left: 12),
+                              child: Text('Elige tu grado'),
+                            ),
+                            value: dropdownValor2.isNotEmpty
+                                ? dropdownValor2
+                                : null,
+                            iconStyleData: IconStyleData(
+                              iconSize: 42,
+                              iconEnabledColor: ThemeColors.yellow,
+                            ),
+                            onChanged: (option) {
+                              if (option == 'Selecione sua clase!') {
+                                showToast(
+                                  context,
+                                  'Por favor, selecione uma clase válida',
+                                  ThemeColors.red,
+                                  ThemeColors.white,
+                                );
+                              } else {
+                                setState(() {
+                                  classRoomChoosed = true;
+                                  dropdownValor2 = option!;
+                                });
+                              }
+                            },
+                            items: classOptions.map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                           );
-                        }).toList(),
-                      );
-                    },
+                        },
                   ),
                 ),
-              const SizedBox(
-                height: 12,
-              ),
+              const SizedBox(height: 12),
               if (classRoomChoosed && currentUser == null)
                 TextFormField(
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
                     ),
                     label: Padding(
                       padding: const EdgeInsets.only(left: 8),
@@ -233,9 +248,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     });
                   },
                 ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               SizedBox(
                 height: 60,
                 child: ElevatedButton.icon(
@@ -246,46 +259,125 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () => {
-                    if (currentUser != null)
-                      {
-                        setState(
-                          () => studentName = currentUser.displayName!,
+                  onPressed: isLoading
+                      ? null // desativa o botão enquanto carrega
+                      : () async {
+                          if (currentUser != null) {
+                            setState(
+                              () => studentName = currentUser.displayName!,
+                            );
+                          }
+
+                          if (dropdownValor1.isNotEmpty &&
+                              dropdownValor2.isNotEmpty &&
+                              studentName.isNotEmpty) {
+                            setState(() => isLoading = true);
+                            try {
+                              await _controller.setStudentOptions(
+                                dropdownValor1,
+                                dropdownValor2,
+                                studentName,
+                              );
+                              await _controller.saveStudentInfo(
+                                context,
+                                currentUser,
+                                studentName,
+                              );
+
+                              showToast(
+                                context,
+                                'Datos salvos com sucesso',
+                                ThemeColors.green,
+                                ThemeColors.white,
+                              );
+
+                              if (mounted) {
+                                Navigator.of(context).pushNamed('/');
+                              }
+                            } catch (e) {
+                              showToast(
+                                context,
+                                'Error al guardar datos: $e',
+                                ThemeColors.red,
+                                ThemeColors.white,
+                              );
+                            } finally {
+                              if (mounted) setState(() => isLoading = false);
+                            }
+                          } else {
+                            showToast(
+                              context,
+                              'Seleciona sus datos correctamente',
+                              ThemeColors.red,
+                              ThemeColors.white,
+                            );
+                          }
+                        },
+                  label: isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(
+                          'Confirmar los datos',
+                          style: ThemeText.paragraph16WhiteBold,
                         ),
-                      },
-                    if (dropdownValor1 != 'Selecione sua escuela!' &&
-                        dropdownValor2 != 'Selecione sua clase!' &&
-                        dropdownValor1.isNotEmpty &&
-                        dropdownValor2.isNotEmpty &&
-                        studentName.isNotEmpty &&
-                        studentName != '')
-                      {
-                        _controller.saveStudentOptions(
-                          currentUser,
-                          dropdownValor1,
-                          dropdownValor2,
-                          studentName,
-                          formKey,
-                          context,
-                        ),
-                      }
-                    else
-                      {
-                        showToast(
-                          color: ThemeColors.red,
-                          'Seleciona sus datos correctamente',
-                        ),
-                      },
-                  },
-                  label: Text(
-                    'Confirmar los datos',
-                    style: ThemeText.paragraph16WhiteBold,
-                  ),
-                  icon: const Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.check, color: Colors.white),
                 ),
+
+                // ElevatedButton.icon(
+                //   style: ElevatedButton.styleFrom(
+                //     backgroundColor: ThemeColors.red,
+                //     minimumSize: const Size.fromHeight(50),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //   ),
+                //   onPressed: () => {
+                //      if (currentUser != null) {
+                //         setState(
+                //           () => studentName = currentUser.displayName!,
+                //         ),
+                //       },
+                //     if (dropdownValor1 != 'Selecione sua escuela!' &&
+                //         dropdownValor2 != 'Selecione sua clase!' &&
+                //         dropdownValor1.isNotEmpty &&
+                //         dropdownValor2.isNotEmpty &&
+                //         studentName.isNotEmpty &&
+                //         studentName != '')
+                //       {
+                //         _controller.saveStudentOptions(
+                //           currentUser,
+                //           dropdownValor1,
+                //           dropdownValor2,
+                //           studentName,
+                //           formKey,
+                //           context,
+                //         ),
+                //       }
+                //     else
+                //       {
+                //         showToast(
+                //           context,
+                //           'Seleciona sus datos correctamente',
+                //           ThemeColors.red,
+                //           ThemeColors.white,
+                //         ),
+                //       },
+                //   },
+                //   label: Text(
+                //     'Confirmar los datos',
+                //     style: ThemeText.paragraph16WhiteBold,
+                //   ),
+                //   icon: const Icon(
+                //     Icons.check,
+                //     color: Colors.white,
+                //   ),
+                // ),
               ),
             ],
           ),

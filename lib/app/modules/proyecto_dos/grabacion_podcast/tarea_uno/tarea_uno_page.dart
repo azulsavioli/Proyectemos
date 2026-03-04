@@ -115,17 +115,18 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
-                        final currentUser = getCurrentUser(context);
+                      onPressed: () async {
+                        final currentUser = await getCurrentUser(context);
                         if (_controller.pickedFile == null ||
                             _controller.files.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
+                            context,
                             '''
 ¡No se puede enviar la respuesta! Selecione o archivo y haz clic en enviar!
 ''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           setState(() {
@@ -138,6 +139,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                             ),
                           );
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                           );
                         }

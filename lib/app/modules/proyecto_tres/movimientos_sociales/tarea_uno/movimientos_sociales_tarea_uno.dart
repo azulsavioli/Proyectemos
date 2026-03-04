@@ -44,8 +44,6 @@ class _MovimientosSocialesTareaUnoState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -107,7 +105,7 @@ class _MovimientosSocialesTareaUnoState
                     )
                   else
                     TextButton(
-                      onPressed: () {
+                      onPressed: () async {
                         pageController.previousPage(
                           duration: const Duration(milliseconds: 400),
                           curve: Curves.easeInOut,
@@ -137,35 +135,46 @@ class _MovimientosSocialesTareaUnoState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
-                        if (_controller.studentGroup.length <= 0 ||
-                            _controller.pickedFile == null) {
+                      onPressed: () async {
+                        // Verifica se há alunos e arquivo selecionado
+                        if (_controller.studentGroup.isEmpty || _controller.pickedFile == null) {
                           showToast(
-                            '''Selecciona el video correctamente y sus compañeros''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            context,
+                            'Selecciona el video correctamente y sus compañeros',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
-                        } else {
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) {
-                              if (mounted) {
-                                _controller.sendAnswers(
-                                  currentUser,
-                                );
-                                Navigator.pushNamed(
-                                  context,
-                                  '/pTres_movimientosSociales_menu',
-                                );
-                              }
-                            },
-                          );
+                          return;
                         }
+
+                        setState(() {
+                          loading = true;
+                        });
+
+                        // Delay opcional para efeito visual
+                        await Future.delayed(const Duration(milliseconds: 2000));
+
+                        if (!mounted) return;
+
+                        // Pega o usuário atual de forma assíncrona
+                        final currentUser = await getCurrentUser(context);
+
+                        // Envia respostas
+                        await _controller.sendAnswers(context, currentUser);
+
+                        if (!mounted) return;
+
+                        // Navega para a próxima página
+                        Navigator.pushNamed(
+                          context,
+                          '/pTres_movimientosSociales_menu',
+                        );
+
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: const Text(
                         'Enviar',
@@ -176,6 +185,51 @@ class _MovimientosSocialesTareaUnoState
                         ),
                       ),
                     )
+                  // if (pageChanged == 3)
+                    // TextButton(
+                    //   style: ButtonStyle(
+                    //     backgroundColor:
+                    //         WidgetStateProperty.all<Color>(ThemeColors.blue),
+                    //   ),
+                    //   onPressed: () async {
+                    //     if (_controller.studentGroup.length <= 0 ||
+                    //         _controller.pickedFile == null) {
+                    //       showToast(
+                    //         context,
+                    //         '''Selecciona el video correctamente y sus compañeros''',
+                    //         ThemeColors.red,
+                    //         ThemeColors.white,
+                    //       );
+                    //     } else {
+                    //       setState(() {
+                    //         loading = true;
+                    //       });
+                    //       Future.delayed(Duration(milliseconds: 2000)).then(
+                    //         (value) {
+                    //           if (mounted) {
+                    //             final currentUser = await getCurrentUser(context);
+                    //             _controller.sendAnswers(
+                    //               context,
+                    //               currentUser,
+                    //             );
+                    //             Navigator.pushNamed(
+                    //               context,
+                    //               '/pTres_movimientosSociales_menu',
+                    //             );
+                    //           }
+                    //         },
+                    //       );
+                    //     }
+                    //   },
+                    //   child: const Text(
+                    //     'Enviar',
+                    //     style: TextStyle(
+                    //       fontSize: 18,
+                    //       color: Colors.white,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    // )
                   else
                     TextButton(
                       onPressed: () {

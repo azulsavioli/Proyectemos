@@ -127,88 +127,85 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        final currentUser = getCurrentUser(context);
+                        final currentUser = await getCurrentUser(context); // <-- await
 
                         if (_controller.isAccessible!) {
                           if (textEditingController1.text.isEmpty ||
-                              textEditingController2.text.isEmpty &&
-                                  _controller.answer1 == '' ||
+                              textEditingController2.text.isEmpty ||
+                              _controller.answer1 == '' ||
                               _controller.answer2 == '') {
                             showToast(
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              '¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
-                          } else {
-                            if (textEditingController1.text.isNotEmpty &&
-                                    textEditingController2.text.isNotEmpty &&
-                                    _controller.answer1 != '' ||
-                                _controller.answer2 != '') {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    final respostas =
-                                        _controller.makeAnswerList(
-                                      textEditingController1.text,
-                                      textEditingController2.text,
-                                    );
-
-                                    _controller.sendAnswersText(
-                                      currentUser,
-                                      respostas,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pDos_conocesPodcast_menu',
-                                    );
-                                  }
-                                },
-                              );
-                            }
+                            return;
                           }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          final respostas = _controller.makeAnswerList(
+                            textEditingController1.text,
+                            textEditingController2.text,
+                          );
+
+                          await _controller.sendAnswersText(
+                            context,
+                            currentUser,
+                            respostas,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pDos_conocesPodcast_menu');
+                          setState(() {
+                            loading = false;
+                          });
+
                         } else {
                           if (recordsPathList.isEmpty ||
-                              recordsPathList.length < 2 &&
-                                  _controller.answer1 == '' ||
+                              recordsPathList.length < 2 ||
+                              _controller.answer1 == '' ||
                               _controller.answer2 == '') {
                             showToast(
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              '¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en enviar!',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
-                          } else {
-                            if (recordsPathList.isNotEmpty &&
-                                    recordsPathList.length == 2 &&
-                                    _controller.answer1 != '' ||
-                                _controller.answer2 != '') {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    _controller.sendAnswersAudio(
-                                      currentUser,
-                                      recordsPathList,
-                                    );
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pDos_conocesPodcast_menu',
-                                    );
-                                  }
-                                },
-                              );
-                            }
+                            return;
                           }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          await _controller.sendAnswersAudio(
+                            context,
+                            currentUser,
+                            recordsPathList,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pDos_conocesPodcast_menu');
+                          setState(() {
+                            loading = false;
+                          });
                         }
                       },
                       child: const Text(
@@ -220,6 +217,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         ),
                       ),
                     )
+
                   else
                     TextButton(
                       onPressed: () {

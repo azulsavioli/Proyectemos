@@ -112,8 +112,6 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     final isAllFilesFilleds = textControllerOne.text.isNotEmpty &&
         textControllerTwo.text.isNotEmpty &&
         textControllerThree.text.isNotEmpty &&
@@ -256,8 +254,10 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                             textControllerFive.text.isEmpty ||
                             textControllerSix.text.isEmpty) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tujas respuestas correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList(
@@ -277,7 +277,9 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                               '/pDos_comoCrearPodcast_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

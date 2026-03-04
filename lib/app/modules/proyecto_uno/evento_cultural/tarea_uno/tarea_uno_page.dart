@@ -123,41 +123,47 @@ class _PUnoEventoCulturalTareaPageState
                     if (pageChanged == 3)
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all<Color>(ThemeColors.blue),
+                          backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                         ),
-                        onPressed: () {
-                          final currentUser = getCurrentUser(context);
+                        onPressed: () async {
+                          final currentUser = await getCurrentUser(context); // <-- await
 
                           if (_controller.recordsPathList.isEmpty) {
                             showToast(
-                              '''
-      ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!
-      ''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              '¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
-                          } else {
-                            setState(() {
-                              loading = true;
-                            });
-                            if (_controller.recordsPathList.isNotEmpty &&
-                                _controller.recordsPathList.length == 1) {
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) {
-                                  if (mounted) {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/pUno_evento_cultural_menu',
-                                    );
-                                    _controller.sendAnswers(
-                                      currentUser,
-                                    );
-                                  }
-                                },
-                              );
-                            }
+                            return;
                           }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          // Espera 2 segundos
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          // Envia as respostas
+                          await _controller.sendAnswers(
+                            context,
+                            currentUser,
+                          );
+
+                          if (!mounted) return;
+
+                          // Navega para a próxima tela
+                          Navigator.pushNamed(
+                            context,
+                            '/pUno_evento_cultural_menu',
+                          );
+
+                          setState(() {
+                            loading = false;
+                          });
                         },
                         child: const Text(
                           'Compartir',
@@ -168,6 +174,7 @@ class _PUnoEventoCulturalTareaPageState
                           ),
                         ),
                       )
+
                     else
                       TextButton(
                         onPressed: () {

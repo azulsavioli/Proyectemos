@@ -1,8 +1,8 @@
-// import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +13,7 @@ import 'package:proyectemos/providers/record_audio_provider_evento_cultural_impl
 import 'package:proyectemos/providers/record_audio_provider_la_sociedad_impl.dart';
 import 'package:proyectemos/repository/proyectemos_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'app/proyectemos_app.dart';
 import 'commons/firebase_options.dart';
@@ -26,6 +27,17 @@ bool? isStudentInfoSaved;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await dotenv.load(fileName: '.env');
+
+  final clientId = dotenv.env['CLIENT_ID'];
+  final serverClientId = dotenv.env['SERVER_CLIENT_ID'];
+
+  print("Client ID: $clientId");
+  print("Server Client ID: $serverClientId");
+
+  await GoogleSignIn.instance.initialize();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

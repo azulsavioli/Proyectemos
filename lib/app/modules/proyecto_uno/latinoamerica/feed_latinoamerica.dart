@@ -44,7 +44,8 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
           padding: const EdgeInsets.only(left: 8.0),
           child: IconButton(
             icon: Icon(Icons.arrow_back_ios,
-                color: ThemeColors.white, size: isMobile ? 20 : 50),            onPressed: () => Navigator.of(context).pop(),
+                color: ThemeColors.white, size: isMobile ? 20 : 50),
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ),
         centerTitle: true,
@@ -123,7 +124,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
                   subtitle: Text(
                     lista[i]['imagem_latinoamerica_${j + 1}'][0],
                     style: TextStyle(
-                      color: Colors.black.withOpacity(0.6),
+                      color: Colors.black.withValues(alpha: 0.6),
                     ),
                   ),
                 ),

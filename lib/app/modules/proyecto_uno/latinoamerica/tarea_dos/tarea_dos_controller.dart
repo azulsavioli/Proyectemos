@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -41,6 +42,7 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -57,31 +59,44 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
         final attachment = setupAttachments(answersList);
 
         await _repository.sendEmail(
-          currentUser,
-          answersList,
-          subject,
-          message,
-          attachment,
+          currentUser: currentUser,
+          answerList: answersList,
+          subject: subject,
+          body: message,
+          attachments: attachment,
         );
         await _repository.sendAnswersToFirebase(json, doc);
         await _repository.saveClassroomImagesLatinoamerica(json);
         await _repository.saveTaskCompleted(task);
         await _repository.isTaskLoading(task, false);
 
-        showToast(Strings.tareaEnviada);
+        showToast(
+          context,
+          Strings.tareaEnviada,
+          ThemeColors.green,
+          ThemeColors.white,
+        );
         notifyListeners();
       } else {
-        showToast('O usuário não está autenticado.');
+        showToast(
+          context,
+          'O usuário não está autenticado.',
+          ThemeColors.yellow,
+          ThemeColors.white,
+        );
       }
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocorreu um erro no envio dos dados!');
+      showToast(
+        context,
+        'Ocorreu um erro no envio dos dados!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 
-  List<FileAttachment> setupAttachments(
-    List<String> answersList,
-  ) {
+  List<FileAttachment> setupAttachments(List<String> answersList) {
     final imagesList = setImages();
     final fileOne = File(imagesList[0]);
     final fileTwo = File(imagesList[1]);
@@ -163,7 +178,8 @@ class LatinoamericaTareaDosController extends ChangeNotifier {
     List<String> allStudentInfo,
     List<String> respostas,
   ) {
-    final text = '''
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
@@ -187,19 +203,15 @@ Imagens em anexo!
     String textFour,
     String textFive,
   ) {
-    final respostas = [
-      textOne,
-      textTwo,
-      textThree,
-      textFour,
-      textFive,
-    ];
+    final respostas = [textOne, textTwo, textThree, textFour, textFive];
     return respostas;
   }
 }
 
 Future<List<String>> convertImageToFirebase(
-    List<Object?> params, currentUser) async {
+  List<Object?> params,
+  currentUser,
+) async {
   final List<String> imgPaths = params as List<String>;
   final firebaseStorage = FirebaseStorage.instance;
   final firebasePaths = <String>[];
@@ -215,7 +227,8 @@ Future<List<String>> convertImageToFirebase(
       final snapshot = await firebaseStorage
           .ref()
           .child(
-              'uno-latinoamerica-images/${currentUser.email}-img-$counter.jpeg')
+            'uno-latinoamerica-images/${currentUser.email}-img-$counter.jpeg',
+          )
           .putFile(file)
           .whenComplete(() => null);
 

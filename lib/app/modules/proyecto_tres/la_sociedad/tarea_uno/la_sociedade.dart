@@ -259,44 +259,45 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                   if (pageChanged == 4)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         onPageChanged(pageChanged);
-                        final currentUser = getCurrentUser(context);
 
-                        if (recordsPathList.isEmpty ||
-                            recordsPathList.length < 4) {
+                        final currentUser = await getCurrentUser(context);
+
+                        if (recordsPathList.isEmpty || recordsPathList.length < 4) {
                           showToast(
+                            context,
                             '''
 ¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
-                        } else {
-                          if (recordsPathList.isNotEmpty &&
-                              recordsPathList.length == 4) {
-                            setState(() {
-                              loading = true;
-                            });
-
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) {
-                                if (mounted) {
-                                  _laSociedadController.sendAnswers(
-                                    currentUser,
-                                    recordsPathList,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/pTres_laSociedad_menu',
-                                  );
-                                }
-                              },
-                            );
-                          }
+                          return;
                         }
+
+                        setState(() {
+                          loading = true;
+                        });
+
+                        await Future.delayed(const Duration(milliseconds: 2000));
+
+                        if (!mounted) return;
+
+                        await _laSociedadController.sendAnswers(
+                          context,
+                          currentUser,
+                          recordsPathList,
+                        );
+
+                        if (!mounted) return;
+
+                        Navigator.pushNamed(context, '/pTres_laSociedad_menu');
+
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: const Text(
                         'Enviar',

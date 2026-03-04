@@ -50,7 +50,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             PageThree(),
           ],
         ),
-        bottomNavigationBar: Container(
+        bottomNavigationBar: SafeArea(child: Container(
           color: Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 8),
           height: 60,
@@ -141,6 +141,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 ),
             ],
           ),
-        ),
+        ),)
+
+
       );
 }

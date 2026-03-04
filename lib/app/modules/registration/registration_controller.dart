@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../repository/repository_impl.dart';
@@ -38,20 +39,29 @@ class RegistrationController extends ChangeNotifier {
         studentClassRoomInfo,
         studentNameInfo,
       ).then(
-        (value) => saveStudentInfo(currentUser, studentNameInfo).then(
-          (value) => showToast('Datos salvos com sucesso'),
+        (value) => saveStudentInfo(context, currentUser, studentNameInfo).then(
+          (value) => showToast(
+            context,
+            'Datos salvos com sucesso',
+            ThemeColors.green,
+            ThemeColors.white,
+          ),
         ),
       );
 
-      Navigator.pushNamed(context, '/proyectos');
+      Navigator.pushReplacementNamed(context, '/home');
     } else {
       showToast(
+        context,
         '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!''',
+        ThemeColors.yellow,
+        ThemeColors.white,
       );
     }
   }
 
   Future<void> saveStudentInfo(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     String studentNameInfo,
   ) async {
@@ -62,7 +72,12 @@ class RegistrationController extends ChangeNotifier {
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 }

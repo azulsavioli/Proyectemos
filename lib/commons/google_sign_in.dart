@@ -1,61 +1,122 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart'
-    show TargetPlatform, defaultTargetPlatform, kIsWeb;
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
-  final auth = FirebaseAuth.instance;
-  final GoogleSignIn googleSignIn = kIsWeb
-      ? GoogleSignIn(
-          scopes: ['email', 'https://mail.google.com/'],
-        )
-      : (defaultTargetPlatform == TargetPlatform.android)
-          ? GoogleSignIn(
-              scopes: ['https://mail.google.com/'],
-            )
-          : GoogleSignIn(
-              scopes: ['email', 'https://mail.google.com/'],
-              clientId:
-                  '333978861746-p88q9nentd8ogn0q30e9qv24rjlouno5.apps.googleusercontent.com',
-            );
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
 
-  late GoogleSignInAccount? _user;
+  GoogleSignInAccount? _user;
+  GoogleSignInAccount? get user => _user;
+  bool get isSignedIn => _user != null;
 
-  GoogleSignInAccount get user => _user!;
+  GoogleSignInProvider() {
+    _init();
+  }
 
-  Future googleLogin() async {
-    try {
-      if (kIsWeb) {
-        final googleProvider = GoogleAuthProvider();
-        await auth.signInWithPopup(googleProvider);
+  void _init() async {
+    final clientId = dotenv.env['CLIENT_ID'];
+    final serverClientId = dotenv.env['SERVER_CLIENT_ID'];
+    if (clientId == null || serverClientId == null) return;
+
+    await _googleSignIn.initialize(clientId: clientId, serverClientId: serverClientId);
+    _googleSignIn.authenticationEvents
+        .listen(_handleAuthenticationEvent)
+        .onError(_handleAuthenticationError);
+
+    final prefs = await SharedPreferences.getInstance();
+    final hasLoggedInBefore = prefs.getBool('hasLoggedInBefore') ?? false;
+
+    if (hasLoggedInBefore) {
+      final account = await _googleSignIn.attemptLightweightAuthentication();
+      if (account != null) {
+        _user = account;
+        await _signInFirebase(account);
         notifyListeners();
-        return;
+        debugPrint('✅ Login silencioso realizado: ${account.email}');
       }
-
-      final googleUser = await googleSignIn.signIn();
-
-      if (googleUser == null) return;
-      _user = googleUser;
-
-      final googleAuth = await googleUser.authentication;
-
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      await auth.signInWithCredential(credential);
-
-      notifyListeners();
-    } on FirebaseAuthException catch (e) {
-      return e.toString();
+    } else {
+      debugPrint('ℹ️ Usuário nunca logou antes, não tenta login silencioso');
     }
   }
 
-  Future googleLogout() async {
-    await auth.signOut();
-    await googleSignIn.disconnect();
-    await FirebaseAuth.instance.signOut();
+  Future<void> _handleAuthenticationEvent(
+      GoogleSignInAuthenticationEvent event) async {
+    switch (event.runtimeType) {
+      case GoogleSignInAuthenticationEventSignIn:
+        _user = (event as GoogleSignInAuthenticationEventSignIn).user;
+        if (_user != null) {
+          await _signInFirebase(_user!);
+        }
+        break;
+      case GoogleSignInAuthenticationEventSignOut:
+        _user = null;
+        break;
+    }
+    notifyListeners();
+  }
+
+  Future<void> _handleAuthenticationError(Object e) async {
+    if (e is GoogleSignInException && e.code == 'canceled') {
+      debugPrint('Usuário cancelou o login do Google.');
+    } else {
+      debugPrint('GoogleSignIn event error: $e');
+    }
+    _user = null;
+    notifyListeners();
+  }
+
+  Future<void> signIn() async {
+    try {
+      if (_googleSignIn.supportsAuthenticate()) {
+        final account = await _googleSignIn.authenticate();
+        if (account != null) {
+          _user = account;
+          await _signInFirebase(account);
+          notifyListeners();
+        }
+      } else {
+        debugPrint('Authenticate not supported on this platform.');
+      }
+    } catch (e) {
+      debugPrint('Google Sign-In failed: $e');
+    }
+  }
+
+  Future<void> signOut() async {
+    try {
+      await _auth.signOut();
+      await _googleSignIn.disconnect();
+      _user = null;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Google Sign-Out failed: $e');
+    }
+  }
+
+  Future<void> _signInFirebase(GoogleSignInAccount account) async {
+    final googleAuth = await account.authentication;
+    final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+    await _auth.signInWithCredential(credential);
+  }
+
+  Future<GoogleSignInAccount?> attemptLightweightSignIn() async {
+    try {
+      final account = await _googleSignIn.attemptLightweightAuthentication();
+      if (account != null) {
+        _user = account;
+        await _signInFirebase(account);
+        notifyListeners();
+      }
+      return account;
+    } catch (e) {
+      debugPrint('Lightweight sign-in failed: $e');
+      return null;
+    }
   }
 }

@@ -51,7 +51,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
         WidgetStateProperty.resolveWith<Color?>(
       (Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
-          return Colors.amber.withOpacity(0.54);
+          return Colors.amber.withValues(alpha: 0.54);
         }
         if (states.contains(WidgetState.disabled)) {
           return ThemeColors.gray;

@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -23,8 +24,9 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
   List<PlatformFile> listFiles = CustomUploadForm.listFiles;
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
-    List<TextEditingController> answersList,
+    List<String> answersList,
   ) async {
     await _repository.isTaskLoading(task, true);
 
@@ -39,23 +41,33 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
       final attachment = setupAttachments();
 
       await _repository.sendEmail(
-        currentUser,
-        answersList,
-        subject,
-        message,
-        attachment,
+        currentUser: currentUser,
+        answerList: answersList,
+        subject: subject,
+        body: message,
+        attachments: attachment,
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomImagesArtistas(json);
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 
@@ -94,9 +106,7 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
     }
   }
 
-  Future convertFileToFirebase(
-    List<String> filePaths,
-  ) async {
+  Future convertFileToFirebase(List<String> filePaths) async {
     final firebaseStorage = FirebaseStorage.instance;
     final firebasePaths = [];
     final email = _repository.authService.userAuth?.email;
@@ -137,21 +147,19 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
 
   Map<String, List> setJson(
     List<dynamic> filePaths,
-    List<TextEditingController> answerList,
+    List<String> answerList,
   ) {
     final json = {
-      'resposta_1': [answerList[0].text, filePaths[0]],
-      'resposta_2': [answerList[1].text, filePaths[1]],
-      'resposta_3': [answerList[2].text, filePaths[2]],
-      'resposta_4': [answerList[3].text, filePaths[3]],
-      'resposta_5': [answerList[4].text, filePaths[4]],
+      'resposta_1': [answerList[0], filePaths[0]],
+      'resposta_2': [answerList[1], filePaths[1]],
+      'resposta_3': [answerList[2], filePaths[2]],
+      'resposta_4': [answerList[3], filePaths[3]],
+      'resposta_5': [answerList[4], filePaths[4]],
     };
     return json;
   }
 
-  Future<dynamic> makeJson(
-    List<TextEditingController> answerList,
-  ) async {
+  Future<dynamic> makeJson(List<String> answerList) async {
     final list = setFiles();
     final firebasePaths = await convertFileToFirebase(list);
     final json = setJson(firebasePaths, answerList);
@@ -178,17 +186,18 @@ class ArtistasLatinoamericanosTareaDosController extends ChangeNotifier {
 
   String createEmailMessage(
     List<String> allStudentInfo,
-    List<TextEditingController> answerList,
+    List<String> answerList,
   ) {
-    final text = '''
+    final text =
+        '''
 Proyectemos\n
 ${allStudentInfo[0]} - ${allStudentInfo[1]} - ${allStudentInfo[2]}\n\n 
         Atividade Artistas Hispanoamericanos 2ª etapa concluída!
-        \nPaís: ${randonCountrys[0]} - Artista: ${answerList[0].text}
-        \nPaís: ${randonCountrys[1]} - Artista: ${answerList[1].text}
-        \nPaís: ${randonCountrys[2]} - Artista: ${answerList[2].text}
-        \nPaís: ${randonCountrys[3]} - Artista: ${answerList[3].text}
-        \nPaís: ${randonCountrys[4]} - Artista: ${answerList[4].text}
+        \nPaís: ${randonCountrys[0]} - Artista: ${answerList[0]}
+        \nPaís: ${randonCountrys[1]} - Artista: ${answerList[1]}
+        \nPaís: ${randonCountrys[2]} - Artista: ${answerList[2]}
+        \nPaís: ${randonCountrys[3]} - Artista: ${answerList[3]}
+        \nPaís: ${randonCountrys[4]} - Artista: ${answerList[4]}
         \nObs: Arquivos diversos.''';
     return text;
   }

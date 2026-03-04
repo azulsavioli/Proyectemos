@@ -1,14 +1,16 @@
 import 'dart:math';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mailer/mailer.dart';
 import 'package:proyectemos/repository/repository_interface.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../repository/proyectemos_repository.dart';
 import '../services/auth_services.dart';
 import '../utils/email_sender.dart';
+import 'package:mailer/mailer.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 
 class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   List<String> student = [];
@@ -20,6 +22,28 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   final _repository = ProyectemosRepository();
   final emailSender = EmailSender();
   AuthService authService = AuthService();
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+
+  Future<GoogleSignInAccount?> getSignedInUser() async {
+    try {
+      final account = await _googleSignIn.attemptLightweightAuthentication();
+      return account;
+    } catch (e) {
+      print('Erro ao obter usuário logado: $e');
+      return null;
+    }
+  }
+
+  Future<List<String>> getTeacherEmails() async {
+    try {
+      final emails = await _repository.getTeacherEmail();
+      return emails;
+    } catch (e) {
+      print('Erro ao obter e-mails dos professores: $e');
+      return [];
+    }
+  }
 
   @override
   Map<T, T> createJson(List answersList) {
@@ -33,27 +57,18 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   @override
   Future<void> isTaskLoading(T taskName, bool bool) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(
-      "isLoadingTask-$taskName",
-      bool,
-    );
+    await preferences.setBool("isLoadingTask-$taskName", bool);
   }
 
   @override
   Future<void> saveTaskCompleted(T taskName) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(
-      taskName.toString(),
-      true,
-    );
+    await preferences.setBool(taskName.toString(), true);
   }
 
   Future<void> resetTaskCompleted(T taskName) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(
-      taskName.toString(),
-      false,
-    );
+    await preferences.setBool(taskName.toString(), false);
   }
 
   @override
@@ -155,23 +170,27 @@ class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   }
 
   @override
-  Future<void> sendEmail(
-    GoogleSignInAccount? currentUser,
-    List<T> answersList,
-    dynamic subject,
-    dynamic message,
-    List<Attachment> attachment,
-  ) async {
-    final email = await _repository.getTeacherEmail();
+  Future<void> sendEmail({
+    required GoogleSignInAccount? currentUser,
+    List<String>? answerList,
+    required String subject,
+    required String body,
+    List<dynamic>? attachments,
+  }) async {
+    final teacherEmails = await getTeacherEmails();
 
-    if (email != null) {
+    if (teacherEmails.isNotEmpty) {
       await emailSender.sendEmailToTeacher(
-        currentUser,
-        attachment,
-        [email[0], email[1], email[2]],
-        subject,
-        message,
+        currentUser: currentUser,
+        attachments: (attachments != null)
+            ? attachments.map((a) => a is File ? a.path : a.toString()).toList()
+            : [],
+        recipients: teacherEmails,
+        subject: subject,
+        body: body,
       );
+    } else {
+      throw Exception('Nenhum e-mail de professor encontrado');
     }
   }
 

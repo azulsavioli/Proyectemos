@@ -5,9 +5,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../services/toast_services.dart';
@@ -80,6 +81,7 @@ class DivulgacaoController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
   ) async {
     await _repository.isTaskLoading(task, true);
@@ -94,11 +96,11 @@ class DivulgacaoController extends ChangeNotifier {
       final attachment = createVideoAttachments();
 
       await _repository.sendEmail(
-        currentUser,
-        [],
-        subject,
-        message,
-        attachment,
+        currentUser: currentUser,
+        subject: subject,
+        answerList: [],
+        body: message,
+        attachments: attachment,
       );
 
       await _repository.sendAnswersToFirebase(json, doc);
@@ -111,12 +113,22 @@ class DivulgacaoController extends ChangeNotifier {
       }
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 

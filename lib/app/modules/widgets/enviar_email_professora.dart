@@ -67,7 +67,8 @@ class _EnvioEmailProfesoraState extends State<EnvioEmailProfesora> {
       studentInformation[2],
     ];
     final subject = 'Mediação feedback tarea $tareaTitle';
-    final text = '''
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n\n 
@@ -75,19 +76,22 @@ ${_emailController.text}''';
     final emailSender = EmailSender();
 
     await emailSender.sendEmailToTeacher(
-      currentUser,
-      [],
-      [email],
-      subject,
-      text,
+      currentUser: currentUser,
+      attachments: [],
+      recipients: [email],
+      subject: subject,
+      body: text,
     );
-    showToast(Strings.emailEnviado);
+    showToast(
+      context,
+      Strings.emailEnviado,
+      ThemeColors.green,
+      ThemeColors.white,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -96,9 +100,7 @@ ${_emailController.text}''';
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.enviarEmailProfesora,
           style: ThemeText.paragraph16WhiteBold,
@@ -114,9 +116,7 @@ ${_emailController.text}''';
               'Enviar un email a profesora',
               style: ThemeText.paragraph16GrayNormal,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             CustomTextFormField(
               focusNode: focusNode,
               textInputAction: TextInputAction.go,
@@ -127,9 +127,7 @@ ${_emailController.text}''';
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SizedBox(
               height: 60,
               child: ElevatedButton(
@@ -141,10 +139,12 @@ ${_emailController.text}''';
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     isEmailSending = true;
                   });
+                  final currentUser = await getCurrentUser(context);
+
                   sendEmail(currentUser).then(
                     (value) => {
                       setState(() {

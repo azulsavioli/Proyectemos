@@ -60,7 +60,6 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -194,8 +193,10 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             textControllerFour.text.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tuja respuesta correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList(
@@ -213,7 +214,9 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                               '/pDos_comoCrearPodcast_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

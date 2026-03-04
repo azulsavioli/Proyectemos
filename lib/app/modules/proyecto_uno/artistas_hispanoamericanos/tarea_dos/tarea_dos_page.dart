@@ -57,7 +57,6 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     final bool isMobile = shortestSide < 600;
 
@@ -174,41 +173,58 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                     if (pageChanged == 5)
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all<Color>(ThemeColors.blue),
+                          backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           if (_formKey.currentState!.validate() &&
                               answerUnoController.text.isNotEmpty &&
                               answerDosController.text.isNotEmpty &&
                               answerTresController.text.isNotEmpty &&
                               answerQuatroController.text.isNotEmpty &&
                               answerCincoController.text.isNotEmpty) {
+
                             setState(() {
                               loading = true;
                             });
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) {
-                                if (mounted) {
-                                  _controller.sendAnswers(currentUser, [
-                                    answerUnoController,
-                                    answerDosController,
-                                    answerTresController,
-                                    answerQuatroController,
-                                    answerCincoController,
-                                  ]);
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/pUno_artistas_menu',
-                                  );
-                                }
-                              },
+
+                            // Aguarda 2 segundos (efeito visual)
+                            await Future.delayed(const Duration(milliseconds: 2000));
+
+                            if (!mounted) return;
+
+                            // Pega o usuário corretamente
+                            final currentUser = await getCurrentUser(context);
+
+                            // Envia as respostas
+                            await _controller.sendAnswers(
+                              context,
+                              currentUser,
+                              [
+                                answerUnoController.text,
+                                answerDosController.text,
+                                answerTresController.text,
+                                answerQuatroController.text,
+                                answerCincoController.text,
+                              ],
                             );
+
+                            if (!mounted) return;
+
+                            // Navega para menu
+                            Navigator.pushNamed(
+                              context,
+                              '/pUno_artistas_menu',
+                            );
+
+                            setState(() {
+                              loading = false;
+                            });
                           } else {
                             showToast(
-                              '''Selecciona todos los archivos y escriba sus descripciones''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              'Selecciona todos los archivos y escriba sus descripciones',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           }
                         },
@@ -221,6 +237,60 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           ),
                         ),
                       )
+
+                    // if (pageChanged == 5)
+                    //   TextButton(
+                    //     style: ButtonStyle(
+                    //       backgroundColor:
+                    //           WidgetStateProperty.all<Color>(ThemeColors.blue),
+                    //     ),
+                    //     onPressed: () {
+                    //       if (_formKey.currentState!.validate() &&
+                    //           answerUnoController.text.isNotEmpty &&
+                    //           answerDosController.text.isNotEmpty &&
+                    //           answerTresController.text.isNotEmpty &&
+                    //           answerQuatroController.text.isNotEmpty &&
+                    //           answerCincoController.text.isNotEmpty) {
+                    //         setState(() {
+                    //           loading = true;
+                    //         });
+                    //         Future.delayed(Duration(milliseconds: 2000)).then(
+                    //           (value) {
+                    //             if (mounted) {
+                    //               _controller.sendAnswers(
+                    //                   context,
+                    //                   currentUser, [
+                    //                 answerUnoController,
+                    //                 answerDosController,
+                    //                 answerTresController,
+                    //                 answerQuatroController,
+                    //                 answerCincoController,
+                    //               ]);
+                    //               Navigator.pushNamed(
+                    //                 context,
+                    //                 '/pUno_artistas_menu',
+                    //               );
+                    //             }
+                    //           },
+                    //         );
+                    //       } else {
+                    //         showToast(
+                    //           context,
+                    //           '''Selecciona todos los archivos y escriba sus descripciones''',
+                    //           ThemeColors.red,
+                    //           ThemeColors.white,
+                    //         );
+                    //       }
+                    //     },
+                    //     child: const Text(
+                    //       'Enviar',
+                    //       style: TextStyle(
+                    //         fontSize: 18,
+                    //         color: Colors.white,
+                    //         fontWeight: FontWeight.bold,
+                    //       ),
+                    //     ),
+                    //   )
                     else
                       TextButton(
                         onPressed: () {

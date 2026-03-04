@@ -54,8 +54,6 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -64,9 +62,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
           style: ThemeText.paragraph14WhiteBold,
@@ -80,12 +76,8 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
         },
         controller: pageController,
         children: [
-          QuestionQueEsUnaEncuestaOne(
-            controller: _controller,
-          ),
-          QuestionQueEsUnaEncuestaDos(
-            controller: _controller,
-          ),
+          QuestionQueEsUnaEncuestaOne(controller: _controller),
+          QuestionQueEsUnaEncuestaDos(controller: _controller),
           QuestionQueEsUnaEncuestaTres(
             focusNode: focusNode,
             textController: textEditingController,
@@ -106,9 +98,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -141,8 +131,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         if (isAccessible) {
@@ -152,54 +141,71 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             setState(() {
                               loading = true;
                             });
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) {
-                                if (mounted) {
-                                  _controller.sendAnswersText(
-                                    currentUser,
-                                    textEditingController.text,
-                                  );
-                                  Navigator.pushNamed(
-                                    context,
-                                    '/pDos_laEncuesta_menu',
-                                  );
-                                }
-                              },
+
+                            // Delay opcional para efeito visual
+                            await Future.delayed(const Duration(milliseconds: 2000));
+
+                            if (!mounted) return;
+
+                            final currentUser = await getCurrentUser(context);
+                            await _controller.sendAnswersText(
+                              context,
+                              currentUser,
+                              textEditingController.text,
                             );
+
+                            if (!mounted) return;
+
+                            Navigator.pushNamed(
+                              context,
+                              '/pDos_laEncuesta_menu',
+                            );
+
+                            setState(() {
+                              loading = false;
+                            });
                           } else {
                             showToast(
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              '¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           }
                         } else {
-                          if (recordsPathList.isEmpty ||
-                              _controller.answer1 == '' ||
-                              _controller.answer2 == '') {
+                          if (recordsPathList.isEmpty || _controller.answer1 == '' || _controller.answer2 == '') {
                             showToast(
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
-                              color: ThemeColors.red,
-                              textColor: ThemeColors.white,
+                              context,
+                              '¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!',
+                              ThemeColors.red,
+                              ThemeColors.white,
                             );
                           } else {
-                            if (recordsPathList.isNotEmpty &&
-                                    _controller.answer1 != '' ||
-                                _controller.answer2 != '') {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_laEncuesta_menu',
-                                ),
-                              );
-                              _controller.sendAnswersAudio(
-                                  currentUser, recordsPathList);
-                            }
+                            setState(() {
+                              loading = true;
+                            });
+
+                            await Future.delayed(const Duration(milliseconds: 2000));
+
+                            if (!mounted) return;
+
+                            final currentUser = await getCurrentUser(context);
+                            await _controller.sendAnswersAudio(
+                              context,
+                              currentUser,
+                              recordsPathList,
+                            );
+
+                            if (!mounted) return;
+
+                            Navigator.pushNamed(
+                              context,
+                              '/pDos_laEncuesta_menu',
+                            );
+
+                            setState(() {
+                              loading = false;
+                            });
                           }
                         }
                       },

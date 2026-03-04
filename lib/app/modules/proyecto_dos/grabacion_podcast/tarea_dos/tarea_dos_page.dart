@@ -96,7 +96,6 @@ class _TareaDosGrabacionPodcastPageState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
@@ -214,7 +213,7 @@ class _TareaDosGrabacionPodcastPageState
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           if (pageChanged == 1) {
                             youTubeController.addListener(listener);
@@ -228,8 +227,10 @@ class _TareaDosGrabacionPodcastPageState
                             textController3.text.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             '''Vuelve y ingrese tuja respuesta correctamente y sus compañeros''',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
                         } else {
                           final respostas = _controller.makeAnswersList([
@@ -246,7 +247,9 @@ class _TareaDosGrabacionPodcastPageState
                               '/pDos_grabacionPodcast_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
+                            context,
                             currentUser,
                             respostas,
                           );

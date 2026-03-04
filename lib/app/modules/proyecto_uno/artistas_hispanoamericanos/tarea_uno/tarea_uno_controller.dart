@@ -4,8 +4,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mailer/mailer.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
+import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../providers/record_audio_provider_artistas_impl.dart';
@@ -29,39 +30,62 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
-    GoogleSignInAccount? currentUser,
-    List<String> answersList,
-  ) async {
+      BuildContext context,
+      GoogleSignInAccount? currentUser,
+      List<String> audioPaths,
+      ) async {
     await _repository.isTaskLoading(task, true);
 
     try {
-      final json = await makeJson(currentUser);
+      // Converte áudios para URLs do Firebase
+      final firebasePaths = await convertAudioToFirebase(audioPaths, currentUser);
 
-      final message = createEmailMessage(
-        await _repository.getStudentInfo(),
-      );
+      // Cria JSON para salvar no Firestore
+      final json = setJson(firebasePaths);
 
-      final attachment = createAudioAttachments(recordsPathList);
+      // Cria mensagem de e-mail com info do aluno
+      final studentInfo = await _repository.getStudentInfo();
+      final message = createEmailMessage(studentInfo);
 
+      // Cria anexos para enviar por e-mail
+      final attachments = createAudioAttachments(audioPaths);
+
+      // Envia e-mail para professores
+      final teacherEmails = await _repository.getTeacherEmails();
       await _repository.sendEmail(
-        currentUser,
-        answersList,
-        subject,
-        message,
-        attachment,
+        currentUser: currentUser,
+        subject: subject,
+        answerList: [],
+        body: message,
+        attachments: attachments,
       );
 
+      // Salva no Firebase
       await _repository.sendAnswersToFirebase(json, doc);
+
+      // Marca tarefa como concluída
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
-      e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      print(e.toString());
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
+
+    // Limpa lista de gravações
     recordsPathList = [];
   }
 

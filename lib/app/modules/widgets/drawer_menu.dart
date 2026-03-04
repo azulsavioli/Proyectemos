@@ -38,16 +38,16 @@ class DrawerMenuWidget extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Inicio'),
-            onTap: () {
-              Navigator.of(context).pushNamed('/home');
-            },
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.home),
+          //   title: const Text('Inicio'),
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/home');
+          //   },
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Perfil'),
@@ -61,16 +61,21 @@ class DrawerMenuWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Salir'),
-            onTap: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              if (provider.googleSignIn.currentUser != null) {
-                provider.googleLogout();
+            onTap: () async {
+              final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+
+              if (provider.user != null) {
+                await provider.signOut();
+                await authService.logout();
               } else {
-                authService.logout();
+                await authService.logout();
               }
-              Navigator.of(context).pushNamed('/login');
+
+              if (context.mounted) {
+                Navigator.of(context).pushNamed('/login');
+              }
             },
+
           ),
         ],
       ),
@@ -122,16 +127,21 @@ class DrawerMenuWidget extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.exit_to_app, size: 30,),
             title: Text('Salir', style: ThemeText.paragraph12Gray),
-            onTap: () {
-              final provider =
-                  Provider.of<GoogleSignInProvider>(context, listen: false);
-              if (provider.googleSignIn.currentUser != null) {
-                provider.googleLogout();
+            onTap: () async {
+              final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+
+              if (provider.user != null) {
+                await provider.signOut();
+                await authService.logout();
               } else {
-                authService.logout();
+                await authService.logout();
               }
-              Navigator.of(context).pushNamed('/login');
+
+              if (context.mounted) {
+                Navigator.of(context).pushNamed('/login');
+              }
             },
+
           ),
         ],
       ),

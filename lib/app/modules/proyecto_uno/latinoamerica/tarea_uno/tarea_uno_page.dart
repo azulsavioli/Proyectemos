@@ -107,14 +107,14 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     final bool isMobile = shortestSide < 600;
-    final currentUser = getCurrentUser(context);
     final textOne = textControllerOne.text;
     final textTwo = textControllerTwo.text;
     final textThree = textControllerThree.text;
     final textFour = textControllerFour.text;
     final textFive = textControllerFive.text;
 
-    return Scaffold(
+    return SafeArea(child:
+      Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -262,10 +262,9 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                   if (pageChanged == 6)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           if (pageChanged == 1) {
                             youTubeController.addListener(listener);
@@ -274,41 +273,52 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           }
                         });
                         deactivate();
+
                         if (textControllerOne.text.isEmpty ||
                             textControllerTwo.text.isEmpty ||
                             textControllerThree.text.isEmpty ||
                             textControllerFour.text.isEmpty ||
                             textControllerFive.text.isEmpty) {
                           showToast(
-                            color: ThemeColors.red,
+                            context,
                             'Vuelve y ingrese tuja respuesta correctamente',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
-                        } else {
-                          final respostas = _tareaUnoController.makeAnswersList(
-                            textOne,
-                            textTwo,
-                            textThree,
-                            textFour,
-                            textFive,
-                          );
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) {
-                              if (mounted) {
-                                _tareaUnoController.sendAnswers(
-                                  currentUser,
-                                  respostas,
-                                );
-                                Navigator.pushNamed(
-                                  context,
-                                  '/pUno_latinoamerica_menu',
-                                );
-                              }
-                            },
-                          );
+                          return;
                         }
+
+                        final currentUser = await getCurrentUser(context); // <-- await aqui
+
+                        final respostas = _tareaUnoController.makeAnswersList(
+                          textOne,
+                          textTwo,
+                          textThree,
+                          textFour,
+                          textFive,
+                        );
+
+                        setState(() {
+                          loading = true;
+                        });
+
+                        await Future.delayed(const Duration(milliseconds: 2000));
+
+                        if (!mounted) return;
+
+                        await _tareaUnoController.sendAnswers(
+                          context,
+                          currentUser,
+                          respostas,
+                        );
+
+                        if (!mounted) return;
+
+                        Navigator.pushNamed(context, '/pUno_latinoamerica_menu');
+
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: Text(
                         'Enviar',
@@ -350,6 +360,6 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                 ],
               ),
             ),
-    );
+    ));
   }
 }

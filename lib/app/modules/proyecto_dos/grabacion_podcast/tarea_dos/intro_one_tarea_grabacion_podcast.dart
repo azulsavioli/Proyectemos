@@ -29,28 +29,35 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
 
   Map<String, bool> nameSelection = {};
 
+  GoogleSignInAccount? _currentUser;
+
   @override
   void initState() {
     super.initState();
-    final currentUser = getCurrentUser(context);
     studentsNamesFuture = _repository.getStudents();
-    studentsNamesFuture?.then((names) {
-      if (names != null) {
-        for (final name in names) {
-          if (name == currentUser?.displayName) {
-            // nameSelection[name] = true;
-            nameSelection[name] = (name == currentUser?.displayName);
-            if (!_controller.studentGroup.contains(name)) {
-              _controller.studentGroup.add(name);
-            }
-          } else {
-            nameSelection[name] = false;
-          }
-        }
-        setState(() {});
-      }
-    });
+    _loadCurrentUserAndNames();
   }
+
+  Future<void> _loadCurrentUserAndNames() async {
+
+    _currentUser = await getCurrentUser(context);
+    final names = await studentsNamesFuture;
+    if (names != null) {
+      for (final name in names) {
+        if (name == _currentUser?.displayName) {
+          nameSelection[name] = true;
+          if (!_controller.studentGroup.contains(name)) {
+            _controller.studentGroup.add(name);
+          }
+        } else {
+          nameSelection[name] = false;
+        }
+      }
+    }
+
+    setState(() {});
+  }
+
 
   int countSelectedNames() {
     return nameSelection.values.where((value) => value).length;
@@ -58,8 +65,6 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
-
     super.build(context);
     return SingleChildScrollView(
       child: Padding(
@@ -82,8 +87,8 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
                     padding: EdgeInsets.only(top: 250),
                     child: Center(
                         child: CircularProgressIndicator(
-                      color: ThemeColors.blue,
-                    )),
+                          color: ThemeColors.blue,
+                        )),
                   );
                 } else if (snapshot.hasError) {
                   return Text('Erro: ${snapshot.error}');
@@ -94,16 +99,17 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
                   );
                 } else {
                   final names = snapshot.data!;
+                  // Usa _currentUser carregado antes, sem await
                   for (final name in names) {
                     if (!nameSelection.containsKey(name)) {
-                      nameSelection[name] = (name == currentUser?.displayName);
+                      nameSelection[name] = (name == _currentUser?.displayName);
                     }
                   }
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 80),
                     child: Column(
                       children: names
-                          .map((name) => _buildCheckbox(name, currentUser))
+                          .map((name) => _buildCheckbox(name, _currentUser))
                           .toList(),
                     ),
                   );
@@ -130,16 +136,20 @@ class _IntroUnoTareaDosGrabacionPodcastPageState
       onChanged: (bool? value) {
         if (name == currentUser?.displayName && value == false) {
           showToast(
+            context,
             'No puedes deseleccionar tu propio nombre.',
-            color: ThemeColors.yellow,
+            ThemeColors.yellow,
+            ThemeColors.white,
           );
           return;
         }
 
         if (value == true && countSelectedNames() >= 3) {
           showToast(
+            context,
             '¡Selecione un mínimo 2 y máximo 3 alumnos!',
-            color: ThemeColors.yellow,
+            ThemeColors.yellow,
+            ThemeColors.white,
           );
           return;
         }

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -23,6 +24,7 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
   PlatformFile? pickedFile;
 
   Future<void> sendAnswers(
+    context,
     GoogleSignInAccount? currentUser,
     List<String> poscastInfos,
   ) async {
@@ -37,23 +39,33 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
       );
 
       await _repository.sendEmail(
-        currentUser,
-        poscastInfos,
-        subject,
-        message,
-        [],
+        currentUser: currentUser,
+        answerList: poscastInfos,
+        subject: subject,
+        body: message,
+        attachments: [],
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomPodcast(json);
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     studentGroup = [];
   }
@@ -82,10 +94,7 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
 
   Future<dynamic> makeFirebasePaths(currentUser) async {
     final listFile = setFiles();
-    final firebasePathFile = await convertFileToFirebase(
-      listFile,
-      currentUser,
-    );
+    final firebasePathFile = await convertFileToFirebase(listFile, currentUser);
     return firebasePathFile;
   }
 
@@ -93,12 +102,7 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
     final filePathList = setFiles();
     final firstArchive = File(filePathList[0]);
 
-    final attachment = [
-      FileAttachment(
-        firstArchive,
-        fileName: 'Logo podcast',
-      ),
-    ];
+    final attachment = [FileAttachment(firstArchive, fileName: 'Logo podcast')];
 
     return attachment;
   }
@@ -141,14 +145,8 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
     return filePaths;
   }
 
-  List<String> makeAnswersList(
-    List<String> listAnswers,
-  ) {
-    final respostas = [
-      listAnswers[0],
-      listAnswers[1],
-      listAnswers[2],
-    ];
+  List<String> makeAnswersList(List<String> listAnswers) {
+    final respostas = [listAnswers[0], listAnswers[1], listAnswers[2]];
     return respostas;
   }
 
@@ -159,17 +157,20 @@ class TareaDosGrabacionPodcastController extends ChangeNotifier {
     var studentsNames = '';
 
     if (studentGroup.length == 2) {
-      studentsNames = '''
+      studentsNames =
+          '''
 Aluno 1: ${studentGroup[0]}
 Aluno 2: ${studentGroup[1]}''';
     } else {
-      studentsNames = '''
+      studentsNames =
+          '''
 Aluno 1: ${studentGroup[0]}
 Aluno 2: ${studentGroup[1]}
 Aluno 3: ${studentGroup[2]}''';
     }
 
-    final text = '''
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n

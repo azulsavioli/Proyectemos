@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:proyectemos/commons/strings/strings_crea_tu_movimiento.dart';
+import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../repository/repository_impl.dart';
@@ -15,6 +16,7 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
   List studentGroup = [];
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> movimientoInfo,
   ) async {
@@ -29,23 +31,33 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
       );
 
       await _repository.sendEmail(
-        currentUser,
-        movimientoInfo,
-        subject,
-        message,
-        [],
+        currentUser: currentUser,
+        answerList: movimientoInfo,
+        subject: subject,
+        body: message,
+        attachments: [],
       );
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveClassroomMovimientoSociale(json);
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     studentGroup = [];
   }
@@ -62,9 +74,7 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
     return json;
   }
 
-  List<String> makeAnswersList(
-    List<String> listAnswers,
-  ) {
+  List<String> makeAnswersList(List<String> listAnswers) {
     final respostas = [
       listAnswers[0],
       listAnswers[1],
@@ -82,17 +92,20 @@ class CreacionDeSuMovimentoTareaUnoController extends ChangeNotifier {
     var studentsNames = '';
 
     if (studentGroup.length == 2) {
-      studentsNames = '''
+      studentsNames =
+          '''
 Aluno 1: ${studentGroup[0]}
 Aluno 2: ${studentGroup[1]}''';
     } else {
-      studentsNames = '''
+      studentsNames =
+          '''
 Aluno 1: ${studentGroup[0]}
 Aluno 2: ${studentGroup[1]}
 Aluno 3: ${studentGroup[2]}''';
     }
 
-    final text = '''
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n

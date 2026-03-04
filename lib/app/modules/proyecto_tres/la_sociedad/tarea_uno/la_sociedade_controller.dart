@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -26,9 +27,7 @@ class LaSociedadController extends ChangeNotifier {
   List<String> recordsPathList =
       RecordAudioLaSociedadProviderImpl.recordingsPaths;
 
-  List<FileAttachment> createAudioAttachments(
-    List<String> recordsPathList,
-  ) {
+  List<FileAttachment> createAudioAttachments(List<String> recordsPathList) {
     final firstAudio = File(recordsPathList[0]);
     final secondAudio = File(recordsPathList[1]);
     final thirdAudio = File(recordsPathList[2]);
@@ -94,9 +93,7 @@ class LaSociedadController extends ChangeNotifier {
 
         final snapshot = await firebaseStorage
             .ref()
-            .child(
-              'tres-la-sociedad-audios/$email-audio-$counter.mp3',
-            )
+            .child('tres-la-sociedad-audios/$email-audio-$counter.mp3')
             .putFile(file)
             .whenComplete(() => null);
 
@@ -111,6 +108,7 @@ class LaSociedadController extends ChangeNotifier {
   }
 
   sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
     List<String> answersList,
   ) async {
@@ -119,38 +117,45 @@ class LaSociedadController extends ChangeNotifier {
     try {
       final json = await makeJson(currentUser);
 
-      final message = createEmailMessage(
-        await _repository.getStudentInfo(),
-      );
+      final message = createEmailMessage(await _repository.getStudentInfo());
 
       final attachment = createAudioAttachments(recordsPathList);
 
       await _repository.sendEmail(
-        currentUser,
-        answersList,
-        subject,
-        message,
-        attachment,
+        currentUser: currentUser,
+        answerList: answersList,
+        subject: subject,
+        body: message,
+        attachments: attachment,
       );
 
       await _repository.sendAnswersToFirebase(json, doc);
       await _repository.saveTaskCompleted(task);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
     recordsPathList = [];
   }
 
-  String createEmailMessage(
-    List<String> allStudentInfo,
-  ) {
-    final text = '''
+  String createEmailMessage(List<String> allStudentInfo) {
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 

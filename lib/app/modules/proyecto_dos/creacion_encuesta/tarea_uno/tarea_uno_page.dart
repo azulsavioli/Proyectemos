@@ -111,35 +111,40 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
-                        final currentUser = getCurrentUser(context);
+                      onPressed: () async {
+                        final currentUser = await getCurrentUser(context);
+
                         if (_controller.pickedFile == null ||
                             _controller.files.isEmpty ||
                             _controller.studentGroup.length <= 1) {
                           showToast(
-                            '''
-¡No se puede enviar la respuesta! Selecione o archivo y haz clic en enviar!
-''',
-                            color: ThemeColors.red,
-                            textColor: ThemeColors.white,
+                            context,
+                            '¡No se puede enviar la respuesta! Selecione o archivo y haz clic en enviar!',
+                            ThemeColors.red,
+                            ThemeColors.white,
                           );
-                        } else {
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) => Navigator.pushNamed(
-                              context,
-                              '/pDos_creacionEncuesta_menu',
-                            ),
-                          );
-                          _controller.sendAnswers(
-                            currentUser,
-                          );
+                          return;
                         }
+
+                        setState(() {
+                          loading = true;
+                        });
+
+                        await Future.delayed(const Duration(milliseconds: 2000));
+
+                        if (!mounted) return;
+
+                        await _controller.sendAnswers(context, currentUser);
+
+                        if (!mounted) return;
+
+                        Navigator.pushNamed(context, '/pDos_creacionEncuesta_menu');
+
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: const Text(
                         'Enviar',

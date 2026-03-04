@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -22,11 +23,7 @@ class MovimientosSocialesController extends ChangeNotifier {
   PlatformFile? pickedFile;
 
   void randomMovimiento() {
-    const listCountrys = [
-      '#NiUnaMenos',
-      '#BlackLivesMatter',
-      '#MeToo',
-    ];
+    const listCountrys = ['#NiUnaMenos', '#BlackLivesMatter', '#MeToo'];
 
     while (randonMovimientos.length < 1) {
       final randomNumber = Random().nextInt(3);
@@ -46,10 +43,7 @@ class MovimientosSocialesController extends ChangeNotifier {
   Future makeJson(currentUser) async {
     final firebasePaths = await convertVideoToFirebase();
 
-    final json = {
-      'grupo': '$studentGroup',
-      'video_grupo': firebasePaths[0],
-    };
+    final json = {'grupo': '$studentGroup', 'video_grupo': firebasePaths[0]};
     return json;
   }
 
@@ -74,9 +68,7 @@ class MovimientosSocialesController extends ChangeNotifier {
 
       final snapshot = await firebaseStorage
           .ref()
-          .child(
-            'tres-video-movimientos-sociales/$email-video.mp4',
-          )
+          .child('tres-video-movimientos-sociales/$email-video.mp4')
           .putFile(file)
           .whenComplete(() => null);
 
@@ -91,6 +83,7 @@ class MovimientosSocialesController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
+    BuildContext context,
     GoogleSignInAccount? currentUser,
   ) async {
     await _repository.isTaskLoading(task, true);
@@ -98,18 +91,16 @@ class MovimientosSocialesController extends ChangeNotifier {
     try {
       final json = await makeJson(currentUser);
 
-      final message = createEmailMessage(
-        await _repository.getStudentInfo(),
-      );
+      final message = createEmailMessage(await _repository.getStudentInfo());
 
       final attachment = createVideoAttachments();
 
       await _repository.sendEmail(
-        currentUser,
-        [],
-        subject,
-        message,
-        attachment,
+        currentUser: currentUser,
+        answerList: [],
+        subject: subject,
+        body: message,
+        attachments: attachment,
       );
 
       await _repository.sendAnswersToFirebase(json, doc);
@@ -117,12 +108,22 @@ class MovimientosSocialesController extends ChangeNotifier {
       await _repository.saveClassroomMovimientosSocialesVideo(json);
       await _repository.isTaskLoading(task, false);
 
-      showToast(Strings.tareaEnviada);
+      showToast(
+        context,
+        Strings.tareaEnviada,
+        ThemeColors.green,
+        ThemeColors.white,
+      );
 
       notifyListeners();
     } on FirebaseException catch (e) {
       e.toString();
-      showToast('Ocurrio un erro no envio dos datos!');
+      showToast(
+        context,
+        'Ocurrio un erro no envio dos datos!',
+        ThemeColors.red,
+        ThemeColors.white,
+      );
     }
   }
 
@@ -138,10 +139,9 @@ class MovimientosSocialesController extends ChangeNotifier {
     return attachment;
   }
 
-  String createEmailMessage(
-    List<String> allStudentInfo,
-  ) {
-    final text = '''
+  String createEmailMessage(List<String> allStudentInfo) {
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 
