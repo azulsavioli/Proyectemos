@@ -13,6 +13,10 @@
 // }
 
 abstract class AudioProvider {
+  bool get isRecording;
+
+  String get recordedFilePath;
+
   List<dynamic> clearOldData();
 
   Future<void> recordVoice(context);

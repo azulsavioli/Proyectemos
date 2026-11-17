@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/strings/strings_la_encuesta.dart';
 import 'package:proyectemos/services/toast_services.dart';
@@ -114,7 +115,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -197,8 +198,8 @@ class _TareaDosComoCrearUnaEncuestaPageState
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 4),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 4,
                       effect: const WormEffect(
@@ -207,7 +208,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 3)
                     TextButton(

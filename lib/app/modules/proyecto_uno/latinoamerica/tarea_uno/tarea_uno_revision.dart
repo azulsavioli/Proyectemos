@@ -55,7 +55,7 @@ class _RevisionQuestionsLatinoamericaState
               )
             else
               Text(
-                'Vuelve y ingrese tuja respuesta correctamente',
+                'Vuelve y ingrese tu respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
             SizedBox(
@@ -75,7 +75,7 @@ class _RevisionQuestionsLatinoamericaState
               )
             else
               Text(
-                'Vuelve y ingrese tuja respuesta correctamente',
+                'Vuelve y ingrese tu respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
             SizedBox(
@@ -95,7 +95,7 @@ class _RevisionQuestionsLatinoamericaState
               )
             else
               Text(
-                'Vuelve y ingrese tuja respuesta correctamente',
+                'Vuelve y ingrese tu respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
             SizedBox(
@@ -115,7 +115,7 @@ class _RevisionQuestionsLatinoamericaState
               )
             else
               Text(
-                'Vuelve y ingrese tuja respuesta correctamente',
+                'Vuelve y ingrese tu respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
             SizedBox(
@@ -135,7 +135,7 @@ class _RevisionQuestionsLatinoamericaState
               )
             else
               Text(
-                'Vuelve y ingrese tuja respuesta correctamente',
+                'Vuelve y ingrese tu respuesta correctamente',
                 style: ThemeText.paragraph12Red,
               ),
           ],

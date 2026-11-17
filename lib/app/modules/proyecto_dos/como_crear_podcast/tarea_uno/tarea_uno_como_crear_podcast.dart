@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/question_como_crear_podcast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -129,7 +130,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -235,8 +236,8 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                             ),
                     ),
                   ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: pageCount),
+SmoothPageIndicator(
                       controller: pageController,
                       count: pageCount,
                       effect: WormEffect(
@@ -246,7 +247,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   Expanded(
                     child: Align(
@@ -269,7 +270,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                                     textControllerSix.text.isEmpty) {
                                   showToast(
                                     context,
-                                    'Vuelve y ingrese tujas respuestas correctamente',
+                                    'Vuelve y ingrese tus respuestas correctamente',
                                     ThemeColors.red,
                                     ThemeColors.white,
                                   );

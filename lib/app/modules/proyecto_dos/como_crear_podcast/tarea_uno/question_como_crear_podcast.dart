@@ -48,7 +48,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[0],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -68,7 +68,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[1],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -88,7 +88,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[2],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -108,7 +108,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[3],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -128,7 +128,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[4],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -148,7 +148,7 @@ class _QuestionComoCrearPodcastState extends State<QuestionComoCrearPodcast>
               hint: 'Respuesta',
               controller: textControllerList[5],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/divulgacion/tarea_uno/question_one_divulgacao.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/divulgacion/tarea_uno/tarea_uno_controller.dart';
 import 'package:proyectemos/services/toast_services.dart';
@@ -38,7 +39,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -100,8 +101,8 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           ),
                         ),
                       ),
-                    Center(
-                      child: SmoothPageIndicator(
+                    Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 3),
+SmoothPageIndicator(
                         controller: pageController,
                         count: 3,
                         effect: const WormEffect(
@@ -110,7 +111,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           activeDotColor: Colors.blueAccent,
                           dotColor: Colors.black26,
                         ),
-                      ),
+                      )]),),
                     ),
                     if (pageChanged == 2)
                       TextButton(
@@ -127,7 +128,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           if (_controller.pickedFile == null) {
                             showToast(
                               context,
-                              'Vuelve y ingrese tujas respuestas correctamente',
+                              'Vuelve y ingrese tus respuestas correctamente',
                               ThemeColors.red,
                               ThemeColors.white,
                             );
