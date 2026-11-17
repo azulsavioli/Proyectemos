@@ -131,7 +131,9 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         if (isAccessible) {
@@ -143,7 +145,9 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             });
 
                             // Delay opcional para efeito visual
-                            await Future.delayed(const Duration(milliseconds: 2000));
+                            await Future.delayed(
+                              const Duration(milliseconds: 2000),
+                            );
 
                             if (!mounted) return;
 
@@ -173,7 +177,9 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             );
                           }
                         } else {
-                          if (recordsPathList.isEmpty || _controller.answer1 == '' || _controller.answer2 == '') {
+                          if (recordsPathList.isEmpty ||
+                              _controller.answer1 == '' ||
+                              _controller.answer2 == '') {
                             showToast(
                               context,
                               '¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!',
@@ -185,7 +191,9 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                               loading = true;
                             });
 
-                            await Future.delayed(const Duration(milliseconds: 2000));
+                            await Future.delayed(
+                              const Duration(milliseconds: 2000),
+                            );
 
                             if (!mounted) return;
 

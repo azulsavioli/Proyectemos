@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
@@ -39,16 +40,18 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await DosTasksCompletedService.isLoadind("laEncuestaTareaUnoCompleted");
+    final isTaskOneLoading = await DosTasksCompletedService.isLoadind(
+      "laEncuestaTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTareaUno = isTaskOneLoading;
     });
   }
 
   Future<void> isTaskDosLoading() async {
-    final isTaskTwoLoading =
-        await DosTasksCompletedService.isLoadind("laEncuestaTareaDosCompleted");
+    final isTaskTwoLoading = await DosTasksCompletedService.isLoadind(
+      "laEncuestaTareaDosCompleted",
+    );
     setState(() {
       isLoadingTareaDos = isTaskTwoLoading;
     });
@@ -68,7 +71,7 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_dos'),
+            onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -86,78 +89,71 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? StringsLaEncuesta.titleTareaUnoQueEsUnaEncuestaLoading
                       : tareaUno
-                          ? StringsLaEncuesta
-                              .titleFeedbackTareaUnoQueEsUnaEncuesta
-                          : StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
-                  cardWidth:  isMobile ? width : widthTablet,
+                      ? StringsLaEncuesta.titleFeedbackTareaUnoQueEsUnaEncuesta
+                      : StringsLaEncuesta.titleTareaUnoQueEsUnaEncuesta,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
                       : tareaUno
-                          ? '/pDos_que_es_una_encuesta_feedback_tarea_uno'
-                          : '/pDos_que_es_una_encuesta_tarea_uno',
+                      ? '/pDos_que_es_una_encuesta_feedback_tarea_uno'
+                      : '/pDos_que_es_una_encuesta_tarea_uno',
                   backgroundColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTareaUno
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.music_note_sharp,
+                      ? Icons.check
+                      : Icons.music_note_sharp,
                   shadowColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? StringsLaEncuesta
-                          .titleTareaDosComoCrearUnaEncuestaLoading
+                            .titleTareaDosComoCrearUnaEncuestaLoading
                       : tareaDos
-                          ? StringsLaEncuesta
-                              .titleFeedbackTareaDosComoCrearUnaEncuesta
-                          : StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
-                  cardWidth:  isMobile ? width : widthTablet,
+                      ? StringsLaEncuesta
+                            .titleFeedbackTareaDosComoCrearUnaEncuesta
+                      : StringsLaEncuesta.titleTareaDosComoCrearUnaEncuesta,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
                       : tareaDos
-                          ? '/pDos_crear_una_encuesta_feedback_tarea_dos'
-                          : '/pDos_crear_una_encuesta_tarea_dos',
+                      ? '/pDos_crear_una_encuesta_feedback_tarea_dos'
+                      : '/pDos_crear_una_encuesta_tarea_dos',
                   backgroundColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTareaDos
                       ? Icons.hourglass_bottom_outlined
                       : tareaDos
-                          ? Icons.check
-                          : Icons.image,
+                      ? Icons.check
+                      : Icons.image,
                   shadowColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

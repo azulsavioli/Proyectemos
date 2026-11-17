@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDjb4N5ZPqB1pW1hMsZSraYN7WfvgFIk0U',
-    appId: '1:333978861746:android:b560e4a7de709b7b3a89ab',
+    appId: '1:333978861746:android:19096c8cc0c5fd783a89ab',
     messagingSenderId: '333978861746',
     projectId: 'proyectemos-9924c',
     storageBucket: 'proyectemos-9924c.appspot.com',
@@ -64,8 +64,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '333978861746',
     projectId: 'proyectemos-9924c',
     storageBucket: 'proyectemos-9924c.appspot.com',
-    iosClientId:
-        '333978861746-28s4hghi0m8sbgfafdjt4tc5rue1eoff.apps.googleusercontent.com',
+    iosClientId: '333978861746-28s4hghi0m8sbgfafdjt4tc5rue1eoff.apps.googleusercontent.com',
     iosBundleId: 'com.example.proyectemos',
   );
 }

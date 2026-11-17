@@ -1,11 +1,7 @@
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mailer/mailer.dart';
-import 'dart:io';
 
 abstract class Repository<T, U, V> {
-  Map<T, T> createJson(
-    List<T> answersList,
-  );
+  Map<T, T> createJson(List<T> answersList);
   Future<void> isTaskLoading(T taskName, bool bool);
   Future<void> getStudentInfo();
   Future<void> sendAnswersToFirebase(Map<T, T> json, T doc);

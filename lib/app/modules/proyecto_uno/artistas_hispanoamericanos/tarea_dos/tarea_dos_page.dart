@@ -68,8 +68,11 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
               onPressed: () {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.of(context).pop();
@@ -138,9 +141,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (pageChanged == 0)
-                      const SizedBox(
-                        width: 65,
-                      )
+                      const SizedBox(width: 65)
                     else
                       TextButton(
                         onPressed: () {
@@ -173,7 +174,9 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                     if (pageChanged == 5)
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            ThemeColors.blue,
+                          ),
                         ),
                         onPressed: () async {
                           if (_formKey.currentState!.validate() &&
@@ -182,13 +185,14 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                               answerTresController.text.isNotEmpty &&
                               answerQuatroController.text.isNotEmpty &&
                               answerCincoController.text.isNotEmpty) {
-
                             setState(() {
                               loading = true;
                             });
 
                             // Aguarda 2 segundos (efeito visual)
-                            await Future.delayed(const Duration(milliseconds: 2000));
+                            await Future.delayed(
+                              const Duration(milliseconds: 2000),
+                            );
 
                             if (!mounted) return;
 
@@ -211,10 +215,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                             if (!mounted) return;
 
                             // Navega para menu
-                            Navigator.pushNamed(
-                              context,
-                              '/pUno_artistas_menu',
-                            );
+                            Navigator.pushNamed(context, '/pUno_artistas_menu');
 
                             setState(() {
                               loading = false;
@@ -237,7 +238,6 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           ),
                         ),
                       )
-
                     // if (pageChanged == 5)
                     //   TextButton(
                     //     style: ButtonStyle(

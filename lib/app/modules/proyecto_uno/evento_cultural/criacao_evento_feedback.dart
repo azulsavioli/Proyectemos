@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -21,13 +22,10 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-          onPressed: () =>
-              Navigator.pushNamed(context, '/pUno_evento_cultural_menu'),
+          onPressed: () => popOrReplace(context, '/pUno_evento_cultural_menu'),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titlePropuestadeEventoUno,
           style: ThemeText.paragraph16WhiteBold,
@@ -42,9 +40,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
               StringsEventoCultural.descriptionDosEventocultural,
               style: ThemeText.paragraph16GrayNormal,
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SizedBox(
               height: 60,
               child: ElevatedButton(
@@ -57,10 +53,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/pUno_feedback_page',
-                  );
+                  Navigator.pushNamed(context, '/pUno_feedback_page');
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -79,9 +72,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             SizedBox(
               height: 60,
               child: ElevatedButton(
@@ -94,10 +85,7 @@ class _CriacaoEventoFeedbackState extends State<CriacaoEventoFeedback> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/pUno_send_email_prof',
-                  );
+                  Navigator.pushNamed(context, '/pUno_send_email_prof');
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

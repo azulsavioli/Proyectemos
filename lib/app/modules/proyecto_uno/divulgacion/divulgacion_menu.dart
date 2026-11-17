@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 
 import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
@@ -43,7 +44,8 @@ class _PUnoDivulgacionMenuState extends State<PUnoDivulgacionMenu> {
 
   Future<void> isTaskOneLoading() async {
     final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
-        "divulgationTareaUnoCompleted");
+      "divulgationTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -75,9 +77,12 @@ class _PUnoDivulgacionMenuState extends State<PUnoDivulgacionMenu> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
-              onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
+              onPressed: () => popOrReplace(context, '/proyecto_uno'),
             ),
           ),
           centerTitle: true,
@@ -96,42 +101,38 @@ class _PUnoDivulgacionMenuState extends State<PUnoDivulgacionMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nDivulgar Evento Cultural'
                       : tareaUno
-                          ? 'Feedback\nDivulgar Evento Cultural'
-                          : 'Divulgar Evento Cultural',
+                      ? 'Feedback\nDivulgar Evento Cultural'
+                      : 'Divulgar Evento Cultural',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pUno_divulgacao_feedback'
-                          : '/pUno_divulgacao_page',
+                      ? '/pUno_divulgacao_feedback'
+                      : '/pUno_divulgacao_page',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (tareaUno && timerEnded)
                   CardButton(
                     iconSize: 30,

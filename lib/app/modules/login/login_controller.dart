@@ -1,13 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
 
 class LoginController {
-  Future<void> login() async {
-    final provider = GoogleSignInProvider();
-    try {
-      await provider.signIn();
-    } on FirebaseAuthException {
-      rethrow;
-    }
+  Future<bool> login(BuildContext context) {
+    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+    return provider.signIn();
   }
 }

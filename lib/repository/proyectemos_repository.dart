@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/services/auth_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../services/firebase/db_firestore_helper.dart';
 
 class ProyectemosRepository extends ChangeNotifier {
@@ -26,10 +27,9 @@ class ProyectemosRepository extends ChangeNotifier {
   Future<List<DocumentSnapshot>> getAllSchools() async {
     var schools;
 
-    await FirebaseFirestore.instance
-        .collection('escolas')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
+    await FirebaseFirestore.instance.collection('escolas').get().then((
+      QuerySnapshot querySnapshot,
+    ) {
       schools = querySnapshot.docs;
     });
 
@@ -104,7 +104,9 @@ class ProyectemosRepository extends ChangeNotifier {
   // }
 
   Future<List<String>> getStudentListIds(
-      String schoolId, String classroomId) async {
+    String schoolId,
+    String classroomId,
+  ) async {
     final studentsRef = FirebaseFirestore.instance
         .collection('escolas')
         .doc(schoolId)
@@ -174,8 +176,9 @@ class ProyectemosRepository extends ChangeNotifier {
     List<String> studentsList = [];
     final sharedPreferences = await SharedPreferences.getInstance();
     final studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
-    final studentClassRoomInfo =
-        sharedPreferences.getString('studentClassRoomInfo')!;
+    final studentClassRoomInfo = sharedPreferences.getString(
+      'studentClassRoomInfo',
+    )!;
 
     final schoolId = await getSchoolId(studentSchoolInfo);
     final classroomId = await getClassRoomId(schoolId, studentClassRoomInfo);
@@ -718,7 +721,7 @@ class ProyectemosRepository extends ChangeNotifier {
   }
 
   Future<List<Map<String, dynamic>>?>
-      getVideosMovimientosSocialesTurma() async {
+  getVideosMovimientosSocialesTurma() async {
     sharedPreferences = await SharedPreferences.getInstance();
     studentSchoolInfo = sharedPreferences.getString('studentSchoolInfo')!;
     studentClassRoomInfo = sharedPreferences.getString('studentClassRoomInfo')!;
@@ -779,7 +782,7 @@ class ProyectemosRepository extends ChangeNotifier {
       final querySnapshot = await teacherInfoRef.get();
 
       for (final doc in querySnapshot.docs) {
-        final data = doc.data() as Map<String, dynamic>;
+        final data = doc.data();
         final email = data['teacherEmail'] as String?;
         if (email != null && email.isNotEmpty) {
           teacherEmailList.add(email.trim());
@@ -797,8 +800,9 @@ class ProyectemosRepository extends ChangeNotifier {
     sharedPreferences = await SharedPreferences.getInstance();
 
     final studentSchoolTemp = sharedPreferences.getString('studentSchoolInfo');
-    final studentClassRoomTemp =
-        sharedPreferences.getString('studentClassRoomInfo');
+    final studentClassRoomTemp = sharedPreferences.getString(
+      'studentClassRoomInfo',
+    );
 
     if (studentSchoolTemp == null || studentClassRoomTemp == null) {
       throw Exception('studentSchoolInfo or studentClassRoomInfo is null');

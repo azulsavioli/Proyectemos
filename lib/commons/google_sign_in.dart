@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleSignInProvider extends ChangeNotifier {
@@ -19,50 +18,46 @@ class GoogleSignInProvider extends ChangeNotifier {
     _init();
   }
 
-  void _init() async {
-    final clientId = dotenv.env['CLIENT_ID'];
-    final serverClientId = dotenv.env['SERVER_CLIENT_ID'];
-    if (clientId == null || serverClientId == null) return;
+  Future<void> _init() async {
+    try {
+      _googleSignIn.authenticationEvents
+          .listen(_handleAuthenticationEvent)
+          .onError(_handleAuthenticationError);
 
-    await _googleSignIn.initialize(clientId: clientId, serverClientId: serverClientId);
-    _googleSignIn.authenticationEvents
-        .listen(_handleAuthenticationEvent)
-        .onError(_handleAuthenticationError);
+      final prefs = await SharedPreferences.getInstance();
+      final hasLoggedInBefore = prefs.getBool('hasLoggedInBefore') ?? false;
+      if (!hasLoggedInBefore) return;
 
-    final prefs = await SharedPreferences.getInstance();
-    final hasLoggedInBefore = prefs.getBool('hasLoggedInBefore') ?? false;
-
-    if (hasLoggedInBefore) {
       final account = await _googleSignIn.attemptLightweightAuthentication();
       if (account != null) {
         _user = account;
         await _signInFirebase(account);
         notifyListeners();
-        debugPrint('✅ Login silencioso realizado: ${account.email}');
+        debugPrint('Login silencioso realizado: ${account.email}');
       }
-    } else {
-      debugPrint('ℹ️ Usuário nunca logou antes, não tenta login silencioso');
+    } catch (e) {
+      debugPrint('Init GoogleSignIn failed: $e');
     }
   }
 
   Future<void> _handleAuthenticationEvent(
-      GoogleSignInAuthenticationEvent event) async {
-    switch (event.runtimeType) {
-      case GoogleSignInAuthenticationEventSignIn:
-        _user = (event as GoogleSignInAuthenticationEventSignIn).user;
-        if (_user != null) {
-          await _signInFirebase(_user!);
-        }
-        break;
-      case GoogleSignInAuthenticationEventSignOut:
-        _user = null;
-        break;
+    GoogleSignInAuthenticationEvent event,
+  ) async {
+    if (event is GoogleSignInAuthenticationEventSignIn) {
+      _user = event.user;
+      final signedIn = _user;
+      if (signedIn != null) {
+        await _signInFirebase(signedIn);
+      }
+    } else if (event is GoogleSignInAuthenticationEventSignOut) {
+      _user = null;
     }
     notifyListeners();
   }
 
   Future<void> _handleAuthenticationError(Object e) async {
-    if (e is GoogleSignInException && e.code == 'canceled') {
+    if (e is GoogleSignInException &&
+        e.code == GoogleSignInExceptionCode.canceled) {
       debugPrint('Usuário cancelou o login do Google.');
     } else {
       debugPrint('GoogleSignIn event error: $e');
@@ -71,20 +66,22 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signIn() async {
+  Future<bool> signIn() async {
     try {
-      if (_googleSignIn.supportsAuthenticate()) {
-        final account = await _googleSignIn.authenticate();
-        if (account != null) {
-          _user = account;
-          await _signInFirebase(account);
-          notifyListeners();
-        }
-      } else {
+      if (!_googleSignIn.supportsAuthenticate()) {
         debugPrint('Authenticate not supported on this platform.');
+        return false;
       }
+      final account = await _googleSignIn.authenticate();
+      _user = account;
+      await _signInFirebase(account);
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('hasLoggedInBefore', true);
+      notifyListeners();
+      return _auth.currentUser != null;
     } catch (e) {
       debugPrint('Google Sign-In failed: $e');
+      return false;
     }
   }
 
@@ -100,8 +97,10 @@ class GoogleSignInProvider extends ChangeNotifier {
   }
 
   Future<void> _signInFirebase(GoogleSignInAccount account) async {
-    final googleAuth = await account.authentication;
-    final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
+    final googleAuth = account.authentication;
+    final credential = GoogleAuthProvider.credential(
+      idToken: googleAuth.idToken,
+    );
     await _auth.signInWithCredential(credential);
   }
 

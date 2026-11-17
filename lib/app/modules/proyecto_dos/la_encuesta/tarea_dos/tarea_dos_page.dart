@@ -206,7 +206,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         setState(() {
@@ -219,7 +221,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
 
                         deactivate();
 
-                        final currentUser = await getCurrentUser(context); // <-- await
+                        final currentUser = await getCurrentUser(
+                          context,
+                        ); // <-- await
 
                         if (_controller.isAccessible!) {
                           if (!_formKey.currentState!.validate() ||
@@ -240,7 +244,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
                             loading = true;
                           });
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 
@@ -264,7 +270,8 @@ class _TareaDosComoCrearUnaEncuestaPageState
                             loading = false;
                           });
                         } else {
-                          if (recordsPathList.isEmpty || recordsPathList.length < 3) {
+                          if (recordsPathList.isEmpty ||
+                              recordsPathList.length < 3) {
                             showToast(
                               context,
                               '''
@@ -279,7 +286,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
                             loading = true;
                           });
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 

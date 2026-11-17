@@ -1,6 +1,5 @@
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'dart:io';
 
 class EmailSender {
   Future<void> sendEmailToTeacher({
@@ -41,8 +40,6 @@ class EmailSender {
     }
   }
 }
-
-
 
 // import 'package:google_sign_in/google_sign_in.dart';
 //

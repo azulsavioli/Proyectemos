@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -26,7 +27,7 @@ class _FeedbackCreacionDeSuMovimentoMenuState
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_tres'),
+            onPressed: () => popOrReplace(context, '/proyecto_tres'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -44,9 +45,7 @@ class _FeedbackCreacionDeSuMovimentoMenuState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: 30,
                   text: 'Feed\nCrea tu movimiento',
@@ -57,9 +56,7 @@ class _FeedbackCreacionDeSuMovimentoMenuState
                   icon: Icons.music_note_sharp,
                   shadowColor: ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: 30,
                   text: 'Feedback\nCrea tu movimiento',
@@ -70,9 +67,7 @@ class _FeedbackCreacionDeSuMovimentoMenuState
                   icon: Icons.image,
                   shadowColor: ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

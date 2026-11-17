@@ -41,8 +41,11 @@ class _PUnoEventoCulturalTareaPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
               onPressed: () {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   Navigator.of(context).pop();
@@ -70,9 +73,7 @@ class _PUnoEventoCulturalTareaPageState
             const IntroTareaUnoEventoCulturalPage(),
             const IntroTareaDosEventoCulturalPage(),
             const IntroTareaTresEventoCulturalPage(),
-            TareaUnoEventoCulturalPage(
-              controller: _controller,
-            ),
+            TareaUnoEventoCulturalPage(controller: _controller),
           ],
         ),
         bottomNavigationBar: loading
@@ -88,9 +89,7 @@ class _PUnoEventoCulturalTareaPageState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (pageChanged == 0)
-                      const SizedBox(
-                        width: 65,
-                      )
+                      const SizedBox(width: 65)
                     else
                       TextButton(
                         onPressed: () {
@@ -123,10 +122,14 @@ class _PUnoEventoCulturalTareaPageState
                     if (pageChanged == 3)
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            ThemeColors.blue,
+                          ),
                         ),
                         onPressed: () async {
-                          final currentUser = await getCurrentUser(context); // <-- await
+                          final currentUser = await getCurrentUser(
+                            context,
+                          ); // <-- await
 
                           if (_controller.recordsPathList.isEmpty) {
                             showToast(
@@ -143,15 +146,14 @@ class _PUnoEventoCulturalTareaPageState
                           });
 
                           // Espera 2 segundos
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 
                           // Envia as respostas
-                          await _controller.sendAnswers(
-                            context,
-                            currentUser,
-                          );
+                          await _controller.sendAnswers(context, currentUser);
 
                           if (!mounted) return;
 
@@ -174,7 +176,6 @@ class _PUnoEventoCulturalTareaPageState
                           ),
                         ),
                       )
-
                     else
                       TextButton(
                         onPressed: () {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/services/tres_tasks_completed.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -35,8 +36,9 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await UnoTasksCompletedService.isLoadind("laSociedadTareaCompleted");
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+      "laSociedadTareaCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -56,7 +58,7 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_tres'),
+            onPressed: () => popOrReplace(context, '/proyecto_tres'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -74,42 +76,38 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nLa Sociedad'
                       : tareaUno
-                          ? 'Feedback La Sociedad'
-                          : 'La Sociedad',
+                      ? 'Feedback La Sociedad'
+                      : 'La Sociedad',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pTres_laSociedad_feedback'
-                          : '/pTres_laSociedad',
+                      ? '/pTres_laSociedad_feedback'
+                      : '/pTres_laSociedad',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

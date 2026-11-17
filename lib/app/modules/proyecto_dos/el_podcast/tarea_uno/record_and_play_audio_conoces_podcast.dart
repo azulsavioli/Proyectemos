@@ -40,8 +40,9 @@ class _RecordAndPlayConocesPodcastScreenState
 
   @override
   Widget build(BuildContext context) {
-    final recordProvider =
-        Provider.of<RecordAudioConocesPodcastProviderImpl>(context);
+    final recordProvider = Provider.of<RecordAudioConocesPodcastProviderImpl>(
+      context,
+    );
     final playProvider = Provider.of<PlayAudioProvider>(context);
 
     final arguments = ModalRoute.of(context)?.settings.arguments;
@@ -55,97 +56,88 @@ class _RecordAndPlayConocesPodcastScreenState
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleConocesPodcast,
           style: ThemeText.paragraph16WhiteBold,
         ),
       ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            opacity: 0.3,
-            fit: BoxFit.cover,
-            image: NetworkImage(
-              Strings.conocesPodcastImage,
-            ),
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const SizedBox(height: 30),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Center(
-                child: Text(
-                  question.toString(),
-                  style: ThemeText.paragraph14GrayBold,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    opacity: 0.3,
+                    fit: BoxFit.cover,
+                    image: NetworkImage(Strings.conocesPodcastImage),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Center(
+                        child: Text(
+                          question.toString(),
+                          style: ThemeText.paragraph14GrayBold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    if (recordProvider.recordedFilePath.isEmpty)
+                      _recordHeading()
+                    else
+                      _playAudioHeading(),
+                    const SizedBox(height: 20),
+                    if (recordProvider.recordedFilePath.isEmpty)
+                      _recordingSection()
+                    else
+                      _audioPlayingSection(),
+                    if (recordProvider.recordedFilePath.isNotEmpty &&
+                        !playProvider.isSongPlaying)
+                      const SizedBox(height: 20),
+                    if (recordProvider.recordedFilePath.isNotEmpty &&
+                        !playProvider.isSongPlaying)
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 20,
+                        runSpacing: 12,
+                        children: [_resetButton(), _saveButton()],
+                      ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
               ),
             ),
-            const SizedBox(height: 30),
-            if (recordProvider.recordedFilePath.isEmpty)
-              _recordHeading()
-            else
-              _playAudioHeading(),
-            const SizedBox(height: 20),
-            if (recordProvider.recordedFilePath.isEmpty)
-              _recordingSection()
-            else
-              _audioPlayingSection(),
-            if (recordProvider.recordedFilePath.isNotEmpty &&
-                !playProvider.isSongPlaying)
-              const SizedBox(height: 20),
-            if (recordProvider.recordedFilePath.isNotEmpty &&
-                !playProvider.isSongPlaying)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _resetButton(),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  _saveButton(),
-                ],
-              ),
-            const SizedBox(height: 40),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
   Center _recordHeading() {
-    return Center(
-      child: Text(
-        'Grabar Audio',
-        style: ThemeText.h3title20Gray,
-      ),
-    );
+    return Center(child: Text('Grabar Audio', style: ThemeText.h3title20Gray));
   }
 
   Center _playAudioHeading() {
-    return Center(
-      child: Text(
-        'Tocar Audio',
-        style: ThemeText.h3title20Gray,
-      ),
-    );
+    return Center(child: Text('Tocar Audio', style: ThemeText.h3title20Gray));
   }
 
   InkWell _recordingSection() {
-    final recordProvider =
-        Provider.of<RecordAudioConocesPodcastProviderImpl>(context);
+    final recordProvider = Provider.of<RecordAudioConocesPodcastProviderImpl>(
+      context,
+    );
     final recordProviderWithoutListener =
         Provider.of<RecordAudioConocesPodcastProviderImpl>(
-      context,
-      listen: false,
-    );
+          context,
+          listen: false,
+        );
 
     if (recordProvider.isRecording) {
       return InkWell(
@@ -167,8 +159,9 @@ class _RecordAndPlayConocesPodcastScreenState
   }
 
   Container _commonIconSection() {
-    final recordProvider =
-        Provider.of<RecordAudioConocesPodcastProviderImpl>(context);
+    final recordProvider = Provider.of<RecordAudioConocesPodcastProviderImpl>(
+      context,
+    );
 
     return Container(
       width: 100,
@@ -187,12 +180,12 @@ class _RecordAndPlayConocesPodcastScreenState
   }
 
   Container _audioPlayingSection() {
-    final recordProvider =
-        Provider.of<RecordAudioConocesPodcastProviderImpl>(context);
+    final recordProvider = Provider.of<RecordAudioConocesPodcastProviderImpl>(
+      context,
+    );
 
     return Container(
       width: MediaQuery.of(context).size.width - 110,
-      height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       margin: const EdgeInsets.only(bottom: 10),
       decoration: BoxDecoration(
@@ -210,8 +203,10 @@ class _RecordAndPlayConocesPodcastScreenState
 
   IconButton _audioControllingSection(String songPath) {
     final playProvider = Provider.of<PlayAudioProvider>(context);
-    final playProviderWithoutListen =
-        Provider.of<PlayAudioProvider>(context, listen: false);
+    final playProviderWithoutListen = Provider.of<PlayAudioProvider>(
+      context,
+      listen: false,
+    );
 
     return IconButton(
       onPressed: () async {
@@ -276,7 +271,10 @@ class _RecordAndPlayConocesPodcastScreenState
     );
 
     return InkWell(
-      onTap: () => {recordProvider.saveRecording(context), Navigator.pop(context)},
+      onTap: () => {
+        recordProvider.saveRecording(context),
+        Navigator.pop(context),
+      },
       child: Center(
         child: Container(
           width: 140,

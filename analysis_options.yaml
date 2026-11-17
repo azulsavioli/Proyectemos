@@ -8,6 +8,21 @@
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
 
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - web/**
+  errors:
+    # Flutter 3.50 marks package:flutter/material.dart and cupertino.dart as
+    # deprecated in favor of package:material_ui / package:cupertino_ui.
+    # Those new libraries define distinct widget types, and the plugins this
+    # app still uses (dropdown_button2 and others) expose the Flutter Material
+    # types. Importing material_ui makes InputDecoration and dropdown items
+    # incompatible, so the app keeps the Flutter imports until the plugins
+    # migrate. Real API deprecations (RadioGroup, WidgetStateProperty,
+    # Firebase App Check providers) are updated in code.
+    deprecated_member_use: ignore
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`

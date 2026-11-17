@@ -107,7 +107,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                         keyboardType: TextInputType.text,
                         validatorVazio: 'Ingrese tuja respuesta correctamente',
                         validatorMenorqueNumero:
-                        'Su respuesta debe tener al menos 3 caracteres',
+                            'Su respuesta debe tener al menos 3 caracteres',
                       ),
                       const SizedBox(height: 20),
                       CustomTextFormField(
@@ -119,7 +119,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                         keyboardType: TextInputType.text,
                         validatorVazio: 'Ingrese tuja respuesta correctamente',
                         validatorMenorqueNumero:
-                        'Su respuesta debe tener al menos 10 caracteres',
+                            'Su respuesta debe tener al menos 10 caracteres',
                       ),
                     ],
                   ),
@@ -139,17 +139,17 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                 onPressed: _isLoading ? null : _handleSendEmail,
                 child: _isLoading
                     ? const SizedBox(
-                  height: 24,
-                  width: 24,
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                    strokeWidth: 2,
-                  ),
-                )
+                        height: 24,
+                        width: 24,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
                     : const Text(
-                  'Enviar el email',
-                  style: TextStyle(fontSize: 20, color: Colors.white),
-                ),
+                        'Enviar el email',
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
               ),
             ),
           ],
@@ -158,7 +158,6 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
     );
   }
 }
-
 
 // class EnvioEmailProfesoraPerfil extends StatefulWidget {
 //   const EnvioEmailProfesoraPerfil({super.key});
@@ -263,8 +262,8 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //                 child: ElevatedButton(
 //                   style: ButtonStyle(
 //                     backgroundColor:
-//                         MaterialStateProperty.all(ThemeColors.yellow),
-//                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+//                         WidgetStateProperty.all(ThemeColors.yellow),
+//                     shape: WidgetStateProperty.all<RoundedRectangleBorder>(
 //                       RoundedRectangleBorder(
 //                         borderRadius: BorderRadius.circular(20),
 //                       ),
@@ -302,7 +301,6 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //     );
 //   }
 // }
-
 
 //
 // class EnvioEmailProfesoraPerfil extends StatefulWidget {

@@ -38,9 +38,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleCreacionEncuesta,
           style: ThemeText.paragraph14WhiteBold,
@@ -54,13 +52,9 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
         },
         controller: pageController,
         children: [
-          IntroTareaUnoCreacionEncuestaPage(
-            controller: _controller,
-          ),
+          IntroTareaUnoCreacionEncuestaPage(controller: _controller),
           const IntroTareaDosCreacionEncuestaPage(),
-          TareaCreacionEncuestaPage(
-            controller: _controller,
-          ),
+          TareaCreacionEncuestaPage(controller: _controller),
         ],
       ),
       bottomNavigationBar: loading
@@ -76,9 +70,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -111,7 +103,9 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         final currentUser = await getCurrentUser(context);
@@ -132,7 +126,9 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                           loading = true;
                         });
 
-                        await Future.delayed(const Duration(milliseconds: 2000));
+                        await Future.delayed(
+                          const Duration(milliseconds: 2000),
+                        );
 
                         if (!mounted) return;
 
@@ -140,7 +136,10 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
 
                         if (!mounted) return;
 
-                        Navigator.pushNamed(context, '/pDos_creacionEncuesta_menu');
+                        Navigator.pushNamed(
+                          context,
+                          '/pDos_creacionEncuesta_menu',
+                        );
 
                         setState(() {
                           loading = false;
