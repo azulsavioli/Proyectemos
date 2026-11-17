@@ -70,7 +70,6 @@ class _CreacionDeSuMovimentoTareaUnoState
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
@@ -203,7 +202,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (textController1.text.isEmpty ||
                             textController2.text.isEmpty ||
                             textController3.text.isEmpty ||
@@ -233,6 +232,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                               '/pTres_creacionDeSuMovimento_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
                             context,
                             currentUser,

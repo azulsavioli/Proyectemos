@@ -6,6 +6,7 @@ import 'package:proyectemos/repository/repository_impl.dart';
 import '../../../commons/styles.dart';
 import '../../../services/toast_services.dart';
 import '../../../utils/get_user.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({
@@ -17,6 +18,21 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  GoogleSignInAccount? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  Future<void> _loadCurrentUser() async {
+    final user = await getCurrentUser(context);
+    setState(() {
+      _currentUser = user;
+    });
+  }
+
   final formKey = GlobalKey<FormState>();
   final _repository = RepositoryImpl();
   final _controller = RegistrationController();
@@ -30,7 +46,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = getCurrentUser(context);
+    final currentUser = _currentUser;
 
     return Scaffold(
       backgroundColor: ThemeColors.white,
@@ -251,8 +267,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                   onPressed: () => {
-                    if (currentUser != null)
-                      {
+                     if (currentUser != null) {
                         setState(
                           () => studentName = currentUser.displayName!,
                         ),

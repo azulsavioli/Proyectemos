@@ -247,9 +247,10 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
+                  final currentUser = await getCurrentUser(context);
                   _controller.sendEmail(
-                    currentUser!,
+                    currentUser,
                     _assuntoController.text,
                     _descricaoController.text,
                   );

@@ -214,7 +214,7 @@ class _TareaDosGrabacionPodcastPageState
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         setState(() {
                           if (pageChanged == 1) {
                             youTubeController.addListener(listener);
@@ -248,6 +248,7 @@ class _TareaDosGrabacionPodcastPageState
                               '/pDos_grabacionPodcast_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
                             context,
                             currentUser,

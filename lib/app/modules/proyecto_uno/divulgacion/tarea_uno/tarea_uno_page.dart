@@ -115,11 +115,10 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        final currentUser = getCurrentUser(context);
+                        final currentUser = await getCurrentUser(context); // <-- await
 
                         if (_controller.pickedFile == null) {
                           showToast(
@@ -128,21 +127,32 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                             ThemeColors.red,
                             ThemeColors.white,
                           );
-                        } else {
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) => Navigator.pushNamed(
-                              context,
-                              '/pUno_divulgacao_menu',
-                            ),
-                          );
-                          _controller.sendAnswers(
-                            context,
-                            currentUser,
-                          );
+                          return;
                         }
+
+                        setState(() {
+                          loading = true;
+                        });
+
+                        await Future.delayed(const Duration(milliseconds: 2000));
+
+                        if (!mounted) return;
+
+                        await _controller.sendAnswers(
+                          context,
+                          currentUser,
+                        );
+
+                        if (!mounted) return;
+
+                        Navigator.pushNamed(
+                          context,
+                          '/pUno_divulgacao_menu',
+                        );
+
+                        setState(() {
+                          loading = false;
+                        });
                       },
                       child: const Text(
                         'Enviar',

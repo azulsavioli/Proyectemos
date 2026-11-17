@@ -133,9 +133,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                          ThemeColors.blue,
-                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
                         if (isAccessible) {
@@ -145,60 +143,71 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                             setState(() {
                               loading = true;
                             });
-                            Future.delayed(Duration(milliseconds: 2000)).then((
-                              value,
-                            ) {
-                              if (mounted) {
-                                _controller.sendAnswersText(
-                                  context,
-                                  currentUser,
-                                  textEditingController.text,
-                                );
-                                Navigator.pushNamed(
-                                  context,
-                                  '/pDos_laEncuesta_menu',
-                                );
-                              }
+
+                            // Delay opcional para efeito visual
+                            await Future.delayed(const Duration(milliseconds: 2000));
+
+                            if (!mounted) return;
+
+                            final currentUser = await getCurrentUser(context);
+                            await _controller.sendAnswersText(
+                              context,
+                              currentUser,
+                              textEditingController.text,
+                            );
+
+                            if (!mounted) return;
+
+                            Navigator.pushNamed(
+                              context,
+                              '/pDos_laEncuesta_menu',
+                            );
+
+                            setState(() {
+                              loading = false;
                             });
                           } else {
                             showToast(
                               context,
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!''',
+                              '¡No se puede enviar la respuesta! Selecione las opciones, escribe las respostas y haz clic en enviar!',
                               ThemeColors.red,
                               ThemeColors.white,
                             );
                           }
                         } else {
-                          if (recordsPathList.isEmpty ||
-                              _controller.answer1 == '' ||
-                              _controller.answer2 == '') {
+                          if (recordsPathList.isEmpty || _controller.answer1 == '' || _controller.answer2 == '') {
                             showToast(
                               context,
-                              '''
-¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!''',
+                              '¡No se puede enviar la respuesta! Selecione las opciones, graba los audios y haz clic en guardar!',
                               ThemeColors.red,
                               ThemeColors.white,
                             );
                           } else {
-                            if (recordsPathList.isNotEmpty &&
-                                    _controller.answer1 != '' ||
-                                _controller.answer2 != '') {
-                              setState(() {
-                                loading = true;
-                              });
-                              Future.delayed(Duration(milliseconds: 2000)).then(
-                                (value) => Navigator.pushNamed(
-                                  context,
-                                  '/pDos_laEncuesta_menu',
-                                ),
-                              );
-                              _controller.sendAnswersAudio(
-                                context,
-                                currentUser,
-                                recordsPathList,
-                              );
-                            }
+                            setState(() {
+                              loading = true;
+                            });
+
+                            await Future.delayed(const Duration(milliseconds: 2000));
+
+                            if (!mounted) return;
+
+                            final currentUser = await getCurrentUser(context);
+                            await _controller.sendAnswersAudio(
+                              context,
+                              currentUser,
+                              recordsPathList,
+                            );
+
+                            if (!mounted) return;
+
+                            Navigator.pushNamed(
+                              context,
+                              '/pDos_laEncuesta_menu',
+                            );
+
+                            setState(() {
+                              loading = false;
+                            });
                           }
                         }
                       },

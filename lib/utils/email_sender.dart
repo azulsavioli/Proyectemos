@@ -4,26 +4,36 @@ import 'package:mailer/smtp_server/gmail.dart';
 
 class EmailSender {
   Future sendEmailToTeacher(
-    GoogleSignInAccount? currentUser,
-    List<Attachment> attachment,
-    List<String> email,
-    String subject,
-    String text,
-  ) async {
+      GoogleSignInAccount? currentUser,
+      List<Attachment> attachment,
+      List<String> email,
+      String subject,
+      String text,
+      ) async {
     var user = currentUser;
 
-    if (currentUser == null) {
-      user = await GoogleSignIn().signIn();
+    if (user == null) {
+      // Usa a instância singleton
+      user = await GoogleSignIn.instance.authenticate(
+        scopeHint: ['https://mail.google.com/'],
+      );
     }
 
-    final currentUserEmail = user?.email;
-    final currentUserName = user?.displayName;
+    final currentUserEmail = user.email;
+    final currentUserName = user.displayName;
 
     final recipients = email.map(Address.new).toList();
 
-    final auth = await user?.authentication;
-    final token = auth?.accessToken;
-    final smtpServer = gmailSaslXoauth2(currentUserEmail!, token!);
+    final authClient = user.authorizationClient;
+    final headers =
+    await authClient.authorizationHeaders(['https://mail.google.com/']);
+    final token = headers?['Authorization']?.split(' ').last;
+
+    if (token == null) {
+      throw Exception('Não foi possível obter o token OAuth2.');
+    }
+
+    final smtpServer = gmailSaslXoauth2(currentUserEmail, token);
     final message = Message()
       ..attachments = attachment
       ..from = Address(currentUserEmail, currentUserName)

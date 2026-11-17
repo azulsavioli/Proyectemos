@@ -115,8 +115,8 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                         backgroundColor:
                             WidgetStateProperty.all<Color>(ThemeColors.blue),
                       ),
-                      onPressed: () {
-                        final currentUser = getCurrentUser(context);
+                      onPressed: () async {
+                        final currentUser = await getCurrentUser(context);
                         if (_controller.pickedFile == null ||
                             _controller.files.isEmpty ||
                             _controller.studentGroup.length <= 1) {

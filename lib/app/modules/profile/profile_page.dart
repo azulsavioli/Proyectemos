@@ -389,15 +389,17 @@ Widget logoutCard(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
         textStyle: ThemeText.paragraph14Gray,
       ),
-      onPressed: () {
-        final provider =
-            Provider.of<GoogleSignInProvider>(context, listen: false);
-        if (provider.googleSignIn.currentUser != null) {
-          provider.googleLogout();
+      onPressed: () async {
+        final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+
+        if (provider.user != null) {
+          await provider.signOut();
+          await authService.logout();
         } else {
-          authService.logout();
+          await authService.logout();
         }
       },
+
       label: Row(
         children: [
           const SizedBox(

@@ -100,14 +100,12 @@ class _TuAlrededorState extends State<TuAlrededor> {
                   if (pageChanged == 6)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
                       ),
                       onPressed: () async {
-                        final currentUser = getCurrentUser(context);
+                        final currentUser = await getCurrentUser(context); // <-- await
 
-                        if (recordsPathList.isEmpty ||
-                            recordsPathList.length < 7) {
+                        if (recordsPathList.isEmpty || recordsPathList.length < 7) {
                           showToast(
                             context,
                             '''
@@ -116,24 +114,31 @@ class _TuAlrededorState extends State<TuAlrededor> {
                             ThemeColors.red,
                             ThemeColors.white,
                           );
-                        } else {
-                          if (recordsPathList.isNotEmpty &&
-                              recordsPathList.length == 7) {
-                            setState(() {
-                              loading = true;
-                            });
-                            Future.delayed(Duration(milliseconds: 2000)).then(
-                              (value) => Navigator.pushNamed(
-                                context,
-                                '/pTres_tuAlrededor_menu',
-                              ),
-                            );
-                            _controller.sendAnswers(
-                              context,
-                              currentUser,
-                              recordsPathList,
-                            );
-                          }
+                          return;
+                        }
+
+                        if (recordsPathList.length == 7) {
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(const Duration(milliseconds: 2000));
+
+                          if (!mounted) return;
+
+                          await _controller.sendAnswers(
+                            context,
+                            currentUser,
+                            recordsPathList,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pTres_tuAlrededor_menu');
+
+                          setState(() {
+                            loading = false;
+                          });
                         }
                       },
                       child: const Text(
@@ -145,6 +150,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         ),
                       ),
                     )
+
                   else
                     TextButton(
                       onPressed: () {

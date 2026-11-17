@@ -146,10 +146,12 @@ ${_emailController.text}''';
                     ),
                   ),
                 ),
-                onPressed: () {
+                onPressed: () async {
                   setState(() {
                     isEmailSending = true;
                   });
+                  final currentUser = await getCurrentUser(context);
+
                   sendEmail(currentUser).then(
                     (value) => {
                       setState(() {

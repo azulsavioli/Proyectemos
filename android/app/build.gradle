@@ -1,61 +1,32 @@
 plugins {
     id "com.android.application"
-    id 'com.google.gms.google-services'
     id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
-}
-
-def localProperties = new Properties()
-def localPropertiesFile = rootProject.file('local.properties')
-if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader('UTF-8') { reader ->
-        localProperties.load(reader)
-    }
-}
-
-def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
-if (flutterVersionCode == null) {
-    flutterVersionCode = '1.0.22'
-}
-
-def flutterVersionName = localProperties.getProperty('flutter.versionName')
-if (flutterVersionName == null) {
-    flutterVersionName = 'proyectemos 1.0.22'
-}
-
-def keystoreProperties = new Properties()
-def keystorePropertiesFile = rootProject.file('key.properties')
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    id "com.google.gms.google-services"
 }
 
 android {
     namespace "com.moobaalabs.proyectemos"
     compileSdkVersion flutter.compileSdkVersion
-    ndkVersion "27.0.12077973"
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
+        jvmTarget = "21"
+        javaParameters = true
+        freeCompilerArgs += ["-Xjvm-default=all"]
     }
 
     defaultConfig {
         applicationId "com.moobaalabs.proyectemos"
         minSdkVersion flutter.minSdkVersion
-        minSdkVersion flutter.minSdkVersion
-        resourceConfigurations += ['es', 'pt']
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resourceConfigurations += ['es', 'pt']
     }
 
     signingConfigs {
@@ -72,6 +43,10 @@ android {
             signingConfig signingConfigs.release
             ndk.debugSymbolLevel = 'FULL'
         }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 

@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/registration/registration_page.dart';
 import 'package:proyectemos/main.dart';
 
 import '../app/modules/onboarding/onboarding_page.dart';
-import 'google_sign_in.dart';
 
 class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);
@@ -20,8 +18,7 @@ class AuthCheck extends StatefulWidget {
 class _AuthCheckState extends State<AuthCheck> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-    final currentUser = provider.auth.currentUser;
+    final currentUser = FirebaseAuth.instance.currentUser;
 
     try {
       if (currentUser == null) {
@@ -30,14 +27,19 @@ class _AuthCheckState extends State<AuthCheck> {
         return isOnboardingCompleted == null
             ? const OnboardingPage()
             : isStudentInfoSaved == null
-                ? const RegistrationPage()
-                : const HomePage();
+            ? const RegistrationPage()
+            : const HomePage();
       }
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
         print(e);
       }
       rethrow;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+      return const LoginPage();
     }
   }
 }

@@ -215,6 +215,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                               '/pDos_comoCrearPodcast_menu',
                             ),
                           );
+                          final currentUser = await getCurrentUser(context);
                           _controller.sendAnswers(
                             context,
                             currentUser,

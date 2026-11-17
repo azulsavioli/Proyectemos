@@ -5,7 +5,7 @@ class LoginController {
   Future<void> login() async {
     final provider = GoogleSignInProvider();
     try {
-      await provider.googleLogin();
+      await provider.signIn();
     } on FirebaseAuthException {
       rethrow;
     }
