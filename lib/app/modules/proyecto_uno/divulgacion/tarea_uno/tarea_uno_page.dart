@@ -95,7 +95,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           'Volver',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -175,7 +175,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
                           'Próximo',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

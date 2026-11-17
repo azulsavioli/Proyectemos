@@ -100,7 +100,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -235,7 +235,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

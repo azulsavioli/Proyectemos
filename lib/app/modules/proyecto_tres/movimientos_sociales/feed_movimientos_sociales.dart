@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:chewie/chewie.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
@@ -11,6 +10,7 @@ import 'package:proyectemos/services/tres_tasks_completed.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
+import '../../widgets/feed_status_view.dart';
 
 class FeedMovimientosSocialesPage extends StatefulWidget {
   const FeedMovimientosSocialesPage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _FeedMovimientosSocialesPageState
   bool feedTurma = false;
   late VideoPlayerController videoPlayerController;
   late List<String> videosList;
-  late List<ChewieController> videoPlayerControllers;
+  List<ChewieController> videoPlayerControllers = [];
   List students = [];
   late StreamController<List> _videosStreamController;
   late ChewieController chewieController;
@@ -67,9 +67,13 @@ class _FeedMovimientosSocialesPageState
           .getVideosMovimientosSocialesTurma();
       final studentsList = await setStudentsList(snapshot);
       _videosStreamController.add(studentsList);
-    } on FirebaseException catch (e) {
+    } catch (e) {
       _videosStreamController.addError(e.toString());
     }
+  }
+
+  void reloadFeed() {
+    startFeed();
   }
 
   Future<List> setStudentsList(snapshot) async {
@@ -133,8 +137,9 @@ class _FeedMovimientosSocialesPageState
         stream: _videosStreamController.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ocurrió un error al intentar cargar los videos.'),
+            return FeedStatusView(
+              message: 'No se pudieron cargar los videos. Inténtalo de nuevo.',
+              onReload: reloadFeed,
             );
           }
           if (!snapshot.hasData) {
@@ -143,6 +148,12 @@ class _FeedMovimientosSocialesPageState
             );
           }
           final students = snapshot.data!;
+          if (students.isEmpty) {
+            return FeedStatusView(
+              message: 'Todavía no hay videos compartidos.',
+              onReload: reloadFeed,
+            );
+          }
 
           return Padding(
             padding: const EdgeInsets.all(16),

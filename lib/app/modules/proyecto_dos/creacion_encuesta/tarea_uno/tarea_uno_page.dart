@@ -84,7 +84,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -167,7 +167,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

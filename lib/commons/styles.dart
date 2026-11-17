@@ -33,7 +33,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -65,7 +65,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
@@ -74,7 +74,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -107,7 +107,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(35),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -139,7 +139,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(35),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
@@ -188,7 +188,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(20),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -228,7 +228,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(20),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
@@ -427,6 +427,14 @@ abstract class ThemeColors {
   static const Color otherGreen = Color(0xFF4BB543);
   static const Color red = Color(0xFFB00040);
   static const Color yellow = Color.fromRGBO(254, 147, 28, 1);
+
+  /// Darker amber for yellow-family text on [white]. About 6:1.
+  static const Color yellowOnWhite = Color(0xFF9A4A00);
+
+  /// Login gradient stops. White text is at least 4.8:1 on the lightest.
+  static const Color loginBlueTop = Color(0xFF0277BD);
+  static const Color loginBlueMid = Color(0xFF01579B);
+  static const Color loginBlueBottom = Color(0xFF014A82);
   static const Color nearBlack = Color(0xFF1A1A1A);
   static const Color gray = Color(0xFF424242);
   static const Color grayLight = Color(0xFF616161);

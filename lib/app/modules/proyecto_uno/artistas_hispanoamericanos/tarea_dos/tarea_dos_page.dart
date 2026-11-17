@@ -155,7 +155,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -304,7 +304,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -1,3 +1,4 @@
+import 'package:proyectemos/app/modules/widgets/menu_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/utils/navigation.dart';
 
@@ -65,12 +66,8 @@ class _PUnoDivulgacionMenuState extends State<PUnoDivulgacionMenu> {
         appBar: AppBar(
           actions: [
             Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.menu, size: isMobile ? 20 : 40),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              ),
+              builder: (context) =>
+                  MenuIconButton(iconSize: isMobile ? 20 : 40),
             ),
           ],
           toolbarHeight: isMobile ? 60 : 110,

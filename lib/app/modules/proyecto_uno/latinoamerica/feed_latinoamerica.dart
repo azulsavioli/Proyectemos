@@ -1,3 +1,4 @@
+import 'package:proyectemos/app/modules/widgets/menu_icon_button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -39,11 +40,8 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
+          Builder(
+            builder: (context) => MenuIconButton(iconSize: isMobile ? 20 : 50),
           ),
         ],
         toolbarHeight: isMobile ? 60 : 110,

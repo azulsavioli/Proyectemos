@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,6 +66,38 @@ void main() {
       ),
       isTrue,
     );
+  });
+
+  test('text tokens on the app white meet WCAG AA', () {
+    const background = ThemeColors.white;
+    expect(
+      ThemeColors.contrastRatio(ThemeColors.yellowOnWhite, background),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      ThemeColors.contrastRatio(Colors.white, ThemeColors.loginBlueTop),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      ThemeColors.contrastRatio(Colors.white, ThemeColors.loginBlueMid),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      ThemeColors.contrastRatio(Colors.white, ThemeColors.loginBlueBottom),
+      greaterThanOrEqualTo(4.5),
+    );
+    expect(
+      ThemeColors.contrastRatio(ThemeColors.nearBlack, ThemeColors.yellow),
+      greaterThanOrEqualTo(4.5),
+    );
+  });
+
+  test('network sign-in errors are not treated as account errors', () {
+    expect(
+      isNetworkSignInError(const SocketException('failed host lookup')),
+      isTrue,
+    );
+    expect(isNetworkSignInError(Exception('account disabled')), isFalse);
   });
 
   testWidgets('home cards and title do not overflow at text scale 2', (

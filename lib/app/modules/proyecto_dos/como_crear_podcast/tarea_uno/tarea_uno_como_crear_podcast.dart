@@ -227,7 +227,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                                   'Volver',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.grey,
+                                    color: ThemeColors.gray,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -331,7 +331,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                                   'Próximo',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.grey,
+                                    color: ThemeColors.gray,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

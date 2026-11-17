@@ -244,7 +244,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           'Volver',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -363,7 +363,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           'Próximo',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

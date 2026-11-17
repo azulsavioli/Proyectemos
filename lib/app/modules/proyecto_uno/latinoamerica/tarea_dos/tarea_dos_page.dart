@@ -143,7 +143,7 @@ class _PUnoLatinoamericaTareaDosPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -232,7 +232,7 @@ class _PUnoLatinoamericaTareaDosPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -375,7 +375,7 @@ class _PUnoLatinoamericaTareaDosPageState
 //                           'Volver',
 //                           style: TextStyle(
 //                             fontSize: isMobile ? 18 : 28,
-//                             color: Colors.grey,
+//                             color: ThemeColors.gray,
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         ),
@@ -460,7 +460,7 @@ class _PUnoLatinoamericaTareaDosPageState
 //                           'Próximo',
 //                           style: TextStyle(
 //                             fontSize: isMobile ? 18 : 28,
-//                             color: Colors.grey,
+//                             color: ThemeColors.gray,
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         ),

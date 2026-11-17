@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
+import 'package:proyectemos/app/modules/widgets/menu_icon_button.dart';
 
 import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
@@ -51,12 +52,8 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
         appBar: AppBar(
           actions: [
             Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.menu, size: isMobile ? 20 : 40),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              ),
+              builder: (context) =>
+                  MenuIconButton(iconSize: isMobile ? 20 : 40),
             ),
           ],
           toolbarHeight: isMobile ? 60 : 110,
@@ -64,6 +61,10 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
               tooltip: 'Volver',
+              style: IconButton.styleFrom(
+                minimumSize: const Size(48, 48),
+                tapTargetSize: MaterialTapTargetSize.padded,
+              ),
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,

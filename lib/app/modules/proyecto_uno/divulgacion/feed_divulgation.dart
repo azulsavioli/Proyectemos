@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:chewie/chewie.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +10,7 @@ import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../../../services/uno_tasks_completed.dart';
 import '../../widgets/drawer_menu.dart';
+import '../../widgets/feed_status_view.dart';
 
 class FeedDivulgationPage extends StatefulWidget {
   const FeedDivulgationPage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
   late VideoPlayerController videoPlayerController;
   late List<String> videosList;
   // late List<CustomVideoPlayerController> customVideoPlayerControllers;
-  late List<ChewieController> videoPlayerControllers;
+  List<ChewieController> videoPlayerControllers = [];
   // late CustomVideoPlayerController customVideoPlayerController;
   List students = [];
   late StreamController<List> _videosStreamController;
@@ -105,9 +105,13 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
         final studentsList = await setStudentsList(snapshot);
         _videosStreamController.add(studentsList);
       }
-    } on FirebaseException catch (e) {
+    } catch (e) {
       _videosStreamController.addError(e.toString());
     }
+  }
+
+  void reloadFeed() {
+    startFeed();
   }
 
   Future<List> setStudentsList(snapshot) async {
@@ -171,8 +175,9 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
         stream: _videosStreamController.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ocurrió un error al intentar cargar los videos.'),
+            return FeedStatusView(
+              message: 'No se pudieron cargar los videos. Inténtalo de nuevo.',
+              onReload: reloadFeed,
             );
           }
           if (!snapshot.hasData) {
@@ -181,6 +186,12 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
             );
           }
           final students = snapshot.data!;
+          if (students.isEmpty) {
+            return FeedStatusView(
+              message: 'Todavía no hay videos compartidos.',
+              onReload: reloadFeed,
+            );
+          }
 
           return Padding(
             padding: const EdgeInsets.all(16),

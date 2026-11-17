@@ -1,10 +1,26 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+enum SignInResult { success, cancelled, networkFailure, accountFailure }
+
+bool isNetworkSignInError(Object error) {
+  if (error is SocketException || error is TimeoutException) return true;
+  if (error is FirebaseAuthException &&
+      (error.code == 'network-request-failed' || error.code == 'unavailable')) {
+    return true;
+  }
+  final text = error.toString().toLowerCase();
+  return text.contains('network') ||
+      text.contains('socket') ||
+      text.contains('timeout') ||
+      text.contains('failed host lookup');
+}
 
 /// User dismissal of the Google account picker should stay silent.
 bool isGoogleSignInCancellation(Object error) {
@@ -78,13 +94,12 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// `true` when Firebase has a user, `false` on a real failure, and `null`
-  /// when the person dismissed the Google account picker.
-  Future<bool?> signIn() async {
+  /// [SignInResult.cancelled] is a dismissed picker and should stay silent.
+  Future<SignInResult> signIn() async {
     try {
       if (!_googleSignIn.supportsAuthenticate()) {
         debugPrint('Authenticate not supported on this platform.');
-        return false;
+        return SignInResult.accountFailure;
       }
       final account = await _googleSignIn.authenticate();
       _user = account;
@@ -92,14 +107,18 @@ class GoogleSignInProvider extends ChangeNotifier {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setBool('hasLoggedInBefore', true);
       notifyListeners();
-      return _auth.currentUser != null;
+      return _auth.currentUser != null
+          ? SignInResult.success
+          : SignInResult.accountFailure;
     } catch (e) {
       if (isGoogleSignInCancellation(e)) {
         debugPrint('Usuário cancelou o login do Google.');
-        return null;
+        return SignInResult.cancelled;
       }
       debugPrint('Google Sign-In failed: $e');
-      return false;
+      return isNetworkSignInError(e)
+          ? SignInResult.networkFailure
+          : SignInResult.accountFailure;
     }
   }
 

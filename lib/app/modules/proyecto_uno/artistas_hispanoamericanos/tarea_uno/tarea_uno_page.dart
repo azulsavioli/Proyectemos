@@ -125,7 +125,7 @@ class _TareaArtistasLatinoamericanosPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -210,7 +210,7 @@ class _TareaArtistasLatinoamericanosPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
