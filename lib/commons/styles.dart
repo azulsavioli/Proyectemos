@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,7 +33,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -63,7 +65,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
@@ -72,7 +74,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(45),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -105,7 +107,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(35),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -137,12 +139,12 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(35),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
   //H3
-  static TextStyle  h3title30White = TextStyle(
+  static TextStyle h3title30White = TextStyle(
     fontSize: ScreenUtil().setSp(30),
     letterSpacing: 1,
     fontFamily: 'Poppins',
@@ -186,7 +188,7 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(20),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.bold,
   );
 
@@ -226,11 +228,11 @@ abstract class ThemeText {
     fontSize: ScreenUtil().setSp(20),
     letterSpacing: 1,
     fontFamily: 'Poppins',
-    color: ThemeColors.yellow,
+    color: ThemeColors.yellowOnWhite,
     fontWeight: FontWeight.normal,
   );
 
-//Paragraph 16
+  //Paragraph 16
   static TextStyle paragraph16RedBold = TextStyle(
     fontSize: ScreenUtil().setSp(16),
     letterSpacing: 1,
@@ -303,7 +305,7 @@ abstract class ThemeText {
     fontWeight: FontWeight.normal,
   );
 
-//Paragraph 14
+  //Paragraph 14
 
   static TextStyle paragraph14Gray = TextStyle(
     fontSize: ScreenUtil().setSp(14),
@@ -411,50 +413,44 @@ abstract class ThemeText {
 }
 
 abstract class ThemeColors {
-  static const Color white = Color.fromRGBO(
-    250,
-    251,
-    250,
-    1,
-  );
-  static const Color blue = Color.fromRGBO(
-    0,
-    159,
-    251,
-    1,
-  );
-  static const Color green = Color.fromARGB(
-    255,
-    42,
-    175,
-    2,
-  );
+  static const Color white = Color.fromRGBO(250, 251, 250, 1);
 
-  static const Color otherGreen = Color(
-    0xff4BB543,
-  );
-  static const Color red = Color.fromRGBO(
-    243,
-    1,
-    70,
-    1,
-  );
-  static const Color yellow = Color.fromRGBO(
-    254,
-    147,
-    28,
-    1,
-  );
-  static const Color gray = Color.fromARGB(
-    255,
-    119,
-    118,
-    118,
-  );
-  static const Color grayLight = Color.fromARGB(
-    255,
-    187,
-    186,
-    186,
-  );
+  /// Light brand hues. Illustration assets keep these tones; bars, titles
+  /// and buttons use the darker family colors below so white text meets
+  /// WCAG AA (4.5:1).
+  static const Color blueLight = Color(0xFF009FFB);
+  static const Color greenLight = Color(0xFF2AAF02);
+  static const Color redLight = Color(0xFFF30146);
+
+  static const Color blue = Color(0xFF01579B);
+  static const Color green = Color(0xFF1B5E20);
+  static const Color otherGreen = Color(0xFF4BB543);
+  static const Color red = Color(0xFFB00040);
+  static const Color yellow = Color.fromRGBO(254, 147, 28, 1);
+
+  /// Darker amber for yellow-family text on [white]. About 6:1.
+  static const Color yellowOnWhite = Color(0xFF9A4A00);
+
+  /// Login gradient stops. White text is at least 4.8:1 on the lightest.
+  static const Color loginBlueTop = Color(0xFF0277BD);
+  static const Color loginBlueMid = Color(0xFF01579B);
+  static const Color loginBlueBottom = Color(0xFF014A82);
+  static const Color nearBlack = Color(0xFF1A1A1A);
+  static const Color gray = Color(0xFF424242);
+  static const Color grayLight = Color(0xFF616161);
+
+  static double contrastRatio(Color foreground, Color background) {
+    final foregroundLuminance = foreground.computeLuminance();
+    final backgroundLuminance = background.computeLuminance();
+    final lighter = math.max(foregroundLuminance, backgroundLuminance);
+    final darker = math.min(foregroundLuminance, backgroundLuminance);
+    return (lighter + 0.05) / (darker + 0.05);
+  }
+
+  /// Picks near-black or white, whichever is readable on [background].
+  static Color foregroundOn(Color background) {
+    final onDark = contrastRatio(nearBlack, background);
+    final onLight = contrastRatio(white, background);
+    return onDark >= onLight ? nearBlack : white;
+  }
 }

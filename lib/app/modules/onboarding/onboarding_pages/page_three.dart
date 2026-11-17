@@ -26,7 +26,9 @@ class PageThree extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       '¡Deseamos que los momentos en la aplicación !PROYECTEMOS!',
-                      style: ThemeText.paragraph14WhiteBold,
+                      style: ThemeText.paragraph14WhiteBold.copyWith(
+                        color: ThemeColors.nearBlack,
+                      ),
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -42,7 +44,9 @@ class PageThree extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     child: Text(
                       'sean una experiencia significativa y transformadora!',
-                      style: ThemeText.paragraph14WhiteBold,
+                      style: ThemeText.paragraph14WhiteBold.copyWith(
+                        color: ThemeColors.nearBlack,
+                      ),
                       textAlign: TextAlign.start,
                     ),
                   ),

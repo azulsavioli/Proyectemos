@@ -83,6 +83,7 @@ class _PUnoLatinoamericaTareaDosPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
+              tooltip: 'Volver',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -142,7 +143,7 @@ class _PUnoLatinoamericaTareaDosPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -231,7 +232,7 @@ class _PUnoLatinoamericaTareaDosPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -374,7 +375,7 @@ class _PUnoLatinoamericaTareaDosPageState
 //                           'Volver',
 //                           style: TextStyle(
 //                             fontSize: isMobile ? 18 : 28,
-//                             color: Colors.grey,
+//                             color: ThemeColors.gray,
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         ),
@@ -459,7 +460,7 @@ class _PUnoLatinoamericaTareaDosPageState
 //                           'Próximo',
 //                           style: TextStyle(
 //                             fontSize: isMobile ? 18 : 28,
-//                             color: Colors.grey,
+//                             color: ThemeColors.gray,
 //                             fontWeight: FontWeight.bold,
 //                           ),
 //                         ),

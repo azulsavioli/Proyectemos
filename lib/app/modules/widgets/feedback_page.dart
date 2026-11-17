@@ -1,3 +1,4 @@
+import 'package:proyectemos/app/modules/widgets/menu_icon_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,20 +62,20 @@ class _FeedbackPageState extends State<FeedbackPage> {
         appBar: AppBar(
           actions: [
             Builder(
-              builder: (context) => IconButton(
-                icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-              ),
+              builder: (context) =>
+                  MenuIconButton(iconSize: isMobile ? 20 : 50),
             ),
           ],
           toolbarHeight: isMobile ? 60 : 90,
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 40),
+              tooltip: 'Volver',
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 40,
+              ),
               onPressed: () => Navigator.pop(context),
             ),
           ),
@@ -82,14 +83,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
           iconTheme: const IconThemeData(
             color: Color.fromRGBO(250, 251, 250, 1),
           ),
-          title: Text(
-            widget.pageTitle,
-            style: ThemeText.paragraph14WhiteBold,
-          ),
+          title: Text(widget.pageTitle, style: ThemeText.paragraph14WhiteBold),
         ),
         endDrawer: DrawerMenuWidget(),
         body: Padding(
-          padding: isMobile? EdgeInsets.fromLTRB(16, 30, 16, 16) : EdgeInsets.fromLTRB(30, 60, 30, 30),
+          padding: isMobile
+              ? EdgeInsets.fromLTRB(16, 30, 16, 16)
+              : EdgeInsets.fromLTRB(30, 60, 30, 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -99,24 +99,21 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     ? ThemeText.paragraph16BlueNormal
                     : ThemeText.paragraph14Blue,
               ),
-              SizedBox(
-                height: isMobile ? 20 : 40,
-              ),
+              SizedBox(height: isMobile ? 20 : 40),
               Text(
                 feedback,
                 style: isMobile
                     ? ThemeText.paragraph14Gray
                     : ThemeText.paragraph12Gray,
               ),
+              SizedBox(height: isMobile ? 20 : 40),
               SizedBox(
-                height: isMobile ? 20 : 40,
-              ),
-              SizedBox(
-                height:  isMobile ? 60 : 100,
+                height: isMobile ? 60 : 100,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      minimumSize: Size(100, isMobile ? 50 : 120),
-                      backgroundColor: ThemeColors.yellow),
+                    minimumSize: Size(100, isMobile ? 50 : 120),
+                    backgroundColor: ThemeColors.yellow,
+                  ),
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
@@ -171,9 +168,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Future<void> saveFeedbackCompleted() async {
     const taskCompleted = true;
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool(
-      widget.taskCompleted,
-      taskCompleted,
-    );
+    await preferences.setBool(widget.taskCompleted, taskCompleted);
   }
 }

@@ -77,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           centerTitle: true,
           title: Text('Perfil', style: ThemeText.paragraph16WhiteBold),
           leading: IconButton(
+            tooltip: 'Volver',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyectos'),
           ),
@@ -320,21 +321,21 @@ Widget acessibilityCard(BuildContext context) {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        child: Row(
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 8,
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 25,
               backgroundColor: ThemeColors.yellow,
               child: Icon(
                 Icons.settings_accessibility_sharp,
                 size: 25,
-                color: ThemeColors.white,
+                color: ThemeColors.foregroundOn(ThemeColors.yellow),
               ),
             ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text('Accesibilidad', style: ThemeText.paragraph14Gray),
-            ),
+            Text('Accesibilidad', style: ThemeText.paragraph14Gray),
             Text(
               'off',
               style: TextStyle(

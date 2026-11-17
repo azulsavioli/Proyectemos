@@ -7,7 +7,6 @@ import '../../../services/auth_services.dart';
 
 class DrawerMenuWidget extends StatelessWidget {
   DrawerMenuWidget({Key? key}) : super(key: key);
-  final authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +23,7 @@ class DrawerMenuWidget extends StatelessWidget {
           SizedBox(
             height: 90,
             child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(0, 159, 251, 1),
-              ),
+              decoration: const BoxDecoration(color: ThemeColors.blue),
               child: Center(
                 child: Text(
                   '¡Proyectemos!',
@@ -35,9 +32,7 @@ class DrawerMenuWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           // ListTile(
           //   leading: const Icon(Icons.home),
           //   title: const Text('Inicio'),
@@ -55,27 +50,27 @@ class DrawerMenuWidget extends StatelessWidget {
               Navigator.of(context).pushNamed('/profile');
             },
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Salir'),
             onTap: () async {
-              final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+              final provider = Provider.of<GoogleSignInProvider>(
+                context,
+                listen: false,
+              );
 
               if (provider.user != null) {
                 await provider.signOut();
-                await authService.logout();
+                await AuthService().logout();
               } else {
-                await authService.logout();
+                await AuthService().logout();
               }
 
               if (context.mounted) {
                 Navigator.of(context).pushNamed('/login');
               }
             },
-
           ),
         ],
       ),
@@ -90,9 +85,7 @@ class DrawerMenuWidget extends StatelessWidget {
           SizedBox(
             height: 150,
             child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(0, 159, 251, 1),
-              ),
+              decoration: const BoxDecoration(color: ThemeColors.blue),
               child: Center(
                 child: Text(
                   '¡Proyectemos!',
@@ -101,47 +94,43 @@ class DrawerMenuWidget extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           ListTile(
-            leading: const Icon(Icons.home, size: 30,),
+            leading: const Icon(Icons.home, size: 30),
             title: Text('Inicio', style: ThemeText.paragraph12Gray),
             onTap: () {
               Navigator.of(context).pushNamed('/home');
             },
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           ListTile(
-            leading: const Icon(Icons.person, size: 30,),
+            leading: const Icon(Icons.person, size: 30),
             title: Text('Perfil', style: ThemeText.paragraph12Gray),
             onTap: () {
               Navigator.of(context).pushNamed('/profile');
             },
           ),
-          SizedBox(
-            height: 20,
-          ),
+          SizedBox(height: 20),
           ListTile(
-            leading: const Icon(Icons.exit_to_app, size: 30,),
+            leading: const Icon(Icons.exit_to_app, size: 30),
             title: Text('Salir', style: ThemeText.paragraph12Gray),
             onTap: () async {
-              final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+              final provider = Provider.of<GoogleSignInProvider>(
+                context,
+                listen: false,
+              );
 
               if (provider.user != null) {
                 await provider.signOut();
-                await authService.logout();
+                await AuthService().logout();
               } else {
-                await authService.logout();
+                await AuthService().logout();
               }
 
               if (context.mounted) {
                 Navigator.of(context).pushNamed('/login');
               }
             },
-
           ),
         ],
       ),

@@ -7,6 +7,7 @@ import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
+import '../../widgets/feed_status_view.dart';
 
 class FeedCreaTuMovimientoTareaDosPage extends StatefulWidget {
   const FeedCreaTuMovimientoTareaDosPage({super.key});
@@ -27,19 +28,24 @@ class _FeedCreaTuMovimientoTareaDosPageState
     super.initState();
   }
 
+  void _reload() {
+    setState(() {
+      _linkMovimientoStream = _repository.getMovimientoSocialeTurmaStream();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleGrabacionPodcastFeed,
           style: ThemeText.paragraph14WhiteBold,
@@ -50,15 +56,14 @@ class _FeedCreaTuMovimientoTareaDosPageState
         stream: _linkMovimientoStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ocurrió un error al intentar cargar las imágenes.'),
+            return FeedStatusView(
+              message: 'No se pudieron cargar los links. Inténtalo de nuevo.',
+              onReload: _reload,
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+              child: CircularProgressIndicator(color: ThemeColors.blue),
             );
           }
           final students = snapshot.data ?? [];
@@ -83,10 +88,9 @@ class _FeedCreaTuMovimientoTareaDosPageState
               ],
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+            return FeedStatusView(
+              message: 'Todavía no hay links compartidos.',
+              onReload: _reload,
             );
           }
         },
@@ -129,22 +133,16 @@ class _FeedCreaTuMovimientoTareaDosPageState
                         ),
                       ),
                       title: Text(nomeMovimiento),
-                      subtitle: Text(
-                        '''
-\n${grupo.substring(1, grupo.length - 1)}\n''',
-                      ),
+                      subtitle: Text('''
+\n${grupo.substring(1, grupo.length - 1)}\n'''),
                     ),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: ThemeColors.blue,
                       ),
-                      onPressed: () => launchUrlMovimientoSoliale(
-                        movimientosLink,
-                      ),
-                      icon: const Icon(
-                        Icons.link,
-                        color: Colors.white,
-                      ),
+                      onPressed: () =>
+                          launchUrlMovimientoSoliale(movimientosLink),
+                      icon: const Icon(Icons.link, color: Colors.white),
                       label: const Text(
                         'Ir para o podcast',
                         style: TextStyle(color: Colors.white),
@@ -159,9 +157,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
       }
       i++;
     }
-    return Column(
-      children: cardsPodcast,
-    );
+    return Column(children: cardsPodcast);
   }
 
   Future<void> launchUrlMovimientoSoliale(String urlString) async {

@@ -36,10 +36,13 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
 
   IconButton _audioControllingSection(String songPath) {
     final playProvider = Provider.of<PlayAudioProvider>(context);
-    final playProviderWithoutListen =
-        Provider.of<PlayAudioProvider>(context, listen: false);
+    final playProviderWithoutListen = Provider.of<PlayAudioProvider>(
+      context,
+      listen: false,
+    );
 
     return IconButton(
+      tooltip: playProvider.isSongPlaying ? 'Pausar' : 'Reproducir',
       onPressed: () async {
         if (songPath.isEmpty) return;
 

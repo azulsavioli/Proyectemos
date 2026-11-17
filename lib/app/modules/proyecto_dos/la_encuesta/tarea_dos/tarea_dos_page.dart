@@ -47,7 +47,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
   final double volume = 100;
   final bool muted = false;
   final bool isPlayerReady = false;
-  final bool isAccessible = false;
+  bool isAccessible = false;
 
   bool loading = false;
 
@@ -58,13 +58,18 @@ class _TareaDosComoCrearUnaEncuestaPageState
   final focusNode3 = FocusNode();
   final textEditingController3 = TextEditingController();
 
+  Future<void> _loadAccessibility() async {
+    await _controller.getIsAcessible();
+    if (!mounted) return;
+    setState(() {
+      isAccessible = _controller.isAccessible ?? false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller.getIsAcessible();
-    setState(() {
-      isAccessible == _controller.isAccessible;
-    });
+    _loadAccessibility();
 
     youTubeController = YoutubePlayerController(
       initialVideoId: 'HVk3UYTKCr0',
@@ -109,6 +114,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -186,7 +192,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -225,7 +231,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                           context,
                         ); // <-- await
 
-                        if (_controller.isAccessible!) {
+                        if (isAccessible) {
                           if (!_formKey.currentState!.validate() ||
                               textEditingController1.text.isEmpty ||
                               textEditingController2.text.isEmpty ||
@@ -339,7 +345,7 @@ class _TareaDosComoCrearUnaEncuestaPageState
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
