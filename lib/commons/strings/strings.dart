@@ -19,20 +19,20 @@ abstract class Strings {
   static const String loginImage = 'assets/images/loginpage.png';
 
   //Strings
-  static const String title = '¡Proyectos!';
+  static const String title = 'Projetos!';
   static const String titleCardUno = 'Proyecto UNO';
   static const String titleCardDos = 'Proyecto DOS';
   static const String titleCardTres = 'Proyecto TRES';
 
   //Feedbacks
-  static const String tareaEnviada = 'Tarea enviada com sucesso!';
+  static const String tareaEnviada = 'Tarefa enviada com sucesso!';
   static const String emailEnviado = 'Email enviado com sucesso!';
 
   //Login
-  static const String bemvindos = '¡Bienvenidos a Proyectemos!';
+  static const String bemvindos = 'Bem-vindos ao Proyectemos!';
   static const String descricaoAppLogin =
-      '''Un diálogo entre libros didácticos y una aplicación móvil en las clases de lengua española.''';
-  static const String iniciaSessao = 'Inicia sesión con Google';
+      '''Um diálogo entre livros didáticos e um aplicativo nas aulas de língua espanhola.''';
+  static const String iniciaSessao = 'Entrar com o Google';
   static const String capesDescription = '''
 O presente trabalho foi realizado com apoio da Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Código de Financiamento 001''';
 

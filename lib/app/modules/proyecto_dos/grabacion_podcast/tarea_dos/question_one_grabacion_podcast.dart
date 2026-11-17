@@ -58,7 +58,7 @@ class _QuestionGrabacionPodcastOneState
               hint: 'Respuesta',
               controller: controllerList[0],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -78,7 +78,7 @@ class _QuestionGrabacionPodcastOneState
               hint: 'Respuesta',
               controller: controllerList[1],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),
@@ -98,7 +98,7 @@ class _QuestionGrabacionPodcastOneState
               hint: 'Respuesta',
               controller: controllerList[2],
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),

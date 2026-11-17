@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -83,7 +84,7 @@ class _PUnoLatinoamericaTareaDosPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -148,8 +149,8 @@ class _PUnoLatinoamericaTareaDosPageState
                           ),
                         ),
                       ),
-                    Center(
-                      child: SmoothPageIndicator(
+                    Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 2),
+SmoothPageIndicator(
                         controller: pageController,
                         count: 2,
                         effect: WormEffect(
@@ -158,7 +159,7 @@ class _PUnoLatinoamericaTareaDosPageState
                           activeDotColor: Colors.blueAccent,
                           dotColor: Colors.black26,
                         ),
-                      ),
+                      )]),),
                     ),
                     if (pageChanged == 1 &&
                         _controller.selectedImages.length == 5)
@@ -381,7 +382,8 @@ class _PUnoLatinoamericaTareaDosPageState
 //                         ),
 //                       ),
 //                     Center(
-//                       child: SmoothPageIndicator(
+//                       child: TaskStepLabel(current: pageChanged + 1, total: 2),
+// SmoothPageIndicator(
 //                         controller: pageController,
 //                         count: 2,
 //                         effect: WormEffect(

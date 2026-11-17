@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_uno/tarea_uno_revision.dart';
 import 'package:proyectemos/services/toast_services.dart';
@@ -122,7 +123,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -249,8 +250,8 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           ),
                         ),
                       ),
-                    Center(
-                      child: SmoothPageIndicator(
+                    Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 7),
+SmoothPageIndicator(
                         controller: pageController,
                         count: 7,
                         effect: WormEffect(
@@ -259,7 +260,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                           activeDotColor: ThemeColors.blue,
                           dotColor: Colors.black26,
                         ),
-                      ),
+                      )]),),
                     ),
                     if (pageChanged == 6)
                       TextButton(
@@ -285,7 +286,7 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                               textControllerFive.text.isEmpty) {
                             showToast(
                               context,
-                              'Vuelve y ingrese tuja respuesta correctamente',
+                              'Vuelve y ingrese tu respuesta correctamente',
                               ThemeColors.red,
                               ThemeColors.white,
                             );

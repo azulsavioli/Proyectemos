@@ -165,7 +165,7 @@ class _CustomStepState extends State<CustomStep> {
               hint: 'Respuesta',
               controller: widget.controller,
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_four.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/la_sociedad/tarea_uno/question_one.dart';
@@ -154,7 +155,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -241,8 +242,8 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 5),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 5,
                       effect: const WormEffect(
@@ -251,7 +252,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 4)
                     TextButton(

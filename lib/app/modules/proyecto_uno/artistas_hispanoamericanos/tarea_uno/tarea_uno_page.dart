@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -46,7 +47,7 @@ class _TareaArtistasLatinoamericanosPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -130,8 +131,8 @@ class _TareaArtistasLatinoamericanosPageState
                           ),
                         ),
                       ),
-                    Center(
-                      child: SmoothPageIndicator(
+                    Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 4),
+SmoothPageIndicator(
                         controller: pageController,
                         count: 4,
                         effect: WormEffect(
@@ -140,7 +141,7 @@ class _TareaArtistasLatinoamericanosPageState
                           activeDotColor: ThemeColors.blue,
                           dotColor: Colors.black26,
                         ),
-                      ),
+                      )]),),
                     ),
                     if (pageChanged == 3)
                       TextButton(

@@ -53,7 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         backgroundColor: ThemeColors.blue,
         elevation: 0,
         title: Text(
-          'Registro de estudiantes',
+          'Registro de estudantes',
           style: ThemeText.paragraph16White,
           textAlign: TextAlign.center,
         ),
@@ -67,7 +67,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             children: [
               Center(
                 child: Text(
-                  'Elige tu escuela y clase',
+                  'Escolha sua escola e turma',
                   style: ThemeText.paragraph16GrayBold,
                   textAlign: TextAlign.center,
                 ),
@@ -91,7 +91,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         }
 
                         final schoolOptions = [
-                          'Selecione sua escuela!',
+                          'Selecione sua escola!',
                           ...snapshot.data!,
                         ];
                         return DropdownButtonFormField2<String>(
@@ -108,7 +108,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                           hint: const Padding(
                             padding: EdgeInsets.only(left: 12),
-                            child: Text('Elige tu escuela'),
+                            child: Text('Escolha sua escola'),
                           ),
                           value: (dropdownValor1.isEmpty)
                               ? null
@@ -118,7 +118,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             iconEnabledColor: ThemeColors.yellow,
                           ),
                           onChanged: (option) {
-                            if (option == 'Selecione sua escuela!') {
+                            if (option == 'Selecione sua escola!') {
                               showToast(
                                 context,
                                 'Por favor, selecione uma escola válida',
@@ -165,7 +165,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           }
 
                           final classOptions = [
-                            'Selecione sua clase!',
+                            'Selecione sua turma!',
                             ...snapshot.data!,
                           ];
                           return DropdownButtonFormField2<String>(
@@ -182,7 +182,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             ),
                             hint: const Padding(
                               padding: EdgeInsets.only(left: 12),
-                              child: Text('Elige tu grado'),
+                              child: Text('Escolha sua turma'),
                             ),
                             value: dropdownValor2.isNotEmpty
                                 ? dropdownValor2
@@ -192,10 +192,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               iconEnabledColor: ThemeColors.yellow,
                             ),
                             onChanged: (option) {
-                              if (option == 'Selecione sua clase!') {
+                              if (option == 'Selecione sua turma!') {
                                 showToast(
                                   context,
-                                  'Por favor, selecione uma clase válida',
+                                  'Por favor, selecione uma turma válida',
                                   ThemeColors.red,
                                   ThemeColors.white,
                                 );
@@ -231,14 +231,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     label: Padding(
                       padding: const EdgeInsets.only(left: 8),
                       child: Text(
-                        'Nombre del estudiante',
+                        'Nome do estudante',
                         style: ThemeText.paragraph16GrayLight,
                       ),
                     ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Por favor, ingrese su nombre';
+                      return 'Por favor, informe seu nome';
                     }
                     return null;
                   },
@@ -297,7 +297,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             } catch (e) {
                               showToast(
                                 context,
-                                'Error al guardar datos: $e',
+                                'Erro ao salvar os dados: $e',
                                 ThemeColors.red,
                                 ThemeColors.white,
                               );
@@ -307,7 +307,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           } else {
                             showToast(
                               context,
-                              'Seleciona sus datos correctamente',
+                              'Selecione seus dados corretamente',
                               ThemeColors.red,
                               ThemeColors.white,
                             );
@@ -323,7 +323,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           ),
                         )
                       : Text(
-                          'Confirmar los datos',
+                          'Confirmar os dados',
                           style: ThemeText.paragraph16WhiteBold,
                         ),
                   icon: const Icon(Icons.check, color: Colors.white),

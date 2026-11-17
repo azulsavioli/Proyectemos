@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -64,7 +65,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -159,8 +160,8 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 7),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 7,
                       effect: const WormEffect(
@@ -169,7 +170,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 6)
                     TextButton(
@@ -186,7 +187,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                             _controller.studentGroup.length <= 1) {
                           showToast(
                             context,
-                            'Vuelve y ingrese tuja respuesta correctamente',
+                            'Vuelve y ingrese tu respuesta correctamente',
                             ThemeColors.red,
                             ThemeColors.white,
                           );

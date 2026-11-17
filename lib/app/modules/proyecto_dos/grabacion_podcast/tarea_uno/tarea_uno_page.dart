@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/commons/strings/strings_grabacion_podcast.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -31,7 +32,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -90,8 +91,8 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 3),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 3,
                       effect: const WormEffect(
@@ -100,7 +101,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 2)
                     TextButton(

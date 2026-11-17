@@ -69,7 +69,7 @@ class _PUnoEventoCulturalMenuState extends State<PUnoEventoCulturalMenu> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,

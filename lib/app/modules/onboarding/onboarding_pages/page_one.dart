@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:proyectemos/app/modules/widgets/spanish_text.dart';
 
 class PageOne extends StatelessWidget {
   const PageOne({Key? key}) : super(key: key);
@@ -22,8 +23,8 @@ class PageOne extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    '!Bienvenidos!',
+                  SpanishText(
+                    '¡Bienvenidos!',
                     style: ThemeText.h2title35White,
                     textAlign: TextAlign.center,
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/crea_tu_movimiento/tarea_uno/crea_tu_movimiento_feedback.dart';
@@ -224,6 +225,16 @@ class Proyectemos extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               title: Proyectemos.title,
+              locale: const Locale('pt', 'BR'),
+              supportedLocales: const [
+                Locale('pt', 'BR'),
+                Locale('es'),
+              ],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
               theme: ThemeData(
                 primaryColor: ThemeColors.blue,
                 secondaryHeaderColor: ThemeColors.yellow,
