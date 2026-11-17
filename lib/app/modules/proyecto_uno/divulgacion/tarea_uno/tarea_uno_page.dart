@@ -38,6 +38,7 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
+              tooltip: 'Volver',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,

@@ -121,6 +121,10 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() => loadingGoogle = true);
                                     final ok = await _controller.login(context);
                                     if (!context.mounted) return;
+                                    if (ok == null) {
+                                      setState(() => loadingGoogle = false);
+                                      return;
+                                    }
                                     if (ok) {
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
@@ -138,35 +142,35 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                     );
                                   },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: loadingGoogle
-                                  ? [
-                                      const SizedBox(
-                                        width: 22,
-                                        height: 22,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ]
-                                  : [
+                            child: loadingGoogle
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      color: ThemeColors.nearBlack,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
                                       const FaIcon(
                                         FontAwesomeIcons.google,
-                                        color: Colors.white,
+                                        color: ThemeColors.nearBlack,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8),
+                                      const SizedBox(width: 8),
+                                      Flexible(
                                         child: Text(
                                           Strings.iniciaSessao,
+                                          textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                            color: Colors.white,
+                                            color: ThemeColors.nearBlack,
                                             fontSize: 16,
+                                            height: 1.2,
                                           ),
                                         ),
                                       ),
                                     ],
-                            ),
+                                  ),
                           ),
                         ),
                       ),

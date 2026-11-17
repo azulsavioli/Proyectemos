@@ -41,12 +41,14 @@ class _ProyectosPageState extends State<ProyectosPage> {
     super.initState();
     getTaskCompleted();
     setState(() {
-      isUnoCompleted = latinoamericaCompleted &&
+      isUnoCompleted =
+          latinoamericaCompleted &&
           artistasCompleted &&
           eventoCulturalCompleted &&
           divulgationCompleted;
 
-      isDosCompleted = conocesPodcast &&
+      isDosCompleted =
+          conocesPodcast &&
           comoCrearPodcast &&
           laEncuesta &&
           creacionEncuesta &&
@@ -82,12 +84,14 @@ class _ProyectosPageState extends State<ProyectosPage> {
       tuAlrededor = resultadoTres[2];
       creaTuMovimiento = resultadoTres[3];
 
-      isUnoCompleted = latinoamericaCompleted &&
+      isUnoCompleted =
+          latinoamericaCompleted &&
           artistasCompleted &&
           eventoCulturalCompleted &&
           divulgationCompleted;
 
-      isDosCompleted = conocesPodcast &&
+      isDosCompleted =
+          conocesPodcast &&
           comoCrearPodcast &&
           laEncuesta &&
           creacionEncuesta &&
@@ -102,13 +106,14 @@ class _ProyectosPageState extends State<ProyectosPage> {
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     final bool isMobile = shortestSide < 450;
+    final titleStyle = isMobile
+        ? ThemeText.h3title20BlueBold
+        : ThemeText.paragraph16BlueBold;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: isMobile ? 60 : 80,
-          iconTheme: const IconThemeData(
-            color: ThemeColors.gray,
-          ),
+          toolbarHeight: isMobile ? 64 : 80,
+          iconTheme: const IconThemeData(color: ThemeColors.gray),
           backgroundColor: ThemeColors.white,
           centerTitle: true,
           leading: Padding(
@@ -117,13 +122,18 @@ class _ProyectosPageState extends State<ProyectosPage> {
               'assets/images/logo.png',
               height: 10,
               width: 10,
+              semanticLabel: 'Proyectemos',
             ),
           ),
-          title: Text(
-            Strings.title,
-            style: isMobile
-                ? ThemeText.h3title20BlueBold
-                : ThemeText.paragraph16BlueBold,
+          title: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              Strings.title,
+              maxLines: 1,
+              softWrap: false,
+              textAlign: TextAlign.center,
+              style: titleStyle,
+            ),
           ),
         ),
         backgroundColor: ThemeColors.white,

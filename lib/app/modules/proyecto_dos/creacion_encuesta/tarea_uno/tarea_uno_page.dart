@@ -30,6 +30,7 @@ class _PDosCreacionEncuestaState extends State<PDosCreacionEncuesta> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -28,76 +28,30 @@ class CardButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
     final bool isMobile = shortestSide < 600;
-    return isMobile
-        ? _buildMobileCard(context)
-        : _buildDesktopCard(context);
+    return isMobile ? _buildMobileCard(context) : _buildDesktopCard(context);
   }
 
   Widget _buildMobileCard(BuildContext context) {
-    return SizedBox(
-      height: cardHeight,
-      width: cardWidth,
-      child: ElevatedButton.icon(
-        icon: Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: CircleAvatar(
-            radius: 25,
-            backgroundColor: backgroundColor,
-            child: Icon(
-              icon,
-              size: iconSize,
-              color: ThemeColors.white,
-            ),
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          foregroundColor: shadowColor,
-          backgroundColor: Colors.white,
-          elevation: 3,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-          textStyle: ThemeText.paragraph14Gray,
-        ),
-        onPressed: () {
-          if (namedRoute == null)
-            return;
-          else
-            Navigator.of(context).pushNamed(namedRoute!);
-        },
-        label: Row(
-          children: [
-            const SizedBox(
-              width: 24,
-            ),
-            Text(
-              text,
-              style: ThemeText.paragraph14Gray,
-            ),
-          ],
-        ),
-      ),
-    );
+    return _buildCard(context, iconRadius: 25, gap: 12, horizontalPadding: 14);
   }
 
   Widget _buildDesktopCard(BuildContext context) {
-    return SizedBox(
-      height: cardHeight,
-      width: cardWidth,
-      child: ElevatedButton.icon(
-        icon: Padding(
-          padding: const EdgeInsets.only(left: 24),
-          child: CircleAvatar(
-            radius: 45,
-            backgroundColor: backgroundColor,
-            child: Icon(
-              icon,
-              size: iconSize,
-              color: ThemeColors.white,
-            ),
-          ),
-        ),
+    return _buildCard(context, iconRadius: 45, gap: 24, horizontalPadding: 20);
+  }
+
+  Widget _buildCard(
+    BuildContext context, {
+    required double iconRadius,
+    required double gap,
+    required double horizontalPadding,
+  }) {
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: cardHeight,
+        minWidth: cardWidth,
+        maxWidth: cardWidth,
+      ),
+      child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
@@ -105,23 +59,36 @@ class CardButton extends StatelessWidget {
           foregroundColor: shadowColor,
           backgroundColor: Colors.white,
           elevation: 3,
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: horizontalPadding,
+            vertical: 16,
+          ),
           textStyle: ThemeText.paragraph14Gray,
         ),
         onPressed: () {
-          if (namedRoute == null)
+          if (namedRoute == null) {
             return;
-          else
-            Navigator.of(context).pushNamed(namedRoute!);
+          }
+          Navigator.of(context).pushNamed(namedRoute!);
         },
-        label: Row(
+        child: Row(
           children: [
-            const SizedBox(
-              width: 60,
+            CircleAvatar(
+              radius: iconRadius,
+              backgroundColor: backgroundColor,
+              child: Icon(
+                icon,
+                size: iconSize,
+                color: ThemeColors.foregroundOn(backgroundColor),
+              ),
             ),
-            Text(
-              text,
-              style: ThemeText.paragraph14Gray,
+            SizedBox(width: gap),
+            Expanded(
+              child: Text(
+                text,
+                style: ThemeText.paragraph14Gray,
+                softWrap: true,
+              ),
             ),
           ],
         ),

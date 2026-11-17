@@ -56,15 +56,18 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
           Uri.parse(video),
         );
 
-        videoPlayerController.initialize().then((_) {
-          setState(() {});
-          chewieController = ChewieController(
-            videoPlayerController: videoPlayerController,
-          );
-          videoPlayerControllers.add(chewieController);
-        }).catchError((error) {
-          print("Error initializing video player: $error");
-        });
+        videoPlayerController
+            .initialize()
+            .then((_) {
+              setState(() {});
+              chewieController = ChewieController(
+                videoPlayerController: videoPlayerController,
+              );
+              videoPlayerControllers.add(chewieController);
+            })
+            .catchError((error) {
+              print("Error initializing video player: $error");
+            });
       } catch (error) {
         print("Error creating video player: $error");
       }
@@ -90,13 +93,15 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
   Future<void> getVideos() async {
     try {
       if (feedTurma) {
-        final snapshot =
-            await context.read<ProyectemosRepository>().getVideosTurma();
+        final snapshot = await context
+            .read<ProyectemosRepository>()
+            .getVideosTurma();
         final studentsList = await setStudentsList(snapshot);
         _videosStreamController.add(studentsList);
       } else {
-        final snapshot =
-            await context.read<ProyectemosRepository>().getVideosPublic();
+        final snapshot = await context
+            .read<ProyectemosRepository>()
+            .getVideosPublic();
         final studentsList = await setStudentsList(snapshot);
         _videosStreamController.add(studentsList);
       }
@@ -150,13 +155,12 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleDivulgacionUnoFeed,
           style: ThemeText.paragraph16WhiteBold,
@@ -173,9 +177,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
           }
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+              child: CircularProgressIndicator(color: ThemeColors.blue),
             );
           }
           final students = snapshot.data!;
@@ -184,17 +186,13 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
             padding: const EdgeInsets.all(16),
             child: ListView(
               children: [
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Text(
                   'Actividades compartidas por los estudiantes',
                   textAlign: TextAlign.center,
                   style: ThemeText.paragraph16BlueBold,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 buildCards(students, videoPlayerControllers),
               ],
             ),
@@ -219,16 +217,12 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: ListTile(
-                  title: Text(listStudents[i]['aluno']),
-                ),
+                child: ListTile(title: Text(listStudents[i]['aluno'])),
               ),
               SizedBox(
                 width: 360,
                 height: 400,
-                child: Chewie(
-                  controller: videoControllers[i],
-                ),
+                child: Chewie(controller: videoControllers[i]),
               ),
             ],
           ),
@@ -236,8 +230,6 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
       );
       i++;
     }
-    return Column(
-      children: cards,
-    );
+    return Column(children: cards);
   }
 }

@@ -25,12 +25,23 @@ class _IntroDosTareaDosGrabacionPodcastPageState
   YoutubePlayerController get controller => widget.controller;
   Function() get listener => widget.listener;
 
-  void _launchURL() async {
+  Future<void> _launchURL() async {
     const url = 'https://www.youtube.com/watch?v=Ke0nMCBVFRw&t=8s';
-    if (await canLaunchUrl(Uri(path: url))) {
-      await launchUrl(Uri(path: url));
-    } else {
-      throw 'Could not launch $url';
+    final uri = Uri.parse(url);
+    var opened = false;
+    try {
+      if (await canLaunchUrl(uri)) {
+        opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      }
+    } catch (_) {
+      opened = false;
+    }
+    if (!opened && mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('No se pudo abrir el enlace de subtítulos.'),
+        ),
+      );
     }
   }
 
@@ -46,9 +57,7 @@ class _IntroDosTareaDosGrabacionPodcastPageState
             StringsGrabacionPodcast.descriptionTwoTareaDosGrabacionPodcast,
             style: ThemeText.paragraph16GrayNormal,
           ),
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40),
           YoutubePlayer(
             thumbnail: const Text(
               'https://www.youtube.com/watch?v=Ke0nMCBVFRw&t=8s',
@@ -60,13 +69,9 @@ class _IntroDosTareaDosGrabacionPodcastPageState
               controller.addListener(listener);
             },
             bottomActions: [
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Flexible(child: CurrentPosition()),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Expanded(
                 flex: 6,
                 child: ProgressBar(
@@ -76,36 +81,25 @@ class _IntroDosTareaDosGrabacionPodcastPageState
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               Flexible(child: RemainingDuration()),
-              const SizedBox(
-                width: 5,
-              ),
+              const SizedBox(width: 5),
             ],
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
           SizedBox(
             height: 60,
             width: MediaQuery.of(context).size.width,
             child: ElevatedButton.icon(
               style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  Colors.blue,
-                ),
+                backgroundColor: WidgetStateProperty.all(ThemeColors.blue),
                 shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
-              icon: Icon(
-                Icons.link,
-                color: Colors.white,
-              ),
+              icon: Icon(Icons.link, color: Colors.white),
               label: Text(
                 "Ver con subtítulos en YouTube",
                 style: ThemeText.paragraph14White,
@@ -113,9 +107,7 @@ class _IntroDosTareaDosGrabacionPodcastPageState
               onPressed: _launchURL,
             ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
         ],
       ),
     );

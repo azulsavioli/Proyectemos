@@ -101,6 +101,7 @@ class _TareaDosGrabacionPodcastPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -109,9 +110,7 @@ class _TareaDosGrabacionPodcastPageState
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsGrabacionPodcast.titleTareaDosGrabacionPodcast,
           style: ThemeText.paragraph14WhiteBold,
@@ -137,9 +136,7 @@ class _TareaDosGrabacionPodcastPageState
             },
             controller: pageController,
             children: [
-              IntroUnoTareaDosGrabacionPodcastPage(
-                controller: _controller,
-              ),
+              IntroUnoTareaDosGrabacionPodcastPage(controller: _controller),
               IntroDosTareaDosGrabacionPodcastPage(
                 controller: youTubeController,
                 listener: listener,
@@ -147,11 +144,7 @@ class _TareaDosGrabacionPodcastPageState
               const IntroTresTareaDosGrabacionPodcastPage(),
               QuestionGrabacionPodcastOne(
                 controller: _controller,
-                focusNodeList: [
-                  focusNode1,
-                  focusNode2,
-                  focusNode3,
-                ],
+                focusNodeList: [focusNode1, focusNode2, focusNode3],
                 controllerList: [
                   textController1,
                   textController2,
@@ -175,9 +168,7 @@ class _TareaDosGrabacionPodcastPageState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -210,8 +201,9 @@ class _TareaDosGrabacionPodcastPageState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         setState(() {

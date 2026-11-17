@@ -52,6 +52,7 @@ class _RecordAndPlayConocesPodcastScreenState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -158,23 +159,39 @@ class _RecordAndPlayConocesPodcastScreenState
     );
   }
 
-  Container _commonIconSection() {
+  Widget _commonIconSection() {
     final recordProvider = Provider.of<RecordAudioConocesPodcastProviderImpl>(
       context,
     );
 
-    return Container(
-      width: 100,
-      height: 100,
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: recordProvider.isRecording ? ThemeColors.red : ThemeColors.green,
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Icon(
-        recordProvider.isRecording ? Icons.stop : Icons.keyboard_voice_rounded,
-        color: Colors.white,
-        size: 60,
+    final recordLabel = recordProvider.isRecording
+        ? 'Detener la grabación'
+        : 'Grabar';
+    return Tooltip(
+      message: recordLabel,
+      excludeFromSemantics: true,
+      child: Semantics(
+        button: true,
+        label: recordLabel,
+        excludeSemantics: true,
+        child: Container(
+          width: 100,
+          height: 100,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: recordProvider.isRecording
+                ? ThemeColors.red
+                : ThemeColors.green,
+            borderRadius: BorderRadius.circular(100),
+          ),
+          child: Icon(
+            recordProvider.isRecording
+                ? Icons.stop
+                : Icons.keyboard_voice_rounded,
+            color: Colors.white,
+            size: 60,
+          ),
+        ),
       ),
     );
   }
@@ -209,6 +226,7 @@ class _RecordAndPlayConocesPodcastScreenState
     );
 
     return IconButton(
+      tooltip: playProvider.isSongPlaying ? 'Pausar' : 'Reproducir',
       onPressed: () async {
         if (songPath.isEmpty) return;
 

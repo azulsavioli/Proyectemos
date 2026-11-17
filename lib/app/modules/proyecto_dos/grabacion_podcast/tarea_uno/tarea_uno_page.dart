@@ -31,6 +31,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,9 +40,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsGrabacionPodcast.titleTareaUnoGrabacionPodcast,
           style: ThemeText.paragraph14WhiteBold,
@@ -55,13 +54,9 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
         },
         controller: pageController,
         children: [
-          IntroTareaUnoGrabacionPodcastPage(
-            controller: _controller,
-          ),
+          IntroTareaUnoGrabacionPodcastPage(controller: _controller),
           const IntroTareaDosGrabacionPodcastPage(),
-          TareaUnoGrabacionPodcastPage(
-            controller: _controller,
-          ),
+          TareaUnoGrabacionPodcastPage(controller: _controller),
         ],
       ),
       bottomNavigationBar: loading
@@ -77,9 +72,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -112,8 +105,9 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                   if (pageChanged == 2)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         final currentUser = await getCurrentUser(context);
@@ -138,10 +132,7 @@ class _TareaUnoGrabacionPodcastState extends State<TareaUnoGrabacionPodcast> {
                               '/pDos_grabacionPodcast_menu',
                             ),
                           );
-                          _controller.sendAnswers(
-                            context,
-                            currentUser,
-                          );
+                          _controller.sendAnswers(context, currentUser);
                         }
                       },
                       child: const Text(

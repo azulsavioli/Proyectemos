@@ -6,6 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// User dismissal of the Google account picker should stay silent.
+bool isGoogleSignInCancellation(Object error) {
+  if (error is GoogleSignInException &&
+      error.code == GoogleSignInExceptionCode.canceled) {
+    return true;
+  }
+  final text = error.toString().toLowerCase();
+  return text.contains('sign_in_canceled') ||
+      text.contains('sign_in_cancelled') ||
+      text.contains('google_sign_in_canceled');
+}
+
 class GoogleSignInProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
@@ -66,7 +78,9 @@ class GoogleSignInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> signIn() async {
+  /// `true` when Firebase has a user, `false` on a real failure, and `null`
+  /// when the person dismissed the Google account picker.
+  Future<bool?> signIn() async {
     try {
       if (!_googleSignIn.supportsAuthenticate()) {
         debugPrint('Authenticate not supported on this platform.');
@@ -80,6 +94,10 @@ class GoogleSignInProvider extends ChangeNotifier {
       notifyListeners();
       return _auth.currentUser != null;
     } catch (e) {
+      if (isGoogleSignInCancellation(e)) {
+        debugPrint('Usuário cancelou o login do Google.');
+        return null;
+      }
       debugPrint('Google Sign-In failed: $e');
       return false;
     }

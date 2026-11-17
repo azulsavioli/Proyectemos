@@ -52,8 +52,8 @@ class _FeedMovimientosSocialesPageState
   }
 
   Future<void> getFeedTask() async {
-    final resultado = await TresTasksCompletedService
-        .getTresMovimientosSocialesCompletedInfo();
+    final resultado =
+        await TresTasksCompletedService.getTresMovimientosSocialesCompletedInfo();
 
     setState(() {
       feedTurma = resultado;
@@ -117,13 +117,12 @@ class _FeedMovimientosSocialesPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsMovimientosSociales.title,
           style: ThemeText.paragraph16WhiteBold,
@@ -140,9 +139,7 @@ class _FeedMovimientosSocialesPageState
           }
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+              child: CircularProgressIndicator(color: ThemeColors.blue),
             );
           }
           final students = snapshot.data!;
@@ -151,17 +148,13 @@ class _FeedMovimientosSocialesPageState
             padding: const EdgeInsets.all(16),
             child: ListView(
               children: [
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Text(
                   'Videos compartidos por los estudiantes',
                   textAlign: TextAlign.center,
                   style: ThemeText.paragraph16BlueBold,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 buildCards(students, videoPlayerControllers),
               ],
             ),
@@ -184,16 +177,12 @@ class _FeedMovimientosSocialesPageState
             children: [
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: ListTile(
-                  title: Text(listStudents[i]['grupo']),
-                ),
+                child: ListTile(title: Text(listStudents[i]['grupo'])),
               ),
               SizedBox(
                 width: 360,
                 height: 400,
-                child: Chewie(
-                  controller: videoControllers[i],
-                ),
+                child: Chewie(controller: videoControllers[i]),
               ),
             ],
           ),
@@ -201,8 +190,6 @@ class _FeedMovimientosSocialesPageState
       );
       i++;
     }
-    return Column(
-      children: cards,
-    );
+    return Column(children: cards);
   }
 }

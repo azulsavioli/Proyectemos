@@ -77,6 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           centerTitle: true,
           title: Text('Perfil', style: ThemeText.paragraph16WhiteBold),
           leading: IconButton(
+            tooltip: 'Volver',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyectos'),
           ),

@@ -96,7 +96,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   dotHeight: 10,
                   dotWidth: 10,
                   activeDotColor: Colors.blueAccent,
-                  dotColor: Colors.white,
+                  dotColor: Colors.black26,
                 ),
               ),
             ),

@@ -57,6 +57,7 @@ class _PTresLaSociedadtMenuState extends State<PTresLaSociedadtMenu> {
         backgroundColor: ThemeColors.white,
         appBar: AppBar(
           leading: IconButton(
+            tooltip: 'Volver',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyecto_tres'),
           ),
