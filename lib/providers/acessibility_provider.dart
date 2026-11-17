@@ -1,28 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Accessibility mode follows the system unless the student sets an override.
 class AccessibilityProvider with ChangeNotifier {
-  bool _isAccessible = false;
+  static const preferenceKey = 'isAccessible';
 
-  bool get isAccessible => _isAccessible;
+  bool? _override;
+  bool _loaded = false;
+
+  bool get loaded => _loaded;
+
+  /// Null means "follow the system".
+  bool? get overridePreference => _override;
 
   AccessibilityProvider() {
     _loadAccessibility();
   }
 
+  bool followsSystem(MediaQueryData media) {
+    return media.accessibleNavigation ||
+        media.boldText ||
+        media.highContrast ||
+        media.disableAnimations;
+  }
+
+  bool isEnabled(BuildContext context) {
+    return _override ?? followsSystem(MediaQuery.of(context));
+  }
+
   Future<void> _loadAccessibility() async {
     final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    if (isAccessibleOn != null) {
-      _isAccessible = isAccessibleOn;
+    if (preferences.containsKey(preferenceKey)) {
+      _override = preferences.getBool(preferenceKey);
+    } else {
+      _override = null;
     }
+    _loaded = true;
     notifyListeners();
   }
 
   Future<void> setAccessibility(bool value) async {
     final preferences = await SharedPreferences.getInstance();
-    await preferences.setBool("isAccessible", value);
-    _isAccessible = value;
+    await preferences.setBool(preferenceKey, value);
+    _override = value;
+    notifyListeners();
+  }
+
+  Future<void> clearOverride() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove(preferenceKey);
+    _override = null;
     notifyListeners();
   }
 }

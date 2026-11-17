@@ -4,6 +4,7 @@ import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
 
 import '../../../../../commons/styles.dart';
 import '../../../widgets/player.dart';
+import '../../../widgets/spanish_text.dart';
 
 class IntroUnoMovimientosSocialesPage extends StatefulWidget {
   const IntroUnoMovimientosSocialesPage({
@@ -52,7 +53,7 @@ class _IntroUnoMovimientosSocialesPageState
             const SizedBox(
               height: 20,
             ),
-            Text(
+            SpanishText(
               StringsMovimientosSociales.descriptionUno,
               style: ThemeText.paragraph16GrayNormal,
             ),
@@ -60,6 +61,13 @@ class _IntroUnoMovimientosSocialesPageState
               height: 20,
             ),
             PlayerWidget(player: player),
+            const SizedBox(height: 16),
+            Text('Transcrição', style: ThemeText.paragraph16GrayBold),
+            const SizedBox(height: 8),
+            SpanishText(
+              StringsMovimientosSociales.descriptionUno,
+              style: ThemeText.paragraph14Gray,
+            ),
             const SizedBox(
               height: 40,
             ),

@@ -65,7 +65,7 @@ class _QuestionComoCrearUnaEncuestaTresState
                 hint: 'Respuesta',
                 controller: _textController,
                 keyboardType: TextInputType.text,
-                validatorVazio: 'Ingrese tuja respuesta correctamente',
+                validatorVazio: 'Ingrese tu respuesta correctamente',
                 validatorMenorqueNumero:
                     'Su respuesta debe tener al menos 3 caracteres',
               ),

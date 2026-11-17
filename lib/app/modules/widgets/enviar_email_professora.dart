@@ -96,7 +96,7 @@ ${_emailController.text}''';
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -124,7 +124,7 @@ ${_emailController.text}''';
               hint: 'Respuesta',
               controller: _emailController,
               keyboardType: TextInputType.text,
-              validatorVazio: 'Ingrese tuja respuesta correctamente',
+              validatorVazio: 'Ingrese tu respuesta correctamente',
               validatorMenorqueNumero:
                   'Su respuesta debe tener al menos 3 caracteres',
             ),

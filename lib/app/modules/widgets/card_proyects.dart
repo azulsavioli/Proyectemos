@@ -76,13 +76,16 @@ class CardProyecto extends StatelessWidget {
               ),
               if (icon != null) ...[
                 const SizedBox(width: 8),
-                CircleAvatar(
-                  radius: 15,
-                  backgroundColor: backgroundColor,
-                  child: Icon(
-                    icon!,
-                    size: 20,
-                    color: ThemeColors.foregroundOn(backgroundColor),
+                Semantics(
+                  label: 'Módulo concluído',
+                  child: CircleAvatar(
+                    radius: 15,
+                    backgroundColor: backgroundColor,
+                    child: Icon(
+                      icon!,
+                      size: 20,
+                      color: ThemeColors.foregroundOn(backgroundColor),
+                    ),
                   ),
                 ),
               ],

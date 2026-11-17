@@ -145,7 +145,7 @@ void main() {
     await tester.pump();
     expect(find.text('Enviar'), findsNothing);
     expect(find.text('Próximo'), findsOneWidget);
-    expect(find.byTooltip('Volver'), findsOneWidget);
+    expect(find.byTooltip('Voltar'), findsOneWidget);
 
     for (var i = 0; i < 9; i++) {
       await tester.tap(find.text('Próximo'));
