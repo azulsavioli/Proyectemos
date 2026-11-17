@@ -45,9 +45,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsConocesPodcast.titleConocesPodcastUno,
           style: ThemeText.paragraph14WhiteBold,
@@ -61,12 +59,8 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
         },
         controller: pageController,
         children: [
-          QuestionConocesPodcastOne(
-            controller: _controller,
-          ),
-          QuestionConocesPodcastDos(
-            controller: _controller,
-          ),
+          QuestionConocesPodcastOne(controller: _controller),
+          QuestionConocesPodcastDos(controller: _controller),
           QuestionConocesPodcastTres(
             focusNode: focusNode1,
             textController: textEditingController1,
@@ -92,9 +86,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -127,10 +119,14 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
-                        final currentUser = await getCurrentUser(context); // <-- await
+                        final currentUser = await getCurrentUser(
+                          context,
+                        ); // <-- await
 
                         if (_controller.isAccessible!) {
                           if (textEditingController1.text.isEmpty ||
@@ -150,7 +146,9 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                             loading = true;
                           });
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 
@@ -167,11 +165,13 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
 
                           if (!mounted) return;
 
-                          Navigator.pushNamed(context, '/pDos_conocesPodcast_menu');
+                          Navigator.pushNamed(
+                            context,
+                            '/pDos_conocesPodcast_menu',
+                          );
                           setState(() {
                             loading = false;
                           });
-
                         } else {
                           if (recordsPathList.isEmpty ||
                               recordsPathList.length < 2 ||
@@ -190,7 +190,9 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                             loading = true;
                           });
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 
@@ -202,7 +204,10 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
 
                           if (!mounted) return;
 
-                          Navigator.pushNamed(context, '/pDos_conocesPodcast_menu');
+                          Navigator.pushNamed(
+                            context,
+                            '/pDos_conocesPodcast_menu',
+                          );
                           setState(() {
                             loading = false;
                           });
@@ -217,7 +222,6 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         ),
                       ),
                     )
-
                   else
                     TextButton(
                       onPressed: () {

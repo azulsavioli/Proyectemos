@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
@@ -41,16 +42,15 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
     if (tareaUno && tareaDos) {
       await Future.delayed(
         const Duration(seconds: 3),
-        () => setState(
-          () => timerEnded = true,
-        ),
+        () => setState(() => timerEnded = true),
       );
     }
   }
 
   Future<void> isTaskOneLoading() async {
     final isTaskOneLoading = await DosTasksCompletedService.isLoadind(
-        "grabacionPodcastTareaUnoCompleted");
+      "grabacionPodcastTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTareaUno = isTaskOneLoading;
     });
@@ -58,7 +58,8 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
 
   Future<void> isTaskDosLoading() async {
     final isTaskTwoLoading = await DosTasksCompletedService.isLoadind(
-        "grabacionPodcastTareaDosCompleted");
+      "grabacionPodcastTareaDosCompleted",
+    );
     setState(() {
       isLoadingTareaDos = isTaskTwoLoading;
     });
@@ -78,7 +79,7 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_dos'),
+            onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -96,80 +97,74 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando\nGuión de grabación'
                       : tareaUno
-                          ? 'Feedback\nGuión de grabación'
-                          : 'Guión de grabación',
-                  cardWidth:  isMobile ? width : widthTablet,
+                      ? 'Feedback\nGuión de grabación'
+                      : 'Guión de grabación',
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
                       : tareaUno
-                          ? '/pDos_grabacion_podcast_feedback_tarea_uno'
-                          : '/pDos_grabacion_podcast_tarea_uno',
+                      ? '/pDos_grabacion_podcast_feedback_tarea_uno'
+                      : '/pDos_grabacion_podcast_tarea_uno',
                   backgroundColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                   icon: isLoadingTareaUno
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.style,
+                      ? Icons.check
+                      : Icons.style,
                   shadowColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nGrabar el podcast'
                       : tareaDos
-                          ? 'Feedback\nGrabar el podcast'
-                          : 'Grabar el podcast',
-                  cardWidth:  isMobile ? width : widthTablet,
+                      ? 'Feedback\nGrabar el podcast'
+                      : 'Grabar el podcast',
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
                       : tareaDos
-                          ? '/pDos_grabacion_podcast_feedback_tarea_dos'
-                          : '/pDos_grabacion_podcast_tarea_dos',
+                      ? '/pDos_grabacion_podcast_feedback_tarea_dos'
+                      : '/pDos_grabacion_podcast_tarea_dos',
                   backgroundColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                   icon: isLoadingTareaDos
                       ? Icons.hourglass_bottom_outlined
                       : tareaDos
-                          ? Icons.check
-                          : Icons.mic_external_on,
+                      ? Icons.check
+                      : Icons.mic_external_on,
                   shadowColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (tareaUno && tareaDos && timerEnded)
                   CardButton(
                     iconSize: isMobile ? 30 : 50,
                     text: 'Feed de Podcasts',
-                    cardWidth:  isMobile ? width : widthTablet,
+                    cardWidth: isMobile ? width : widthTablet,
                     cardHeight: height,
                     namedRoute: '/pDos_grabacion_podcast_feed',
                     backgroundColor: ThemeColors.green,
@@ -190,9 +185,7 @@ class _PDosGrabacionPodcastMenuState extends State<PDosGrabacionPodcastMenu> {
                       ),
                     ),
                   ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 
 import '../../../commons/strings/strings.dart';
@@ -62,9 +63,12 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
-              onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
+              onPressed: () => popOrReplace(context, '/proyectos'),
             ),
           ),
           centerTitle: true,
@@ -105,24 +109,22 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                       ? ThemeColors.green
                       : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: 'Artistas\nhispanoamericanos',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pUno_artistas_menu',
-                  backgroundColor:
-                      artistasCompleted ? ThemeColors.green : ThemeColors.blue,
+                  backgroundColor: artistasCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                   icon: artistasCompleted ? Icons.check : Icons.group,
-                  shadowColor:
-                      artistasCompleted ? ThemeColors.green : ThemeColors.blue,
+                  shadowColor: artistasCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Evento Cultural',
@@ -137,9 +139,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Divulgación',
@@ -154,9 +154,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

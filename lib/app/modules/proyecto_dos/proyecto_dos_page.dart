@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 
 import '../../../commons/strings/strings.dart';
@@ -52,7 +53,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+            onPressed: () => popOrReplace(context, '/proyectos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -79,11 +80,11 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                   ),
                 ),
                 CardButton(
-                  iconSize:isMobile ? 30 : 50,
+                  iconSize: isMobile ? 30 : 50,
                   text: conocesPodcastCompleted
                       ? Strings.titlefeedbackConocesPodcast
                       : Strings.titleConocesPodcast,
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_conocesPodcast_menu',
                   backgroundColor: conocesPodcastCompleted
@@ -94,78 +95,73 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
                       ? ThemeColors.green
                       : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Cómo crear un podcast',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_comoCrearPodcast_menu',
                   backgroundColor: comoCrearPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
-                  icon:
-                      comoCrearPodcastCompleted ? Icons.check : Icons.group_add,
+                  icon: comoCrearPodcastCompleted
+                      ? Icons.check
+                      : Icons.group_add,
                   shadowColor: comoCrearPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: 'La encuesta',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_laEncuesta_menu',
-                  backgroundColor:
-                      laEncuestaCompleted ? ThemeColors.green : ThemeColors.red,
+                  backgroundColor: laEncuestaCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: laEncuestaCompleted ? Icons.check : Icons.person,
-                  shadowColor:
-                      laEncuestaCompleted ? ThemeColors.green : ThemeColors.red,
+                  shadowColor: laEncuestaCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Creación de la encuesta',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_creacionEncuesta_menu',
                   backgroundColor: creacionEncuestaCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
-                  icon:
-                      creacionEncuestaCompleted ? Icons.check : Icons.group_add,
+                  icon: creacionEncuestaCompleted
+                      ? Icons.check
+                      : Icons.group_add,
                   shadowColor: creacionEncuestaCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Grabación del podcast',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pDos_grabacionPodcast_menu',
                   backgroundColor: grabacionPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
-                  icon:
-                      grabacionPodcastCompleted ? Icons.check : Icons.group_add,
+                  icon: grabacionPodcastCompleted
+                      ? Icons.check
+                      : Icons.group_add,
                   shadowColor: grabacionPodcastCompleted
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

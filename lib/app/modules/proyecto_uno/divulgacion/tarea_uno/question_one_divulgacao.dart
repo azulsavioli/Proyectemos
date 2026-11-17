@@ -6,10 +6,8 @@ import 'tarea_uno_controller.dart';
 class QuestionDivulgacaoOne extends StatefulWidget {
   final DivulgacaoController controller;
 
-  const QuestionDivulgacaoOne({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+  const QuestionDivulgacaoOne({Key? key, required this.controller})
+    : super(key: key);
 
   @override
   State<QuestionDivulgacaoOne> createState() => _QuestionDivulgacaoOneState();
@@ -24,10 +22,7 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
   bool isButtonDisabled = false;
 
   bool buttonFileSelected = false;
-  Icon buttonFileIcon = const Icon(
-    Icons.file_copy,
-    color: ThemeColors.white,
-  );
+  Icon buttonFileIcon = const Icon(Icons.file_copy, color: ThemeColors.white);
   Color buttonFileColor = ThemeColors.blue;
 
   @override
@@ -40,50 +35,42 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: RadioListTile<OpcoesCompartilhamento>(
-                    title: const Text('Todos'),
-                    fillColor: WidgetStateProperty.resolveWith(
-                      (states) => ThemeColors.blue,
+            child: RadioGroup<OpcoesCompartilhamento>(
+              groupValue: _controller.sendingType,
+              onChanged: (value) {
+                setState(() {
+                  _controller.sendingType = value;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: RadioListTile<OpcoesCompartilhamento>(
+                      title: const Text('Todos'),
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => ThemeColors.blue,
+                      ),
+                      value: OpcoesCompartilhamento.todos,
                     ),
-                    value: OpcoesCompartilhamento.todos,
-                    groupValue: _controller.sendingType,
-                    onChanged: (OpcoesCompartilhamento? value) {
-                      setState(() {
-                        _controller.sendingType = value;
-                      });
-                    },
                   ),
-                ),
-                Expanded(
-                  child: RadioListTile<OpcoesCompartilhamento>(
-                    title: const Text('Turma'),
-                    fillColor: WidgetStateProperty.resolveWith(
-                      (states) => ThemeColors.blue,
+                  Expanded(
+                    child: RadioListTile<OpcoesCompartilhamento>(
+                      title: const Text('Turma'),
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => ThemeColors.blue,
+                      ),
+                      value: OpcoesCompartilhamento.turma,
                     ),
-                    value: OpcoesCompartilhamento.turma,
-                    groupValue: _controller.sendingType,
-                    onChanged: (OpcoesCompartilhamento? value) {
-                      setState(() {
-                        _controller.sendingType = value;
-                      });
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
           SizedBox(
             height: 60,
             width: MediaQuery.of(context).size.width,
@@ -112,15 +99,10 @@ class _QuestionDivulgacaoOneState extends State<QuestionDivulgacaoOne>
                   });
                 }
               },
-              label: Text(
-                'Subir el vídeo',
-                style: ThemeText.paragraph16White,
-              ),
+              label: Text('Subir el vídeo', style: ThemeText.paragraph16White),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -8,6 +9,7 @@ class PlayAudioProvider extends ChangeNotifier {
   double _currAudioPlaying = 0;
   bool _isSongPlaying = false;
   String _audioFilePath = '';
+  bool _listenersAttached = false;
 
   bool get isSongPlaying => _isSongPlaying;
 
@@ -23,90 +25,83 @@ class PlayAudioProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  playAssetAudio(String assetPath, {bool update = true}) async {
-    try {
-      _justAudioPlayer.positionStream.listen((event) {
-        _currAudioPlaying = event.inMicroseconds.ceilToDouble();
-        if (update) notifyListeners();
-      });
+  void _ensureListeners() {
+    if (_listenersAttached) return;
+    _listenersAttached = true;
 
-      _justAudioPlayer.playerStateStream.listen((event) {
-        if (event.processingState == ProcessingState.completed) {
-          _justAudioPlayer.stop();
-          _reset();
-        }
-      });
+    _justAudioPlayer.positionStream.listen((event) {
+      _currAudioPlaying = event.inMicroseconds.ceilToDouble();
+      notifyListeners();
+    });
 
-      if (_audioFilePath != assetPath) {
-        setAudioFilePath(assetPath);
-
-        await _justAudioPlayer.setAsset(assetPath); // Modificado para setAsset
-        updateSongPlayingStatus(true);
-        await _justAudioPlayer.play();
-      }
-
-      if (_justAudioPlayer.processingState == ProcessingState.idle) {
-        await _justAudioPlayer.setAsset(assetPath); // Modificado para setAsset
-        updateSongPlayingStatus(true);
-
-        await _justAudioPlayer.play();
-      } else if (_justAudioPlayer.playing) {
-        updateSongPlayingStatus(false);
-
-        await _justAudioPlayer.pause();
-      } else if (_justAudioPlayer.processingState == ProcessingState.ready) {
-        updateSongPlayingStatus(true);
-
-        await _justAudioPlayer.play();
-      } else if (_justAudioPlayer.processingState ==
-          ProcessingState.completed) {
+    _justAudioPlayer.playerStateStream.listen((event) {
+      if (event.processingState == ProcessingState.completed) {
+        _justAudioPlayer.stop();
         _reset();
       }
+    });
+  }
+
+  Future<void> _toggleSource({
+    required bool isNewSource,
+    required Future<void> Function() load,
+  }) async {
+    _ensureListeners();
+    if (isNewSource ||
+        _justAudioPlayer.processingState == ProcessingState.idle ||
+        _justAudioPlayer.processingState == ProcessingState.completed) {
+      await load();
+      updateSongPlayingStatus(true);
+      await _justAudioPlayer.play();
+      return;
+    }
+
+    if (_justAudioPlayer.playing) {
+      updateSongPlayingStatus(false);
+      await _justAudioPlayer.pause();
+      return;
+    }
+
+    updateSongPlayingStatus(true);
+    await _justAudioPlayer.play();
+  }
+
+  Future<String?> playAssetAudio(String assetPath, {bool update = true}) async {
+    try {
+      final isNewSource = _audioFilePath != assetPath;
+      await _toggleSource(
+        isNewSource: isNewSource,
+        load: () async {
+          setAudioFilePath(assetPath);
+          await _justAudioPlayer.setAsset(assetPath);
+        },
+      );
+      return null;
     } catch (e) {
+      debugPrint('Erro ao tocar asset de áudio: $e');
+      updateSongPlayingStatus(false);
       return e.toString();
     }
   }
 
-  playAudio(File incomingAudioFile, {bool update = true}) async {
+  Future<String?> playAudio(
+    File incomingAudioFile, {
+    bool update = true,
+  }) async {
     try {
-      _justAudioPlayer.positionStream.listen((event) {
-        _currAudioPlaying = event.inMicroseconds.ceilToDouble();
-        if (update) notifyListeners();
-      });
-
-      _justAudioPlayer.playerStateStream.listen((event) {
-        if (event.processingState == ProcessingState.completed) {
-          _justAudioPlayer.stop();
-          _reset();
-        }
-      });
-
-      if (_audioFilePath != incomingAudioFile.path) {
-        setAudioFilePath(incomingAudioFile.path);
-
-        await _justAudioPlayer.setFilePath(incomingAudioFile.path);
-        updateSongPlayingStatus(true);
-        await _justAudioPlayer.play();
-      }
-
-      if (_justAudioPlayer.processingState == ProcessingState.idle) {
-        await _justAudioPlayer.setFilePath(incomingAudioFile.path);
-        updateSongPlayingStatus(true);
-
-        await _justAudioPlayer.play();
-      } else if (_justAudioPlayer.playing) {
-        updateSongPlayingStatus(false);
-
-        await _justAudioPlayer.pause();
-      } else if (_justAudioPlayer.processingState == ProcessingState.ready) {
-        updateSongPlayingStatus(true);
-
-        await _justAudioPlayer.play();
-      } else if (_justAudioPlayer.processingState ==
-          ProcessingState.completed) {
-        _reset();
-      }
+      final path = incomingAudioFile.path;
+      final isNewSource = _audioFilePath != path;
+      await _toggleSource(
+        isNewSource: isNewSource,
+        load: () async {
+          setAudioFilePath(path);
+          await _justAudioPlayer.setFilePath(path);
+        },
+      );
+      return null;
     } catch (e) {
+      debugPrint('Erro ao tocar áudio gravado: $e');
+      updateSongPlayingStatus(false);
       return e.toString();
     }
   }
@@ -114,7 +109,6 @@ class PlayAudioProvider extends ChangeNotifier {
   void _reset() {
     _currAudioPlaying = 0.0;
     notifyListeners();
-
     updateSongPlayingStatus(false);
   }
 
@@ -124,9 +118,16 @@ class PlayAudioProvider extends ChangeNotifier {
   }
 
   double get currLoadingStatus {
-    final currTime = _currAudioPlaying /
-        (_justAudioPlayer.duration?.inMicroseconds.ceilToDouble() ?? 1.0);
-
+    final duration = _justAudioPlayer.duration?.inMicroseconds.ceilToDouble();
+    if (duration == null || duration == 0) return 0;
+    final currTime = _currAudioPlaying / duration;
+    if (currTime < 0) return 0;
     return currTime > 1.0 ? 1.0 : currTime;
+  }
+
+  @override
+  void dispose() {
+    _justAudioPlayer.dispose();
+    super.dispose();
   }
 }

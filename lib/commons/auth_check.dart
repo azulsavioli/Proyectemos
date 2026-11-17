@@ -1,14 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/home/home_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
-import 'package:proyectemos/app/modules/registration/registration_page.dart';
 import 'package:proyectemos/app/modules/onboarding/onboarding_page.dart';
+import 'package:proyectemos/app/modules/registration/registration_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthCheck extends StatelessWidget {
+class AuthCheck extends StatefulWidget {
   const AuthCheck({Key? key}) : super(key: key);
+
+  @override
+  State<AuthCheck> createState() => _AuthCheckState();
+}
+
+class _AuthCheckState extends State<AuthCheck> {
+  String? _userKey;
+  Future<Widget>? _redirect;
 
   Future<Widget> _handleRedirect(User? currentUser) async {
     final preferences = await SharedPreferences.getInstance();
@@ -22,7 +29,8 @@ class AuthCheck extends StatelessWidget {
       return const OnboardingPage();
     }
 
-    final bool isStudentInfoSaved = preferences.getBool('studentInfoSaved') ?? false;
+    final bool isStudentInfoSaved =
+        preferences.getBool('studentInfoSaved') ?? false;
     if (!isStudentInfoSaved) {
       return const RegistrationPage();
     }
@@ -36,26 +44,33 @@ class AuthCheck extends StatelessWidget {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
         }
 
         if (snapshot.hasError) {
-          if (kDebugMode) print('Erro no authStateChanges: ${snapshot.error}');
+          debugPrint('Erro no authStateChanges: ${snapshot.error}');
           return const LoginPage();
         }
 
         final user = snapshot.data;
+        final key = user?.uid ?? '';
+        if (_userKey != key || _redirect == null) {
+          _userKey = key;
+          _redirect = _handleRedirect(user);
+        }
 
         return FutureBuilder<Widget>(
-          future: _handleRedirect(user),
+          future: _redirect,
           builder: (context, redirectSnapshot) {
             if (redirectSnapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
             }
             if (redirectSnapshot.hasError) {
-              if (kDebugMode) {
-                print('Erro ao redirecionar: ${redirectSnapshot.error}');
-              }
+              debugPrint('Erro ao redirecionar: ${redirectSnapshot.error}');
               return const LoginPage();
             }
             return redirectSnapshot.data ?? const LoginPage();

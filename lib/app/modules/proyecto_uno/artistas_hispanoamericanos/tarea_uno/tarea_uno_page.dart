@@ -46,8 +46,11 @@ class _TareaArtistasLatinoamericanosPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
@@ -61,40 +64,39 @@ class _TareaArtistasLatinoamericanosPageState
           ),
         ),
         body: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(
-                  height:
-                      MediaQuery.of(context).size.height - kToolbarHeight - 90,
-                  child: PageView(
-                    onPageChanged: (index) {
-                      setState(() {
-                        pageChanged = index;
-                      });
-                    },
-                    controller: pageController,
-                    children: [
-                      IntroTareaUnoArtistasHispanoamericanosPage(
-                        controller: _controller,
-                      ),
-                      QuestionArtistashispanoamericanosOne(
-                        controller: _controller,
-                      ),
-                      QuestionArtistashispanoamericanosTwo(
-                        controller: _controller,
-                      ),
-                      QuestionArtistashispanoamericanosThree(
-                        controller: _controller,
-                      ),
-                    ],
-                  ),
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              SizedBox(
+                height:
+                    MediaQuery.of(context).size.height - kToolbarHeight - 90,
+                child: PageView(
+                  onPageChanged: (index) {
+                    setState(() {
+                      pageChanged = index;
+                    });
+                  },
+                  controller: pageController,
+                  children: [
+                    IntroTareaUnoArtistasHispanoamericanosPage(
+                      controller: _controller,
+                    ),
+                    QuestionArtistashispanoamericanosOne(
+                      controller: _controller,
+                    ),
+                    QuestionArtistashispanoamericanosTwo(
+                      controller: _controller,
+                    ),
+                    QuestionArtistashispanoamericanosThree(
+                      controller: _controller,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: 100,
-                )
-              ],
-            )),
+              ),
+              SizedBox(height: 100),
+            ],
+          ),
+        ),
         bottomNavigationBar: loading
             ? const LinearProgressIndicator(
                 minHeight: 20,
@@ -109,9 +111,7 @@ class _TareaArtistasLatinoamericanosPageState
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     if (pageChanged == 0)
-                      const SizedBox(
-                        width: 65,
-                      )
+                      const SizedBox(width: 65)
                     else
                       TextButton(
                         onPressed: () {
@@ -144,12 +144,15 @@ class _TareaArtistasLatinoamericanosPageState
                     if (pageChanged == 3)
                       TextButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            ThemeColors.blue,
+                          ),
                         ),
                         onPressed: () async {
                           final currentUser = await getCurrentUser(context);
 
-                          if (recordsPathList.isEmpty || recordsPathList.length < 3) {
+                          if (recordsPathList.isEmpty ||
+                              recordsPathList.length < 3) {
                             showToast(
                               context,
                               '¡No se puede enviar la respuesta! Graba los audios y haz clic en guardar!',
@@ -164,7 +167,9 @@ class _TareaArtistasLatinoamericanosPageState
                               loading = true;
                             });
 
-                            await Future.delayed(const Duration(milliseconds: 2000));
+                            await Future.delayed(
+                              const Duration(milliseconds: 2000),
+                            );
 
                             if (!mounted) return;
 
@@ -176,10 +181,7 @@ class _TareaArtistasLatinoamericanosPageState
 
                             if (!mounted) return;
 
-                            Navigator.pushNamed(
-                              context,
-                              '/pUno_artistas_menu',
-                            );
+                            Navigator.pushNamed(context, '/pUno_artistas_menu');
 
                             setState(() {
                               loading = false;
@@ -195,7 +197,6 @@ class _TareaArtistasLatinoamericanosPageState
                           ),
                         ),
                       )
-
                     else
                       TextButton(
                         onPressed: () {

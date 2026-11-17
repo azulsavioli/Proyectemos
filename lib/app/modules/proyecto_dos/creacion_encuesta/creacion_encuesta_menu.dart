@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -36,8 +37,9 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await UnoTasksCompletedService.isLoadind("creacionEncuestaCompleted");
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+      "creacionEncuestaCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -57,7 +59,7 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_dos'),
+            onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -75,42 +77,38 @@ class _PDosCreacionEncuestaMenuState extends State<PDosCreacionEncuestaMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: isLoadingTarea
                       ? 'Cargando\nCreacion de la encuesta'
                       : tareaUno
-                          ? 'Feedback\nCreacion de la encuesta'
-                          : 'Creacion de la encuesta',
+                      ? 'Feedback\nCreacion de la encuesta'
+                      : 'Creacion de la encuesta',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pDos_creacionEncuesta_feedback'
-                          : '/pDos_creacionEncuesta',
+                      ? '/pDos_creacionEncuesta_feedback'
+                      : '/pDos_creacionEncuesta',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

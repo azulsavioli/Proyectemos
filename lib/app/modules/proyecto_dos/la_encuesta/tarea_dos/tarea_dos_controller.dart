@@ -28,7 +28,7 @@ class TareaDosComoCrearUnaEncuestaController extends ChangeNotifier {
   Future<void> getIsAcessible() async {
     final preferences = await SharedPreferences.getInstance();
     final isAccessibleOn = preferences.getBool("isAccessible");
-    if (isAccessible != null) {
+    if (isAccessibleOn != null) {
       isAccessible = isAccessibleOn;
       notifyListeners();
     }

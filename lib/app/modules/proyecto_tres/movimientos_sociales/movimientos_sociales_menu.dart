@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/services/tres_tasks_completed.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -28,8 +29,8 @@ class _PTresMovimientosSocialestMenuState
   }
 
   Future<void> getTaskCompleted() async {
-    final resultado = await TresTasksCompletedService
-        .getTresMovimientosSocialesCompletedInfo();
+    final resultado =
+        await TresTasksCompletedService.getTresMovimientosSocialesCompletedInfo();
 
     setState(() {
       tareaUno = resultado;
@@ -45,7 +46,8 @@ class _PTresMovimientosSocialestMenuState
 
   Future<void> isTaskOneLoading() async {
     final isTaskOneLoading = await TresTasksCompletedService.isLoadind(
-        "movimientosSocialesCompleted");
+      "movimientosSocialesCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -65,7 +67,7 @@ class _PTresMovimientosSocialestMenuState
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_tres'),
+            onPressed: () => popOrReplace(context, '/proyecto_tres'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -83,42 +85,38 @@ class _PTresMovimientosSocialestMenuState
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nMovimientos Sociales'
                       : tareaUno
-                          ? 'Feedback\nMovimientos sociales'
-                          : 'Movimientos sociales',
+                      ? 'Feedback\nMovimientos sociales'
+                      : 'Movimientos sociales',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pTres_movimientosSociales_feedback'
-                          : '/pTres_movimientosSociales',
+                      ? '/pTres_movimientosSociales_feedback'
+                      : '/pTres_movimientosSociales',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 if (tareaUno && timerEnded)
                   CardButton(
                     iconSize: isMobile ? 30 : 50,

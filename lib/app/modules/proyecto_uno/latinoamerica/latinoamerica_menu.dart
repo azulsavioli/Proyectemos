@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -32,7 +33,8 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
 
   Future<void> isTaskOneLoading() async {
     final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
-        "latinoamericaTareaUnoCompleted");
+      "latinoamericaTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTareaUno = isTaskOneLoading;
     });
@@ -40,7 +42,8 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
 
   Future<void> isTaskDosLoading() async {
     final isTaskTwoLoading = await UnoTasksCompletedService.isLoadind(
-        "latinoamericaTareaDosCompleted");
+      "latinoamericaTareaDosCompleted",
+    );
     setState(() {
       isLoadingTareaDos = isTaskTwoLoading;
     });
@@ -89,9 +92,12 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
-              onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
+              onPressed: () => popOrReplace(context, '/proyecto_uno'),
             ),
           ),
           centerTitle: true,
@@ -116,30 +122,30 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                   text: isLoadingTareaUno
                       ? 'Cargando 300 kilos'
                       : tareaUno
-                          ? 'Feedback 300 kilos'
-                          : '300 kilos',
+                      ? 'Feedback 300 kilos'
+                      : '300 kilos',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
                       : tareaUno
-                          ? '/pUno_latinoamerica_feedback_tarea_uno'
-                          : '/pUno_latinoamerica_tarea_uno',
+                      ? '/pUno_latinoamerica_feedback_tarea_uno'
+                      : '/pUno_latinoamerica_tarea_uno',
                   backgroundColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTareaUno
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.music_note_sharp,
+                      ? Icons.check
+                      : Icons.music_note_sharp,
                   shadowColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
                 const SizedBox(height: 20),
                 CardButton(
@@ -147,30 +153,30 @@ class _PUnoLatinoamericaMenuState extends State<PUnoLatinoamericaMenu> {
                   text: isLoadingTareaDos
                       ? 'Cargando\nTu Latinoamérica'
                       : tareaDos
-                          ? 'Feedback\nTu Latinoamérica'
-                          : 'Tu Latinoamérica',
+                      ? 'Feedback\nTu Latinoamérica'
+                      : 'Tu Latinoamérica',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
                       : tareaDos
-                          ? '/pUno_latinoamerica_feedback_tarea_dos'
-                          : '/pUno_latinoamerica_tarea_dos',
+                      ? '/pUno_latinoamerica_feedback_tarea_dos'
+                      : '/pUno_latinoamerica_tarea_dos',
                   backgroundColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTareaDos
                       ? Icons.hourglass_bottom_outlined
                       : tareaDos
-                          ? Icons.check
-                          : Icons.image,
+                      ? Icons.check
+                      : Icons.image,
                   shadowColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
                 const SizedBox(height: 20),
                 if (tareaUno && tareaDos && timerEnded)

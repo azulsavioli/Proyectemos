@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/profile/profile_controller.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
+import 'package:proyectemos/utils/navigation.dart';
 
 import '../../../commons/google_sign_in.dart';
 import '../../../repository/repository_impl.dart';
@@ -22,9 +24,10 @@ class _ProfilePageState extends State<ProfilePage> {
   final _repository = RepositoryImpl();
   var percentage = 0.0;
   final user = FirebaseAuth.instance.currentUser!;
-  var allStudentsInfo = [];
   var studentSchool = '';
   var studentClass = '';
+  bool _loading = true;
+  String? _loadError;
 
   @override
   void initState() {
@@ -33,45 +36,49 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _initializeData() async {
-    await getStudentInfo();
-    await _controller.getUnoTaskCompleted();
-    await _controller.getDosTaskCompleted();
-    await _controller.getTresTaskCompleted();
-    await _controller
-        .getPercentage();
-    setState(() {
-      percentage = _controller.percentage;
-    });
+    try {
+      await getStudentInfo();
+      await _controller.getUnoTaskCompleted();
+      await _controller.getDosTaskCompleted();
+      await _controller.getTresTaskCompleted();
+      await _controller.getPercentage();
+      if (!mounted) return;
+      setState(() {
+        percentage = _controller.percentage;
+        _loading = false;
+        _loadError = null;
+      });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _loading = false;
+        _loadError = 'No se pudo cargar el perfil. Inténtalo de nuevo.';
+      });
+    }
   }
 
   Future<void> getStudentInfo() async {
-    allStudentsInfo = await _repository.getStudentInfo();
-    studentSchool = allStudentsInfo[1];
-    studentClass = allStudentsInfo[2];
+    final allStudentsInfo = await _repository.getStudentInfo();
+    if (allStudentsInfo.length > 2) {
+      studentSchool = '${allStudentsInfo[1]}';
+      studentClass = '${allStudentsInfo[2]}';
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width * .9;
     final height = MediaQuery.of(context).size.width * .2;
-    var tasksCompleted = 0;
-    // final _repository = RepositoryImpl();
-
-    setState(() {
-      tasksCompleted = _controller.getAllTasks();
-    });
+    final tasksCompleted = _controller.getAllTasks();
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Perfil',
-            style: ThemeText.paragraph16WhiteBold,
-          ),
+          title: Text('Perfil', style: ThemeText.paragraph16WhiteBold),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+            onPressed: () => popOrReplace(context, '/proyectos'),
           ),
         ),
         // floatingActionButton: FloatingActionButton(
@@ -99,315 +106,294 @@ class _ProfilePageState extends State<ProfilePage> {
         //       ..resetTaskCompleted('creaTuMovimientoTareaDosCompleted');
         //   },
         // ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 8,
-                ),
-                Card(
-                  elevation: 3,
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: 180,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: ThemeColors.yellow,
-                          child: CircleAvatar(
-                            radius: 27,
-                            backgroundImage: (user.photoURL == null)
-                                ? const NetworkImage(
-                                    'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
-                                  )
-                                : NetworkImage(user.photoURL!, scale: 40),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        if (user.displayName == null)
-                          const Text('')
-                        else
-                          Text(
-                            user.displayName!,
-                            style: ThemeText.paragraph16BlueBold,
-                          ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          user.email!,
-                          style: ThemeText.paragraph14Gray,
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  elevation: 3,
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: 80,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '$tasksCompleted/${_controller.allTasks}',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                'Tareas',
-                                style: ThemeText.paragraph14Gray,
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '${_controller.percentage.toStringAsFixed(0)}%',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                'Conclusão',
-                                style: ThemeText.paragraph14Gray,
-                              ),
-                            ],
-                          ),
-                        ],
+        body: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : _loadError != null
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _loadError!,
+                        textAlign: TextAlign.center,
+                        style: ThemeText.paragraph14Gray,
                       ),
-                    ),
-                  ),
-                ),
-                Card(
-                  elevation: 3,
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: 80,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Escola',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                '$studentSchool',
-                                style: ThemeText.paragraph14Gray,
-                              ),
-                            ],
-                          ),
-                        ],
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _loading = true;
+                            _loadError = null;
+                          });
+                          _initializeData();
+                        },
+                        child: const Text('Reintentar'),
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                Card(
-                  elevation: 3,
-                  color: Colors.white,
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * .9,
-                    height: 80,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Turma',
-                                style: ThemeText.paragraph16BlueBold,
-                              ),
-                              Text(
-                                '$studentClass',
-                                style: ThemeText.paragraph14Gray,
-                              ),
-                            ],
+              )
+            : SingleChildScrollView(
+                child: Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 8),
+                      Card(
+                        elevation: 3,
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: ThemeColors.yellow,
+                                  child: CircleAvatar(
+                                    radius: 27,
+                                    backgroundImage: (user.photoURL == null)
+                                        ? const NetworkImage(
+                                            'https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=',
+                                          )
+                                        : NetworkImage(
+                                            user.photoURL!,
+                                            scale: 40,
+                                          ),
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                if (user.displayName == null)
+                                  const Text('')
+                                else
+                                  Text(
+                                    user.displayName!,
+                                    textAlign: TextAlign.center,
+                                    style: ThemeText.paragraph16BlueBold,
+                                  ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  user.email!,
+                                  textAlign: TextAlign.center,
+                                  style: ThemeText.paragraph14Gray,
+                                ),
+                                const SizedBox(height: 8),
+                              ],
+                            ),
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                      Card(
+                        elevation: 3,
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '$tasksCompleted/${_controller.allTasks}',
+                                      style: ThemeText.paragraph16BlueBold,
+                                    ),
+                                    Text(
+                                      'Tareas',
+                                      style: ThemeText.paragraph14Gray,
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '${_controller.percentage.toStringAsFixed(0)}%',
+                                      style: ThemeText.paragraph16BlueBold,
+                                    ),
+                                    Text(
+                                      'Conclusão',
+                                      style: ThemeText.paragraph14Gray,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        elevation: 3,
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Escola',
+                                      style: ThemeText.paragraph16BlueBold,
+                                    ),
+                                    Text(
+                                      '$studentSchool',
+                                      style: ThemeText.paragraph14Gray,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Card(
+                        elevation: 3,
+                        color: Colors.white,
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .9,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Turma',
+                                      style: ThemeText.paragraph16BlueBold,
+                                    ),
+                                    Text(
+                                      '$studentClass',
+                                      style: ThemeText.paragraph14Gray,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      CardButton(
+                        iconSize: 25,
+                        text: 'Profesor(a)',
+                        backgroundColor: ThemeColors.green,
+                        icon: Icons.volunteer_activism_outlined,
+                        cardWidth: width,
+                        cardHeight: height,
+                        namedRoute: '/profile_contato_professora',
+                        shadowColor: ThemeColors.green,
+                      ),
+                      const SizedBox(height: 8),
+                      acessibilityCard(context),
+                      const SizedBox(height: 8),
+                      logoutCard(context),
+                      const SizedBox(height: 8),
+                      const SizedBox(height: 8),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                CardButton(
-                  iconSize: 25,
-                  text: 'Profesor(a)',
-                  backgroundColor: ThemeColors.green,
-                  icon: Icons.volunteer_activism_outlined,
-                  cardWidth: width,
-                  cardHeight: height,
-                  namedRoute: '/profile_contato_professora',
-                  shadowColor: ThemeColors.green,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                acessibilityCard(context),
-                const SizedBox(
-                  height: 8,
-                ),
-                logoutCard(context, _controller),
-                const SizedBox(
-                  height: 8,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-              ],
-            ),
-          ),
-        ),
+              ),
       ),
     );
   }
 }
 
-Widget acessibilityCard(
-  BuildContext context,
-) {
+Widget acessibilityCard(BuildContext context) {
   final width = MediaQuery.of(context).size.width * .9;
-  final height = MediaQuery.of(context).size.width * .2;
+  final accessible = context.watch<AccessibilityProvider>().isAccessible;
   return SizedBox(
-    height: height,
     width: width,
-    child: ElevatedButton.icon(
-      icon: Padding(
-        padding: const EdgeInsets.only(left: 8),
-        child: CircleAvatar(
-          radius: 25,
-          backgroundColor: ThemeColors.yellow,
-          child: Icon(
-            Icons.settings_accessibility_sharp,
-            size: 25,
-            color: ThemeColors.white,
-          ),
-        ),
-      ),
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10), // Raio de borda desejado
-        ),
-        foregroundColor: ThemeColors.yellow,
-        backgroundColor: Colors.white,
-        elevation: 3,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
-        textStyle: ThemeText.paragraph14Gray,
-      ),
-      onPressed: () {},
-      label: Row(
-        children: [
-          const SizedBox(
-            width: 15,
-          ),
-          Text(
-            "Accesibilidad",
-            style: ThemeText.paragraph14Gray,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            "off",
-            style: TextStyle(
-              color: ThemeColors.gray,
+    child: Card(
+      elevation: 3,
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        child: Row(
+          children: [
+            const CircleAvatar(
+              radius: 25,
+              backgroundColor: ThemeColors.yellow,
+              child: Icon(
+                Icons.settings_accessibility_sharp,
+                size: 25,
+                color: ThemeColors.white,
+              ),
             ),
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          CustomSwitch(),
-          const SizedBox(
-            width: 5,
-          ),
-          Text(
-            "on",
-            style: TextStyle(
-              color: ThemeColors.gray,
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text('Accesibilidad', style: ThemeText.paragraph14Gray),
             ),
-          ),
-        ],
+            Text(
+              'off',
+              style: TextStyle(
+                color: accessible ? ThemeColors.gray : ThemeColors.blue,
+                fontWeight: accessible ? FontWeight.w400 : FontWeight.w700,
+              ),
+            ),
+            const CustomSwitch(),
+            Text(
+              'on',
+              style: TextStyle(
+                color: accessible ? ThemeColors.blue : ThemeColors.gray,
+                fontWeight: accessible ? FontWeight.w700 : FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
 }
 
-Widget logoutCard(
-  BuildContext context,
-  ProfileController _controller,
-) {
+Widget logoutCard(BuildContext context) {
   final width = MediaQuery.of(context).size.width * .9;
-  final height = MediaQuery.of(context).size.width * .2;
   final authService = AuthService();
 
   return SizedBox(
-    height: height,
     width: width,
     child: ElevatedButton.icon(
-      icon: Padding(
-        padding: const EdgeInsets.only(left: 8),
+      icon: const Padding(
+        padding: EdgeInsets.only(left: 8),
         child: CircleAvatar(
           radius: 25,
           backgroundColor: ThemeColors.red,
-          child: Icon(
-            Icons.logout,
-            size: 25,
-            color: ThemeColors.white,
-          ),
+          child: Icon(Icons.logout, size: 25, color: ThemeColors.white),
         ),
       ),
       style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(
-          // Definindo a forma retangular
-          borderRadius: BorderRadius.circular(10), // Raio de borda desejado
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         foregroundColor: ThemeColors.red,
         backgroundColor: Colors.white,
         elevation: 3,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
         textStyle: ThemeText.paragraph14Gray,
       ),
       onPressed: () async {
-        final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
-
-        if (provider.user != null) {
-          await provider.signOut();
-          await authService.logout();
-        } else {
-          await authService.logout();
-        }
+        final provider = Provider.of<GoogleSignInProvider>(
+          context,
+          listen: false,
+        );
+        await provider.signOut();
+        await authService.logout();
+        if (!context.mounted) return;
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
       },
-
       label: Row(
         children: [
-          const SizedBox(
-            width: 15,
-          ),
-          Text(
-            "Salir",
-            style: ThemeText.paragraph14Gray,
-          ),
+          const SizedBox(width: 15),
+          Text('Salir', style: ThemeText.paragraph14Gray),
         ],
       ),
     ),

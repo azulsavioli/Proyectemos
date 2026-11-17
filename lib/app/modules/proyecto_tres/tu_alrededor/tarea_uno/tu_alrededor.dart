@@ -44,9 +44,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleTuAlrededor,
           style: ThemeText.paragraph14WhiteBold,
@@ -65,9 +63,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -100,12 +96,17 @@ class _TuAlrededorState extends State<TuAlrededor> {
                   if (pageChanged == 6)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
-                        final currentUser = await getCurrentUser(context); // <-- await
+                        final currentUser = await getCurrentUser(
+                          context,
+                        ); // <-- await
 
-                        if (recordsPathList.isEmpty || recordsPathList.length < 7) {
+                        if (recordsPathList.isEmpty ||
+                            recordsPathList.length < 7) {
                           showToast(
                             context,
                             '''
@@ -122,7 +123,9 @@ class _TuAlrededorState extends State<TuAlrededor> {
                             loading = true;
                           });
 
-                          await Future.delayed(const Duration(milliseconds: 2000));
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
 
                           if (!mounted) return;
 
@@ -134,7 +137,10 @@ class _TuAlrededorState extends State<TuAlrededor> {
 
                           if (!mounted) return;
 
-                          Navigator.pushNamed(context, '/pTres_tuAlrededor_menu');
+                          Navigator.pushNamed(
+                            context,
+                            '/pTres_tuAlrededor_menu',
+                          );
 
                           setState(() {
                             loading = false;
@@ -150,7 +156,6 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         ),
                       ),
                     )
-
                   else
                     TextButton(
                       onPressed: () {
@@ -175,7 +180,8 @@ class _TuAlrededorState extends State<TuAlrededor> {
         child: Column(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height -
+              height:
+                  MediaQuery.of(context).size.height -
                   kToolbarHeight -
                   130, // altura da tela menos a altura da appbar e bottomSheet
               child: PageView(
@@ -186,27 +192,13 @@ class _TuAlrededorState extends State<TuAlrededor> {
                 },
                 controller: pageController,
                 children: [
-                  QuestionTuAlrededorOne(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorTwo(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorThree(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorFour(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorFive(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorSix(
-                    controller: _controller,
-                  ),
-                  QuestionTuAlrededorSeven(
-                    controller: _controller,
-                  ),
+                  QuestionTuAlrededorOne(controller: _controller),
+                  QuestionTuAlrededorTwo(controller: _controller),
+                  QuestionTuAlrededorThree(controller: _controller),
+                  QuestionTuAlrededorFour(controller: _controller),
+                  QuestionTuAlrededorFive(controller: _controller),
+                  QuestionTuAlrededorSix(controller: _controller),
+                  QuestionTuAlrededorSeven(controller: _controller),
                 ],
               ),
             ),

@@ -113,253 +113,264 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
     final textFour = textControllerFour.text;
     final textFive = textControllerFive.text;
 
-    return SafeArea(child:
-      Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: ThemeColors.white,
-      appBar: AppBar(
-        toolbarHeight: isMobile ? 60 : 90,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back_ios,
-                color: ThemeColors.white, size: isMobile ? 20 : 40),
-            onPressed: () {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                Navigator.of(context).pop();
-              });
-            },
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
-        title: Text(
-          Strings.title300kilos,
-          style: ThemeText.paragraph14WhiteBold,
-        ),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Form(
-          key: _formKey,
-          child: PageView(
-            onPageChanged: (index) {
-              if (index == 0) {
-                focusNode1.requestFocus();
-              }
-              if (index == 1) {
-                focusNode2.requestFocus();
-              }
-              if (index == 2) {
-                FocusScope.of(context).unfocus();
-              }
-              if (index == 3) {
-                focusNode3.requestFocus();
-              }
-              if (index == 4) {
-                focusNode4.requestFocus();
-              }
-              if (index == 5) {
-                focusNode5.requestFocus();
-              }
-              if (index == 6) {
-                FocusScope.of(context).unfocus();
-              }
-              setState(() {
-                pageChanged = index;
-              });
-            },
-            controller: pageController,
-            children: [
-              IntroTareaLatinoamericaPage(
-                focusNode: focusNode1,
-                controller: textControllerOne,
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          toolbarHeight: isMobile ? 60 : 90,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 40,
               ),
-              QuestionLatinoamericaOne(
-                focusNode: focusNode2,
-                controller: textControllerTwo,
-              ),
-              QuestionLatinoamericaTwo(
-                controller: youTubeController,
-                listener: listener,
-              ),
-              QuestionLatinoamericaThree(
-                focusNode: focusNode3,
-                controller: textControllerThree,
-              ),
-              QuestionLatinoamericaFour(
-                focusNode: focusNode4,
-                controller: textControllerFour,
-              ),
-              QuestionLatinoamericaFive(
-                focusNode: focusNode5,
-                controller: textControllerFive,
-              ),
-              RevisionQuestionsLatinoamerica(
-                controllerList: [
-                  textControllerOne,
-                  textControllerTwo,
-                  textControllerThree,
-                  textControllerFour,
-                  textControllerFive,
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: loading
-          ? const LinearProgressIndicator(
-              minHeight: 20,
-              color: ThemeColors.blue,
-            )
-          : Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              height: isMobile ? 60 : 90,
-              width: MediaQuery.of(context).size.width * .8,
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: isMobile ? 18 : 28,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 7,
-                      effect: WormEffect(
-                        dotHeight: isMobile ? 10 : 18,
-                        dotWidth: isMobile ? 10 : 18,
-                        activeDotColor: ThemeColors.blue,
-                        dotColor: Colors.black26,
-                      ),
-                    ),
-                  ),
-                  if (pageChanged == 6)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          if (pageChanged == 1) {
-                            youTubeController.addListener(listener);
-                          } else {
-                            youTubeController.removeListener(listener);
-                          }
-                        });
-                        deactivate();
-
-                        if (textControllerOne.text.isEmpty ||
-                            textControllerTwo.text.isEmpty ||
-                            textControllerThree.text.isEmpty ||
-                            textControllerFour.text.isEmpty ||
-                            textControllerFive.text.isEmpty) {
-                          showToast(
-                            context,
-                            'Vuelve y ingrese tuja respuesta correctamente',
-                            ThemeColors.red,
-                            ThemeColors.white,
-                          );
-                          return;
-                        }
-
-                        final currentUser = await getCurrentUser(context); // <-- await aqui
-
-                        final respostas = _tareaUnoController.makeAnswersList(
-                          textOne,
-                          textTwo,
-                          textThree,
-                          textFour,
-                          textFive,
-                        );
-
-                        setState(() {
-                          loading = true;
-                        });
-
-                        await Future.delayed(const Duration(milliseconds: 2000));
-
-                        if (!mounted) return;
-
-                        await _tareaUnoController.sendAnswers(
-                          context,
-                          currentUser,
-                          respostas,
-                        );
-
-                        if (!mounted) return;
-
-                        Navigator.pushNamed(context, '/pUno_latinoamerica_menu');
-
-                        setState(() {
-                          loading = false;
-                        });
-                      },
-                      child: Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: isMobile ? 18 : 28,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          if (pageChanged == 1) {
-                            youTubeController.addListener(listener);
-                          } else {
-                            youTubeController.removeListener(listener);
-                          }
-                        });
-                        if (pageChanged == 6) {
-                          deactivate();
-                        }
-
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: isMobile ? 18 : 28,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+              onPressed: () {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.of(context).pop();
+                });
+              },
             ),
-    ));
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Color.fromRGBO(250, 251, 250, 1),
+          ),
+          title: Text(
+            Strings.title300kilos,
+            style: ThemeText.paragraph14WhiteBold,
+          ),
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: PageView(
+              onPageChanged: (index) {
+                if (index == 0) {
+                  focusNode1.requestFocus();
+                }
+                if (index == 1) {
+                  focusNode2.requestFocus();
+                }
+                if (index == 2) {
+                  FocusScope.of(context).unfocus();
+                }
+                if (index == 3) {
+                  focusNode3.requestFocus();
+                }
+                if (index == 4) {
+                  focusNode4.requestFocus();
+                }
+                if (index == 5) {
+                  focusNode5.requestFocus();
+                }
+                if (index == 6) {
+                  FocusScope.of(context).unfocus();
+                }
+                setState(() {
+                  pageChanged = index;
+                });
+              },
+              controller: pageController,
+              children: [
+                IntroTareaLatinoamericaPage(
+                  focusNode: focusNode1,
+                  controller: textControllerOne,
+                ),
+                QuestionLatinoamericaOne(
+                  focusNode: focusNode2,
+                  controller: textControllerTwo,
+                ),
+                QuestionLatinoamericaTwo(
+                  controller: youTubeController,
+                  listener: listener,
+                ),
+                QuestionLatinoamericaThree(
+                  focusNode: focusNode3,
+                  controller: textControllerThree,
+                ),
+                QuestionLatinoamericaFour(
+                  focusNode: focusNode4,
+                  controller: textControllerFour,
+                ),
+                QuestionLatinoamericaFive(
+                  focusNode: focusNode5,
+                  controller: textControllerFive,
+                ),
+                RevisionQuestionsLatinoamerica(
+                  controllerList: [
+                    textControllerOne,
+                    textControllerTwo,
+                    textControllerThree,
+                    textControllerFour,
+                    textControllerFive,
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: loading
+            ? const LinearProgressIndicator(
+                minHeight: 20,
+                color: ThemeColors.blue,
+              )
+            : Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                height: isMobile ? 60 : 90,
+                width: MediaQuery.of(context).size.width * .8,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (pageChanged == 0)
+                      const SizedBox(width: 65)
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Volver',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 7,
+                        effect: WormEffect(
+                          dotHeight: isMobile ? 10 : 18,
+                          dotWidth: isMobile ? 10 : 18,
+                          activeDotColor: ThemeColors.blue,
+                          dotColor: Colors.black26,
+                        ),
+                      ),
+                    ),
+                    if (pageChanged == 6)
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            ThemeColors.blue,
+                          ),
+                        ),
+                        onPressed: () async {
+                          setState(() {
+                            if (pageChanged == 1) {
+                              youTubeController.addListener(listener);
+                            } else {
+                              youTubeController.removeListener(listener);
+                            }
+                          });
+                          deactivate();
+
+                          if (textControllerOne.text.isEmpty ||
+                              textControllerTwo.text.isEmpty ||
+                              textControllerThree.text.isEmpty ||
+                              textControllerFour.text.isEmpty ||
+                              textControllerFive.text.isEmpty) {
+                            showToast(
+                              context,
+                              'Vuelve y ingrese tuja respuesta correctamente',
+                              ThemeColors.red,
+                              ThemeColors.white,
+                            );
+                            return;
+                          }
+
+                          final currentUser = await getCurrentUser(
+                            context,
+                          ); // <-- await aqui
+
+                          final respostas = _tareaUnoController.makeAnswersList(
+                            textOne,
+                            textTwo,
+                            textThree,
+                            textFour,
+                            textFive,
+                          );
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
+
+                          if (!mounted) return;
+
+                          await _tareaUnoController.sendAnswers(
+                            context,
+                            currentUser,
+                            respostas,
+                          );
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(
+                            context,
+                            '/pUno_latinoamerica_menu',
+                          );
+
+                          setState(() {
+                            loading = false;
+                          });
+                        },
+                        child: Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (pageChanged == 1) {
+                              youTubeController.addListener(listener);
+                            } else {
+                              youTubeController.removeListener(listener);
+                            }
+                          });
+                          if (pageChanged == 6) {
+                            deactivate();
+                          }
+
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+      ),
+    );
   }
 }

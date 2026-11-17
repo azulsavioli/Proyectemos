@@ -3,16 +3,14 @@ description: A new Flutter project.
 
 publish_to: 'none'
 
-version: 2.0.0+1
+version: 2.1.0+12
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.14.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-
-  dependency_validator: ^5.0.2
 
   # Firebase
   firebase_core: ^4.1.1
@@ -27,26 +25,26 @@ dependencies:
   google_sign_in: ^7.2.0
 
   # Google icon
-  font_awesome_flutter: ^10.1.0
+  font_awesome_flutter: ^11.0.0
 
   # State management
   provider: ^6.1.1
-  path_provider: ^2.0.11
+  path_provider: ^2.1.6
 
   # Video
   youtube_player_flutter: ^9.0.1
   appinio_video_player: ^1.2.2
-  video_player: ^2.7.0
+  video_player: ^2.14.1
   chewie: ^1.7.0
 
   #Seguranca
   flutter_dotenv: ^6.0.0
 
   # url
-  url_launcher: ^6.3.2
+  url_launcher: ^6.3.3
 
   # ImagePicker
-  image_picker: ^1.0.0
+  image_picker: ^1.2.4
   image: ^4.0.17
 
   # Smooth page indicator
@@ -79,7 +77,7 @@ dependencies:
   toast: ^0.3.0
 
   # Data
-  shared_preferences: ^2.0.15
+  shared_preferences: ^2.5.6
 
   # Internacional
   intl: ^0.20.2
@@ -114,21 +112,26 @@ flutter_native_splash:
 flutter_launcher_icons:
   image_path: "assets/images/splash.png"
   android: "launcher_icon"
-  min_sdk_android: 21
+  min_sdk_android: 24
   adaptative_icon_background: "#ffffff"
   adaptative_icon_foreground: "assets/images/icon-android.png"
-  lints: ^2.1.1
+
+dependency_overrides:
+  # youtube_player_flutter 9 allows ^6.0.0, which resolved to 6.0.0.
+  # That Android implementation still references the removed v1 embedding
+  # (PluginRegistry.Registrar). 6.1.5 uses the current embedding.
+  flutter_inappwebview: 6.1.5
+  # url_launcher 6.3.3 allows url_launcher_android ^6.3.0, and pub kept 6.3.1,
+  # which still references PluginRegistry.Registrar. 6.3.35 does not.
+  url_launcher_android: 6.3.35
 
 dev_dependencies:
-
   flutter_test:
     sdk: flutter
-  mockito:
-  build_runner:
+  mockito: ^5.4.6
+  build_runner: ^2.4.15
   lints: ^6.0.0
-
-  #Lint
-  flutterando_analysis: ^0.0.2
+  dependency_validator: ^5.0.2
 
 flutter:
 

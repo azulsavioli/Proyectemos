@@ -30,15 +30,18 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
   }
 
   Future<void> sendAnswers(
-      BuildContext context,
-      GoogleSignInAccount? currentUser,
-      List<String> audioPaths,
-      ) async {
+    BuildContext context,
+    GoogleSignInAccount? currentUser,
+    List<String> audioPaths,
+  ) async {
     await _repository.isTaskLoading(task, true);
 
     try {
       // Converte áudios para URLs do Firebase
-      final firebasePaths = await convertAudioToFirebase(audioPaths, currentUser);
+      final firebasePaths = await convertAudioToFirebase(
+        audioPaths,
+        currentUser,
+      );
 
       // Cria JSON para salvar no Firestore
       final json = setJson(firebasePaths);
@@ -50,8 +53,6 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
       // Cria anexos para enviar por e-mail
       final attachments = createAudioAttachments(audioPaths);
 
-      // Envia e-mail para professores
-      final teacherEmails = await _repository.getTeacherEmails();
       await _repository.sendEmail(
         currentUser: currentUser,
         subject: subject,
@@ -139,9 +140,7 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
     return json;
   }
 
-  List<FileAttachment> createAudioAttachments(
-    List<String> recordsPathList,
-  ) {
+  List<FileAttachment> createAudioAttachments(List<String> recordsPathList) {
     final firstAudio = File(recordsPathList[0]);
     final secondAudio = File(recordsPathList[1]);
     final thirdAudio = File(recordsPathList[2]);
@@ -166,10 +165,9 @@ class ArtistasLatinoamericanosTareaUnoController extends ChangeNotifier {
     return attachment;
   }
 
-  String createEmailMessage(
-    List<String> allStudentInfo,
-  ) {
-    final text = '''
+  String createEmailMessage(List<String> allStudentInfo) {
+    final text =
+        '''
 Proyectemos\n
 Aluno: ${allStudentInfo[0]}\n
 Escola: ${allStudentInfo[1]} - Turma: ${allStudentInfo[2]}\n 

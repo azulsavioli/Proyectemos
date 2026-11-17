@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -35,8 +36,9 @@ class _PDosConocesPodcastMenuState extends State<PDosConocesPodcastMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await UnoTasksCompletedService.isLoadind("conocesPodcastCompleted");
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+      "conocesPodcastCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -56,7 +58,7 @@ class _PDosConocesPodcastMenuState extends State<PDosConocesPodcastMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_dos'),
+            onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -74,42 +76,38 @@ class _PDosConocesPodcastMenuState extends State<PDosConocesPodcastMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nConoces el podcast'
                       : tareaUno
-                          ? 'Feedback\nConoces el podcast'
-                          : 'Conoces el podcast',
+                      ? 'Feedback\nConoces el podcast'
+                      : 'Conoces el podcast',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pDos_conocesPodcast_feedback'
-                          : '/pDos_conocesPodcast',
+                      ? '/pDos_conocesPodcast_feedback'
+                      : '/pDos_conocesPodcast',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.red,
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

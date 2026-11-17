@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 
 import '../../../commons/strings/strings.dart';
 import '../../../commons/styles.dart';
@@ -52,7 +53,7 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyectos'),
+            onPressed: () => popOrReplace(context, '/proyectos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -81,40 +82,39 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: 'La Sociedad',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_laSociedad_menu',
-                  backgroundColor:
-                      laSociedadCompleted ? ThemeColors.green : ThemeColors.red,
+                  backgroundColor: laSociedadCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                   icon: laSociedadCompleted ? Icons.check : Icons.person,
-                  shadowColor:
-                      laSociedadCompleted ? ThemeColors.green : ThemeColors.red,
+                  shadowColor: laSociedadCompleted
+                      ? ThemeColors.green
+                      : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: 'Movimientos\nSociales',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_movimientosSociales_menu',
                   backgroundColor: movimientosSocialesCompleted
                       ? ThemeColors.green
                       : ThemeColors.blue,
-                  icon:
-                      movimientosSocialesCompleted ? Icons.check : Icons.group,
+                  icon: movimientosSocialesCompleted
+                      ? Icons.check
+                      : Icons.group,
                   shadowColor: movimientosSocialesCompleted
                       ? ThemeColors.green
                       : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: 'Tu Alrededor',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_tuAlrededor_menu',
                   backgroundColor: tuAlrededorCompleted
@@ -125,13 +125,11 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                       ? ThemeColors.green
                       : ThemeColors.red,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 25 : 45,
                   text: 'Crea tu movimiento',
-                  cardWidth:  isMobile ? width : widthTablet,
+                  cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: '/pTres_creacionDeSuMovimento_menu',
                   backgroundColor: creacionDeSuMovimentoCompleted
@@ -144,9 +142,7 @@ class _ProyectoTresPageState extends State<ProyectoTresPage> {
                       ? ThemeColors.green
                       : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

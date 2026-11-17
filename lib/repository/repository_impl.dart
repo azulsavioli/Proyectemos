@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,8 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../repository/proyectemos_repository.dart';
 import '../services/auth_services.dart';
 import '../utils/email_sender.dart';
-import 'package:mailer/mailer.dart';
-import 'package:flutter_mailer/flutter_mailer.dart';
 
 class RepositoryImpl<T> extends Repository<T, dynamic, dynamic> {
   List<String> student = [];

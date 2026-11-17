@@ -1,15 +1,3 @@
-buildscript {
-    ext.kotlin_version = '1.7.10'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
@@ -17,12 +5,25 @@ allprojects {
     }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory.set(file('../build'))
+
+subprojects { project ->
+    project.layout.buildDirectory.set(rootProject.layout.buildDirectory.dir(project.name))
+}
+
+subprojects { subproject ->
+    subproject.afterEvaluate {
+        def androidExt = subproject.extensions.findByName("android")
+        if (androidExt != null) {
+            androidExt.compileSdkVersion 36
+        }
+    }
+}
+
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
     project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:proyectemos/commons/styles.dart';
+
 import '../../../commons/strings/strings.dart';
 import 'login_controller.dart';
 
@@ -53,26 +53,15 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Center(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 50, bottom: 10),
-                          child: isMobile
-                              ? SizedBox(
-                                  height: 300,
-                                  width: 300,
-                                  child: Image.asset(
-                                    Strings.loginImage,
-                                    height: 60,
-                                    width: 60,
-                                  ),
-                                )
-                              : SizedBox(
-                                  height: 500,
-                                  width: 500,
-                                  child: Image.asset(
-                                    Strings.loginImage,
-                                    height: 80,
-                                    width: 80,
-                                  ),
-                                ),
+                          padding: const EdgeInsets.only(top: 32, bottom: 10),
+                          child: Image.asset(
+                            Strings.loginImage,
+                            height: (shortestSide * 0.55).clamp(
+                              160.0,
+                              isMobile ? 280.0 : 460.0,
+                            ),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                       Padding(
@@ -80,18 +69,14 @@ class _LoginPageState extends State<LoginPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: isMobile ? 20 : 40,
-                            ),
+                            SizedBox(height: isMobile ? 20 : 40),
                             Text(
                               Strings.bemvindos,
                               style: isMobile
                                   ? ThemeText.h2title35White
                                   : ThemeText.h3title30White,
                             ),
-                            SizedBox(
-                              height: isMobile ? 20 : 80,
-                            ),
+                            SizedBox(height: isMobile ? 20 : 80),
                             Text(
                               Strings.descricaoAppLogin,
                               style: isMobile
@@ -99,39 +84,60 @@ class _LoginPageState extends State<LoginPage> {
                                   : ThemeText.paragraph12White,
                               textAlign: TextAlign.left,
                             ),
-                            SizedBox(
-                              height: isMobile ? 20 : 50,
-                            ),
+                            SizedBox(height: isMobile ? 20 : 50),
                           ],
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 24),
+                          vertical: 20,
+                          horizontal: 24,
+                        ),
                         child: SizedBox(
-                          height: 60,
+                          width: double.infinity,
                           child: ElevatedButton(
                             style: ButtonStyle(
-                              backgroundColor:
-                                  WidgetStateProperty.all(ThemeColors.yellow),
-                              shape: WidgetStateProperty.all<
-                                  RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
+                              backgroundColor: WidgetStateProperty.all(
+                                ThemeColors.yellow,
+                              ),
+                              padding: WidgetStateProperty.all(
+                                const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
                                 ),
                               ),
-                            ),
-                            onPressed: () {
-                              _controller.login().then(
-                                    (value) => Future.delayed(
-                                      const Duration(seconds: 3),
-                                      () => Navigator.pushNamed(context, '/'),
+                              shape:
+                                  WidgetStateProperty.all<
+                                    RoundedRectangleBorder
+                                  >(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                  );
-                              setState(() {
-                                loadingGoogle = true;
-                              });
-                            },
+                                  ),
+                            ),
+                            onPressed: loadingGoogle
+                                ? null
+                                : () async {
+                                    setState(() => loadingGoogle = true);
+                                    final ok = await _controller.login(context);
+                                    if (!context.mounted) return;
+                                    if (ok) {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/',
+                                        (_) => false,
+                                      );
+                                      return;
+                                    }
+                                    setState(() => loadingGoogle = false);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'No se pudo iniciar sesión. Inténtalo de nuevo.',
+                                        ),
+                                      ),
+                                    );
+                                  },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: loadingGoogle
@@ -153,9 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                                         padding: const EdgeInsets.all(8),
                                         child: Text(
                                           Strings.iniciaSessao,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
-                                            fontSize: ScreenUtil().setSp(12),
+                                            fontSize: 16,
                                           ),
                                         ),
                                       ),

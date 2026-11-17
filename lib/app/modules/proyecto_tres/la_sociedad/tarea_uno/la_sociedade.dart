@@ -162,9 +162,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleLaSociedad,
           style: ThemeText.paragraph14WhiteBold,
@@ -221,9 +219,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -259,14 +255,17 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                   if (pageChanged == 4)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         onPageChanged(pageChanged);
 
                         final currentUser = await getCurrentUser(context);
 
-                        if (recordsPathList.isEmpty || recordsPathList.length < 4) {
+                        if (recordsPathList.isEmpty ||
+                            recordsPathList.length < 4) {
                           showToast(
                             context,
                             '''
@@ -281,7 +280,9 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                           loading = true;
                         });
 
-                        await Future.delayed(const Duration(milliseconds: 2000));
+                        await Future.delayed(
+                          const Duration(milliseconds: 2000),
+                        );
 
                         if (!mounted) return;
 

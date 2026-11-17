@@ -37,112 +37,107 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: PageView(
-          onPageChanged: (index) {
-            setState(() {
-              pageChanged = index;
-            });
-          },
-          controller: controller,
-          children: const [
-            PageOne(),
-            PageTwo(),
-            PageThree(),
-          ],
-        ),
-        bottomNavigationBar: SafeArea(child: Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          height: 60,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (pageChanged == 0)
-                TextButton(
-                  onPressed: () => {
-                    _onboardingController.storeOnboardingInfo(),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegistrationPage(),
-                      ),
+    body: PageView(
+      onPageChanged: (index) {
+        setState(() {
+          pageChanged = index;
+        });
+      },
+      controller: controller,
+      children: const [PageOne(), PageTwo(), PageThree()],
+    ),
+    bottomNavigationBar: SafeArea(
+      child: Container(
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            if (pageChanged == 0)
+              TextButton(
+                onPressed: () {
+                  _onboardingController.storeOnboardingInfo();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegistrationPage(),
                     ),
-                  },
-                  child: const Text(
-                    'Pular',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              else
-                TextButton(
-                  onPressed: () => controller.previousPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  ),
-                  child: const Text(
-                    'Voltar',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  );
+                },
+                child: const Text(
+                  'Pular',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              Center(
-                child: SmoothPageIndicator(
-                  controller: controller,
-                  count: 3,
-                  effect: const WormEffect(
-                    dotHeight: 10,
-                    dotWidth: 10,
-                    activeDotColor: Colors.blueAccent,
-                    dotColor: Colors.white,
+              )
+            else
+              TextButton(
+                onPressed: () => controller.previousPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                ),
+                child: const Text(
+                  'Voltar',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-              if (pageChanged == 2)
-                TextButton(
-                  onPressed: () => {
-                    _onboardingController.storeOnboardingInfo(),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegistrationPage(),
-                      ),
+            Center(
+              child: SmoothPageIndicator(
+                controller: controller,
+                count: 3,
+                effect: const WormEffect(
+                  dotHeight: 10,
+                  dotWidth: 10,
+                  activeDotColor: Colors.blueAccent,
+                  dotColor: Colors.white,
+                ),
+              ),
+            ),
+            if (pageChanged == 2)
+              TextButton(
+                onPressed: () {
+                  _onboardingController.storeOnboardingInfo();
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RegistrationPage(),
                     ),
-                  },
-                  child: const Text(
-                    'Concluir',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              else
-                TextButton(
-                  onPressed: () => controller.nextPage(
-                    duration: const Duration(milliseconds: 400),
-                    curve: Curves.easeInOut,
-                  ),
-                  child: const Text(
-                    'Próximo',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  );
+                },
+                child: const Text(
+                  'Concluir',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-            ],
-          ),
-        ),)
-
-
-      );
+              )
+            else
+              TextButton(
+                onPressed: () => controller.nextPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                ),
+                child: const Text(
+                  'Próximo',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 
 import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
@@ -34,8 +35,9 @@ class _PUnoEventoCulturalMenuState extends State<PUnoEventoCulturalMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await UnoTasksCompletedService.isLoadind("artistasTareaUnoCompleted");
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+      "artistasTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTarea = isTaskOneLoading;
     });
@@ -67,9 +69,12 @@ class _PUnoEventoCulturalMenuState extends State<PUnoEventoCulturalMenu> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
-              onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
+              onPressed: () => popOrReplace(context, '/proyecto_uno'),
             ),
           ),
           centerTitle: true,
@@ -88,42 +93,38 @@ class _PUnoEventoCulturalMenuState extends State<PUnoEventoCulturalMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTarea
                       ? 'Cargando\nCrear Evento Cultural'
                       : tareaUno
-                          ? 'Feedback\nCrear Evento Cultural'
-                          : 'Crear Evento Cultural',
+                      ? 'Feedback\nCrear Evento Cultural'
+                      : 'Crear Evento Cultural',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTarea
                       ? null
                       : tareaUno
-                          ? '/pUno_evento_cultural_feedback'
-                          : '/pUno_criacao_evento_page',
+                      ? '/pUno_evento_cultural_feedback'
+                      : '/pUno_criacao_evento_page',
                   backgroundColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                   icon: isLoadingTarea
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTarea
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

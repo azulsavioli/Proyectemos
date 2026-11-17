@@ -49,7 +49,8 @@ class _PUnoLatinoamericaTareaDosPageState
 
   void updateCanSubmit() {
     setState(() {
-      canSubmit = pageChanged == 1 &&
+      canSubmit =
+          pageChanged == 1 &&
           _controller.selectedImages.length == 5 &&
           _controller.answerUnoController.text.isNotEmpty &&
           _controller.answerDosController.text.isNotEmpty &&
@@ -82,8 +83,11 @@ class _PUnoLatinoamericaTareaDosPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 40),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 40,
+              ),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
@@ -113,129 +117,132 @@ class _PUnoLatinoamericaTareaDosPageState
         ),
         bottomNavigationBar: loading
             ? const LinearProgressIndicator(
-          minHeight: 20,
-          color: ThemeColors.blue,
-        )
+                minHeight: 20,
+                color: ThemeColors.blue,
+              )
             : Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          height: isMobile ? 60 : 90,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              if (pageChanged == 0)
-                const SizedBox(width: 65)
-              else
-                TextButton(
-                  onPressed: () {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Text(
-                    'Volver',
-                    style: TextStyle(
-                      fontSize: isMobile ? 18 : 28,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
+                color: Colors.transparent,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: isMobile ? 60 : 90,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (pageChanged == 0)
+                      const SizedBox(width: 65)
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Volver',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 2,
+                        effect: WormEffect(
+                          dotHeight: isMobile ? 10 : 18,
+                          dotWidth: isMobile ? 10 : 18,
+                          activeDotColor: Colors.blueAccent,
+                          dotColor: Colors.black26,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              Center(
-                child: SmoothPageIndicator(
-                  controller: pageController,
-                  count: 2,
-                  effect: WormEffect(
-                    dotHeight: isMobile ? 10 : 18,
-                    dotWidth: isMobile ? 10 : 18,
-                    activeDotColor: Colors.blueAccent,
-                    dotColor: Colors.black26,
-                  ),
+                    if (pageChanged == 1 &&
+                        _controller.selectedImages.length == 5)
+                      ElevatedButton(
+                        onPressed: canSubmit
+                            ? () async {
+                                updateCanSubmit();
+                                setState(() => loading = true);
+
+                                final answerList = _controller.makeAnswersList(
+                                  _controller.answerUnoController.text,
+                                  _controller.answerDosController.text,
+                                  _controller.answerTresController.text,
+                                  _controller.answerQuatroController.text,
+                                  _controller.answerCincoController.text,
+                                );
+
+                                if (_currentUser != null) {
+                                  await _controller.sendAnswers(
+                                    context,
+                                    _currentUser!,
+                                    answerList,
+                                  );
+                                }
+
+                                // delay visual antes de navegar
+                                await Future.delayed(
+                                  const Duration(seconds: 2),
+                                );
+                                if (mounted) {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/pUno_latinoamerica_menu',
+                                  );
+                                }
+
+                                setState(() => loading = false);
+                              }
+                            : () {
+                                updateCanSubmit();
+                                showToast(
+                                  context,
+                                  'Vuelve y ingrese tus respuestas correctamente',
+                                  ThemeColors.red,
+                                  ThemeColors.white,
+                                );
+                              },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            canSubmit ? ThemeColors.blue : Colors.grey,
+                          ),
+                        ),
+                        child: Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: isMobile ? 18 : 28,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
-              if (pageChanged == 1 && _controller.selectedImages.length == 5)
-                ElevatedButton(
-                  onPressed: canSubmit
-                      ? () async {
-                    updateCanSubmit();
-                    setState(() => loading = true);
-
-                    final answerList = _controller.makeAnswersList(
-                      _controller.answerUnoController.text,
-                      _controller.answerDosController.text,
-                      _controller.answerTresController.text,
-                      _controller.answerQuatroController.text,
-                      _controller.answerCincoController.text,
-                    );
-
-                    if (_currentUser != null) {
-                      await _controller.sendAnswers(
-                        context,
-                        _currentUser!,
-                        answerList,
-                      );
-                    }
-
-                    // delay visual antes de navegar
-                    await Future.delayed(const Duration(seconds: 2));
-                    if (mounted) {
-                      Navigator.pushNamed(
-                        context,
-                        '/pUno_latinoamerica_menu',
-                      );
-                    }
-
-                    setState(() => loading = false);
-                  }
-                      : () {
-                    updateCanSubmit();
-                    showToast(
-                      context,
-                      'Vuelve y ingrese tus respuestas correctamente',
-                      ThemeColors.red,
-                      ThemeColors.white,
-                    );
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        canSubmit ? ThemeColors.blue : Colors.grey),
-                  ),
-                  child: Text(
-                    'Enviar',
-                    style: TextStyle(
-                      fontSize: isMobile ? 18 : 28,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              else
-                TextButton(
-                  onPressed: () {
-                    pageController.nextPage(
-                      duration: const Duration(milliseconds: 400),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                  child: Text(
-                    'Próximo',
-                    style: TextStyle(
-                      fontSize: isMobile ? 18 : 28,
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
       ),
     );
   }
 }
-
 
 // import 'package:flutter/material.dart';
 // import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_controller.dart';

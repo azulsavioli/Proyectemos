@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/dos_tasks_completed.dart';
 
@@ -29,8 +30,8 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
   }
 
   Future<void> getTaskCompleted() async {
-    final resultado = await DosTasksCompletedService
-        .getDosComoCrearPodcastTaskCompletedInfo();
+    final resultado =
+        await DosTasksCompletedService.getDosComoCrearPodcastTaskCompletedInfo();
 
     setState(() {
       tareaUno = resultado[0];
@@ -40,7 +41,8 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
 
   Future<void> isTaskOneLoading() async {
     final isTaskOneLoading = await DosTasksCompletedService.isLoadind(
-        "comoCrearPodcastTareaUnoCompleted");
+      "comoCrearPodcastTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTareaUno = isTaskOneLoading;
     });
@@ -48,7 +50,8 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
 
   Future<void> isTaskDosLoading() async {
     final isTaskTwoLoading = await DosTasksCompletedService.isLoadind(
-        "comoCrearPodcastTareaDosCompleted");
+      "comoCrearPodcastTareaDosCompleted",
+    );
     setState(() {
       isLoadingTareaDos = isTaskTwoLoading;
     });
@@ -68,7 +71,7 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
-            onPressed: () => Navigator.pushNamed(context, '/proyecto_dos'),
+            onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),
           centerTitle: true,
           iconTheme: const IconThemeData(
@@ -86,75 +89,69 @@ class _PDosComoCrearPodcastMenuState extends State<PDosComoCrearPodcastMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando\nEl contenido del podcast'
                       : tareaUno
-                          ? 'Feedback\nEl contenido del podcast'
-                          : 'El contenido del podcast',
+                      ? 'Feedback\nEl contenido del podcast'
+                      : 'El contenido del podcast',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
                       : tareaUno
-                          ? '/pDos_escuchar_podcast_feedback_tarea_uno'
-                          : '/pDos_escuchar_podcast_tarea_uno',
+                      ? '/pDos_escuchar_podcast_feedback_tarea_uno'
+                      : '/pDos_escuchar_podcast_tarea_uno',
                   backgroundColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                   icon: isLoadingTareaUno
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.music_note_sharp,
+                      ? Icons.check
+                      : Icons.music_note_sharp,
                   shadowColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nCrear un Podcast'
                       : tareaDos
-                          ? 'Feedback\nCrear un Podcast'
-                          : 'Crear un Podcast',
+                      ? 'Feedback\nCrear un Podcast'
+                      : 'Crear un Podcast',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
                       : tareaDos
-                          ? '/pDos_crear_un_podcast_feedback_tarea_dos'
-                          : '/pDos_crear_un_podcast_tarea_dos',
+                      ? '/pDos_crear_un_podcast_feedback_tarea_dos'
+                      : '/pDos_crear_un_podcast_tarea_dos',
                   backgroundColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                   icon: isLoadingTareaDos
                       ? Icons.hourglass_bottom_outlined
                       : tareaDos
-                          ? Icons.check
-                          : Icons.image,
+                      ? Icons.check
+                      : Icons.image,
                   shadowColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.yellow,
+                      ? ThemeColors.green
+                      : ThemeColors.yellow,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

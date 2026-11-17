@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:proyectemos/services/permission_management.dart';
+
 import '../services/storage_management.dart';
 import '../services/toast_services.dart';
 import 'audio_provider_interface.dart';
@@ -45,7 +46,7 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
       if (!isPermitted) {
         showToast(
           context,
-          'Permissões de gravação não concedidas.',
+          'No se concedió el permiso del micrófono.',
           ThemeColors.red,
           ThemeColors.white,
         );
@@ -53,7 +54,8 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
       }
 
       // Inicializar o recorder se necessário
-      if (!_isRecorderOpen) { // Corrigido: usando _isRecorderOpen
+      if (!_isRecorderOpen) {
+        // Corrigido: usando _isRecorderOpen
         await _record.openRecorder();
         _isRecorderOpen = true; // Atualizando a variável de controle
       }
@@ -68,7 +70,8 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
 
       await _record.startRecorder(
         toFile: voiceFilePath,
-        codec: Codec.aacADTS, // ou Codec.pcm16WAV dependendo do formato desejado
+        codec:
+            Codec.aacADTS, // ou Codec.pcm16WAV dependendo do formato desejado
       );
 
       isRecording = true;
@@ -80,10 +83,10 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
         ThemeColors.white,
       );
     } catch (e) {
-      print('Erro ao gravar áudio: $e');
+      debugPrint('Erro ao gravar áudio: $e');
       showToast(
         context,
-        'Erro ao iniciar a gravação de áudio.',
+        'No se pudo iniciar la grabación.',
         ThemeColors.red,
         ThemeColors.white,
       );
@@ -92,7 +95,7 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
 
   Future<bool> _checkPermissions() async {
     final recordingPermission =
-    await PermissionManagement.recordingPermission();
+        await PermissionManagement.recordingPermission();
     return recordingPermission;
   }
 
@@ -111,10 +114,10 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
       isRecording = false;
       notifyListeners();
     } catch (e) {
-      print('Erro ao parar gravação: $e');
+      debugPrint('Erro ao parar gravação: $e');
       showToast(
         context,
-        'Erro ao parar a gravação.',
+        'No se pudo detener la grabación.',
         ThemeColors.red,
         ThemeColors.white,
       );
@@ -148,7 +151,8 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
     if (_record.isRecording) {
       await _record.stopRecorder();
     }
-    if (_isRecorderOpen) { // Corrigido: usando _isRecorderOpen
+    if (_isRecorderOpen) {
+      // Corrigido: usando _isRecorderOpen
       await _record.closeRecorder();
       _isRecorderOpen = false; // Atualizando a variável de controle
     }
@@ -201,7 +205,7 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
 //       if (!isPermitted) {
 //         showToast(
 //           context,
-//           'Permissões de gravação não concedidas.',
+//           'No se concedió el permiso del micrófono.',
 //           ThemeColors.red,
 //           ThemeColors.white,
 //         );
@@ -224,10 +228,10 @@ class RecordAudioArtistasProviderImpl extends ChangeNotifier
 //         ThemeColors.white,
 //       );
 //     } catch (e) {
-//       print('Erro ao gravar áudio: $e');
+//       debugPrint('Erro ao gravar áudio: $e');
 //       showToast(
 //         context,
-//         'Erro ao iniciar a gravação de áudio.',
+//         'No se pudo iniciar la grabación.',
 //         ThemeColors.red,
 //         ThemeColors.white,
 //       );

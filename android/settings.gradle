@@ -15,18 +15,28 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-
-    plugins {
-        id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
-    }
 }
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-    id "com.android.application" version "7.3.0" apply false
-    // START: FlutterFire Configuration
-    id "com.google.gms.google-services" version "4.3.15" apply false
-    // END: FlutterFire Configuration
+    id "com.android.application" version "9.3.1" apply false
+    id "org.jetbrains.kotlin.android" version "2.4.20" apply false
+    id "com.google.gms.google-services" version "4.4.4" apply false
 }
 
 include ":app"
+
+// AGP 9 rejects getDefaultProguardFile('proguard-android.txt'). Some current
+// Flutter plugins (flutter_inappwebview_android) still request that file
+// while configuring their release build type. Rewrite the request before the
+// project is evaluated. The optimized default keep file is what AGP 9 accepts.
+gradle.beforeProject { project ->
+    def gradleFile = project.buildFile
+    if (gradleFile != null && gradleFile.exists()) {
+        def original = gradleFile.getText("UTF-8")
+        def needle = "proguard-android.txt"
+        if (original.contains(needle)) {
+            gradleFile.write(original.replace(needle, "proguard-android-optimize.txt"), "UTF-8")
+        }
+    }
+}

@@ -31,158 +31,158 @@ class _TareaDivulgacaoPageState extends State<TareaDivulgacaoPage> {
     final bool isMobile = shortestSide < 600;
 
     return SafeArea(
-        child: Scaffold(
-      backgroundColor: ThemeColors.white,
-      appBar: AppBar(
-        toolbarHeight: isMobile ? 60 : 110,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: IconButton(
-            icon: Icon(Icons.arrow_back_ios,
-                color: ThemeColors.white, size: isMobile ? 20 : 50),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
-        title: Text(
-          Strings.titleDivulgacionUno,
-          style: ThemeText.paragraph14WhiteBold,
-        ),
-      ),
-      body: PageView(
-        onPageChanged: (index) {
-          setState(() {
-            pageChanged = index;
-          });
-        },
-        controller: pageController,
-        children: [
-          const IntroTareaUnoDivulgacaoPage(),
-          const IntroTareaDosDivulgacaoPage(),
-          QuestionDivulgacaoOne(
-            controller: _controller,
-          ),
-        ],
-      ),
-      bottomNavigationBar: loading
-          ? const LinearProgressIndicator(
-              minHeight: 20,
-              color: ThemeColors.blue,
-            )
-          : Container(
-              color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  Center(
-                    child: SmoothPageIndicator(
-                      controller: pageController,
-                      count: 3,
-                      effect: const WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
-                        activeDotColor: Colors.blueAccent,
-                        dotColor: Colors.black26,
-                      ),
-                    ),
-                  ),
-                  if (pageChanged == 2)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
-                      ),
-                      onPressed: () async {
-                        final currentUser = await getCurrentUser(context); // <-- await
-
-                        if (_controller.pickedFile == null) {
-                          showToast(
-                            context,
-                            'Vuelve y ingrese tujas respuestas correctamente',
-                            ThemeColors.red,
-                            ThemeColors.white,
-                          );
-                          return;
-                        }
-
-                        setState(() {
-                          loading = true;
-                        });
-
-                        await Future.delayed(const Duration(milliseconds: 2000));
-
-                        if (!mounted) return;
-
-                        await _controller.sendAnswers(
-                          context,
-                          currentUser,
-                        );
-
-                        if (!mounted) return;
-
-                        Navigator.pushNamed(
-                          context,
-                          '/pUno_divulgacao_menu',
-                        );
-
-                        setState(() {
-                          loading = false;
-                        });
-                      },
-                      child: const Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
+      child: Scaffold(
+        backgroundColor: ThemeColors.white,
+        appBar: AppBar(
+          toolbarHeight: isMobile ? 60 : 110,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
               ),
+              onPressed: () => Navigator.of(context).pop(),
             ),
-    ));
+          ),
+          centerTitle: true,
+          iconTheme: const IconThemeData(
+            color: Color.fromRGBO(250, 251, 250, 1),
+          ),
+          title: Text(
+            Strings.titleDivulgacionUno,
+            style: ThemeText.paragraph14WhiteBold,
+          ),
+        ),
+        body: PageView(
+          onPageChanged: (index) {
+            setState(() {
+              pageChanged = index;
+            });
+          },
+          controller: pageController,
+          children: [
+            const IntroTareaUnoDivulgacaoPage(),
+            const IntroTareaDosDivulgacaoPage(),
+            QuestionDivulgacaoOne(controller: _controller),
+          ],
+        ),
+        bottomNavigationBar: loading
+            ? const LinearProgressIndicator(
+                minHeight: 20,
+                color: ThemeColors.blue,
+              )
+            : Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (pageChanged == 0)
+                      const SizedBox(width: 65)
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: const Text(
+                          'Volver',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    Center(
+                      child: SmoothPageIndicator(
+                        controller: pageController,
+                        count: 3,
+                        effect: const WormEffect(
+                          dotHeight: 10,
+                          dotWidth: 10,
+                          activeDotColor: Colors.blueAccent,
+                          dotColor: Colors.black26,
+                        ),
+                      ),
+                    ),
+                    if (pageChanged == 2)
+                      TextButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all<Color>(
+                            ThemeColors.blue,
+                          ),
+                        ),
+                        onPressed: () async {
+                          final currentUser = await getCurrentUser(
+                            context,
+                          ); // <-- await
+
+                          if (_controller.pickedFile == null) {
+                            showToast(
+                              context,
+                              'Vuelve y ingrese tujas respuestas correctamente',
+                              ThemeColors.red,
+                              ThemeColors.white,
+                            );
+                            return;
+                          }
+
+                          setState(() {
+                            loading = true;
+                          });
+
+                          await Future.delayed(
+                            const Duration(milliseconds: 2000),
+                          );
+
+                          if (!mounted) return;
+
+                          await _controller.sendAnswers(context, currentUser);
+
+                          if (!mounted) return;
+
+                          Navigator.pushNamed(context, '/pUno_divulgacao_menu');
+
+                          setState(() {
+                            loading = false;
+                          });
+                        },
+                        child: const Text(
+                          'Enviar',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    else
+                      TextButton(
+                        onPressed: () {
+                          pageController.nextPage(
+                            duration: const Duration(milliseconds: 400),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        child: const Text(
+                          'Próximo',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+      ),
+    );
   }
 }

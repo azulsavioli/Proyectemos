@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyectemos/utils/navigation.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../../commons/strings/strings.dart';
@@ -38,16 +39,18 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
   }
 
   Future<void> isTaskOneLoading() async {
-    final isTaskOneLoading =
-        await UnoTasksCompletedService.isLoadind("artistasTareaUnoCompleted");
+    final isTaskOneLoading = await UnoTasksCompletedService.isLoadind(
+      "artistasTareaUnoCompleted",
+    );
     setState(() {
       isLoadingTareaUno = isTaskOneLoading;
     });
   }
 
   Future<void> isTaskDosLoading() async {
-    final isTaskTwoLoading =
-        await UnoTasksCompletedService.isLoadind("artistasTareaDosCompleted");
+    final isTaskTwoLoading = await UnoTasksCompletedService.isLoadind(
+      "artistasTareaDosCompleted",
+    );
     setState(() {
       isLoadingTareaDos = isTaskTwoLoading;
     });
@@ -79,9 +82,12 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              icon: Icon(Icons.arrow_back_ios,
-                  color: ThemeColors.white, size: isMobile ? 20 : 50),
-              onPressed: () => Navigator.pushNamed(context, '/proyecto_uno'),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: ThemeColors.white,
+                size: isMobile ? 20 : 50,
+              ),
+              onPressed: () => popOrReplace(context, '/proyecto_uno'),
             ),
           ),
           centerTitle: true,
@@ -100,75 +106,69 @@ class _PUnoArtistasMenuState extends State<PUnoArtistasMenu> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaUno
                       ? 'Cargando Frida Kahlo'
                       : tareaUno
-                          ? 'Feedback Frida Kahlo'
-                          : 'Frida Kahlo',
+                      ? 'Feedback Frida Kahlo'
+                      : 'Frida Kahlo',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaUno
                       ? null
                       : tareaUno
-                          ? '/pUno_artistas_feedback_tarea_uno'
-                          : '/pUno_artistas_frida',
+                      ? '/pUno_artistas_feedback_tarea_uno'
+                      : '/pUno_artistas_frida',
                   backgroundColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                   icon: isLoadingTareaUno
                       ? Icons.hourglass_bottom_outlined
                       : tareaUno
-                          ? Icons.check
-                          : Icons.record_voice_over,
+                      ? Icons.check
+                      : Icons.record_voice_over,
                   shadowColor: isLoadingTareaUno
                       ? ThemeColors.grayLight
                       : tareaUno
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 CardButton(
                   iconSize: isMobile ? 30 : 50,
                   text: isLoadingTareaDos
                       ? 'Cargando\nSelección de archivos'
                       : tareaDos
-                          ? 'Feedback\nSelección de archivos'
-                          : 'Selección de archivos',
+                      ? 'Feedback\nSelección de archivos'
+                      : 'Selección de archivos',
                   cardWidth: isMobile ? width : widthTablet,
                   cardHeight: height,
                   namedRoute: isLoadingTareaDos
                       ? null
                       : tareaDos
-                          ? '/pUno_artistas_feedback_tarea_dos'
-                          : '/pUno_artistas_tarea_dos',
+                      ? '/pUno_artistas_feedback_tarea_dos'
+                      : '/pUno_artistas_tarea_dos',
                   backgroundColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                   icon: isLoadingTareaDos
                       ? Icons.hourglass_bottom_outlined
                       : tareaDos
-                          ? Icons.check
-                          : Icons.file_copy,
+                      ? Icons.check
+                      : Icons.file_copy,
                   shadowColor: isLoadingTareaDos
                       ? ThemeColors.grayLight
                       : tareaDos
-                          ? ThemeColors.green
-                          : ThemeColors.blue,
+                      ? ThemeColors.green
+                      : ThemeColors.blue,
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
               ],
             ),
           ),

@@ -56,9 +56,7 @@ class _MovimientosSocialesTareaUnoState
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsMovimientosSociales.title,
           style: ThemeText.paragraph16WhiteBold,
@@ -77,13 +75,9 @@ class _MovimientosSocialesTareaUnoState
           controller: pageController,
           children: [
             IntroUnoMovimientosSocialesPage(),
-            IntroDosMovimientosSocialesPage(
-              controller: _controller,
-            ),
+            IntroDosMovimientosSocialesPage(controller: _controller),
             IntroTresMovimientosSocialesPage(),
-            IntroFourMovimientosSocialesPage(
-              controller: _controller,
-            ),
+            IntroFourMovimientosSocialesPage(controller: _controller),
           ],
         ),
       ),
@@ -100,9 +94,7 @@ class _MovimientosSocialesTareaUnoState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () async {
@@ -135,11 +127,14 @@ class _MovimientosSocialesTareaUnoState
                   if (pageChanged == 3)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         // Verifica se há alunos e arquivo selecionado
-                        if (_controller.studentGroup.isEmpty || _controller.pickedFile == null) {
+                        if (_controller.studentGroup.isEmpty ||
+                            _controller.pickedFile == null) {
                           showToast(
                             context,
                             'Selecciona el video correctamente y sus compañeros',
@@ -154,7 +149,9 @@ class _MovimientosSocialesTareaUnoState
                         });
 
                         // Delay opcional para efeito visual
-                        await Future.delayed(const Duration(milliseconds: 2000));
+                        await Future.delayed(
+                          const Duration(milliseconds: 2000),
+                        );
 
                         if (!mounted) return;
 
@@ -186,50 +183,50 @@ class _MovimientosSocialesTareaUnoState
                       ),
                     )
                   // if (pageChanged == 3)
-                    // TextButton(
-                    //   style: ButtonStyle(
-                    //     backgroundColor:
-                    //         WidgetStateProperty.all<Color>(ThemeColors.blue),
-                    //   ),
-                    //   onPressed: () async {
-                    //     if (_controller.studentGroup.length <= 0 ||
-                    //         _controller.pickedFile == null) {
-                    //       showToast(
-                    //         context,
-                    //         '''Selecciona el video correctamente y sus compañeros''',
-                    //         ThemeColors.red,
-                    //         ThemeColors.white,
-                    //       );
-                    //     } else {
-                    //       setState(() {
-                    //         loading = true;
-                    //       });
-                    //       Future.delayed(Duration(milliseconds: 2000)).then(
-                    //         (value) {
-                    //           if (mounted) {
-                    //             final currentUser = await getCurrentUser(context);
-                    //             _controller.sendAnswers(
-                    //               context,
-                    //               currentUser,
-                    //             );
-                    //             Navigator.pushNamed(
-                    //               context,
-                    //               '/pTres_movimientosSociales_menu',
-                    //             );
-                    //           }
-                    //         },
-                    //       );
-                    //     }
-                    //   },
-                    //   child: const Text(
-                    //     'Enviar',
-                    //     style: TextStyle(
-                    //       fontSize: 18,
-                    //       color: Colors.white,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    // )
+                  // TextButton(
+                  //   style: ButtonStyle(
+                  //     backgroundColor:
+                  //         WidgetStateProperty.all<Color>(ThemeColors.blue),
+                  //   ),
+                  //   onPressed: () async {
+                  //     if (_controller.studentGroup.length <= 0 ||
+                  //         _controller.pickedFile == null) {
+                  //       showToast(
+                  //         context,
+                  //         '''Selecciona el video correctamente y sus compañeros''',
+                  //         ThemeColors.red,
+                  //         ThemeColors.white,
+                  //       );
+                  //     } else {
+                  //       setState(() {
+                  //         loading = true;
+                  //       });
+                  //       Future.delayed(Duration(milliseconds: 2000)).then(
+                  //         (value) {
+                  //           if (mounted) {
+                  //             final currentUser = await getCurrentUser(context);
+                  //             _controller.sendAnswers(
+                  //               context,
+                  //               currentUser,
+                  //             );
+                  //             Navigator.pushNamed(
+                  //               context,
+                  //               '/pTres_movimientosSociales_menu',
+                  //             );
+                  //           }
+                  //         },
+                  //       );
+                  //     }
+                  //   },
+                  //   child: const Text(
+                  //     'Enviar',
+                  //     style: TextStyle(
+                  //       fontSize: 18,
+                  //       color: Colors.white,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // )
                   else
                     TextButton(
                       onPressed: () {
