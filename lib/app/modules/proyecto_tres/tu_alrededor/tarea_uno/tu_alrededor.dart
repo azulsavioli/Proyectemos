@@ -1,4 +1,6 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -40,7 +42,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -69,12 +71,12 @@ class _TuAlrededorState extends State<TuAlrededor> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -82,8 +84,8 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 7),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 7,
                       effect: const WormEffect(
@@ -92,7 +94,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 6)
                     TextButton(
@@ -161,7 +163,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

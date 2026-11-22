@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/la_encuesta/tarea_uno/tarea_uno_controller.dart';
 import 'package:proyectemos/app/modules/widgets/custom_record_audio_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../commons/styles.dart';
@@ -30,27 +31,12 @@ class _QuestionQueEsUnaEncuestaTresState
   QueEsUnaEncuestaController get _controller => widget.controller;
   TextEditingController get _textController => widget.textController;
   FocusNode get focusNode => widget.focusNode;
-  bool isAccessible = false;
-
-  @override
-  initState() {
-    super.initState();
-    getIsAcessible();
-  }
-
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    setState(() {
-      if (isAccessibleOn != null) {
-        isAccessible = isAccessibleOn;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final accessibility = context.watch<AccessibilityProvider>();
+    final isAccessible =
+        accessibility.loaded && accessibility.isEnabled(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
@@ -79,7 +65,7 @@ class _QuestionQueEsUnaEncuestaTresState
                     hint: 'Respuesta',
                     controller: _textController,
                     keyboardType: TextInputType.text,
-                    validatorVazio: 'Ingrese tuja respuesta correctamente',
+                    validatorVazio: 'Ingrese tu respuesta correctamente',
                     validatorMenorqueNumero:
                         'Su respuesta debe tener al menos 3 caracteres',
                   ),

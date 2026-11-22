@@ -1,6 +1,9 @@
+import 'package:proyectemos/utils/motion.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/utils/get_user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
@@ -37,28 +40,17 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
   int pageChanged = 0;
 
   @override
-  initState() {
-    super.initState();
-    getIsAcessible();
-  }
-
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    setState(() {
-      if (isAccessibleOn != null) {
-        isAccessible = isAccessibleOn;
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final accessibility = context.watch<AccessibilityProvider>();
+    if (!accessibility.loaded) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    isAccessible = accessibility.isEnabled(context);
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -104,12 +96,12 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -117,8 +109,8 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 3),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 3,
                       effect: const WormEffect(
@@ -127,7 +119,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 2)
                     TextButton(
@@ -231,7 +223,7 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

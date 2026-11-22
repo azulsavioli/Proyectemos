@@ -40,7 +40,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -57,7 +57,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return FeedStatusView(
-              message: 'No se pudieron cargar los links. Inténtalo de nuevo.',
+              message: 'Não foi possível carregar os links. Tente de novo.',
               onReload: _reload,
             );
           }
@@ -89,7 +89,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
             );
           } else {
             return FeedStatusView(
-              message: 'Todavía no hay links compartidos.',
+              message: 'Ainda não há links compartilhados.',
               onReload: _reload,
             );
           }

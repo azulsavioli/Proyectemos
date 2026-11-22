@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (!mounted) return;
       setState(() {
         _loading = false;
-        _loadError = 'No se pudo cargar el perfil. Inténtalo de nuevo.';
+        _loadError = 'Não foi possível carregar o perfil. Tente de novo.';
       });
     }
   }
@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           centerTitle: true,
           title: Text('Perfil', style: ThemeText.paragraph16WhiteBold),
           leading: IconButton(
-            tooltip: 'Volver',
+            tooltip: 'Voltar',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyectos'),
           ),
@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
                           _initializeData();
                         },
-                        child: const Text('Reintentar'),
+                        child: const Text('Tentar de novo'),
                       ),
                     ],
                   ),
@@ -312,7 +312,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
 Widget acessibilityCard(BuildContext context) {
   final width = MediaQuery.of(context).size.width * .9;
-  final accessible = context.watch<AccessibilityProvider>().isAccessible;
+  final provider = context.watch<AccessibilityProvider>();
+  final accessible = provider.isEnabled(context);
   return SizedBox(
     width: width,
     child: Card(
@@ -335,7 +336,23 @@ Widget acessibilityCard(BuildContext context) {
                 color: ThemeColors.foregroundOn(ThemeColors.yellow),
               ),
             ),
-            Text('Accesibilidad', style: ThemeText.paragraph14Gray),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Acessibilidade', style: ThemeText.paragraph14Gray),
+                Text(
+                  provider.overridePreference == null
+                      ? 'Seguindo o sistema'
+                      : 'Preferência do app',
+                  style: ThemeText.paragraph12Gray,
+                ),
+                if (provider.overridePreference != null)
+                  TextButton(
+                    onPressed: provider.clearOverride,
+                    child: const Text('Seguir o sistema'),
+                  ),
+              ],
+            ),
             Text(
               'off',
               style: TextStyle(

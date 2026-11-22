@@ -1,4 +1,6 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings_crea_tu_movimiento.dart';
@@ -75,7 +77,7 @@ class _CreacionDeSuMovimentoTareaUnoState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -166,12 +168,12 @@ class _CreacionDeSuMovimentoTareaUnoState
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -179,8 +181,8 @@ class _CreacionDeSuMovimentoTareaUnoState
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 7),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 7,
                       effect: const WormEffect(
@@ -189,7 +191,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 6)
                     TextButton(
@@ -207,7 +209,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                             _controller.studentGroup.length <= 0) {
                           showToast(
                             context,
-                            '''Vuelve y ingrese tuja respuesta correctamente y sus compañeros''',
+                            '''Vuelve y ingrese tu respuesta correctamente y sus compañeros''',
                             ThemeColors.red,
                             ThemeColors.white,
                           );
@@ -249,7 +251,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

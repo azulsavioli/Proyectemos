@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/el_podcast/tarea_uno/tarea_uno_controller.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 
 import '../../../../../commons/strings/strings_conoces_podcast.dart';
 import '../../../../../commons/styles.dart';
@@ -21,22 +23,12 @@ class QuestionConocesPodcastDos extends StatefulWidget {
 class _QuestionConocesPodcastDosState extends State<QuestionConocesPodcastDos>
     with AutomaticKeepAliveClientMixin {
   ConocesPodcastController get _controller => widget.controller;
-  bool isAccessibleOn = false;
-
-  @override
-  initState() {
-    super.initState();
-    _controller.getIsAcessible();
-    if (_controller.isAccessible != null) {
-      setState(() {
-        this.isAccessibleOn = _controller.isAccessible!;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final isAccessibleOn =
+        context.watch<AccessibilityProvider>().isEnabled(context);
 
     return Padding(
       padding: const EdgeInsets.all(24),

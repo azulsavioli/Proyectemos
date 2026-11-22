@@ -80,7 +80,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
           children: [
             IconButton(
               key: const Key('play_button'),
-              tooltip: 'Reproducir',
+              tooltip: 'Reproduzir',
               onPressed: _isPlaying ? null : _play,
               iconSize: 48.0,
               icon: Icon(
@@ -102,7 +102,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
             ),
             IconButton(
               key: const Key('stop_button'),
-              tooltip: 'Detener',
+              tooltip: 'Parar',
               onPressed: _isPlaying || _isPaused ? _stop : null,
               iconSize: 48.0,
               icon: Icon(

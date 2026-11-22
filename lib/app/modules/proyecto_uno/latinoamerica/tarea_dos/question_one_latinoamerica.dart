@@ -102,7 +102,7 @@ class _QuestionLatinoamericaTareaDosState
                                     }
                                   : null,
                               child:  Text(
-                                'Volver',
+                                'Voltar',
                                 style: isMobile ? TextStyle(color:ThemeColors.blue) :
                                 TextStyle(
                                     color: ThemeColors.blue,
@@ -127,7 +127,7 @@ class _QuestionLatinoamericaTareaDosState
                                     }
                                   : null,
                               child:  Text(
-                                'Volver',
+                                'Voltar',
                                 style: isMobile ? TextStyle(color:ThemeColors.blue) :
                                 TextStyle(
                                     color: ThemeColors.blue,

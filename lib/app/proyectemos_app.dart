@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/crea_tu_movimiento/tarea_uno/crea_tu_movimiento_feedback.dart';
@@ -214,20 +215,39 @@ class Proyectemos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-    create: (context) => GoogleSignInProvider(),
-    child: ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: true,
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: Proyectemos.title,
-          theme: appTheme(),
-          home: const AuthCheck(),
-          initialRoute: '/',
-          routes: Map.from(routes)..remove(Navigator.defaultRouteName),
-        );
-      },
-    ),
-  );
+        create: (context) => GoogleSignInProvider(),
+        child: ScreenUtilInit(
+          minTextAdapt: true,
+          splitScreenMode: true,
+          builder: (context, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: Proyectemos.title,
+              locale: const Locale('pt', 'BR'),
+              supportedLocales: const [
+                Locale('pt', 'BR'),
+                Locale('es'),
+              ],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              theme: appTheme(),
+              builder: (context, child) {
+                // boldText changes presentation only. It does not open the
+                // multi-page accessible lesson flow.
+                if (!MediaQuery.boldTextOf(context)) return child!;
+                return DefaultTextStyle.merge(
+                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  child: child!,
+                );
+              },
+              home: const AuthCheck(),
+              initialRoute: '/',
+              routes: Map.from(routes)..remove(Navigator.defaultRouteName),
+            );
+          },
+        ),
+      );
 }

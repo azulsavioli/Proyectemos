@@ -53,7 +53,7 @@ class RegistrationController extends ChangeNotifier {
     } else {
       showToast(
         context,
-        '''¡Ups! Ha ocurrido un error y sus datos no ha sido enviado. ¡Inténtalo de nuevo!''',
+        '''Não foi possível enviar os dados. Tente de novo.''',
         ThemeColors.yellow,
         ThemeColors.white,
       );

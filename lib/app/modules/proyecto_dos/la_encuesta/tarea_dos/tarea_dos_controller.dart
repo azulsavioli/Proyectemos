@@ -6,8 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mailer/mailer.dart';
 import 'package:proyectemos/commons/styles.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../../../providers/record_audio_provider_la_encuesta_tarea_dos.dart';
@@ -24,15 +22,6 @@ class TareaDosComoCrearUnaEncuestaController extends ChangeNotifier {
   bool isAudioFinish = RecordAudioLaEncuestaTareaDosProviderImpl().isRecording;
   List<String> recordsPathList =
       RecordAudioLaEncuestaTareaDosProviderImpl.recordingsPaths;
-
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    if (isAccessibleOn != null) {
-      isAccessible = isAccessibleOn;
-      notifyListeners();
-    }
-  }
 
   Future<void> sendAnswersText(
     context,

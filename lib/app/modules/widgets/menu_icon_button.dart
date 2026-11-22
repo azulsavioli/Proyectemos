@@ -9,7 +9,7 @@ class MenuIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      tooltip: 'Menú',
+      tooltip: 'Menu',
       style: IconButton.styleFrom(
         minimumSize: const Size(48, 48),
         tapTargetSize: MaterialTapTargetSize.padded,

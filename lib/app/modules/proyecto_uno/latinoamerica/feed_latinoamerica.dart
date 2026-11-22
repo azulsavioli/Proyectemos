@@ -48,7 +48,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: IconButton(
-            tooltip: 'Volver',
+            tooltip: 'Voltar',
             icon: Icon(
               Icons.arrow_back_ios,
               color: ThemeColors.white,
@@ -71,7 +71,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
           if (snapshot.hasError) {
             return FeedStatusView(
               message:
-                  'No se pudieron cargar las imágenes. Inténtalo de nuevo.',
+                  'Não foi possível carregar as imagens. Tente de novo.',
               onReload: _reload,
             );
           }
@@ -103,7 +103,7 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
             );
           } else {
             return FeedStatusView(
-              message: 'Todavía no hay actividades compartidas.',
+              message: 'Ainda não há atividades compartilhadas.',
               onReload: _reload,
             );
           }

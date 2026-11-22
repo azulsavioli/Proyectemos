@@ -52,7 +52,7 @@ class _ProyectoDosPageState extends State<ProyectoDosPage> {
         backgroundColor: ThemeColors.white,
         appBar: AppBar(
           leading: IconButton(
-            tooltip: 'Volver',
+            tooltip: 'Voltar',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyectos'),
           ),

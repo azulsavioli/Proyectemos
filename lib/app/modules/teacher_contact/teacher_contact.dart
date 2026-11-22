@@ -75,7 +75,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -106,7 +106,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                         hint: 'Assunto',
                         controller: _assuntoController,
                         keyboardType: TextInputType.text,
-                        validatorVazio: 'Ingrese tuja respuesta correctamente',
+                        validatorVazio: 'Ingrese tu respuesta correctamente',
                         validatorMenorqueNumero:
                             'Su respuesta debe tener al menos 3 caracteres',
                       ),
@@ -118,7 +118,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
                         hint: 'Mensaje',
                         controller: _descricaoController,
                         keyboardType: TextInputType.text,
-                        validatorVazio: 'Ingrese tuja respuesta correctamente',
+                        validatorVazio: 'Ingrese tu respuesta correctamente',
                         validatorMenorqueNumero:
                             'Su respuesta debe tener al menos 10 caracteres',
                       ),
@@ -238,7 +238,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //                 hint: 'Assunto',
 //                 controller: _assuntoController,
 //                 keyboardType: TextInputType.text,
-//                 validatorVazio: 'Ingrese tuja respuesta correctamente',
+//                 validatorVazio: 'Ingrese tu respuesta correctamente',
 //                 validatorMenorqueNumero:
 //                     'Su respuesta debe tener al menos 3 caracteres',
 //               ),
@@ -251,7 +251,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //                 hint: 'Mensaje',
 //                 controller: _descricaoController,
 //                 keyboardType: TextInputType.text,
-//                 validatorVazio: 'Ingrese tuja respuesta correctamente',
+//                 validatorVazio: 'Ingrese tu respuesta correctamente',
 //                 validatorMenorqueNumero:
 //                     'Su respuesta debe tener al menos 10 caracteres',
 //               ),
@@ -368,7 +368,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //                       hint: 'Assunto',
 //                       controller: _assuntoController,
 //                       keyboardType: TextInputType.text,
-//                       validatorVazio: 'Ingrese tuja respuesta correctamente',
+//                       validatorVazio: 'Ingrese tu respuesta correctamente',
 //                       validatorMenorqueNumero:
 //                           'Su respuesta debe tener al menos 3 caracteres',
 //                     ),
@@ -380,7 +380,7 @@ class _EnvioEmailProfesoraPerfilState extends State<EnvioEmailProfesoraPerfil> {
 //                       hint: 'Mensaje',
 //                       controller: _descricaoController,
 //                       keyboardType: TextInputType.text,
-//                       validatorVazio: 'Ingrese tuja respuesta correctamente',
+//                       validatorVazio: 'Ingrese tu respuesta correctamente',
 //                       validatorMenorqueNumero:
 //                           'Su respuesta debe tener al menos 10 caracteres',
 //                     ),

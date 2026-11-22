@@ -60,7 +60,7 @@ class _ProyectoUnoPageState extends State<ProyectoUnoPage> {
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
-              tooltip: 'Volver',
+              tooltip: 'Voltar',
               style: IconButton.styleFrom(
                 minimumSize: const Size(48, 48),
                 tapTargetSize: MaterialTapTargetSize.padded,

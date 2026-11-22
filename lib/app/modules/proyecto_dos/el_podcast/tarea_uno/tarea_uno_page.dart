@@ -1,4 +1,8 @@
+import 'package:proyectemos/utils/motion.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:flutter/material.dart';
+import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/services/toast_services.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -41,7 +45,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
-          tooltip: 'Volver',
+          tooltip: 'Voltar',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -92,12 +96,12 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -105,8 +109,8 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         ),
                       ),
                     ),
-                  Center(
-                    child: SmoothPageIndicator(
+                  Expanded(child: FittedBox(fit: BoxFit.scaleDown, child: Column(mainAxisSize: MainAxisSize.min, children: [TaskStepLabel(current: pageChanged + 1, total: 4),
+SmoothPageIndicator(
                       controller: pageController,
                       count: 4,
                       effect: const WormEffect(
@@ -115,7 +119,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
-                    ),
+                    )]),),
                   ),
                   if (pageChanged == 3)
                     TextButton(
@@ -129,6 +133,9 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                           context,
                         ); // <-- await
 
+                        _controller.isAccessible = context
+                            .read<AccessibilityProvider>()
+                            .isEnabled(context);
                         if (_controller.isAccessible!) {
                           if (textEditingController1.text.isEmpty ||
                               textEditingController2.text.isEmpty ||
@@ -227,7 +234,7 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

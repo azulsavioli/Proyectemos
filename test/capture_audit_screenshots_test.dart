@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:proyectemos/app/modules/home/proyectos_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/question_como_crear_podcast.dart';
+import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
 import 'package:proyectemos/app/modules/widgets/card_proyects.dart';
+import 'package:proyectemos/app/modules/widgets/unified_record_and_play.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
+import 'package:proyectemos/providers/audio_provider_interface.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +71,10 @@ void main() {
                   ),
                 );
               },
-              home: home,
+              home: ChangeNotifierProvider(
+                create: (_) => AccessibilityProvider(),
+                child: home,
+              ),
             );
           },
         ),
@@ -103,6 +112,25 @@ void main() {
     await shoot('login_360x640_x2.0', phone, 2, const LoginPage());
     await shoot('tarea_360x640_x1.0', phone, 1, const _TaskShot());
     await shoot('tarea_360x640_x2.0', phone, 2, const _TaskShot());
+
+    SharedPreferences.setMockInitialValues({
+      'isAccessible': true,
+      'latinoamericaTareaUnoCompleted': true,
+      'latinoamericaTareaDosCompleted': true,
+      'artistasTareaUnoCompleted': true,
+      'artistasTareaDosCompleted': true,
+      'eventoTareaUnoCompleted': true,
+      'divulgationTareaUnoCompleted': true,
+    });
+    await shoot('home_checks_360x640_x1.0', phone, 1, const ProyectosPage());
+    await shoot('tarea_paso_360x640_x1.0', phone, 1, const TareaUnoEscucharPodcast());
+    await shoot('recorder_idle_360x640_x1.0', phone, 1, const _RecorderShot());
+    await shoot(
+      'recorder_review_360x640_x1.0',
+      phone,
+      1,
+      const _RecorderShot(hasAudio: true),
+    );
   });
 }
 
@@ -175,6 +203,44 @@ class _HomeShot extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ShotRecorder extends ChangeNotifier implements AudioProvider {
+  _ShotRecorder({this.hasAudio = false});
+  final bool hasAudio;
+  @override
+  bool isRecording = false;
+  @override
+  String get recordedFilePath => hasAudio ? '/tmp/respuesta.aac' : '';
+  @override
+  List<dynamic> clearOldData() => [];
+  @override
+  void clearAllData() {}
+  @override
+  Future<void> recordVoice(context) async {}
+  @override
+  Future<void> stopRecording(context) async {}
+  @override
+  void cancelRecording() {}
+  @override
+  void saveRecording(context) {}
+}
+
+class _RecorderShot extends StatelessWidget {
+  const _RecorderShot({this.hasAudio = false});
+  final bool hasAudio;
+
+  @override
+  Widget build(BuildContext context) {
+    return UnifiedRecordAndPlay(
+      record: _ShotRecorder(hasAudio: hasAudio),
+      title: 'Frida Kahlo',
+      question: 'Describe lo que ves',
+      background: null,
+      isPlaying: false,
+      onTogglePlayback: (_) async {},
     );
   }
 }

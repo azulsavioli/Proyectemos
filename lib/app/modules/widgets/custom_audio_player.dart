@@ -42,7 +42,7 @@ class _CustomAudioPlayerState extends State<CustomAudioPlayer> {
     );
 
     return IconButton(
-      tooltip: playProvider.isSongPlaying ? 'Pausar' : 'Reproducir',
+      tooltip: playProvider.isSongPlaying ? 'Pausar' : 'Reproduzir',
       onPressed: () async {
         if (songPath.isEmpty) return;
 
