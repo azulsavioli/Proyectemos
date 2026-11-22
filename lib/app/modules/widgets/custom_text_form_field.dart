@@ -33,43 +33,51 @@ class CustomTextFormField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SpanishText(hint, style: ThemeText.paragraph16GrayNormal),
+        ExcludeSemantics(
+          child: SpanishText(hint, style: ThemeText.paragraph16GrayNormal),
+        ),
         const SizedBox(height: 8),
-        TextFormField(
-          style: isMobile
-              ? ThemeText.paragraph14Gray
-              : ThemeText.paragraph12Gray,
-          focusNode: focusNode,
-          textInputAction: textInputAction,
-          maxLines: maxLines,
-          controller: controller,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              borderSide: BorderSide(color: Colors.grey),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-              borderSide: BorderSide(color: ThemeColors.blue),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              vertical: isMobile ? 20.0 : 40.0,
-              horizontal: 16.0,
+        Semantics(
+          textField: true,
+          label: hint,
+          child: ExcludeSemantics(
+            child: TextFormField(
+              style: isMobile
+                  ? ThemeText.paragraph14Gray
+                  : ThemeText.paragraph12Gray,
+              focusNode: focusNode,
+              textInputAction: textInputAction,
+              maxLines: maxLines,
+              controller: controller,
+              decoration: InputDecoration(
+                border: const OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  borderSide: BorderSide(color: Colors.grey),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(color: ThemeColors.blue),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: isMobile ? 20.0 : 40.0,
+                  horizontal: 16.0,
+                ),
+              ),
+              keyboardType: keyboardType,
+              cursorColor: Colors.grey,
+              validator: (resposta) {
+                {
+                  if (resposta!.isEmpty) {
+                    return validatorVazio;
+                  }
+                  if (resposta.length < 3) {
+                    return validatorMenorqueNumero;
+                  }
+                  return null;
+                }
+              },
             ),
           ),
-          keyboardType: keyboardType,
-          cursorColor: Colors.grey,
-          validator: (resposta) {
-            {
-              if (resposta!.isEmpty) {
-                return validatorVazio;
-              }
-              if (resposta.length < 3) {
-                return validatorMenorqueNumero;
-              }
-              return null;
-            }
-          },
         ),
       ],
     );

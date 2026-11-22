@@ -17,11 +17,10 @@ class AccessibilityProvider with ChangeNotifier {
     _loadAccessibility();
   }
 
+  /// The long accessible lesson is for a screen reader, or for the in-app
+  /// switch. Bold text and reduced motion only change presentation.
   bool followsSystem(MediaQueryData media) {
-    return media.accessibleNavigation ||
-        media.boldText ||
-        media.highContrast ||
-        media.disableAnimations;
+    return media.accessibleNavigation;
   }
 
   bool isEnabled(BuildContext context) {

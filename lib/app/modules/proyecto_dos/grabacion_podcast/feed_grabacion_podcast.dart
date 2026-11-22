@@ -55,7 +55,7 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
           if (snapshot.hasError) {
             return FeedStatusView(
               message:
-                  'No se pudieron cargar los podcasts. Inténtalo de nuevo.',
+                  'Não foi possível carregar os podcasts. Tente de novo.',
               onReload: _reload,
             );
           }
@@ -87,7 +87,7 @@ class _FeedGrabacionPodcastPageState extends State<FeedGrabacionPodcastPage> {
             );
           } else {
             return FeedStatusView(
-              message: 'Todavía no hay podcasts compartidos.',
+              message: 'Ainda não há podcasts compartilhados.',
               onReload: _reload,
             );
           }

@@ -11,7 +11,9 @@ import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_un
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
 import 'package:proyectemos/app/modules/widgets/card_proyects.dart';
 import 'package:proyectemos/app/modules/widgets/unified_record_and_play.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:proyectemos/providers/audio_provider_interface.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -69,7 +71,10 @@ void main() {
                   ),
                 );
               },
-              home: home,
+              home: ChangeNotifierProvider(
+                create: (_) => AccessibilityProvider(),
+                child: home,
+              ),
             );
           },
         ),

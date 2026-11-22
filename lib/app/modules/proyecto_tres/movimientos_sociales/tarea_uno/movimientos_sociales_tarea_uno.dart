@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
@@ -101,12 +102,12 @@ class _MovimientosSocialesTareaUnoState
                     TextButton(
                       onPressed: () async {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -233,7 +234,7 @@ SmoothPageIndicator(
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

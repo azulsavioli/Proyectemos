@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_tres/crea_tu_movimiento/tarea_dos/crea_tu_movimiento_intro_dos.dart';
@@ -122,12 +123,12 @@ class _CreacionDeSuMovimentoTareaDosState
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -199,7 +200,7 @@ SmoothPageIndicator(
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

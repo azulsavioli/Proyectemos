@@ -176,7 +176,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return FeedStatusView(
-              message: 'No se pudieron cargar los videos. Inténtalo de nuevo.',
+              message: 'Não foi possível carregar os vídeos. Tente de novo.',
               onReload: reloadFeed,
             );
           }
@@ -188,7 +188,7 @@ class _FeedDivulgationPageState extends State<FeedDivulgationPage> {
           final students = snapshot.data!;
           if (students.isEmpty) {
             return FeedStatusView(
-              message: 'Todavía no hay videos compartidos.',
+              message: 'Ainda não há vídeos compartilhados.',
               onReload: reloadFeed,
             );
           }

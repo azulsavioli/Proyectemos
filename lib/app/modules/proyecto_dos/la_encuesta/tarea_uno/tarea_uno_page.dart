@@ -1,7 +1,9 @@
+import 'package:proyectemos/utils/motion.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/utils/get_user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
@@ -38,23 +40,12 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
   int pageChanged = 0;
 
   @override
-  initState() {
-    super.initState();
-    getIsAcessible();
-  }
-
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    setState(() {
-      if (isAccessibleOn != null) {
-        isAccessible = isAccessibleOn;
-      }
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final accessibility = context.watch<AccessibilityProvider>();
+    if (!accessibility.loaded) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    isAccessible = accessibility.isEnabled(context);
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
@@ -105,12 +96,12 @@ class _TareaUnoQueEsUnaEncuestaState extends State<TareaUnoQueEsUnaEncuesta> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -232,7 +223,7 @@ SmoothPageIndicator(
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

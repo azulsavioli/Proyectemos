@@ -146,7 +146,18 @@ class _UnifiedRecordAndPlayState extends State<UnifiedRecordAndPlay> {
       if (open == true) await widget.openSettings();
       return;
     }
-    if (access != MicrophoneAccess.granted || !mounted) return;
+    if (access != MicrophoneAccess.granted || !mounted) {
+      if (access == MicrophoneAccess.denied && mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'O microfone não foi permitido. Sem ele não dá para gravar a resposta.',
+            ),
+          ),
+        );
+      }
+      return;
+    }
 
     setState(() => _elapsed = Duration.zero);
     await widget.record.recordVoice(context);

@@ -1,3 +1,6 @@
+import 'package:proyectemos/utils/motion.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
@@ -59,18 +62,9 @@ class _TareaDosComoCrearUnaEncuestaPageState
   final focusNode3 = FocusNode();
   final textEditingController3 = TextEditingController();
 
-  Future<void> _loadAccessibility() async {
-    await _controller.getIsAcessible();
-    if (!mounted) return;
-    setState(() {
-      isAccessible = _controller.isAccessible ?? false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    _loadAccessibility();
 
     youTubeController = YoutubePlayerController(
       initialVideoId: 'HVk3UYTKCr0',
@@ -110,6 +104,12 @@ class _TareaDosComoCrearUnaEncuestaPageState
 
   @override
   Widget build(BuildContext context) {
+    final accessibility = context.watch<AccessibilityProvider>();
+    if (!accessibility.loaded) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+    isAccessible = accessibility.isEnabled(context);
+    _controller.isAccessible = isAccessible;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: ThemeColors.white,
@@ -185,12 +185,12 @@ class _TareaDosComoCrearUnaEncuestaPageState
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -338,7 +338,7 @@ SmoothPageIndicator(
                         }
 
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

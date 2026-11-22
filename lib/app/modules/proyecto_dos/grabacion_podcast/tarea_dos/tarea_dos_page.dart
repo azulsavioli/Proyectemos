@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/services/toast_services.dart';
@@ -174,12 +175,12 @@ class _TareaDosGrabacionPodcastPageState
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -272,7 +273,7 @@ SmoothPageIndicator(
                         }
 
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

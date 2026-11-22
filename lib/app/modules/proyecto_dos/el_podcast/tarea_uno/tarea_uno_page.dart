@@ -1,3 +1,6 @@
+import 'package:proyectemos/utils/motion.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/services/toast_services.dart';
@@ -93,12 +96,12 @@ class _PDosConocesPodcastState extends State<PDosConocesPodcast> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -130,6 +133,9 @@ SmoothPageIndicator(
                           context,
                         ); // <-- await
 
+                        _controller.isAccessible = context
+                            .read<AccessibilityProvider>()
+                            .isEnabled(context);
                         if (_controller.isAccessible!) {
                           if (textEditingController1.text.isEmpty ||
                               textEditingController2.text.isEmpty ||
@@ -228,7 +234,7 @@ SmoothPageIndicator(
                     TextButton(
                       onPressed: () {
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

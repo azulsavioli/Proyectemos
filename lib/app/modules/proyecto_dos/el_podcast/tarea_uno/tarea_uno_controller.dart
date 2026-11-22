@@ -8,8 +8,6 @@ import 'package:proyectemos/commons/strings/strings_conoces_podcast.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:mailer/mailer.dart';
 import 'package:proyectemos/repository/repository_impl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../providers/record_audio_provider_conoces_podcast_impl.dart';
 import '../../../../../services/toast_services.dart';
@@ -138,15 +136,6 @@ class ConocesPodcastController extends ChangeNotifier {
       'resposta_4': audioList[1],
     };
     return json;
-  }
-
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    if (isAccessibleOn != null) {
-      isAccessible = isAccessibleOn;
-      notifyListeners();
-    }
   }
 
   Future convertAudioToFirebase(

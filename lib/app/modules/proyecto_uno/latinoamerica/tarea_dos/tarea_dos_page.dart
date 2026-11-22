@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_uno/latinoamerica/tarea_dos/tarea_dos_controller.dart';
@@ -136,12 +137,12 @@ class _PUnoLatinoamericaTareaDosPageState
                       TextButton(
                         onPressed: () {
                           pageController.previousPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },
                         child: Text(
-                          'Volver',
+                          'Voltar',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
                             color: ThemeColors.gray,
@@ -225,7 +226,7 @@ SmoothPageIndicator(
                       TextButton(
                         onPressed: () {
                           pageController.nextPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },

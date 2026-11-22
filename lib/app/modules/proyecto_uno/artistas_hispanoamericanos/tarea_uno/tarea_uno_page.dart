@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -118,12 +119,12 @@ class _TareaArtistasLatinoamericanosPageState
                       TextButton(
                         onPressed: () {
                           pageController.previousPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },
                         child: Text(
-                          'Volver',
+                          'Voltar',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
                             color: ThemeColors.gray,
@@ -203,7 +204,7 @@ SmoothPageIndicator(
                       TextButton(
                         onPressed: () {
                           pageController.nextPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },

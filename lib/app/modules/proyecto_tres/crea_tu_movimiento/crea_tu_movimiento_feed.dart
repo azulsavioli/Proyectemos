@@ -57,7 +57,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return FeedStatusView(
-              message: 'No se pudieron cargar los links. Inténtalo de nuevo.',
+              message: 'Não foi possível carregar os links. Tente de novo.',
               onReload: _reload,
             );
           }
@@ -89,7 +89,7 @@ class _FeedCreaTuMovimientoTareaDosPageState
             );
           } else {
             return FeedStatusView(
-              message: 'Todavía no hay links compartidos.',
+              message: 'Ainda não há links compartilhados.',
               onReload: _reload,
             );
           }

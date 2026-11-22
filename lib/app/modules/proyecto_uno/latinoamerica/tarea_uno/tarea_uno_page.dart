@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
@@ -237,12 +238,12 @@ class _TareaUnoLatinoamericaPageState extends State<TareaUnoLatinoamericaPage> {
                       TextButton(
                         onPressed: () {
                           pageController.previousPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },
                         child: Text(
-                          'Volver',
+                          'Voltar',
                           style: TextStyle(
                             fontSize: isMobile ? 18 : 28,
                             color: ThemeColors.gray,
@@ -356,7 +357,7 @@ SmoothPageIndicator(
                           }
 
                           pageController.nextPage(
-                            duration: const Duration(milliseconds: 400),
+                            duration: motionDuration(context),
                             curve: Curves.easeInOut,
                           );
                         },

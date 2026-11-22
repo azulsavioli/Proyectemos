@@ -52,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (!mounted) return;
       setState(() {
         _loading = false;
-        _loadError = 'No se pudo cargar el perfil. Inténtalo de nuevo.';
+        _loadError = 'Não foi possível carregar o perfil. Tente de novo.';
       });
     }
   }
@@ -130,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           });
                           _initializeData();
                         },
-                        child: const Text('Reintentar'),
+                        child: const Text('Tentar de novo'),
                       ),
                     ],
                   ),

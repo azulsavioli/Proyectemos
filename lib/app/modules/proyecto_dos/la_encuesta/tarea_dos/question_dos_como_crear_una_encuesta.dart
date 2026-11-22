@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/styles.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 
 import '../../../../../commons/strings/strings_la_encuesta.dart';
 import '../../../widgets/custom_record_audio_button.dart';
@@ -28,21 +30,11 @@ class _QuestionComoCrearUnaEncuestaDosState
   TareaDosComoCrearUnaEncuestaController get _controller => widget.controller;
   TextEditingController get _textController => widget.textController;
   FocusNode get focusNode => widget.focusNode;
-  bool isAccessibleOn = false;
-
-  @override
-  initState() {
-    super.initState();
-    _controller.getIsAcessible();
-    if (_controller.isAccessible != null) {
-      setState(() {
-        this.isAccessibleOn = _controller.isAccessible!;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final accessibility = context.watch<AccessibilityProvider>();
+    final isAccessibleOn =
+        accessibility.loaded && accessibility.isEnabled(context);
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(

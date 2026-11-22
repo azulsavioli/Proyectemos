@@ -1,7 +1,9 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:flutter/material.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/question_como_crear_podcast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
@@ -47,7 +49,6 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   late bool isAllFilesFilleds;
   bool loading = false;
   bool isAccessible = false;
-  bool _accessibilityReady = false;
 
   final pageController = PageController();
 
@@ -56,7 +57,6 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   @override
   void initState() {
     super.initState();
-    getIsAcessible();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
     focusNode3 = FocusNode();
@@ -88,16 +88,6 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
     });
   }
 
-  Future<void> getIsAcessible() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAccessibleOn = preferences.getBool("isAccessible");
-    if (!mounted) return;
-    setState(() {
-      isAccessible = isAccessibleOn ?? false;
-      _accessibilityReady = true;
-    });
-  }
-
   @override
   void dispose() {
     focusNode1.dispose();
@@ -119,9 +109,11 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
         textControllerFive.text.isNotEmpty &&
         textControllerSix.text.isNotEmpty;
 
-    if (!_accessibilityReady) {
+    final accessibility = context.watch<AccessibilityProvider>();
+    if (!accessibility.loaded) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
+    isAccessible = accessibility.isEnabled(context);
 
     final pageCount = isAccessible ? 10 : 2;
     final isLastPage = pageChanged == pageCount - 1;
@@ -218,14 +210,14 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                           : TextButton(
                               onPressed: () {
                                 pageController.previousPage(
-                                  duration: const Duration(milliseconds: 400),
+                                  duration: motionDuration(context),
                                   curve: Curves.easeInOut,
                                 );
                               },
                               child: const FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  'Volver',
+                                  'Voltar',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: ThemeColors.gray,
@@ -322,7 +314,7 @@ SmoothPageIndicator(
                           : TextButton(
                               onPressed: () {
                                 pageController.nextPage(
-                                  duration: const Duration(milliseconds: 400),
+                                  duration: motionDuration(context),
                                   curve: Curves.easeInOut,
                                 );
                               },

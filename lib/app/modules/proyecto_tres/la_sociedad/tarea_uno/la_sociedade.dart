@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../widgets/task_step_label.dart';
 import 'package:flutter/material.dart';
@@ -226,7 +227,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                     TextButton(
                       onPressed: () {
                         pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                         setState(() {
@@ -234,7 +235,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         });
                       },
                       child: const Text(
-                        'Volver',
+                        'Voltar',
                         style: TextStyle(
                           fontSize: 18,
                           color: ThemeColors.gray,
@@ -322,7 +323,7 @@ SmoothPageIndicator(
                         }
 
                         pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
+                          duration: motionDuration(context),
                           curve: Curves.easeInOut,
                         );
                       },

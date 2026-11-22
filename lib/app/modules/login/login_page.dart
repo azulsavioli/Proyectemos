@@ -139,8 +139,8 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() => loadingGoogle = false);
                                     final message =
                                         result == SignInResult.networkFailure
-                                        ? 'No hay conexión. Revisa tu red e inténtalo de nuevo.'
-                                        : 'No se pudo iniciar sesión con esta cuenta. Inténtalo de nuevo.';
+                                        ? 'Sem conexão. Verifique a rede e tente de novo.'
+                                        : 'Não foi possível entrar com esta conta. Tente de novo.';
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)),
                                     );

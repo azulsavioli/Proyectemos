@@ -7,10 +7,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:proyectemos/app/modules/home/proyectos_page.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
+import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/intro_como_crear_podcast_page_one_accessible.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/tarea_uno_como_crear_podcast.dart';
 import 'package:proyectemos/app/modules/widgets/card_button.dart';
 import 'package:proyectemos/app/modules/widgets/feed_status_view.dart';
 import 'package:proyectemos/commons/google_sign_in.dart';
+import 'package:proyectemos/providers/acessibility_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -210,6 +213,42 @@ void main() {
     expect(find.text('Enviar'), findsOneWidget);
   });
 
+  testWidgets('TalkBack opens the accessible lesson without a stored preference', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({});
+    await _pump(
+      tester,
+      size: const Size(800, 2400),
+      textScale: 1,
+      accessibleNavigation: true,
+      home: const TareaUnoEscucharPodcast(),
+    );
+    await tester.pump();
+    expect(
+      find.byType(IntroTareaComoCrearPodcastPageUnoAccessible),
+      findsOneWidget,
+    );
+    expect(find.text('Enviar'), findsNothing);
+  });
+
+  testWidgets('bold text alone keeps the short lesson', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await _pump(
+      tester,
+      size: const Size(800, 2400),
+      textScale: 1,
+      boldText: true,
+      home: const TareaUnoEscucharPodcast(),
+    );
+    await tester.pump();
+    expect(
+      find.byType(IntroTareaComoCrearPodcastPageUnoAccessible),
+      findsNothing,
+    );
+    expect(find.text('Próximo'), findsOneWidget);
+  });
+
   testWidgets('empty feed offers a reload action', (tester) async {
     var reloads = 0;
     await _pump(
@@ -224,9 +263,9 @@ void main() {
       ),
     );
     expect(find.text('Todavía no hay podcasts compartidos.'), findsOneWidget);
-    await tester.ensureVisible(find.text('Reintentar'));
+    await tester.ensureVisible(find.text('Tentar de novo'));
     await tester.pump();
-    await tester.tap(find.text('Reintentar'));
+    await tester.tap(find.text('Tentar de novo'));
     await tester.pump();
     expect(reloads, 1);
   });
@@ -237,6 +276,9 @@ Future<void> _pump(
   required Size size,
   required double textScale,
   required Widget home,
+  bool accessibleNavigation = false,
+  bool boldText = false,
+  bool disableAnimations = false,
 }) async {
   await tester.binding.setSurfaceSize(size);
   tester.view.devicePixelRatio = 1;
@@ -255,12 +297,19 @@ Future<void> _pump(
           ),
           builder: (context, child) {
             return MediaQuery(
-              data: MediaQuery.of(context)
-                  .copyWith(textScaler: TextScaler.linear(textScale)),
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(textScale),
+                accessibleNavigation: accessibleNavigation,
+                boldText: boldText,
+                disableAnimations: disableAnimations,
+              ),
               child: child!,
             );
           },
-          home: home,
+          home: ChangeNotifierProvider(
+            create: (_) => AccessibilityProvider(),
+            child: home,
+          ),
         );
       },
     ),

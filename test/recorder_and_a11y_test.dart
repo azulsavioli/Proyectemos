@@ -167,6 +167,62 @@ void main() {
     expect(record.starts, 0);
   });
 
+  testWidgets('a simple microphone denial explains why recording did not start', (
+    tester,
+  ) async {
+    final record = FakeRecorder();
+    var settingsOpened = 0;
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(360, 690),
+        builder: (context, _) => MaterialApp(
+          home: UnifiedRecordAndPlay(
+            record: record,
+            title: 'Frida Kahlo',
+            question: 'Describe lo que ves',
+            background: null,
+            isPlaying: false,
+            onTogglePlayback: (_) async {},
+            requestMicrophone: () async => MicrophoneAccess.denied,
+            openSettings: () async {
+              settingsOpened++;
+              return true;
+            },
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.tap(find.byKey(const Key('record_button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Continuar'));
+    await tester.pump();
+    expect(find.textContaining('não foi permitido'), findsOneWidget);
+    expect(settingsOpened, 0);
+    expect(record.starts, 0);
+  });
+
+  test('bold text and reduced motion do not select the long lesson', () {
+    SharedPreferences.setMockInitialValues({});
+    final provider = AccessibilityProvider();
+    expect(
+      provider.followsSystem(const MediaQueryData(boldText: true)),
+      isFalse,
+    );
+    expect(
+      provider.followsSystem(const MediaQueryData(disableAnimations: true)),
+      isFalse,
+    );
+    expect(
+      provider.followsSystem(const MediaQueryData(highContrast: true)),
+      isFalse,
+    );
+    expect(
+      provider.followsSystem(const MediaQueryData(accessibleNavigation: true)),
+      isTrue,
+    );
+  });
+
   testWidgets('accessibility follows the system until the student overrides', (
     tester,
   ) async {

@@ -33,7 +33,7 @@ class FeedStatusView extends StatelessWidget {
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: onReload,
-                      child: const Text('Reintentar'),
+                      child: const Text('Tentar de novo'),
                     ),
                   ],
                 ),

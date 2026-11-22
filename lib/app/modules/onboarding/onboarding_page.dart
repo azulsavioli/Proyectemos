@@ -1,3 +1,4 @@
+import 'package:proyectemos/utils/motion.dart';
 import 'package:proyectemos/commons/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/registration/registration_page.dart';
@@ -77,7 +78,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             else
               TextButton(
                 onPressed: () => controller.previousPage(
-                  duration: const Duration(milliseconds: 400),
+                  duration: motionDuration(context),
                   curve: Curves.easeInOut,
                 ),
                 child: const Text(
@@ -124,7 +125,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             else
               TextButton(
                 onPressed: () => controller.nextPage(
-                  duration: const Duration(milliseconds: 400),
+                  duration: motionDuration(context),
                   curve: Curves.easeInOut,
                 ),
                 child: const Text(
