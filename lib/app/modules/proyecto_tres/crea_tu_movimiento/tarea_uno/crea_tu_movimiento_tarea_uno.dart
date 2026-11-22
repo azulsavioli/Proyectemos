@@ -75,6 +75,7 @@ class _CreacionDeSuMovimentoTareaUnoState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -83,9 +84,7 @@ class _CreacionDeSuMovimentoTareaUnoState
           },
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsCreaTuMovimiento.title,
           style: ThemeText.paragraph14WhiteBold,
@@ -124,9 +123,7 @@ class _CreacionDeSuMovimentoTareaUnoState
             controller: pageController,
             children: [
               IntroUnoCreaTuMovimientoTareaUno(),
-              IntroDosCreaTuMovimientoTareaUno(
-                controller: _controller,
-              ),
+              IntroDosCreaTuMovimientoTareaUno(controller: _controller),
               QuestionOneCreaTuMovimiento(
                 controllerList: textController1,
                 focusNodeList: focusNode1,
@@ -164,9 +161,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -179,7 +174,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -199,8 +194,9 @@ class _CreacionDeSuMovimentoTareaUnoState
                   if (pageChanged == 6)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         if (textController1.text.isEmpty ||
@@ -261,7 +257,7 @@ class _CreacionDeSuMovimentoTareaUnoState
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

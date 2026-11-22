@@ -1,3 +1,4 @@
+import 'package:proyectemos/app/modules/widgets/menu_icon_button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +6,7 @@ import '../../../../commons/strings/strings.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
+import '../../widgets/feed_status_view.dart';
 
 class FeedLatinoamericaPage extends StatefulWidget {
   const FeedLatinoamericaPage({Key? key}) : super(key: key);
@@ -23,6 +25,12 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
     super.initState();
   }
 
+  void _reload() {
+    setState(() {
+      _imagesStream = _repository.getImagesTurmaLatinoamericaStream();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final double shortestSide = MediaQuery.of(context).size.shortestSide;
@@ -32,26 +40,25 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         actions: [
-          IconButton(
-            icon: Icon(Icons.menu, size: isMobile ? 20 : 50),
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
+          Builder(
+            builder: (context) => MenuIconButton(iconSize: isMobile ? 20 : 50),
           ),
         ],
         toolbarHeight: isMobile ? 60 : 110,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios,
-                color: ThemeColors.white, size: isMobile ? 20 : 50),
+            tooltip: 'Volver',
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: ThemeColors.white,
+              size: isMobile ? 20 : 50,
+            ),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleLatinoamericaUnoFeed,
           style: ThemeText.paragraph14WhiteBold,
@@ -62,15 +69,15 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         stream: _imagesStream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ocurrió un error al intentar cargar las imágenes.'),
+            return FeedStatusView(
+              message:
+                  'No se pudieron cargar las imágenes. Inténtalo de nuevo.',
+              onReload: _reload,
             );
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+              child: CircularProgressIndicator(color: ThemeColors.blue),
             );
           }
           final students = snapshot.data ?? [];
@@ -95,10 +102,9 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
               ],
             );
           } else {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+            return FeedStatusView(
+              message: 'Todavía no hay actividades compartidas.',
+              onReload: _reload,
             );
           }
         },
@@ -155,8 +161,6 @@ class _FeedLatinoamericaPageState extends State<FeedLatinoamericaPage> {
         ),
       );
     }
-    return Column(
-      children: swipers,
-    );
+    return Column(children: swipers);
   }
 }

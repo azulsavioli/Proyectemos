@@ -68,6 +68,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
           leading: Padding(
             padding: const EdgeInsets.all(8.0),
             child: IconButton(
+              tooltip: 'Volver',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -154,7 +155,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -303,7 +304,7 @@ class _PUnoArtistasLatinoamericanosTareaDosPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

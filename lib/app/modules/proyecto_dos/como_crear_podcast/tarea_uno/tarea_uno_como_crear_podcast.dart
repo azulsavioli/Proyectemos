@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/proyecto_dos/como_crear_podcast/tarea_uno/question_como_crear_podcast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +5,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../../../../commons/strings/strings.dart';
 import '../../../../../commons/styles.dart';
-import '../../../../../services/storage_service.dart';
 import '../../../../../services/toast_services.dart';
 import '../../../../../utils/get_user.dart';
 import 'controller_uno_como_crear_podcast.dart';
@@ -30,9 +28,7 @@ class TareaUnoEscucharPodcast extends StatefulWidget {
 }
 
 class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
-  final FirebaseFirestore db = FirebaseFirestore.instance;
-  final StorageService storageService = StorageService();
-  final _controller = ControllerEscucharPodcast();
+  late final _controller = ControllerEscucharPodcast();
 
   final textControllerOne = TextEditingController();
   final textControllerTwo = TextEditingController();
@@ -50,6 +46,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   late bool isAllFilesFilleds;
   bool loading = false;
   bool isAccessible = false;
+  bool _accessibilityReady = false;
 
   final pageController = PageController();
 
@@ -80,7 +77,8 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
 
   void _updateIsAllFilesFilleds() {
     setState(() {
-      isAllFilesFilleds = textControllerOne.text.isNotEmpty &&
+      isAllFilesFilleds =
+          textControllerOne.text.isNotEmpty &&
           textControllerTwo.text.isNotEmpty &&
           textControllerThree.text.isNotEmpty &&
           textControllerFour.text.isNotEmpty &&
@@ -92,10 +90,10 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
   Future<void> getIsAcessible() async {
     final preferences = await SharedPreferences.getInstance();
     final isAccessibleOn = preferences.getBool("isAccessible");
+    if (!mounted) return;
     setState(() {
-      if (isAccessibleOn != null) {
-        isAccessible = isAccessibleOn;
-      }
+      isAccessible = isAccessibleOn ?? false;
+      _accessibilityReady = true;
     });
   }
 
@@ -112,87 +110,95 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
 
   @override
   Widget build(BuildContext context) {
-    final isAllFilesFilleds = textControllerOne.text.isNotEmpty &&
+    final isAllFilesFilleds =
+        textControllerOne.text.isNotEmpty &&
         textControllerTwo.text.isNotEmpty &&
         textControllerThree.text.isNotEmpty &&
         textControllerFour.text.isNotEmpty &&
         textControllerFive.text.isNotEmpty &&
         textControllerSix.text.isNotEmpty;
 
+    if (!_accessibilityReady) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    final pageCount = isAccessible ? 10 : 2;
+    final isLastPage = pageChanged == pageCount - 1;
+
     return Scaffold(
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleElContenidoDelPodcast,
           style: ThemeText.paragraph14WhiteBold,
         ),
       ),
       body: PageView(
-          onPageChanged: (index) {
-            setState(() {
-              pageChanged = index;
-            });
-          },
-          controller: pageController,
-          children: isAccessible
-              ? [
-                  const IntroTareaComoCrearPodcastPageUnoAccessible(),
-                  const IntroTareaComoCrearPodcastPageDosAccessible(),
-                  const IntroTareaComoCrearPodcastPageTresAccessible(),
-                  const IntroTareaComoCrearPodcastPageCuatroAccessible(),
-                  const IntroTareaComoCrearPodcastPageCincoAccessible(),
-                  const IntroTareaComoCrearPodcastPageSeisAccessible(),
-                  const IntroTareaComoCrearPodcastPageSieteAccessible(),
-                  const FinalIntroTareaComoCrearPodcastPageUnoAccessible(),
-                  const FinalIntroTareaComoCrearPodcastPageDosAccessible(),
-                  QuestionComoCrearPodcast(
-                    focusNodeList: [
-                      focusNode1,
-                      focusNode2,
-                      focusNode3,
-                      focusNode4,
-                      focusNode5,
-                      focusNode6,
-                    ],
-                    textControllerList: [
-                      textControllerOne,
-                      textControllerTwo,
-                      textControllerThree,
-                      textControllerFour,
-                      textControllerFive,
-                      textControllerSix,
-                    ],
-                  ),
-                ]
-              : [
-                  const IntroTareaComoCrearPodcastPageUno(),
-                  QuestionComoCrearPodcast(
-                    focusNodeList: [
-                      focusNode1,
-                      focusNode2,
-                      focusNode3,
-                      focusNode4,
-                      focusNode5,
-                      focusNode6,
-                    ],
-                    textControllerList: [
-                      textControllerOne,
-                      textControllerTwo,
-                      textControllerThree,
-                      textControllerFour,
-                      textControllerFive,
-                      textControllerSix,
-                    ],
-                  ),
-                ]),
+        onPageChanged: (index) {
+          setState(() {
+            pageChanged = index;
+          });
+        },
+        controller: pageController,
+        children: isAccessible
+            ? [
+                const IntroTareaComoCrearPodcastPageUnoAccessible(),
+                const IntroTareaComoCrearPodcastPageDosAccessible(),
+                const IntroTareaComoCrearPodcastPageTresAccessible(),
+                const IntroTareaComoCrearPodcastPageCuatroAccessible(),
+                const IntroTareaComoCrearPodcastPageCincoAccessible(),
+                const IntroTareaComoCrearPodcastPageSeisAccessible(),
+                const IntroTareaComoCrearPodcastPageSieteAccessible(),
+                const FinalIntroTareaComoCrearPodcastPageUnoAccessible(),
+                const FinalIntroTareaComoCrearPodcastPageDosAccessible(),
+                QuestionComoCrearPodcast(
+                  focusNodeList: [
+                    focusNode1,
+                    focusNode2,
+                    focusNode3,
+                    focusNode4,
+                    focusNode5,
+                    focusNode6,
+                  ],
+                  textControllerList: [
+                    textControllerOne,
+                    textControllerTwo,
+                    textControllerThree,
+                    textControllerFour,
+                    textControllerFive,
+                    textControllerSix,
+                  ],
+                ),
+              ]
+            : [
+                const IntroTareaComoCrearPodcastPageUno(),
+                QuestionComoCrearPodcast(
+                  focusNodeList: [
+                    focusNode1,
+                    focusNode2,
+                    focusNode3,
+                    focusNode4,
+                    focusNode5,
+                    focusNode6,
+                  ],
+                  textControllerList: [
+                    textControllerOne,
+                    textControllerTwo,
+                    textControllerThree,
+                    textControllerFour,
+                    textControllerFive,
+                    textControllerSix,
+                  ],
+                ),
+              ],
+      ),
       bottomNavigationBar: loading
           ? const LinearProgressIndicator(
               minHeight: 20,
@@ -200,117 +206,139 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
             )
           : Container(
               color: Colors.transparent,
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              height: 60,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.previousPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Volver',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: pageChanged == 0
+                          ? const SizedBox(width: 48)
+                          : TextButton(
+                              onPressed: () {
+                                pageController.previousPage(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                              child: const FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Volver',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: ThemeColors.gray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
                     ),
+                  ),
                   Center(
                     child: SmoothPageIndicator(
                       controller: pageController,
-                      count: isAccessible ? 10 : 2,
-                      effect: const WormEffect(
-                        dotHeight: 10,
-                        dotWidth: 10,
+                      count: pageCount,
+                      effect: WormEffect(
+                        dotHeight: 8,
+                        dotWidth: 8,
+                        spacing: pageCount > 4 ? 4 : 8,
                         activeDotColor: Colors.blueAccent,
                         dotColor: Colors.black26,
                       ),
                     ),
                   ),
-                  if (pageChanged == 1)
-                    TextButton(
-                      style: ButtonStyle(
-                        backgroundColor: WidgetStateProperty.all<Color>(
-                            isAllFilesFilleds
-                                ? ThemeColors.blue
-                                : Colors.transparent),
-                      ),
-                      onPressed: () async {
-                        if (textControllerOne.text.isEmpty ||
-                            textControllerTwo.text.isEmpty ||
-                            textControllerThree.text.isEmpty ||
-                            textControllerFour.text.isEmpty ||
-                            textControllerFive.text.isEmpty ||
-                            textControllerSix.text.isEmpty) {
-                          showToast(
-                            context,
-                            'Vuelve y ingrese tujas respuestas correctamente',
-                            ThemeColors.red,
-                            ThemeColors.white,
-                          );
-                        } else {
-                          final respostas = _controller.makeAnswersList(
-                            textControllerOne.text,
-                            textControllerTwo.text,
-                            textControllerThree.text,
-                            textControllerFour.text,
-                            textControllerFive.text,
-                            textControllerSix.text,
-                          );
-                          setState(() {
-                            loading = true;
-                          });
-                          Future.delayed(Duration(milliseconds: 2000)).then(
-                            (value) => Navigator.pushNamed(
-                              context,
-                              '/pDos_comoCrearPodcast_menu',
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: isLastPage
+                          ? TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  isAllFilesFilleds
+                                      ? ThemeColors.blue
+                                      : Colors.transparent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                if (textControllerOne.text.isEmpty ||
+                                    textControllerTwo.text.isEmpty ||
+                                    textControllerThree.text.isEmpty ||
+                                    textControllerFour.text.isEmpty ||
+                                    textControllerFive.text.isEmpty ||
+                                    textControllerSix.text.isEmpty) {
+                                  showToast(
+                                    context,
+                                    'Vuelve y ingrese tujas respuestas correctamente',
+                                    ThemeColors.red,
+                                    ThemeColors.white,
+                                  );
+                                } else {
+                                  final respostas = _controller.makeAnswersList(
+                                    textControllerOne.text,
+                                    textControllerTwo.text,
+                                    textControllerThree.text,
+                                    textControllerFour.text,
+                                    textControllerFive.text,
+                                    textControllerSix.text,
+                                  );
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  Future.delayed(Duration(milliseconds: 2000))
+                                      .then(
+                                        (value) => Navigator.pushNamed(
+                                          context,
+                                          '/pDos_comoCrearPodcast_menu',
+                                        ),
+                                      );
+                                  final currentUser = await getCurrentUser(
+                                    context,
+                                  );
+                                  _controller.sendAnswers(
+                                    context,
+                                    currentUser,
+                                    respostas,
+                                  );
+                                }
+                              },
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Enviar',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: isAllFilesFilleds
+                                        ? ThemeColors.foregroundOn(
+                                            ThemeColors.blue,
+                                          )
+                                        : ThemeColors.gray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : TextButton(
+                              onPressed: () {
+                                pageController.nextPage(
+                                  duration: const Duration(milliseconds: 400),
+                                  curve: Curves.easeInOut,
+                                );
+                              },
+                              child: const FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+                                  'Próximo',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: ThemeColors.gray,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
-                          );
-                          final currentUser = await getCurrentUser(context);
-                          _controller.sendAnswers(
-                            context,
-                            currentUser,
-                            respostas,
-                          );
-                        }
-                      },
-                      child: Text(
-                        'Enviar',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: isAllFilesFilleds ? Colors.white : Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  else
-                    TextButton(
-                      onPressed: () {
-                        pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: const Text(
-                        'Próximo',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ),
+                  ),
                 ],
               ),
             ),

@@ -93,8 +93,7 @@ final routes = {
   '/proyectos': (context) => const ProyectosPage(),
   '/record_and_play': (context) => const RecordAndPlayScreen(),
 
-//projeto uno
-
+  //projeto uno
   '/proyecto_uno': (context) => const ProyectoUnoPage(),
   '/pUno_latinoamerica_menu': (context) => const PUnoLatinoamericaMenu(),
   '/pUno_latinoamerica_tarea_uno': (context) =>
@@ -127,8 +126,7 @@ final routes = {
   '/pUno_feed_divulgacao': (context) => const FeedDivulgationPage(),
   '/pUno_send_email_prof': (context) => const EnvioEmailProfesora(),
 
-//projeto dos
-
+  //projeto dos
   '/proyecto_dos': (context) => const ProyectoDosPage(),
   '/pDos_conocesPodcast_menu': (context) => const PDosConocesPodcastMenu(),
   '/pDos_conocesPodcast': (context) => const PDosConocesPodcast(),
@@ -173,7 +171,7 @@ final routes = {
       const FeedbackTareaDosGrabacionPodcast(),
   '/pDos_grabacion_podcast_feed': (context) => const FeedGrabacionPodcastPage(),
 
-//projeto tres
+  //projeto tres
   '/proyecto_tres': (context) => const ProyectoTresPage(),
 
   '/pTres_laSociedad': (context) => const LaSociedadPage(),
@@ -216,29 +214,20 @@ class Proyectemos extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
-        child: ScreenUtilInit(
-          minTextAdapt: true,
-          splitScreenMode: true,
-          builder: (context, child) {
-            return MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: Proyectemos.title,
-              theme: ThemeData(
-                primaryColor: ThemeColors.blue,
-                secondaryHeaderColor: ThemeColors.yellow,
-                scaffoldBackgroundColor: ThemeColors.white,
-                appBarTheme: const AppBarTheme(
-                  backgroundColor: ThemeColors.blue,
-                  centerTitle: true,
-                  iconTheme: IconThemeData(color: ThemeColors.white),
-                ),
-              ),
-              home: const AuthCheck(),
-              initialRoute: '/',
-              routes: Map.from(routes)..remove(Navigator.defaultRouteName),
-            );
-          },
-        ),
-      );
+    create: (context) => GoogleSignInProvider(),
+    child: ScreenUtilInit(
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: Proyectemos.title,
+          theme: appTheme(),
+          home: const AuthCheck(),
+          initialRoute: '/',
+          routes: Map.from(routes)..remove(Navigator.defaultRouteName),
+        );
+      },
+    ),
+  );
 }

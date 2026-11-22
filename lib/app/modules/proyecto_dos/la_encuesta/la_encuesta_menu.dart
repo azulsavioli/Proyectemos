@@ -70,6 +70,7 @@ class _PDosLaEncuestaMenuState extends State<PDosLaEncuestaMenu> {
         backgroundColor: ThemeColors.white,
         appBar: AppBar(
           leading: IconButton(
+            tooltip: 'Volver',
             icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
             onPressed: () => popOrReplace(context, '/proyecto_dos'),
           ),

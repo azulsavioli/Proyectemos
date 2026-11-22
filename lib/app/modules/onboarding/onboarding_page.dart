@@ -1,3 +1,4 @@
+import 'package:proyectemos/commons/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:proyectemos/app/modules/registration/registration_page.dart';
 import 'package:proyectemos/repository/proyectemos_repository.dart';
@@ -68,7 +69,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   'Pular',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.grey,
+                    color: ThemeColors.gray,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -83,7 +84,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   'Voltar',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.grey,
+                    color: ThemeColors.gray,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -96,7 +97,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   dotHeight: 10,
                   dotWidth: 10,
                   activeDotColor: Colors.blueAccent,
-                  dotColor: Colors.white,
+                  dotColor: Colors.black26,
                 ),
               ),
             ),
@@ -115,7 +116,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   'Concluir',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.grey,
+                    color: ThemeColors.gray,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -130,7 +131,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   'Próximo',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.grey,
+                    color: ThemeColors.gray,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

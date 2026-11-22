@@ -64,13 +64,12 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           Strings.titleCrearUnPodcast,
           style: ThemeText.paragraph14WhiteBold,
@@ -107,9 +106,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
           },
           controller: pageController,
           children: [
-            IntroTareaDosComoCrearPodcastPage(
-              controller: _controller,
-            ),
+            IntroTareaDosComoCrearPodcastPage(controller: _controller),
             QuestionOneComoCrearPodcast(
               controller: textControllerOne,
               focusNode: focusNode1,
@@ -118,12 +115,8 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
               controller: textControllerTwo,
               focusNode: focusNode2,
             ),
-            QuestionThreeComoCrearPodcast(
-              controller: _controller,
-            ),
-            QuestionFourComoCrearPodcast(
-              controller: _controller,
-            ),
+            QuestionThreeComoCrearPodcast(controller: _controller),
+            QuestionFourComoCrearPodcast(controller: _controller),
             QuestionFiveComoCrearPodcast(
               controller: textControllerThree,
               focusNode: focusNode3,
@@ -148,9 +141,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (pageChanged == 0)
-                    const SizedBox(
-                      width: 65,
-                    )
+                    const SizedBox(width: 65)
                   else
                     TextButton(
                       onPressed: () {
@@ -163,7 +154,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -183,8 +174,9 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                   if (pageChanged == 6)
                     TextButton(
                       style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all<Color>(ThemeColors.blue),
+                        backgroundColor: WidgetStateProperty.all<Color>(
+                          ThemeColors.blue,
+                        ),
                       ),
                       onPressed: () async {
                         if (textControllerOne.text.isEmpty ||
@@ -243,7 +235,7 @@ class _TareaDosCrearUnPodcastState extends State<TareaDosCrearUnPodcast> {
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

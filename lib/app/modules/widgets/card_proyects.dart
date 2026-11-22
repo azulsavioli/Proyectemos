@@ -32,81 +32,18 @@ class CardProyecto extends StatelessWidget {
   }
 
   Widget buildPhoneLayout(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(namedRoute);
-      },
-      child: Card(
-        elevation: 3,
-        color: Colors.white,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .9,
-          height: MediaQuery.of(context).size.height * .23,
-          child: Center(
-            child: Row(
-              children: [
-                Image.asset(
-                  image,
-                  height: 120,
-                  width: 120,
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: titleColor,
-                    ),
-                    const SizedBox(
-                      height: 14,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        SizedBox(
-                          width: 160,
-                          child: Text(
-                            description,
-                            style: descriptionColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: 160,
-                        ),
-                        if (icon != null)
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: backgroundColor,
-                            child: Icon(
-                              icon!,
-                              size: 20,
-                              color: ThemeColors.white,
-                            ),
-                          ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    return _card(context, imageSize: 96, gap: 12);
   }
 
   Widget buildTabletLayout(BuildContext context) {
+    return _card(context, imageSize: 140, gap: 20);
+  }
+
+  Widget _card(
+    BuildContext context, {
+    required double imageSize,
+    required double gap,
+  }) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(namedRoute);
@@ -114,67 +51,42 @@ class CardProyecto extends StatelessWidget {
       child: Card(
         elevation: 3,
         color: Colors.white,
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * .98,
-          height: MediaQuery.of(context).size.height * .24,
-          child: Center(
-            child: Row(
-              children: [
-                Image.asset(
-                  image,
-                  height: 150,
-                  width: 150,
-                ),
-                SizedBox(
-                  width: 24,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                image,
+                height: imageSize,
+                width: imageSize,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(width: gap),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: titleColor,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      textBaseline: TextBaseline.alphabetic,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          child: Text(
-                            description,
-                            style: descriptionColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                        ),
-                        if (icon != null)
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundColor: backgroundColor,
-                            child: Icon(
-                              icon!,
-                              size: 60,
-                              color: const Color.fromARGB(255, 157, 187, 157),
-                            ),
-                          ),
-                      ],
-                    )
+                    Text(title, style: titleColor, softWrap: true),
+                    const SizedBox(height: 8),
+                    Text(description, style: descriptionColor, softWrap: true),
                   ],
                 ),
+              ),
+              if (icon != null) ...[
+                const SizedBox(width: 8),
+                CircleAvatar(
+                  radius: 15,
+                  backgroundColor: backgroundColor,
+                  child: Icon(
+                    icon!,
+                    size: 20,
+                    color: ThemeColors.foregroundOn(backgroundColor),
+                  ),
+                ),
               ],
-            ),
+            ],
           ),
         ),
       ),

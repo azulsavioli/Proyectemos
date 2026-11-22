@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:chewie/chewie.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:proyectemos/commons/strings/strings_movimientos_sociales.dart';
@@ -11,6 +10,7 @@ import 'package:proyectemos/services/tres_tasks_completed.dart';
 import '../../../../commons/styles.dart';
 import '../../../../repository/proyectemos_repository.dart';
 import '../../widgets/drawer_menu.dart';
+import '../../widgets/feed_status_view.dart';
 
 class FeedMovimientosSocialesPage extends StatefulWidget {
   const FeedMovimientosSocialesPage({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _FeedMovimientosSocialesPageState
   bool feedTurma = false;
   late VideoPlayerController videoPlayerController;
   late List<String> videosList;
-  late List<ChewieController> videoPlayerControllers;
+  List<ChewieController> videoPlayerControllers = [];
   List students = [];
   late StreamController<List> _videosStreamController;
   late ChewieController chewieController;
@@ -52,8 +52,8 @@ class _FeedMovimientosSocialesPageState
   }
 
   Future<void> getFeedTask() async {
-    final resultado = await TresTasksCompletedService
-        .getTresMovimientosSocialesCompletedInfo();
+    final resultado =
+        await TresTasksCompletedService.getTresMovimientosSocialesCompletedInfo();
 
     setState(() {
       feedTurma = resultado;
@@ -67,9 +67,13 @@ class _FeedMovimientosSocialesPageState
           .getVideosMovimientosSocialesTurma();
       final studentsList = await setStudentsList(snapshot);
       _videosStreamController.add(studentsList);
-    } on FirebaseException catch (e) {
+    } catch (e) {
       _videosStreamController.addError(e.toString());
     }
+  }
+
+  void reloadFeed() {
+    startFeed();
   }
 
   Future<List> setStudentsList(snapshot) async {
@@ -117,13 +121,12 @@ class _FeedMovimientosSocialesPageState
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
         centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color.fromRGBO(250, 251, 250, 1),
-        ),
+        iconTheme: const IconThemeData(color: Color.fromRGBO(250, 251, 250, 1)),
         title: Text(
           StringsMovimientosSociales.title,
           style: ThemeText.paragraph16WhiteBold,
@@ -134,34 +137,35 @@ class _FeedMovimientosSocialesPageState
         stream: _videosStreamController.stream,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(
-              child: Text('Ocurrió un error al intentar cargar los videos.'),
+            return FeedStatusView(
+              message: 'No se pudieron cargar los videos. Inténtalo de nuevo.',
+              onReload: reloadFeed,
             );
           }
           if (!snapshot.hasData) {
             return const Center(
-              child: CircularProgressIndicator(
-                color: ThemeColors.blue,
-              ),
+              child: CircularProgressIndicator(color: ThemeColors.blue),
             );
           }
           final students = snapshot.data!;
+          if (students.isEmpty) {
+            return FeedStatusView(
+              message: 'Todavía no hay videos compartidos.',
+              onReload: reloadFeed,
+            );
+          }
 
           return Padding(
             padding: const EdgeInsets.all(16),
             child: ListView(
               children: [
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 Text(
                   'Videos compartidos por los estudiantes',
                   textAlign: TextAlign.center,
                   style: ThemeText.paragraph16BlueBold,
                 ),
-                const SizedBox(
-                  height: 25,
-                ),
+                const SizedBox(height: 25),
                 buildCards(students, videoPlayerControllers),
               ],
             ),
@@ -184,16 +188,12 @@ class _FeedMovimientosSocialesPageState
             children: [
               Padding(
                 padding: const EdgeInsets.all(8),
-                child: ListTile(
-                  title: Text(listStudents[i]['grupo']),
-                ),
+                child: ListTile(title: Text(listStudents[i]['grupo'])),
               ),
               SizedBox(
                 width: 360,
                 height: 400,
-                child: Chewie(
-                  controller: videoControllers[i],
-                ),
+                child: Chewie(controller: videoControllers[i]),
               ),
             ],
           ),
@@ -201,8 +201,6 @@ class _FeedMovimientosSocialesPageState
       );
       i++;
     }
-    return Column(
-      children: cards,
-    );
+    return Column(children: cards);
   }
 }

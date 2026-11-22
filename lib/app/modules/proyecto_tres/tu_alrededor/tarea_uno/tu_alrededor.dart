@@ -40,6 +40,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -76,7 +77,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -168,7 +169,7 @@ class _TuAlrededorState extends State<TuAlrededor> {
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

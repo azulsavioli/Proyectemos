@@ -154,6 +154,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
       backgroundColor: ThemeColors.white,
       appBar: AppBar(
         leading: IconButton(
+          tooltip: 'Volver',
           icon: const Icon(Icons.arrow_back_ios, color: ThemeColors.white),
           onPressed: () {
             WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -235,7 +236,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         'Volver',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -328,7 +329,7 @@ class _LaSociedadPageState extends State<LaSociedadPage> {
                         'Próximo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey,
+                          color: ThemeColors.gray,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

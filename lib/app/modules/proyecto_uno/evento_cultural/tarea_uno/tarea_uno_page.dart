@@ -41,6 +41,7 @@ class _PUnoEventoCulturalTareaPageState
           leading: Padding(
             padding: const EdgeInsets.only(left: 8.0),
             child: IconButton(
+              tooltip: 'Volver',
               icon: Icon(
                 Icons.arrow_back_ios,
                 color: ThemeColors.white,
@@ -102,7 +103,7 @@ class _PUnoEventoCulturalTareaPageState
                           'Volver',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -188,7 +189,7 @@ class _PUnoEventoCulturalTareaPageState
                           'Próximo',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.grey,
+                            color: ThemeColors.gray,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

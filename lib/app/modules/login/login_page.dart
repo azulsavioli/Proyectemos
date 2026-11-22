@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:proyectemos/commons/google_sign_in.dart';
 import 'package:proyectemos/commons/styles.dart';
 
 import '../../../commons/strings/strings.dart';
@@ -33,9 +34,9 @@ class _LoginPageState extends State<LoginPage> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.blue.shade200,
-                      Colors.blue.shade400,
-                      Colors.blue.shade600,
+                      ThemeColors.loginBlueTop,
+                      ThemeColors.loginBlueMid,
+                      ThemeColors.loginBlueBottom,
                     ],
                   ),
                 ),
@@ -119,9 +120,15 @@ class _LoginPageState extends State<LoginPage> {
                                 ? null
                                 : () async {
                                     setState(() => loadingGoogle = true);
-                                    final ok = await _controller.login(context);
+                                    final result = await _controller.login(
+                                      context,
+                                    );
                                     if (!context.mounted) return;
-                                    if (ok) {
+                                    if (result == SignInResult.cancelled) {
+                                      setState(() => loadingGoogle = false);
+                                      return;
+                                    }
+                                    if (result == SignInResult.success) {
                                       Navigator.pushNamedAndRemoveUntil(
                                         context,
                                         '/',
@@ -130,43 +137,43 @@ class _LoginPageState extends State<LoginPage> {
                                       return;
                                     }
                                     setState(() => loadingGoogle = false);
+                                    final message =
+                                        result == SignInResult.networkFailure
+                                        ? 'No hay conexión. Revisa tu red e inténtalo de nuevo.'
+                                        : 'No se pudo iniciar sesión con esta cuenta. Inténtalo de nuevo.';
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                          'No se pudo iniciar sesión. Inténtalo de nuevo.',
-                                        ),
-                                      ),
+                                      SnackBar(content: Text(message)),
                                     );
                                   },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: loadingGoogle
-                                  ? [
-                                      const SizedBox(
-                                        width: 22,
-                                        height: 22,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ]
-                                  : [
+                            child: loadingGoogle
+                                ? const SizedBox(
+                                    width: 22,
+                                    height: 22,
+                                    child: CircularProgressIndicator(
+                                      color: ThemeColors.nearBlack,
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
                                       const FaIcon(
                                         FontAwesomeIcons.google,
-                                        color: Colors.white,
+                                        color: ThemeColors.nearBlack,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8),
+                                      const SizedBox(width: 8),
+                                      Flexible(
                                         child: Text(
                                           Strings.iniciaSessao,
+                                          textAlign: TextAlign.center,
                                           style: const TextStyle(
-                                            color: Colors.white,
+                                            color: ThemeColors.nearBlack,
                                             fontSize: 16,
+                                            height: 1.2,
                                           ),
                                         ),
                                       ),
                                     ],
-                            ),
+                                  ),
                           ),
                         ),
                       ),
