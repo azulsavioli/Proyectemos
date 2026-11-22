@@ -312,7 +312,7 @@ class _TareaUnoEscucharPodcastState extends State<TareaUnoEscucharPodcast> {
                                         ? ThemeColors.foregroundOn(
                                             ThemeColors.blue,
                                           )
-                                        : Colors.grey,
+                                        : ThemeColors.gray,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

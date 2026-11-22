@@ -222,27 +222,7 @@ class Proyectemos extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: Proyectemos.title,
-          theme: ThemeData(
-            primaryColor: ThemeColors.blue,
-            secondaryHeaderColor: ThemeColors.yellow,
-            scaffoldBackgroundColor: ThemeColors.white,
-            colorScheme: const ColorScheme.light(
-              primary: ThemeColors.blue,
-              onPrimary: ThemeColors.white,
-              secondary: ThemeColors.yellow,
-              onSecondary: ThemeColors.nearBlack,
-              error: ThemeColors.red,
-              onError: ThemeColors.white,
-              surface: ThemeColors.white,
-              onSurface: ThemeColors.nearBlack,
-            ),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: ThemeColors.blue,
-              foregroundColor: ThemeColors.white,
-              centerTitle: true,
-              iconTheme: IconThemeData(color: ThemeColors.white),
-            ),
-          ),
+          theme: appTheme(),
           home: const AuthCheck(),
           initialRoute: '/',
           routes: Map.from(routes)..remove(Navigator.defaultRouteName),

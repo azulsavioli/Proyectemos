@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:proyectemos/app/modules/login/login_page.dart';
@@ -55,15 +54,7 @@ void main() {
           builder: (context, _) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              theme: ThemeData(
-                primaryColor: ThemeColors.blue,
-                scaffoldBackgroundColor: ThemeColors.white,
-                appBarTheme: const AppBarTheme(
-                  backgroundColor: ThemeColors.blue,
-                  centerTitle: true,
-                  iconTheme: IconThemeData(color: ThemeColors.white),
-                ),
-              ),
+              theme: appTheme(),
               builder: (context, child) {
                 return MediaQuery(
                   data: MediaQuery.of(context)
@@ -211,13 +202,4 @@ class _TaskShot extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<void> _loadPoppins() async {
-  final loader = FontLoader('Poppins');
-  for (final name in ['Regular', 'Medium', 'Bold', 'Light']) {
-    final bytes = File('assets/fonts/Poppins-$name.ttf').readAsBytesSync();
-    loader.addFont(Future.value(ByteData.view(bytes.buffer)));
-  }
-  await loader.load();
 }

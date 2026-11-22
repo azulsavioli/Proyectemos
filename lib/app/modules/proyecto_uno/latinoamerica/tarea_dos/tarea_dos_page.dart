@@ -208,7 +208,7 @@ class _PUnoLatinoamericaTareaDosPageState
                               },
                         style: ButtonStyle(
                           backgroundColor: WidgetStateProperty.all<Color>(
-                            canSubmit ? ThemeColors.blue : Colors.grey,
+                            canSubmit ? ThemeColors.blue : ThemeColors.gray,
                           ),
                         ),
                         child: Text(

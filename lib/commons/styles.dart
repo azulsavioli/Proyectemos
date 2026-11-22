@@ -454,3 +454,29 @@ abstract class ThemeColors {
     return onDark >= onLight ? nearBlack : white;
   }
 }
+
+/// Theme used by the app and by screenshot captures, so buttons are not
+/// Material 3's default purple.
+ThemeData appTheme() {
+  return ThemeData(
+    primaryColor: ThemeColors.blue,
+    secondaryHeaderColor: ThemeColors.yellow,
+    scaffoldBackgroundColor: ThemeColors.white,
+    colorScheme: const ColorScheme.light(
+      primary: ThemeColors.blue,
+      onPrimary: ThemeColors.white,
+      secondary: ThemeColors.yellow,
+      onSecondary: ThemeColors.nearBlack,
+      error: ThemeColors.red,
+      onError: ThemeColors.white,
+      surface: ThemeColors.white,
+      onSurface: ThemeColors.nearBlack,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: ThemeColors.blue,
+      foregroundColor: ThemeColors.white,
+      centerTitle: true,
+      iconTheme: IconThemeData(color: ThemeColors.white),
+    ),
+  );
+}
